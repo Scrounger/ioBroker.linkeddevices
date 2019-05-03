@@ -33,6 +33,7 @@ class Linkeddevices extends utils.Adapter {
 	 */
 	async onReady() {
 		// Initialize your adapter here
+		await this.initialObjects()
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
@@ -123,6 +124,76 @@ class Linkeddevices extends utils.Adapter {
 			this.log.info(`state ${id} deleted`);
 		}
 	}
+
+	async initialObjects() {
+		this.log.info('inital all Objects')
+
+		// all unsubscripe to begin completly new
+		this.unsubscribeForeignStates('*')
+
+		// alle Datenpunkte durchsuchen
+		let parentObjList = await this.getForeignObjectsAsync('')
+		for (let idParentObj in parentObjList) {
+			let parentObj = parentObjList[idParentObj]
+
+			// Datenpunkte sind von 'linkeddevices' und aktiviert
+			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
+				&& parentObj.common.custom[this.namespace].enabled) {
+
+				if (!parentObj.common.custom[this.namespace].id || !parentObj.common.custom[this.namespace].id.length || parentObj.common.custom[this.namespace].id === "") {
+					// Property 'id' fehlt oder hat keinen Wert
+					this.log.error("[initialObjects] No 'id' defined for datapoint: '" + parentObj._id + "'");
+				} else {
+					// Property 'id' vorhanden -> cloned Datenpunkt erzeugen
+					await this.createClonedObject(parentObj);
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * @param {ioBroker.Object} parentObj
+	 */
+	async createClonedObject(parentObj) {
+		var newId = this.getClonedObjectId(parentObj)
+
+		let name = null;
+		// @ts-ignore
+		if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
+			// Property 'name' von Objekt übernehmen, sofern vorhanden
+			// @ts-ignore
+			name = parentObj.common.custom[this.namespace].name;
+			this.log.debug("[createClonedObject] using custom name '" + name + "' for: '" + newId + "' (parentObj: '" + parentObj._id + "')");
+		} else {
+			// 'name' wird von parent übernommen
+			name = parentObj.common.name;
+			this.log.debug("[createClonedObject] no custom name defined for: '" + newId + "' (parentObj: '" + parentObj._id + "'). Use datapoint name: '" + parentObj.common.name + "'");
+		}
+
+		// Cloned Objekt erzeugen
+		let clonedObj = Object();
+		clonedObj.type = parentObj.type;
+		clonedObj.common = parentObj.common;
+		clonedObj.common.name = name;
+		//clonedObj.native = parentObj.native;
+		clonedObj.common.desc = "Created by linkeddevices";
+		clonedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "active": true };		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
+
+		// Objekt erzeugen oder Änderungen schreiben
+		await this.setForeignObjectAsync(newId, clonedObj);
+		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + newId + "'");
+	}
+
+	/**
+	 * @param {ioBroker.Object} parentObj
+	 */
+	getClonedObjectId(parentObj) {
+		// id des cloned Objektes erzeugen
+		// @ts-ignore
+		return this.namespace + "." + parentObj.common.custom[this.namespace].id;
+	}
+
 
 	// /**
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
