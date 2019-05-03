@@ -37,5 +37,17 @@ systemDictionary = {
 		"es": "option2",
 		"pl": "option2",
 		"zh-cn": "option2"
+	},
+	"enabled": {
+		"en": "enabled",
+		"de": "Aktiviert"
+	},
+	"datapoint id": {
+		"en": "datapoint id",
+		"de": "Datenpunkt Id",
+	},
+	"datapoint name": {
+		"en": "datapoint name",
+		"de": "Datenpunkt Name",
 	}
 };
