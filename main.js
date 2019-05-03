@@ -133,35 +133,8 @@ class Linkeddevices extends utils.Adapter {
 		// all unsubscripe to begin completly new
 		this.unsubscribeForeignStates('*');
 
-		await this.resetLinkStatus();
-
-		// alle Datenpunkte durchsuchen
-		let parentObjList = await this.getForeignObjectsAsync('');
-		for (let idParentObj in parentObjList) {
-			let parentObj = parentObjList[idParentObj]
-
-			// Datenpunkte sind von 'linkeddevices' und aktiviert
-			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
-				&& parentObj.common.custom[this.namespace].enabled) {
-
-				if (!parentObj.common.custom[this.namespace].id || !parentObj.common.custom[this.namespace].id.length || parentObj.common.custom[this.namespace].id === "") {
-					// Property 'id' fehlt oder hat keinen Wert
-					this.log.error("[initialObjects] No 'id' defined for datapoint: '" + parentObj._id + "'");
-				} else {
-					// Property 'id' vorhanden 
-					var linkedId = this.getLinkedObjectId(parentObj)
-
-					if ((/[*?"'\[\]]/).test(linkedId)) {
-						// enthält illegale zeichen
-						this.log.error("[initialObjects] id: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
-					} else {
-						// linked Datenpunkt erzeugen
-						await this.createLinkedObject(parentObj);
-					}
-					//await this.createLinkedObject(parentObj);
-				}
-			}
-		}
+		await this.resetLinkedObjectsStatus();
+		await this.generateLinkedObjects();
 
 		//this.log.debug(Object.keys(this.dicParentId).length.toString())
 
@@ -169,10 +142,11 @@ class Linkeddevices extends utils.Adapter {
 
 
 	}
+
 	/*
 	* 'custom.linked' auf 'False' für alle vorhanden verlinkten datenpunkte setzen -> status wird später zum löschen benötigt
 	*/
-	async resetLinkStatus() {
+	async resetLinkedObjectsStatus() {
 		// alle Datenpunkte des Adapters durchlaufen
 		let linkedObjList = await this.getAdapterObjectsAsync();
 		for (let idLinkedObj in linkedObjList) {
@@ -185,6 +159,37 @@ class Linkeddevices extends utils.Adapter {
 
 				await this.setForeignObjectAsync(linkedObj._id, linkedObj);
 				this.log.debug("[resetLinkStatus] linked status reseted for '" + linkedObj._id + "'");
+			}
+		}
+	}
+
+	/*
+	* alle Obejkte finden, die verlinkt werden sollen und linkedObject erzeugen bzw. aktualisieren 
+	*/
+	async generateLinkedObjects() {
+		let parentObjList = await this.getForeignObjectsAsync('');
+		for (let idParentObj in parentObjList) {
+			let parentObj = parentObjList[idParentObj]
+
+			// Datenpunkte sind von 'linkeddevices' und aktiviert
+			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
+				&& parentObj.common.custom[this.namespace].enabled) {
+
+				if (!parentObj.common.custom[this.namespace].id || !parentObj.common.custom[this.namespace].id.length || parentObj.common.custom[this.namespace].id === "") {
+					// 'custom.id' fehlt oder hat keinen Wert
+					this.log.error("[generateLinkedObjects] No 'id' defined for datapoint: '" + parentObj._id + "'");
+				} else {
+					// 'custom.id' vorhanden 
+					var linkedId = this.getLinkedObjectId(parentObj)
+
+					if ((/[*?"'\[\]]/).test(linkedId)) {
+						// 'custom.id' enthält illegale zeichen
+						this.log.error("[generateLinkedObjects] id: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
+					} else {
+						// 'custom.id' korrekt -> linked Datenpunkt erzeugen bzw. aktualisieren
+						await this.createLinkedObject(parentObj);
+					}
+				}
 			}
 		}
 	}
