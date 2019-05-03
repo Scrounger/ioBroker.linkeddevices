@@ -148,15 +148,24 @@ class Linkeddevices extends utils.Adapter {
 					// Property 'id' fehlt oder hat keinen Wert
 					this.log.error("[initialObjects] No 'id' defined for datapoint: '" + parentObj._id + "'");
 				} else {
-					// Property 'id' vorhanden -> cloned Datenpunkt erzeugen
-					await this.createLinkedObject(parentObj);
+					// Property 'id' vorhanden 
+					var linkedId = this.getLinkedObjectId(parentObj)
+
+					if ((/[*?"'\[\]]/).test(linkedId)) {
+						// enthält illegale zeichen
+						this.log.error("[initialObjects] id: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
+					} else {
+						// linked Datenpunkt erzeugen
+						await this.createLinkedObject(parentObj);
+					}
+					//await this.createLinkedObject(parentObj);
 				}
 			}
 		}
 
-		this.log.debug(Object.keys(this.dicParentId).length.toString())
+		//this.log.debug(Object.keys(this.dicParentId).length.toString())
 
-
+		this.log.info("initial complete");
 
 
 	}
@@ -169,7 +178,8 @@ class Linkeddevices extends utils.Adapter {
 		for (let idLinkedObj in linkedObjList) {
 			let linkedObj = linkedObjList[idLinkedObj]
 
-			if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].linked) {
+			if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] &&
+				(linkedObj.common.custom[this.namespace].linked || !linkedObj.common.custom[this.namespace].linked)) {
 				// Wenn Datenpunkt Property 'linked' hat, dann auf 'False' setzen
 				linkedObj.common.custom[this.namespace].linked = false
 
@@ -206,7 +216,7 @@ class Linkeddevices extends utils.Adapter {
 		//clonedObj.native = parentObj.native;
 		linkedObj.common.desc = "Created by linkeddevices";
 		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
-		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };		
+		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };
 
 		// LinkedObjekt erzeugen oder Änderungen schreiben
 		await this.setForeignObjectAsync(linkedId, linkedObj);
@@ -217,7 +227,7 @@ class Linkeddevices extends utils.Adapter {
 			await this.setForeignState(linkedId, parentObjState.val, true);
 		}
 
-		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + linkedId + "'");
+		this.log.debug("[createClonedObject] linked datapoint '" + parentObj._id + "' to '" + linkedId + "'");
 
 
 		//this.dicParentId[parentObj._id] = parentObj;
