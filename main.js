@@ -26,6 +26,8 @@ class Linkeddevices extends utils.Adapter {
 		this.on("stateChange", this.onStateChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
+
+		this.dicParentId = {};
 	}
 
 	/**
@@ -152,6 +154,8 @@ class Linkeddevices extends utils.Adapter {
 			}
 		}
 
+		this.log.debug(Object.keys(this.dicParentId).length.toString())
+
 
 
 
@@ -194,17 +198,18 @@ class Linkeddevices extends utils.Adapter {
 			this.log.debug("[createClonedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use datapoint name: '" + parentObj.common.name + "'");
 		}
 
-		// Cloned Objekt erzeugen
-		let clonedObj = Object();
-		clonedObj.type = parentObj.type;
-		clonedObj.common = parentObj.common;
-		clonedObj.common.name = name;
+		// LinkedObjekt daten übergeben
+		let linkedObj = Object();
+		linkedObj.type = parentObj.type;
+		linkedObj.common = parentObj.common;
+		linkedObj.common.name = name;
 		//clonedObj.native = parentObj.native;
-		clonedObj.common.desc = "Created by linkeddevices";
-		clonedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
+		linkedObj.common.desc = "Created by linkeddevices";
+		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
+		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };		
 
-		// Objekt erzeugen oder Änderungen schreiben
-		await this.setForeignObjectAsync(linkedId, clonedObj);
+		// LinkedObjekt erzeugen oder Änderungen schreiben
+		await this.setForeignObjectAsync(linkedId, linkedObj);
 
 		// linked datapoint state setzen, wird vom parent übernommen
 		let parentObjState = await this.getForeignStateAsync(parentObj._id);
@@ -214,7 +219,11 @@ class Linkeddevices extends utils.Adapter {
 
 		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + linkedId + "'");
 
+
+		//this.dicParentId[parentObj._id] = parentObj;
 		//await this.subscribeForeignStatesAsync(parentObj._id);
+
+		//await this.subscribeForeignObjects(parentObj._id);
 	}
 
 	/**
