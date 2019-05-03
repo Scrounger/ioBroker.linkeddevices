@@ -152,7 +152,7 @@ class Linkeddevices extends utils.Adapter {
 			}
 		}
 
-		
+
 
 
 	}
@@ -161,7 +161,7 @@ class Linkeddevices extends utils.Adapter {
 	*/
 	async resetLinkStatus() {
 		// alle Datenpunkte des Adapters durchlaufen
-		let linkedObjList = await this.getForeignObjectsAsync(this.namespace + ".*");
+		let linkedObjList = await this.getAdapterObjectsAsync();
 		for (let idLinkedObj in linkedObjList) {
 			let linkedObj = linkedObjList[idLinkedObj]
 
