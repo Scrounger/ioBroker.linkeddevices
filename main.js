@@ -37,8 +37,8 @@ class Linkeddevices extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config option1: " + this.config.option1);
-		this.log.info("config option2: " + this.config.option2);
+		// this.log.info("config option1: " + this.config.option1);
+		// this.log.info("config option2: " + this.config.option2);
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -65,21 +65,21 @@ class Linkeddevices extends utils.Adapter {
 		you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
 		*/
 		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync("testVariable", true);
+		// await this.setStateAsync("testVariable", true);
 
 		// same thing, but the value is flagged "ack"
 		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync("testVariable", { val: true, ack: true });
+		// await this.setStateAsync("testVariable", { val: true, ack: true });
 
 		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
+		// await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
 
 		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw ioboker: " + result);
+		// let result = await this.checkPasswordAsync("admin", "iobroker");
+		// this.log.info("check user admin pw ioboker: " + result);
 
-		result = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + result);
+		// result = await this.checkGroupAsync("admin", "admin");
+		// this.log.info("check group user admin group admin: " + result);
 	}
 
 	/**
@@ -131,6 +131,8 @@ class Linkeddevices extends utils.Adapter {
 		// all unsubscripe to begin completly new
 		this.unsubscribeForeignStates('*')
 
+		await this.resetLinkStatus();
+
 		// alle Datenpunkte durchsuchen
 		let parentObjList = await this.getForeignObjectsAsync('')
 		for (let idParentObj in parentObjList) {
@@ -149,8 +151,27 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 		}
-	}
 
+
+	}
+	/*
+	* 'custom.linked' auf 'False' für alle vorhanden verlinkten datenpunkte setzen -> status wird später zum löschen benötigt
+	*/
+	async resetLinkStatus() {
+		// alle Datenpunkte des Adapters durchlaufen
+		let linkedObjList = await this.getForeignObjectsAsync(this.namespace + ".*");
+		for (let idLinkedObj in linkedObjList) {
+			let linkedObj = linkedObjList[idLinkedObj]
+
+			if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].linked) {
+				// Wenn Datenpunkt Property 'linked' hat, dann auf 'False' setzen
+				linkedObj.common.custom[this.namespace].linked = false
+
+				await this.setForeignObjectAsync(linkedObj._id, linkedObj);
+				this.log.debug("[initialObjects] linked status reseted for '" + linkedObj._id + "'");
+			}
+		}
+	}
 
 	/**
 	 * @param {ioBroker.Object} parentObj
@@ -178,12 +199,14 @@ class Linkeddevices extends utils.Adapter {
 		clonedObj.common.name = name;
 		//clonedObj.native = parentObj.native;
 		clonedObj.common.desc = "Created by linkeddevices";
-		clonedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "active": true };		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
+		clonedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
 
 		// Objekt erzeugen oder Änderungen schreiben
 		await this.setForeignObjectAsync(newId, clonedObj);
 		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + newId + "'");
 	}
+
+
 
 	/**
 	 * @param {ioBroker.Object} parentObj
