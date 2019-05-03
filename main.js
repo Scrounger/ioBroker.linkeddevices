@@ -168,7 +168,7 @@ class Linkeddevices extends utils.Adapter {
 				linkedObj.common.custom[this.namespace].linked = false
 
 				await this.setForeignObjectAsync(linkedObj._id, linkedObj);
-				this.log.debug("[initialObjects] linked status reseted for '" + linkedObj._id + "'");
+				this.log.debug("[resetLinkStatus] linked status reseted for '" + linkedObj._id + "'");
 			}
 		}
 	}
@@ -177,7 +177,7 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object} parentObj
 	 */
 	async createClonedObject(parentObj) {
-		var newId = this.getClonedObjectId(parentObj)
+		var linkedId = this.getClonedObjectId(parentObj)
 
 		let name = null;
 		// @ts-ignore
@@ -185,11 +185,11 @@ class Linkeddevices extends utils.Adapter {
 			// Property 'name' von Objekt übernehmen, sofern vorhanden
 			// @ts-ignore
 			name = parentObj.common.custom[this.namespace].name;
-			this.log.debug("[createClonedObject] using custom name '" + name + "' for: '" + newId + "' (parentObj: '" + parentObj._id + "')");
+			this.log.debug("[createClonedObject] using custom name '" + name + "' for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
 		} else {
 			// 'name' wird von parent übernommen
 			name = parentObj.common.name;
-			this.log.debug("[createClonedObject] no custom name defined for: '" + newId + "' (parentObj: '" + parentObj._id + "'). Use datapoint name: '" + parentObj.common.name + "'");
+			this.log.debug("[createClonedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use datapoint name: '" + parentObj.common.name + "'");
 		}
 
 		// Cloned Objekt erzeugen
@@ -202,8 +202,15 @@ class Linkeddevices extends utils.Adapter {
 		clonedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
 
 		// Objekt erzeugen oder Änderungen schreiben
-		await this.setForeignObjectAsync(newId, clonedObj);
-		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + newId + "'");
+		await this.setForeignObjectAsync(linkedId, clonedObj);
+
+		// linked datapoint state setzen, wird vom parent übernommen
+		let parentObjState = await this.getForeignStateAsync(parentObj._id);
+		if (parentObjState) {
+			await this.setForeignState(linkedId, parentObjState.val, true);
+		}
+
+		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + linkedId + "'");
 	}
 
 
