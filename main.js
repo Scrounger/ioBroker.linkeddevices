@@ -133,14 +133,15 @@ class Linkeddevices extends utils.Adapter {
 		// all unsubscripe to begin completly new
 		this.unsubscribeForeignStates('*');
 
+		this.dicLinkedObjectsStatus = {};				// Dic für 'linked' Status aller verlinkten Objekte
+
 		await this.resetLinkedObjectsStatus();
 		await this.generateLinkedObjects();
+		await this.removeNotLinkedObjects();
 
 		//this.log.debug(Object.keys(this.dicParentId).length.toString())
 
 		this.log.info("initial complete");
-
-
 	}
 
 	/*
@@ -155,12 +156,17 @@ class Linkeddevices extends utils.Adapter {
 			if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] &&
 				(linkedObj.common.custom[this.namespace].linked || !linkedObj.common.custom[this.namespace].linked)) {
 				// Wenn Datenpunkt Property 'linked' hat, dann auf 'False' setzen
-				linkedObj.common.custom[this.namespace].linked = false
+				linkedObj.common.custom[this.namespace].linked = false;
+
+				// existierende linkedObjects in dict packen
+				if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedObj._id] = false;
 
 				await this.setForeignObjectAsync(linkedObj._id, linkedObj);
 				this.log.debug("[resetLinkStatus] linked status reseted for '" + linkedObj._id + "'");
 			}
 		}
+
+		if (this.dicLinkedObjectsStatus) this.log.debug("[resetLinkStatus] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
 	}
 
 	/*
@@ -177,10 +183,10 @@ class Linkeddevices extends utils.Adapter {
 
 				if (!parentObj.common.custom[this.namespace].id || !parentObj.common.custom[this.namespace].id.length || parentObj.common.custom[this.namespace].id === "") {
 					// 'custom.id' fehlt oder hat keinen Wert
-					this.log.error("[generateLinkedObjects] No 'id' defined for datapoint: '" + parentObj._id + "'");
+					this.log.error("[generateLinkedObjects] No 'id' defined for object: '" + parentObj._id + "'");
 				} else {
 					// 'custom.id' vorhanden 
-					var linkedId = this.getLinkedObjectId(parentObj)
+					var linkedId = this.getLinkedObjectId(parentObj);
 
 					if ((/[*?"'\[\]]/).test(linkedId)) {
 						// 'custom.id' enthält illegale zeichen
@@ -192,13 +198,16 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 		}
+
+		if (this.dicLinkedObjectsStatus) this.log.debug("[generateLinkedObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
 	}
 
 	/**
+	 * LinkedObject mit parentObject erstellen bzw. aktualisieren und 'linked' Status setzen (= hat eine existierende Verlinkung)
 	 * @param {ioBroker.Object} parentObj
 	 */
 	async createLinkedObject(parentObj) {
-		var linkedId = this.getLinkedObjectId(parentObj)
+		var linkedId = this.getLinkedObjectId(parentObj);
 
 		let name = null;
 		// @ts-ignore
@@ -210,7 +219,7 @@ class Linkeddevices extends utils.Adapter {
 		} else {
 			// 'name' wird von parent übernommen
 			name = parentObj.common.name;
-			this.log.debug("[createClonedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use datapoint name: '" + parentObj.common.name + "'");
+			this.log.debug("[createClonedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use object name: '" + parentObj.common.name + "'");
 		}
 
 		// LinkedObjekt daten übergeben
@@ -226,19 +235,38 @@ class Linkeddevices extends utils.Adapter {
 		// LinkedObjekt erzeugen oder Änderungen schreiben
 		await this.setForeignObjectAsync(linkedId, linkedObj);
 
-		// linked datapoint state setzen, wird vom parent übernommen
+		// ggf. können neue linkedObjects hinzugekommen sein -> in dic packen
+		if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = true;
+
+		// state für linkedObject  setzen, wird vom parent übernommen
 		let parentObjState = await this.getForeignStateAsync(parentObj._id);
 		if (parentObjState) {
 			await this.setForeignState(linkedId, parentObjState.val, true);
 		}
 
-		this.log.debug("[createClonedObject] linked datapoint '" + parentObj._id + "' to '" + linkedId + "'");
+		this.log.debug("[createClonedObject] linked object '" + parentObj._id + "' to '" + linkedId + "'");
 
 
 		//this.dicParentId[parentObj._id] = parentObj;
 		//await this.subscribeForeignStatesAsync(parentObj._id);
 
 		//await this.subscribeForeignObjects(parentObj._id);
+	}
+
+	/*
+	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.linked' == false)
+	*/
+	async removeNotLinkedObjects() {
+		// dic verwenden		
+		if (this.dicLinkedObjectsStatus) {
+			for (var linkedId in this.dicLinkedObjectsStatus) {
+				if (this.dicLinkedObjectsStatus[linkedId] === false) {
+					// alle LinkedObject ohne existierende Verlinkung löschen
+					await this.delForeignObjectAsync(linkedId);
+					this.log.debug("[removeNotLinkedObjects] not linkedObject '" + linkedId + "' deleted")
+				}
+			}
+		}
 	}
 
 	/**
