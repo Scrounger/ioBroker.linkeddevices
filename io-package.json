@@ -1,0 +1,84 @@
+{
+	"common": {
+		"name": "linkeddevices",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "LinkedDevices",
+		"titleLang": {
+			"en": "LinkedDevices",
+			"de": "LinkedDevices",
+			"ru": "LinkedDevices",
+			"pt": "LinkedDevices",
+			"nl": "LinkedDevices",
+			"fr": "LinkedDevices",
+			"it": "LinkedDevices",
+			"es": "LinkedDevices",
+			"pl": "LinkedDevices",
+			"zh-cn": "LinkedDevices"
+		},
+		"desc": {
+			"en": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"de": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"ru": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"pt": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"nl": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"fr": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"it": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"es": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"pl": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+			"zh-cn": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)"
+		},
+		"authors": [
+			"Scrounger <scrounger@gmx.net>"
+		],
+		"keywords": [
+			"device",
+			"link",
+			"virtual",
+			"datapoint",
+			"wrapper",
+			"reflect",
+			"logic"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "linkeddevices.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linkeddevices/master/admin/linkeddevices.png",
+		"readme": "https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "logic",
+		"compact": true,
+		"materialize": true,
+		"supportCustoms": true,
+		"dependencies": [
+			{
+				"admin": ">=3.0.0"
+			},
+			{
+				"js-controller": ">=1.4.2"
+			}
+		]
+	},
+	"native": {
+		"option1": true,
+		"option2": "42"
+	},
+	"objects": [],
+	"instanceObjects": []
+}
