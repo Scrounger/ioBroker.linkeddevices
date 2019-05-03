@@ -129,12 +129,12 @@ class Linkeddevices extends utils.Adapter {
 		this.log.info('inital all Objects')
 
 		// all unsubscripe to begin completly new
-		this.unsubscribeForeignStates('*')
+		this.unsubscribeForeignStates('*');
 
 		await this.resetLinkStatus();
 
 		// alle Datenpunkte durchsuchen
-		let parentObjList = await this.getForeignObjectsAsync('')
+		let parentObjList = await this.getForeignObjectsAsync('');
 		for (let idParentObj in parentObjList) {
 			let parentObj = parentObjList[idParentObj]
 
@@ -147,10 +147,12 @@ class Linkeddevices extends utils.Adapter {
 					this.log.error("[initialObjects] No 'id' defined for datapoint: '" + parentObj._id + "'");
 				} else {
 					// Property 'id' vorhanden -> cloned Datenpunkt erzeugen
-					await this.createClonedObject(parentObj);
+					await this.createLinkedObject(parentObj);
 				}
 			}
 		}
+
+		
 
 
 	}
@@ -176,8 +178,8 @@ class Linkeddevices extends utils.Adapter {
 	/**
 	 * @param {ioBroker.Object} parentObj
 	 */
-	async createClonedObject(parentObj) {
-		var linkedId = this.getClonedObjectId(parentObj)
+	async createLinkedObject(parentObj) {
+		var linkedId = this.getLinkedObjectId(parentObj)
 
 		let name = null;
 		// @ts-ignore
@@ -211,14 +213,14 @@ class Linkeddevices extends utils.Adapter {
 		}
 
 		this.log.debug("[createClonedObject] cloned datapoint '" + parentObj._id + "' to '" + linkedId + "'");
+
+		//await this.subscribeForeignStatesAsync(parentObj._id);
 	}
-
-
 
 	/**
 	 * @param {ioBroker.Object} parentObj
 	 */
-	getClonedObjectId(parentObj) {
+	getLinkedObjectId(parentObj) {
 		// id des cloned Objektes erzeugen
 		// @ts-ignore
 		return this.namespace + "." + parentObj.common.custom[this.namespace].id;
