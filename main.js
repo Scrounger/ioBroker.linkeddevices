@@ -113,13 +113,15 @@ class Linkeddevices extends utils.Adapter {
 		if (obj && id.indexOf(this.namespace) === -1 && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
 
 			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
-				//bereits verlinktes parentObject wurde geändert
+				//bereits verlinktes parentObject wurde geändert -> ist im dicLinkedParentObjects enthalten
 				this.log.info("[onObjectChange] parentObject '" + id + "' changed");
 
 			} else {
-				// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true')
-				this.log.info("[onObjectChange] new parentObject '" + id + "'");
-
+				// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true') -> nicht im dicLinkedParentObjects enthalten
+				var linkedId = this.getLinkedObjectId(obj);
+				this.log.info("[onObjectChange] new parentObject '" + id + "' linked to '" + linkedId + "'");
+				
+				this.createLinkedObject(obj);
 			}
 		} else {
 			if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
@@ -323,6 +325,8 @@ class Linkeddevices extends utils.Adapter {
 				// alle linkedObject ohne existierende Verlinkung löschen
 				await this.delForeignObjectAsync(linkedId);
 				this.log.debug("[removeNotLinkedObject] not linkedObject '" + linkedId + "' deleted");
+
+				//TODO: aus dict werfen
 			}
 		}
 	}
@@ -356,6 +360,7 @@ class Linkeddevices extends utils.Adapter {
 
 }
 
+// @ts-ignore
 if (module.parent) {
 	// Export the constructor in compact mode
 	/**
