@@ -169,6 +169,8 @@ class Linkeddevices extends utils.Adapter {
 
 		//this.log.debug(Object.keys(this.dicParentId).length.toString())
 
+		if (this.dicLinkedObjectsStatus) this.log.debug("[initialObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+
 		this.log.info("initial complete");
 	}
 
@@ -324,6 +326,10 @@ class Linkeddevices extends utils.Adapter {
 			if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId] === false) {
 				// alle linkedObject ohne existierende Verlinkung löschen
 				await this.delForeignObjectAsync(linkedId);
+				
+				// linkedId im dicLinkedObjectsStatus löschen
+				delete this.dicLinkedObjectsStatus[linkedId];
+
 				this.log.debug("[removeNotLinkedObject] not linkedObject '" + linkedId + "' deleted");
 
 				//TODO: aus dict werfen
