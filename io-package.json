@@ -76,7 +76,7 @@
 		]
 	},
 	"native": {
-		"option1": true,
+		"option1": false,
 		"option2": "42"
 	},
 	"objects": [],

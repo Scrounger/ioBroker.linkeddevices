@@ -227,6 +227,7 @@ class Linkeddevices extends utils.Adapter {
 		linkedObj.type = parentObj.type;
 		linkedObj.common = parentObj.common;
 		linkedObj.common.name = name;
+		linkedObj.common.icon = "linkeddevices_small.png"
 		//clonedObj.native = parentObj.native;
 		linkedObj.common.desc = "Created by linkeddevices";
 		// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
