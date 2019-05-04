@@ -14,9 +14,9 @@ systemDictionary = {
 		"pl": "Ustawienia adaptera dla linkeddevices",
 		"zh-cn": "linkeddevices的适配器设置"
 	},
-	"option1": {
-		"en": "option1",
-		"de": "option1",
+	"notDeleteDeadLinkedObjects": {
+		"en": "Do not delete objects that are no longer linked",
+		"de": "Nicht mehr verlinkte Objekte nicht löschen",
 		"ru": "option1",
 		"pt": "option1",
 		"nl": "option1",

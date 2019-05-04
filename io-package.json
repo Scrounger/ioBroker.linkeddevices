@@ -76,7 +76,7 @@
 		]
 	},
 	"native": {
-		"option1": false,
+		"notDeleteDeadLinkedObjects": false,
 		"option2": "42"
 	},
 	"objects": [],

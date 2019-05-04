@@ -34,6 +34,9 @@ class Linkeddevices extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	async onReady() {
+		this.log.debug("[onReady] notDeleteDeadLinkedObjects: '" + this.config.notDeleteDeadLinkedObjects + "'");
+
+
 		// Initialize your adapter here
 		await this.initialObjects()
 
@@ -41,6 +44,8 @@ class Linkeddevices extends utils.Adapter {
 		// this.config:
 		// this.log.info("config option1: " + this.config.option1);
 		// this.log.info("config option2: " + this.config.option2);
+
+
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -255,16 +260,18 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/*
-	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.isLinked' == false)
+	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.isLinked' == false), sofern nicht deaktiviert
 	*/
 	async removeNotLinkedObjects() {
-		// dic verwenden		
-		if (this.dicLinkedObjectsStatus) {
-			for (var linkedId in this.dicLinkedObjectsStatus) {
-				if (this.dicLinkedObjectsStatus[linkedId] === false) {
-					// alle linkedObject ohne existierende Verlinkung löschen
-					await this.delForeignObjectAsync(linkedId);
-					this.log.debug("[removeNotLinkedObjects] not linkedObject '" + linkedId + "' deleted")
+		if (!this.config.notDeleteDeadLinkedObjects) {
+			// dic verwenden		
+			if (this.dicLinkedObjectsStatus) {
+				for (var linkedId in this.dicLinkedObjectsStatus) {
+					if (this.dicLinkedObjectsStatus[linkedId] === false) {
+						// alle linkedObject ohne existierende Verlinkung löschen
+						await this.delForeignObjectAsync(linkedId);
+						this.log.debug("[removeNotLinkedObjects] not linkedObject '" + linkedId + "' deleted")
+					}
 				}
 			}
 		}
