@@ -110,16 +110,23 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object | null | undefined} obj
 	 */
 	onObjectChange(id, obj) {
-		if (obj && obj._id.indexOf(this.namespace) === -1 && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
-			// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true') oder bereits verlinktes parentObject wurde geändert
-			this.log.info("[onObjectChange] changes on parentObject '" + id + "'")
-		}
+		if (obj && id.indexOf(this.namespace) === -1 && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
 
-		if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && obj._id in this.dicLinkedParentObjects) {
-			// bereits verlinktes parentObject wurde deaktiviert
-			this.log.info("[onObjectChange] parentObject '" + id + "' deactivated")
-		}
+			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
+				//bereits verlinktes parentObject wurde geändert
+				this.log.info("[onObjectChange] parentObject '" + id + "' changed");
 
+			} else {
+				// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true')
+				this.log.info("[onObjectChange] new parentObject '" + id + "'");
+
+			}
+		} else {
+			if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
+				// bereits verlinktes parentObject wurde deaktiviert
+				this.log.info("[onObjectChange] parentObject '" + id + "' deactivated");
+			}
+		}
 
 		// if (obj) {
 		// 	// The object was changed
@@ -207,26 +214,7 @@ class Linkeddevices extends utils.Adapter {
 		for (let idParentObj in parentObjList) {
 			let parentObj = parentObjList[idParentObj]
 
-			// Datenpunkte sind von 'linkeddevices' und aktiviert
-			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
-				&& parentObj.common.custom[this.namespace].enabled) {
-
-				if (!parentObj.common.custom[this.namespace].linkedId || !parentObj.common.custom[this.namespace].linkedId.length || parentObj.common.custom[this.namespace].linkedId === "") {
-					// 'custom.linkedId' fehlt oder hat keinen Wert
-					this.log.error("[createAllLinkedObjects] No 'linkedId' defined for object: '" + parentObj._id + "'");
-				} else {
-					// 'custom.linkedId' vorhanden 
-					var linkedId = this.getLinkedObjectId(parentObj);
-
-					if ((/[*?"'\[\]]/).test(linkedId)) {
-						// 'custom.linkedId' enthält illegale zeichen
-						this.log.error("[createAllLinkedObjects] linkedId: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
-					} else {
-						// 'custom.linkedId' korrekt -> linkedObject erzeugen bzw. aktualisieren
-						await this.createLinkedObject(parentObj);
-					}
-				}
-			}
+			await this.createLinkedObject(parentObj);
 		}
 
 		if (this.dicLinkedObjectsStatus) this.log.debug("[createAllLinkedObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
@@ -238,54 +226,76 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object} parentObj
 	 */
 	async createLinkedObject(parentObj) {
-		var linkedId = this.getLinkedObjectId(parentObj);
 
-		let name = null;
-		// @ts-ignore
-		if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
-			// Property 'name' von Objekt übernehmen, sofern vorhanden
-			// @ts-ignore
-			name = parentObj.common.custom[this.namespace].name;
-			this.log.debug("[createLinkedObject] using custom name '" + name + "' for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
-		} else {
-			// 'name' wird von parent übernommen
-			name = parentObj.common.name;
-			this.log.debug("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use object name: '" + parentObj.common.name + "'");
+		// Datenpunkte sind von 'linkeddevices' und aktiviert
+		if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
+			&& parentObj.common.custom[this.namespace].enabled) {
+
+			if (!parentObj.common.custom[this.namespace].linkedId || !parentObj.common.custom[this.namespace].linkedId.length || parentObj.common.custom[this.namespace].linkedId === "") {
+				// 'custom.linkedId' fehlt oder hat keinen Wert
+				this.log.error("[createLinkedObject] No 'linkedId' defined for object: '" + parentObj._id + "'");
+			} else {
+				// 'custom.linkedId' vorhanden 
+				var linkedId = this.getLinkedObjectId(parentObj);
+
+				if ((/[*?"'\[\]]/).test(linkedId)) {
+					// 'custom.linkedId' enthält illegale zeichen
+					this.log.error("[createLinkedObject] linkedId: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
+
+				} else {
+					// 'custom.linkedId' korrekt -> linkedObject erzeugen bzw. aktualisieren
+					var linkedId = this.getLinkedObjectId(parentObj);
+
+					let name = null;
+					if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
+						// Property 'name' von Objekt übernehmen, sofern vorhanden
+						name = parentObj.common.custom[this.namespace].name;
+						this.log.debug("[createLinkedObject] using custom name '" + name + "' for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
+					} else {
+						// 'name' wird von parent übernommen
+						name = parentObj.common.name;
+						if (parentObj.common.name) {
+							this.log.warn("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use object name: '" + parentObj.common.name + "'");
+						} else {
+							this.log.warn("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
+						}
+					}
+
+					// LinkedObjekt daten übergeben
+					let linkedObj = Object();
+					linkedObj.type = parentObj.type;
+					linkedObj.common = parentObj.common;
+					linkedObj.common.name = name;
+					linkedObj.common.icon = "linkeddevices_small.png"
+					//linkedObj.native = parentObj.native;
+					linkedObj.common.desc = "Created by linkeddevices";
+					// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
+					linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "isLinked": true };
+
+					// LinkedObjekt erzeugen oder Änderungen schreiben
+					await this.setForeignObjectAsync(linkedId, linkedObj);
+
+					// ggf. können neue linkedObjects hinzugekommen sein -> in dic packen
+					if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = true;
+
+					// linked parentObjects in dic speichern
+					if (this.dicLinkedParentObjects) this.dicLinkedParentObjects[parentObj._id] = linkedId;
+
+					// state für linkedObject  setzen, wird vom parent übernommen
+					let parentObjState = await this.getForeignStateAsync(parentObj._id);
+					if (parentObjState) {
+						await this.setForeignState(linkedId, parentObjState.val, true);
+					}
+
+					this.log.debug("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
+
+					//this.dicParentId[parentObj._id] = parentObj;
+					//await this.subscribeForeignStatesAsync(parentObj._id);
+
+					//await this.subscribeForeignObjects(parentObj._id);
+				}
+			}
 		}
-
-		// LinkedObjekt daten übergeben
-		let linkedObj = Object();
-		linkedObj.type = parentObj.type;
-		linkedObj.common = parentObj.common;
-		linkedObj.common.name = name;
-		linkedObj.common.icon = "linkeddevices_small.png"
-		//linkedObj.native = parentObj.native;
-		linkedObj.common.desc = "Created by linkeddevices";
-		// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
-		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "isLinked": true };
-
-		// LinkedObjekt erzeugen oder Änderungen schreiben
-		await this.setForeignObjectAsync(linkedId, linkedObj);
-
-		// ggf. können neue linkedObjects hinzugekommen sein -> in dic packen
-		if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = true;
-
-		// linked parentObjects in dic speichern
-		if (this.dicLinkedParentObjects) this.dicLinkedParentObjects[parentObj._id] = linkedId;
-
-		// state für linkedObject  setzen, wird vom parent übernommen
-		let parentObjState = await this.getForeignStateAsync(parentObj._id);
-		if (parentObjState) {
-			await this.setForeignState(linkedId, parentObjState.val, true);
-		}
-
-		this.log.debug("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
-
-
-		//this.dicParentId[parentObj._id] = parentObj;
-		//await this.subscribeForeignStatesAsync(parentObj._id);
-
-		//await this.subscribeForeignObjects(parentObj._id);
 	}
 
 	/*
@@ -296,6 +306,7 @@ class Linkeddevices extends utils.Adapter {
 			// dic verwenden		
 			if (this.dicLinkedObjectsStatus) {
 				for (var linkedId in this.dicLinkedObjectsStatus) {
+
 					await this.removeNotLinkedObject(linkedId);
 				}
 			}
@@ -317,10 +328,10 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
+	 * linkedId des linkedObjects erzeugen
 	 * @param {ioBroker.Object} parentObj
 	 */
 	getLinkedObjectId(parentObj) {
-		// linkedId des linkedObjects erzeugen
 		// @ts-ignore
 		return this.namespace + "." + parentObj.common.custom[this.namespace].linkedId;
 	}
