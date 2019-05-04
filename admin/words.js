@@ -42,12 +42,12 @@ systemDictionary = {
 		"en": "enabled",
 		"de": "Aktiviert"
 	},
-	"datapoint id": {
-		"en": "datapoint id",
-		"de": "Datenpunkt Id",
+	"id of linked object": {
+		"en": "id of linked object",
+		"de": "Id des verlinkten Objektes",
 	},
-	"datapoint name": {
-		"en": "datapoint name",
-		"de": "Datenpunkt Name",
+	"name of linked object": {
+		"en": "name of linked object",
+		"de": "Name des verlinkten Objektes",
 	}
 };

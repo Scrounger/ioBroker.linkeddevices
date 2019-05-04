@@ -181,18 +181,18 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
 				&& parentObj.common.custom[this.namespace].enabled) {
 
-				if (!parentObj.common.custom[this.namespace].id || !parentObj.common.custom[this.namespace].id.length || parentObj.common.custom[this.namespace].id === "") {
-					// 'custom.id' fehlt oder hat keinen Wert
-					this.log.error("[generateLinkedObjects] No 'id' defined for object: '" + parentObj._id + "'");
+				if (!parentObj.common.custom[this.namespace].linkedId || !parentObj.common.custom[this.namespace].linkedId.length || parentObj.common.custom[this.namespace].linkedId === "") {
+					// 'custom.linkedId' fehlt oder hat keinen Wert
+					this.log.error("[generateLinkedObjects] No 'linkedId' defined for object: '" + parentObj._id + "'");
 				} else {
-					// 'custom.id' vorhanden 
+					// 'custom.linkedId' vorhanden 
 					var linkedId = this.getLinkedObjectId(parentObj);
 
 					if ((/[*?"'\[\]]/).test(linkedId)) {
-						// 'custom.id' enthält illegale zeichen
-						this.log.error("[generateLinkedObjects] id: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
+						// 'custom.linkedId' enthält illegale zeichen
+						this.log.error("[generateLinkedObjects] linkedId: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
 					} else {
-						// 'custom.id' korrekt -> linkedObject erzeugen bzw. aktualisieren
+						// 'custom.linkedId' korrekt -> linkedObject erzeugen bzw. aktualisieren
 						await this.createLinkedObject(parentObj);
 					}
 				}
@@ -229,7 +229,7 @@ class Linkeddevices extends utils.Adapter {
 		linkedObj.common.name = name;
 		//clonedObj.native = parentObj.native;
 		linkedObj.common.desc = "Created by linkeddevices";
-		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
+		// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "isLinked": true };
 
 		// LinkedObjekt erzeugen oder Änderungen schreiben
@@ -273,9 +273,9 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object} parentObj
 	 */
 	getLinkedObjectId(parentObj) {
-		// id des cloned Objektes erzeugen
+		// linkedId des linkedObjects erzeugen
 		// @ts-ignore
-		return this.namespace + "." + parentObj.common.custom[this.namespace].id;
+		return this.namespace + "." + parentObj.common.custom[this.namespace].linkedId;
 	}
 
 
