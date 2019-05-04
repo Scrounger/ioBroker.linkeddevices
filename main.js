@@ -120,13 +120,15 @@ class Linkeddevices extends utils.Adapter {
 				// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true') -> nicht im dicLinkedParentObjects enthalten
 				var linkedId = this.getLinkedObjectId(obj);
 				this.log.info("[onObjectChange] new parentObject '" + id + "' linked to '" + linkedId + "'");
-				
+
 				this.createLinkedObject(obj);
 			}
 		} else {
 			if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 				// bereits verlinktes parentObject wurde deaktiviert
 				this.log.info("[onObjectChange] parentObject '" + id + "' deactivated");
+
+				//TODO muss aus dicLinkedParentObjects gelöscht werden
 			}
 		}
 
@@ -187,7 +189,10 @@ class Linkeddevices extends utils.Adapter {
 			await this.resetLinkedObjectStatus(linkedObj);
 		}
 
-		if (this.dicLinkedObjectsStatus) this.log.debug("[resetAllLinkedObjectsStatus] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+		if (this.dicLinkedObjectsStatus) {
+			this.log.debug("[resetAllLinkedObjectsStatus] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+			this.log.silly("[resetAllLinkedObjectsStatus] linkedObjects status " + JSON.stringify(this.dicLinkedObjectsStatus));
+		}
 	}
 
 	/**
@@ -204,7 +209,6 @@ class Linkeddevices extends utils.Adapter {
 			// existierende linkedObjects in dict packen
 			if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedObj._id] = false;
 
-			// @ts-ignore
 			await this.setForeignObjectAsync(linkedObj._id, linkedObj);
 			this.log.debug("[resetLinkedObjectStatus] isLinked status reseted for '" + linkedObj._id + "'");
 		}
@@ -221,8 +225,15 @@ class Linkeddevices extends utils.Adapter {
 			await this.createLinkedObject(parentObj);
 		}
 
-		if (this.dicLinkedObjectsStatus) this.log.debug("[createAllLinkedObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
-		if (this.dicLinkedParentObjects) this.log.info("[createAllLinkedObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
+		if (this.dicLinkedObjectsStatus) {
+			this.log.debug("[createAllLinkedObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+			this.log.silly("[createAllLinkedObjects] linkedObjects status " + JSON.stringify(this.dicLinkedObjectsStatus));
+		}
+
+		if (this.dicLinkedParentObjects) {
+			this.log.info("[createAllLinkedObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
+			this.log.debug("[createAllLinkedObjects] active linkedObjects " + JSON.stringify(this.dicLinkedParentObjects));
+		}
 	}
 
 	/**
@@ -326,7 +337,7 @@ class Linkeddevices extends utils.Adapter {
 			if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId] === false) {
 				// alle linkedObject ohne existierende Verlinkung löschen
 				await this.delForeignObjectAsync(linkedId);
-				
+
 				// linkedId im dicLinkedObjectsStatus löschen
 				delete this.dicLinkedObjectsStatus[linkedId];
 
