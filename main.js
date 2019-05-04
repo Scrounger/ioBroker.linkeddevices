@@ -133,7 +133,7 @@ class Linkeddevices extends utils.Adapter {
 		// all unsubscripe to begin completly new
 		this.unsubscribeForeignStates('*');
 
-		this.dicLinkedObjectsStatus = {};				// Dic für 'linked' Status aller verlinkten Objekte
+		this.dicLinkedObjectsStatus = {};				// Dic für 'isLinked' Status aller verlinkten Objekte
 
 		await this.resetLinkedObjectsStatus();
 		await this.generateLinkedObjects();
@@ -145,7 +145,7 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/*
-	* 'custom.linked' auf 'False' für alle vorhanden verlinkten datenpunkte setzen -> status wird später zum löschen benötigt
+	* 'custom.isLinked' auf 'False' für alle vorhanden verlinkten datenpunkte setzen -> status wird später zum löschen benötigt
 	*/
 	async resetLinkedObjectsStatus() {
 		// alle Datenpunkte des Adapters durchlaufen
@@ -154,15 +154,15 @@ class Linkeddevices extends utils.Adapter {
 			let linkedObj = linkedObjList[idLinkedObj]
 
 			if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] &&
-				(linkedObj.common.custom[this.namespace].linked || !linkedObj.common.custom[this.namespace].linked)) {
-				// Wenn Datenpunkt Property 'linked' hat, dann auf 'False' setzen
-				linkedObj.common.custom[this.namespace].linked = false;
+				(linkedObj.common.custom[this.namespace].isLinked || !linkedObj.common.custom[this.namespace].isLinked)) {
+				// Wenn Datenpunkt Property 'isLinked' hat, dann auf 'False' setzen
+				linkedObj.common.custom[this.namespace].isLinked = false;
 
 				// existierende linkedObjects in dict packen
 				if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedObj._id] = false;
 
 				await this.setForeignObjectAsync(linkedObj._id, linkedObj);
-				this.log.debug("[resetLinkStatus] linked status reseted for '" + linkedObj._id + "'");
+				this.log.debug("[resetLinkStatus] isLinked status reseted for '" + linkedObj._id + "'");
 			}
 		}
 
@@ -192,7 +192,7 @@ class Linkeddevices extends utils.Adapter {
 						// 'custom.id' enthält illegale zeichen
 						this.log.error("[generateLinkedObjects] id: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
 					} else {
-						// 'custom.id' korrekt -> linked Datenpunkt erzeugen bzw. aktualisieren
+						// 'custom.id' korrekt -> linkedObject erzeugen bzw. aktualisieren
 						await this.createLinkedObject(parentObj);
 					}
 				}
@@ -203,7 +203,7 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
-	 * LinkedObject mit parentObject erstellen bzw. aktualisieren und 'linked' Status setzen (= hat eine existierende Verlinkung)
+	 * linkedObject mit parentObject erstellen bzw. aktualisieren und 'isLinked' Status setzen (= hat eine existierende Verlinkung)
 	 * @param {ioBroker.Object} parentObj
 	 */
 	async createLinkedObject(parentObj) {
@@ -230,7 +230,7 @@ class Linkeddevices extends utils.Adapter {
 		//clonedObj.native = parentObj.native;
 		linkedObj.common.desc = "Created by linkeddevices";
 		// custom überschreiben, notwenig weil sonst cloned id von parent drin steht
-		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "linked": true };
+		linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "isLinked": true };
 
 		// LinkedObjekt erzeugen oder Änderungen schreiben
 		await this.setForeignObjectAsync(linkedId, linkedObj);
@@ -244,7 +244,7 @@ class Linkeddevices extends utils.Adapter {
 			await this.setForeignState(linkedId, parentObjState.val, true);
 		}
 
-		this.log.debug("[createClonedObject] linked object '" + parentObj._id + "' to '" + linkedId + "'");
+		this.log.debug("[createClonedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
 
 
 		//this.dicParentId[parentObj._id] = parentObj;
@@ -254,14 +254,14 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/*
-	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.linked' == false)
+	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.isLinked' == false)
 	*/
 	async removeNotLinkedObjects() {
 		// dic verwenden		
 		if (this.dicLinkedObjectsStatus) {
 			for (var linkedId in this.dicLinkedObjectsStatus) {
 				if (this.dicLinkedObjectsStatus[linkedId] === false) {
-					// alle LinkedObject ohne existierende Verlinkung löschen
+					// alle linkedObject ohne existierende Verlinkung löschen
 					await this.delForeignObjectAsync(linkedId);
 					this.log.debug("[removeNotLinkedObjects] not linkedObject '" + linkedId + "' deleted")
 				}
