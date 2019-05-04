@@ -110,9 +110,14 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object | null | undefined} obj
 	 */
 	onObjectChange(id, obj) {
-		//this.log.info(obj._id);
 		if (obj && obj._id.indexOf(this.namespace) === -1 && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
+			// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true') oder bereits verlinktes parentObject wurde geändert
 			this.log.info("[onObjectChange] changes on parentObject '" + id + "'")
+		}
+
+		if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && obj._id in this.dicLinkedParentObjects) {
+			// bereits verlinktes parentObject wurde deaktiviert
+			this.log.info("[onObjectChange] parentObject '" + id + "' deactivated")
 		}
 
 
@@ -178,11 +183,11 @@ class Linkeddevices extends utils.Adapter {
 	 * 'custom.isLinked' auf 'False' für linkedObject setzen
 	 * @param {ioBroker.Object} linkedObj
 	 */
-	async resetLinkedObjectStatus(linkedObj){
+	async resetLinkedObjectStatus(linkedObj) {
 		if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] &&
 			(linkedObj.common.custom[this.namespace].isLinked || !linkedObj.common.custom[this.namespace].isLinked)) {
-			
-				// Wenn Datenpunkt Property 'isLinked' hat, dann auf 'False' setzen
+
+			// Wenn Datenpunkt Property 'isLinked' hat, dann auf 'False' setzen
 			linkedObj.common.custom[this.namespace].isLinked = false;
 
 			// existierende linkedObjects in dict packen
@@ -225,6 +230,7 @@ class Linkeddevices extends utils.Adapter {
 		}
 
 		if (this.dicLinkedObjectsStatus) this.log.debug("[createAllLinkedObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+		if (this.dicLinkedParentObjects) this.log.info("[createAllLinkedObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
 	}
 
 	/**
@@ -283,19 +289,29 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/*
-	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.isLinked' == false), sofern nicht deaktiviert
+	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.isLinked' == false), sofern nicht in Config deaktiviert
 	*/
 	async removeAllNotLinkedObjects() {
 		if (!this.config.notDeleteDeadLinkedObjects) {
 			// dic verwenden		
 			if (this.dicLinkedObjectsStatus) {
 				for (var linkedId in this.dicLinkedObjectsStatus) {
-					if (this.dicLinkedObjectsStatus[linkedId] === false) {
-						// alle linkedObject ohne existierende Verlinkung löschen
-						await this.delForeignObjectAsync(linkedId);
-						this.log.debug("[removeNotLinkedObjects] not linkedObject '" + linkedId + "' deleted")
-					}
+					await this.removeNotLinkedObject(linkedId);
 				}
+			}
+		}
+	}
+
+	/**
+	 * LinkedObject löschen, das keine existierende Verlinkung mehr hat ('custom.isLinked' == false), sofern nicht in Config deaktiviert
+	 * @param {string} linkedId
+	 */
+	async removeNotLinkedObject(linkedId) {
+		if (!this.config.notDeleteDeadLinkedObjects) {
+			if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId] === false) {
+				// alle linkedObject ohne existierende Verlinkung löschen
+				await this.delForeignObjectAsync(linkedId);
+				this.log.debug("[removeNotLinkedObject] not linkedObject '" + linkedId + "' deleted");
 			}
 		}
 	}
