@@ -114,21 +114,53 @@ class Linkeddevices extends utils.Adapter {
 
 			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 				//bereits verlinktes parentObject wurde geändert -> ist im dicLinkedParentObjects enthalten
+				let linkedId = this.getLinkedObjectId(obj);
 				this.log.info("[onObjectChange] parentObject '" + id + "' changed");
+
+				// Prüfen ob die linkedId schon verwendet wird, bzw. ob es die gleiche ist
+				if (!this.isLinkedIdInUse(obj, linkedId)) {
+					// nicht verwendet
+					this.createLinkedObject(obj);
+				} else {
+					// wird bereits verwendet -> 'custom' eingaben löschen
+
+				}
 
 			} else {
 				// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true') -> nicht im dicLinkedParentObjects enthalten
-				var linkedId = this.getLinkedObjectId(obj);
+				let linkedId = this.getLinkedObjectId(obj);
 				this.log.info("[onObjectChange] new parentObject '" + id + "' linked to '" + linkedId + "'");
 
-				this.createLinkedObject(obj);
+				// Prüfen ob die linkedId schon verwendet wird
+				if (!this.isLinkedIdInUse(obj, linkedId)) {
+					// nicht verwendet
+					this.createLinkedObject(obj);
+				} else {
+					// wird bereits verwendet -> 'parentObj.common.custom[linkeddevices.x]' löschen
+					if (obj.common.custom[this.namespace].enabled === true) {
+						delete obj.common.custom[this.namespace];
+						this.setForeignObjectAsync(obj._id, obj);
+
+						this.logDicLinkedObjectsStatuss();
+						this.logDicLinkedParentObjects();
+					}
+				}
 			}
 		} else {
-			if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
-				// bereits verlinktes parentObject wurde deaktiviert
+			// bereits verlinktes parentObject wurde deaktiviert
+			if (obj && obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {				
 				this.log.info("[onObjectChange] parentObject '" + id + "' deactivated");
 
-				//TODO muss aus dicLinkedParentObjects gelöscht werden
+				// alte linkedId holen und aus dicLinkedObjectsStatus löschen
+				let oldLinkedId = this.dicLinkedParentObjects[id];
+				if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[oldLinkedId] = false;
+
+				// parentObject aus dicLinkedParentObjects löschen
+				delete this.dicLinkedParentObjects[id];
+				this.logDicLinkedParentObjects();
+
+				// linkedObject löschen
+				this.removeNotLinkedObject(oldLinkedId);				
 			}
 		}
 
@@ -258,6 +290,8 @@ class Linkeddevices extends utils.Adapter {
 					this.log.error("[createLinkedObject] linkedId: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
 
 				} else {
+					//TODO: prüfen ob definierte linkedId schon in Verwendung
+
 					// 'custom.linkedId' korrekt -> linkedObject erzeugen bzw. aktualisieren
 					var linkedId = this.getLinkedObjectId(parentObj);
 
@@ -292,9 +326,11 @@ class Linkeddevices extends utils.Adapter {
 
 					// ggf. können neue linkedObjects hinzugekommen sein -> in dic packen
 					if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = true;
+					this.logDicLinkedObjectsStatuss();
 
 					// linked parentObjects in dic speichern
 					if (this.dicLinkedParentObjects) this.dicLinkedParentObjects[parentObj._id] = linkedId;
+					this.logDicLinkedParentObjects();
 
 					// state für linkedObject  setzen, wird vom parent übernommen
 					let parentObjState = await this.getForeignStateAsync(parentObj._id);
@@ -308,6 +344,8 @@ class Linkeddevices extends utils.Adapter {
 					//await this.subscribeForeignStatesAsync(parentObj._id);
 
 					//await this.subscribeForeignObjects(parentObj._id);
+
+					
 				}
 			}
 		}
@@ -340,6 +378,7 @@ class Linkeddevices extends utils.Adapter {
 
 				// linkedId im dicLinkedObjectsStatus löschen
 				delete this.dicLinkedObjectsStatus[linkedId];
+				this.logDicLinkedParentObjects();
 
 				this.log.debug("[removeNotLinkedObject] not linkedObject '" + linkedId + "' deleted");
 
@@ -375,6 +414,48 @@ class Linkeddevices extends utils.Adapter {
 	// 	}
 	// }
 
+	/**
+	 * Prüfen ob die angegebene linkedId schon verwendet wird
+	 * @param {ioBroker.Object} parentObj
+	 * @param {string | number} linkedId
+	 */
+	isLinkedIdInUse(parentObj, linkedId) {
+
+		// Prüfen ob die eingebene linkedId in dicLinkedObjectsStatus ist
+		if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId]) {
+
+			// Prüfen ob Verlinkung für diese linkedId 'custom.isLinked' true ist
+			if (this.dicLinkedObjectsStatus[linkedId] === true) {
+
+				if (this.dicLinkedParentObjects && this.dicLinkedParentObjects[parentObj._id] && this.dicLinkedParentObjects[parentObj._id] === linkedId) {
+					// Prüfen ob für diese linkedId das parentObject gleich ist -> es wurde nur etwas verändert
+					this.log.debug("[isLinkedIdInUse] parentObject '" + parentObj._id + "' is equal -> update linkedObject '" + linkedId);
+					return false;
+				} else {
+					// parentObject für diese linkedId ist nicht gleich -> linkedId wird schon von einem anderen parentObject verwendet!
+					// @ts-ignore
+					this.log.error("[isLinkedIdInUse] linkedId '" + linkedId + "' still in use with parentObject '" + Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === linkedId));
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	logDicLinkedObjectsStatuss() {
+		if (this.dicLinkedObjectsStatus) {
+			this.log.debug("[resetAllLinkedObjectsStatus] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+			this.log.debug("[resetAllLinkedObjectsStatus] linkedObjects status " + JSON.stringify(this.dicLinkedObjectsStatus));
+		}
+	}
+
+	logDicLinkedParentObjects(){
+		if (this.dicLinkedParentObjects) {
+			this.log.debug("[createAllLinkedObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
+			this.log.debug("[createAllLinkedObjects] active linkedObjects " + JSON.stringify(this.dicLinkedParentObjects));
+		}
+	}
 }
 
 // @ts-ignore
