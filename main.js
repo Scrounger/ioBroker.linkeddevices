@@ -27,7 +27,6 @@ class Linkeddevices extends utils.Adapter {
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 
-		this.dicParentId = {};
 	}
 
 	/**
@@ -221,10 +220,12 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
-	onStateChange(id, state) {
+	async onStateChange(id, state) {
 
+		// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
 		// if (state && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
-		// 	await this.setForeignStateChangedAsync(this.dicLinkedParentObjects[id], state.val, state.ack);
+		// 	let linkedObjId = this.dicLinkedParentObjects[id];
+		// 	await this.setForeignStateChangedAsync(linkedObjId, state.val, state.ack);
 		// }
 
 		// if (state && this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
@@ -253,9 +254,10 @@ class Linkeddevices extends utils.Adapter {
 		await this.createAllLinkedObjects();
 		await this.removeAllNotLinkedObjects();
 
-		//this.log.debug(Object.keys(this.dicParentId).length.toString())
-
 		if (this.dicLinkedObjectsStatus) this.log.debug("[initialObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+
+		// subscribe für alle 'states' des Adapters, um Änderungen mitzubekommen
+		await this.subscribeStatesAsync('*');
 
 		this.log.info('[initialObjects] finished')
 	}
@@ -403,14 +405,10 @@ class Linkeddevices extends utils.Adapter {
 						await this.setForeignState(linkedId, parentObjState.val, true);
 					}
 
+					// subscribe für parentObject 'state', um Änderungen mitzubekommen
+					await this.subscribeForeignStatesAsync(parentObj._id);
+
 					this.log.debug("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
-
-					//this.dicParentId[parentObj._id] = parentObj;
-					//await this.subscribeForeignStatesAsync(parentObj._id);
-
-					//await this.subscribeForeignObjects(parentObj._id);
-
-
 				}
 			}
 		}
