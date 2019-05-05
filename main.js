@@ -223,14 +223,23 @@ class Linkeddevices extends utils.Adapter {
 	async onStateChange(id, state) {
 
 		// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
-		// if (state && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
-		// 	let linkedObjId = this.dicLinkedParentObjects[id];
-		// 	await this.setForeignStateChangedAsync(linkedObjId, state.val, state.ack);
-		// }
+		if (state && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
+			let linkedObjId = this.dicLinkedParentObjects[id];
+			await this.setForeignStateChangedAsync(linkedObjId, state.val, state.ack);
+			this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' --> set linkedObject state '${linkedObjId}'`)
+		}
 
-		// if (state && this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
-		// 	this.setForeignStateChangedAsync(Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id), state.val, state.ack);
-		// }
+		// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
+		else if (state && this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
+			// @ts-ignore
+			let parentObjId = Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id);
+
+			// 'custom.isLinked = true'
+			if (this.dicLinkedObjectsStatus[id] === true) {
+				await this.setForeignStateChangedAsync(parentObjId, state.val, state.ack);
+				this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' --> set parentObject state '${parentObjId}'`)
+			}
+		}
 
 		if (state) {
 			// The state was changed
