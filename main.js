@@ -169,7 +169,7 @@ class Linkeddevices extends utils.Adapter {
 						delete obj.common.custom[this.namespace];
 						this.setForeignObjectAsync(obj._id, obj);
 
-						this.logDicLinkedObjectsStatuss();
+						this.logDicLinkedObjectsStatus();
 						this.logDicLinkedParentObjects();
 					}
 				}
@@ -270,7 +270,7 @@ class Linkeddevices extends utils.Adapter {
 			if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedObj._id] = false;
 
 			await this.setForeignObjectAsync(linkedObj._id, linkedObj);
-			this.log.debug("[resetLinkedObjectStatus] isLinked status reseted for '" + linkedObj._id + "'");
+			this.log.debug("[resetLinkedObjectStatus] 'isLinked' status reseted for '" + linkedObj._id + "'");
 		}
 	}
 
@@ -283,8 +283,9 @@ class Linkeddevices extends utils.Adapter {
 		linkedObj = await this.getForeignObjectAsync(linkedId);
 
 		await this.resetLinkedObjectStatus(linkedObj);
-	}
 
+		this.logDicLinkedObjectsStatus();
+	}
 
 	/*
 	* alle Obejkte finden, die verlinkt werden sollen und linkedObject erzeugen bzw. aktualisieren 
@@ -344,9 +345,9 @@ class Linkeddevices extends utils.Adapter {
 						// 'name' wird von parent übernommen
 						name = parentObj.common.name;
 						if (parentObj.common.name) {
-							this.log.warn("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use object name: '" + parentObj.common.name + "'");
+							this.log.info("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use object name: '" + parentObj.common.name + "'");
 						} else {
-							this.log.warn("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
+							this.log.info("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
 						}
 					}
 
@@ -366,7 +367,7 @@ class Linkeddevices extends utils.Adapter {
 
 					// ggf. können neue linkedObjects hinzugekommen sein -> in dic packen
 					if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = true;
-					this.logDicLinkedObjectsStatuss();
+					this.logDicLinkedObjectsStatus();
 
 					// linked parentObjects in dic speichern
 					if (this.dicLinkedParentObjects) this.dicLinkedParentObjects[parentObj._id] = linkedId;
@@ -419,6 +420,7 @@ class Linkeddevices extends utils.Adapter {
 				// linkedId im dicLinkedObjectsStatus löschen
 				delete this.dicLinkedObjectsStatus[linkedId];
 				this.logDicLinkedParentObjects();
+				this.logDicLinkedObjectsStatus();
 
 				this.log.debug("[removeNotLinkedObject] not linkedObject '" + linkedId + "' deleted");
 
@@ -501,17 +503,17 @@ class Linkeddevices extends utils.Adapter {
 		return false;
 	}
 
-	logDicLinkedObjectsStatuss() {
+	logDicLinkedObjectsStatus() {
 		if (this.dicLinkedObjectsStatus) {
-			this.log.debug("[logDicLinkedObjectsStatuss] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
-			this.log.debug("[logDicLinkedObjectsStatuss] linkedObjects status " + JSON.stringify(this.dicLinkedObjectsStatus));
+			this.log.silly("[logDicLinkedObjectsStatus] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+			this.log.silly("[logDicLinkedObjectsStatus] linkedObjects status " + JSON.stringify(this.dicLinkedObjectsStatus));
 		}
 	}
 
 	logDicLinkedParentObjects() {
 		if (this.dicLinkedParentObjects) {
-			this.log.debug("[logDicLinkedParentObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
-			this.log.debug("[logDicLinkedParentObjects] active linkedObjects " + JSON.stringify(this.dicLinkedParentObjects));
+			this.log.silly("[logDicLinkedParentObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
+			this.log.silly("[logDicLinkedParentObjects] active linkedObjects " + JSON.stringify(this.dicLinkedParentObjects));
 		}
 	}
 }
