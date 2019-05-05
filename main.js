@@ -115,35 +115,43 @@ class Linkeddevices extends utils.Adapter {
 			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 				//bereits verlinktes parentObject wurde geändert -> ist im dicLinkedParentObjects enthalten
 				let linkedId = this.getLinkedObjectId(obj);
-				this.log.info("[onObjectChange] parentObject '" + id + "' changed");
 
 				// Prüfen ob die linkedId schon verwendet wird, bzw. ob es die gleiche ist oder wenn 'isLinked === false' ist
 				if (!this.isLinkedIdInUse(obj, linkedId)) {
 					// nicht verwendet
 
-					if (this.dicLinkedParentObjects[id] == linkedId) {
+					if (this.dicLinkedParentObjects[id] === linkedId) {
 						// linkedId wurde für parentObject nicht geändert -> Eingaben wurden nur aktualisiert
+						this.log.info("[onObjectChange] parentObject '" + id + "' properties changed");
 						this.createLinkedObject(obj);
 					} else {
-						// linkedId wurde für parentObject geändert
+						// alte linkedId aus dic holen
 						let oldLinkedId = this.dicLinkedParentObjects[id];
 
-						// neue linkedId für parentObject in dic schreiben
+						// linkedId wurde für parentObject geändert -> neue linkedId für parentObject in dic schreiben
 						this.dicLinkedParentObjects[id] = linkedId;
 
-						// 'custom.isLinked' auf 'False' für alte LinkedId im LinkedObject und dicLinkedObjectsStatus schreiben
-						this.resetLinkedObjectStatusById(oldLinkedId);
+						this.log.info("[onObjectChange] linkedId '" + oldLinkedId + "' changed to '" + linkedId + "' for parentObject '" + id + "'");
+
+						// linkedObject "custom.isLinked = false" setzen oder linkedObject löschen -> abhängig von Config
+						this.resetStatusOrRemoveNotLinkedObject(oldLinkedId);
 
 						// LinkedObject erzeugen
 						this.createLinkedObject(obj);
-
-						// oldLinkedObject löschen
-						this.removeNotLinkedObject(oldLinkedId);
 					}
 
 				} else {
-					// wird bereits verwendet -> 'custom' eingaben löschen
+					// wird bereits verwendet -> 'custom.linkedId' vom parentObject auf alte linkedId zurücksetzen
+					let oldLinkedId = this.dicLinkedParentObjects[id];
 
+					this.log.info("[onObjectChange] reset linkedId to '" + oldLinkedId + "' for parentObject '" + id + "'");
+
+					// namespace aus oldLinkedId entfernen
+					oldLinkedId = oldLinkedId.replace(this.namespace + ".", "");
+
+					// alte linkedId in parentObject schreiben
+					obj.common.custom[this.namespace].linkedId = oldLinkedId;
+					this.setForeignObject(id, obj);
 				}
 
 			} else {
@@ -179,8 +187,8 @@ class Linkeddevices extends utils.Adapter {
 				delete this.dicLinkedParentObjects[id];
 				this.logDicLinkedParentObjects();
 
-				// linkedObject löschen
-				this.removeNotLinkedObject(oldLinkedId);
+				// linkedObject "custom.isLinked = false" setzen oder linkedObject löschen -> abhängig von Config
+				this.resetStatusOrRemoveNotLinkedObject(oldLinkedId);
 			}
 		}
 
@@ -209,7 +217,7 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	async initialObjects() {
-		this.log.info('inital all Objects')
+		this.log.info('[initialObjects] started...')
 
 		// all unsubscripe to begin completly new
 		this.unsubscribeForeignStates("*");
@@ -225,7 +233,7 @@ class Linkeddevices extends utils.Adapter {
 
 		if (this.dicLinkedObjectsStatus) this.log.debug("[initialObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
 
-		this.log.info("initial complete");
+		this.log.info('[initialObjects] finished')
 	}
 
 	/*
@@ -265,7 +273,7 @@ class Linkeddevices extends utils.Adapter {
 			this.log.debug("[resetLinkedObjectStatus] isLinked status reseted for '" + linkedObj._id + "'");
 		}
 	}
-	
+
 	/**
 	 * 'custom.isLinked' auf 'False' für linkedId setzen
 	 * @param {String} linkedId
@@ -420,6 +428,21 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
+	 * LinkedObject 'custom.isLinked' auf 'False' setzen oder LinkedObject löschen, hängt von Config ab
+	 * @param {any} linkedId
+	 */
+	async resetStatusOrRemoveNotLinkedObject(linkedId) {
+		if (this.config.notDeleteDeadLinkedObjects) {
+			// 'custom.isLinked' auf 'False' für linkedId im LinkedObject und dicLinkedObjectsStatus schreiben
+			this.resetLinkedObjectStatusById(linkedId);
+		} else {
+			// linkedId löschen 
+			if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = false;
+			this.removeNotLinkedObject(linkedId);
+		}
+	}
+
+	/**
 	 * linkedId des linkedObjects erzeugen
 	 * @param {ioBroker.Object} parentObj
 	 */
@@ -454,26 +477,25 @@ class Linkeddevices extends utils.Adapter {
 	isLinkedIdInUse(parentObj, linkedId) {
 
 		// Prüfen ob die eingebene linkedId in dicLinkedObjectsStatus ist
-		if (this.dicLinkedObjectsStatus) {
+		if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId] === true) {
 
 			// Prüfen ob Verlinkung für diese linkedId 'custom.isLinked' true ist
-			if (this.dicLinkedObjectsStatus[linkedId] === true) {
 
-				if (this.dicLinkedParentObjects && this.dicLinkedParentObjects[parentObj._id] && this.dicLinkedParentObjects[parentObj._id] === linkedId) {
-					// Prüfen ob für diese linkedId das parentObject gleich ist -> es wurde nur etwas verändert
-					this.log.debug("[isLinkedIdInUse] parentObject '" + parentObj._id + "' is equal -> update linkedObject '" + linkedId);
-					return false;
-				} else {
-					// parentObject für diese linkedId ist nicht gleich -> linkedId wird schon von einem anderen parentObject verwendet!
-					// @ts-ignore
-					this.log.error("[isLinkedIdInUse] linkedId '" + linkedId + "' still in use with parentObject '" + Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === linkedId));
-					return true;
-				}
-			} else {
-				// isLinked is 'false' -> überschreiben erlaubt
-				this.log.debug("[isLinkedIdInUse] overwirte linkedId '" + linkedId + "' because 'isLinked = false'");
+			if (this.dicLinkedParentObjects && this.dicLinkedParentObjects[parentObj._id] && this.dicLinkedParentObjects[parentObj._id] === linkedId) {
+				// Prüfen ob für diese linkedId das parentObject gleich ist -> es wurde nur etwas verändert
+				this.log.debug("[isLinkedIdInUse] parentObject '" + parentObj._id + "' is equal -> update linkedObject '" + linkedId);
 				return false;
+			} else {
+				// parentObject für diese linkedId ist nicht gleich -> linkedId wird schon von einem anderen parentObject verwendet!
+				// @ts-ignore
+				this.log.error("[isLinkedIdInUse] linkedId '" + linkedId + "' still in use with parentObject '" + Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === linkedId));
+				return true;
 			}
+		}
+		if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId] === false) {
+			// isLinked is 'false' -> überschreiben erlaubt
+			this.log.debug("[isLinkedIdInUse] overwirte linkedId '" + linkedId + "' because 'isLinked = false'");
+			return false;
 		}
 
 		return false;
