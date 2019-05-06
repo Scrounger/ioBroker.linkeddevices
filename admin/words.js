@@ -49,5 +49,13 @@ systemDictionary = {
 	"name of linked object": {
 		"en": "name of linked object",
 		"de": "Name des verlinkten Objektes",
+	},
+	"is linked": {
+		"en": "is linked",
+		"de": "verlinkt",
+	},
+	"linked with": {
+		"en": "linked with",
+		"de": "verlinkt mit",
 	}
 };
