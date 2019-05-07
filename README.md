@@ -1,5 +1,7 @@
-![Logo](admin/linkeddevices.png)
-# ioBroker.linkeddevices
+<h1>
+	<img src="admin/linkeddevices.png" width="32"/>
+	ioBroker.linkeddevices
+</h1>
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.linkeddevices.svg)](https://www.npmjs.com/package/iobroker.linkeddevices)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.linkeddevices.svg)](https://www.npmjs.com/package/iobroker.linkeddevices)
