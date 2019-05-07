@@ -10,9 +10,17 @@
 
 **Tests:**: [![Travis-CI](http://img.shields.io/travis/Scrounger/ioBroker.linkeddevices/master.svg)](https://travis-ci.org/Scrounger/ioBroker.linkeddevices)
 
-## linkeddevices adapter for ioBroker
 
-Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)
+
+## linkeddevices adapter for ioBroker
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YHPPW474N5CKQ&source=url)
+
+Create linked objects (datapoints) from your used devices, objects or datapoints to have it in one place. 
+Define your own structure for the linked object by settings individual ids. 
+
+Advantage is that there is on place where all your objects are defined that can be used in scripts or vis. If you have to change your hardware, you must only update your linked objects and script or vis will work again.
+
+This adapter is inspired at [virtual devices script by Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
 ## Changelog
 
