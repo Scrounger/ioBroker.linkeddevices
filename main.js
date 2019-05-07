@@ -126,6 +126,7 @@ class Linkeddevices extends utils.Adapter {
 					} else {
 						// alte linkedId aus dic holen
 						let oldLinkedId = this.dicLinkedParentObjects[id];
+						let oldLinkedObj = await this.getForeignObjectAsync(oldLinkedId);
 
 						// linkedId wurde für parentObject geändert -> neue linkedId für parentObject in dic schreiben
 						this.dicLinkedParentObjects[id] = linkedId;
@@ -138,8 +139,9 @@ class Linkeddevices extends utils.Adapter {
 						// linkedObject löschen -> abhängig von Config
 						await this.removeNotLinkedObject(oldLinkedId);
 
-						// LinkedObject erzeugen
-						await this.createLinkedObject(obj);
+						// LinkedObject erzeugen, oldLinkeObject mit übergeben, damit custom settings von anderen adaptern mit verschoben werden
+						// @ts-ignore
+						await this.createLinkedObject(obj, oldLinkedObj);
 					}
 
 				} else {
@@ -225,19 +227,26 @@ class Linkeddevices extends utils.Adapter {
 		// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
 		if (state && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 			let linkedObjId = this.dicLinkedParentObjects[id];
-			await this.setForeignStateChangedAsync(linkedObjId, state.val, state.ack);
-			this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' --> set linkedObject state '${linkedObjId}'`)
+			let linkedObjState = await this.getForeignStateAsync(linkedObjId);
+
+			if (linkedObjState && linkedObjState.from != state.from) {
+				await this.setForeignStateChangedAsync(linkedObjId, state.val, state.ack);
+				this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set linkedObject state '${linkedObjId}'`)
+			}
 		}
 
 		// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
 		else if (state && this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
 			// @ts-ignore
 			let parentObjId = Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id);
+			let parentObjState = await this.getForeignStateAsync(parentObjId);
 
 			// 'custom.isLinked = true'
 			if (this.dicLinkedObjectsStatus[id] === true) {
-				await this.setForeignStateChangedAsync(parentObjId, state.val, state.ack);
-				this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' --> set parentObject state '${parentObjId}'`)
+				if (parentObjState && parentObjState.from != state.from) {
+					await this.setForeignStateChangedAsync(parentObjId, state.val, state.ack);
+					this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set parentObject state '${parentObjId}'`)
+				}
 			}
 		}
 
@@ -347,8 +356,9 @@ class Linkeddevices extends utils.Adapter {
 	/**
 	 * linkedObject mit parentObject erstellen bzw. aktualisieren und 'isLinked' Status setzen (= hat eine existierende Verlinkung)
 	 * @param {ioBroker.Object} parentObj
+	 * @param {ioBroker.Object} oldLinkedObj
 	 */
-	async createLinkedObject(parentObj) {
+	async createLinkedObject(parentObj, oldLinkedObj = Object()) {
 
 		// Datenpunkte sind von 'linkeddevices' und aktiviert
 		if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
@@ -394,8 +404,27 @@ class Linkeddevices extends utils.Adapter {
 					linkedObj.common.icon = "linkeddevices_small.png"
 					//linkedObj.native = parentObj.native;
 					linkedObj.common.desc = "Created by linkeddevices";
+
+					// custom settings von anderen Adaptern ggf. übernehmen
+					let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
+					if (existingLinkedObj && existingLinkedObj.common && existingLinkedObj.common.custom) {
+						// linkedObject wurde geändert (nicht linkedId), alle customs vom linkedObject übernehmen -> würde sonst vom parentObject übernommen werden
+						this.log.debug(`[createLinkedObject] keep custom settings '${JSON.stringify(existingLinkedObj.common.custom)}' for linkedObject '${linkedId}'`)
+						linkedObj.common.custom = existingLinkedObj.common.custom;
+					} else {
+						if (oldLinkedObj && oldLinkedObj.common && oldLinkedObj.common.custom) {
+							// linkedObject wurde linkedId geändert -> custom vom alten linkedObject übernehmen
+							linkedObj.common.custom = oldLinkedObj.common.custom;
+							this.log.debug(`[createLinkedObject] move custom settings '${JSON.stringify(oldLinkedObj.common.custom)}' from '${oldLinkedObj._id}' to linkedObject '${linkedId}'`)
+						} else {
+							// linkeObject existiert nicht, alle customs von anderen Adaptern entfernen
+							linkedObj.common.custom = {};
+						}
+					}
+
 					// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
-					linkedObj.common.custom[this.namespace] = { "parentId": parentObj._id, "isLinked": true };
+					// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter die linkedDevices custom settings weg sind
+					linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true };
 
 					// LinkedObjekt erzeugen oder Änderungen schreiben
 					await this.setForeignObjectAsync(linkedId, linkedObj);
