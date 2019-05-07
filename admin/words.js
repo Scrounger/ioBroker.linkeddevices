@@ -57,5 +57,13 @@ systemDictionary = {
 	"linked with": {
 		"en": "linked with",
 		"de": "verlinkt mit",
+	},
+	"expert settings": {
+		"en": "expert settings",
+		"de": "Experteneinstellung",
+	},
+	"change unit": {
+		"en": "change unit",
+		"de": "Einheit ändern",
 	}
 };
