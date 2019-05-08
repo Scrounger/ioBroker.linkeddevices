@@ -227,10 +227,17 @@ class Linkeddevices extends utils.Adapter {
 		// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
 		if (state && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 			let linkedObjId = this.dicLinkedParentObjects[id];
+			let linkedObj = await this.getForeignObjectAsync(linkedObjId);
 			let linkedObjState = await this.getForeignStateAsync(linkedObjId);
 
-			await this.setForeignStateChangedAsync(linkedObjId, state.val, state.ack);
-			this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set linkedObject state '${linkedObjId}'`)
+			let changedValue = state.val
+			// if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].conversion) {
+			// 	changedValue = eval(`${changedValue}${linkedObj.common.custom[this.namespace].conversion}`)
+			// }
+			if (linkedObjState && (linkedObjState.val != state.val || linkedObjState.ack != state.ack) || !linkedObjState) {
+				await this.setForeignStateChanged(linkedObjId, changedValue, state.ack);
+				this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set linkedObject state '${linkedObjId}'`)
+			}
 		}
 
 		// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
@@ -241,18 +248,20 @@ class Linkeddevices extends utils.Adapter {
 
 			// 'custom.isLinked = true'
 			if (this.dicLinkedObjectsStatus[id] === true) {
-				await this.setForeignStateChangedAsync(parentObjId, state.val, state.ack);
-				this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set parentObject state '${parentObjId}'`)
+				if (parentObjState && (parentObjState.val != state.val || parentObjState.ack != state.ack) || !parentObjState) {
+					await this.setForeignStateChangedAsync(parentObjId, state.val, state.ack);
+					this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set parentObject state '${parentObjId}'`)
+				}
 			}
 		}
 
-		if (state) {
-			// The state was changed
-			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
-		} else {
-			// The state was deleted
-			this.log.info(`state ${id} deleted`);
-		}
+		// if (state) {
+		// 	// The state was changed
+		// 	this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+		// } else {
+		// 	// The state was deleted
+		// 	this.log.info(`state ${id} deleted`);
+		// }
 	}
 
 	async initialObjects() {
@@ -420,8 +429,8 @@ class Linkeddevices extends utils.Adapter {
 
 					// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 					// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter die linkedDevices custom settings weg sind
-					linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true };
-
+					linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion };
+				
 					// LinkedObjekt erzeugen oder Änderungen schreiben
 					await this.setForeignObjectAsync(linkedId, linkedObj);
 
