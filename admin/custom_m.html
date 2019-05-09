@@ -35,6 +35,11 @@
 				<input type="text" data-field="unit" size="30" disabled="true">
 				<span class="translate">change unit</span>
 			</div>
+
+			<div class="section s_ParentObj_conversion">
+				<input type="text" data-field="conversion" size="30" disabled="true">
+				<span class="translate">conversion</span>
+			</div>
 		</div>
 
 
@@ -99,8 +104,10 @@
 
 				if (type === 'number') {
 					$div.find('.s_ParentObj_hasUnit').show();
+					$div.find('.s_ParentObj_conversion').show();
 				} else {
 					$div.find('.s_ParentObj_hasUnit').hide();
+					$div.find('.s_ParentObj_conversion').hide();
 				}
 			}
 
@@ -109,8 +116,11 @@
 
 				if (checked) {
 					$div.find('input[data-field="unit"]').prop("disabled", false);
+					$div.find('input[data-field="conversion"]').prop("disabled", false);
+					showMessage("show a message");
 				} else {
 					$div.find('input[data-field="unit"]').prop("disabled", true);
+					$div.find('input[data-field="conversion"]').prop("disabled", true);
 				}
 			});
 
@@ -131,13 +141,10 @@
 
 	if (typeof customPostOnSave !== 'undefined') {
 		customPostOnSave.linkeddevices = function ($div, instance) {
-
-			return _('Please enter ID');
+			return 'Please enter ID';
 			// if (!$div.find('input[data-field="test"]').val() === "") {
 			// 	return _('Please enter ID');
 			// }
 		};
 	}
-
-
 </script>
