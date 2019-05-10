@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.0.1",
+		"version": "0.0.2",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -69,10 +69,10 @@
 		"supportCustoms": true,
 		"dependencies": [
 			{
-				"admin": ">=3.0.0"
+				"admin": ">=3.6.2"
 			},
 			{
-				"js-controller": ">=1.4.2"
+				"js-controller": ">=1.5.8"
 			}
 		]
 	},

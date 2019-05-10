@@ -1,6 +1,6 @@
 {
   "name": "iobroker.linkeddevices",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
   "author": {
     "name": "Scrounger",
