@@ -454,6 +454,7 @@ class Linkeddevices extends utils.Adapter {
 
 						var conversion = "";
 						if (parentObj.common.custom[this.namespace].conversion) {
+							// conversion vorhanden, nur bei type = number
 							conversion = parentObj.common.custom[this.namespace].conversion;
 						}
 
@@ -475,8 +476,9 @@ class Linkeddevices extends utils.Adapter {
 						}
 
 						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
-						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter die linkedDevices custom settings weg sind
+						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
 						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion };
+						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// if (parentObj.common.custom[this.namespace].conversion) {
 						// 	linkedObj.common.custom[this.namespace].conversion = parentObj.common.custom[this.namespace].conversion;
