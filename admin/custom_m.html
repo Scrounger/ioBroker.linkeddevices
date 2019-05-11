@@ -127,21 +127,27 @@
 				}
 			}
 
-			$div.find('input[id="test"]').val(type);
+			$div.find('input[id="test"]').val($div.find(type));
 
 			$div.find('input[id="expertSettings"]').on('change', function () {
-				var checked = $(this).prop('checked');
+				// var checked = $(this).prop('checked');
 
-				if (checked) {
-					$div.find('input[data-field="unit"]').prop("disabled", false);
-					$div.find('input[data-field="conversion"]').prop("disabled", false);
-					$div.find('select[id=conversionType]').prop("disabled", false);
-					gMain.showMessage("Halllo");
-				} else {
-					$div.find('input[data-field="unit"]').prop("disabled", true);
-					$div.find('input[data-field="conversion"]').prop("disabled", true);
-					$div.find('select[id=conversionType]').prop("disabled", true);
-				}
+				$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
+				$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
+				$div.find('select[id=conversionType]').prop("disabled", !this.checked);
+
+				gMain.showMessage("Halllo");
+				
+				// if (checked) {
+				// 	//$div.find('input[data-field="unit"]').prop("disabled", false);
+				// 	$div.find('input[data-field="conversion"]').prop("disabled", false);
+				// 	$div.find('select[id=conversionType]').prop("disabled", false);
+				// 	gMain.showMessage("Halllo");
+				// } else {
+				// 	// $div.find('input[data-field="unit"]').prop("disabled", true);
+				// 	$div.find('input[data-field="conversion"]').prop("disabled", true);
+				// 	$div.find('select[id=conversionType]').prop("disabled", true);
+				// }
 			});
 
 			// $div.find('input[data-field="groupFactor"]').prop("disabled", true);
