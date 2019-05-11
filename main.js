@@ -224,77 +224,30 @@ class Linkeddevices extends utils.Adapter {
 	 */
 	async onStateChange(id, state) {
 
-		// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
-		if (state && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
-			let linkedObjId = this.dicLinkedParentObjects[id];
-			let linkedObj = await this.getForeignObjectAsync(linkedObjId);
-			var linkedObjState = await this.getForeignStateAsync(linkedObjId);
+		// 'state' hat sich geändert -> darauf wird nur reagiert wenn nicht der Adapter selbst auslöser ist
+		if (state && state.from != `system.adapter.${this.namespace}`) {
+			let changedValue = state.val;
 
-			let changedValue = state.val
-			// if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].conversion) {
-			// 	this.log.debug(`[onStateChange] linkedObject state changed ${linkedObj.common.custom[this.namespace].conversion}`)
+			// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
+			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
+				let linkedObjId = this.dicLinkedParentObjects[id];
 
-			// 	changedValue = eval(`${changedValue}${linkedObj.common.custom[this.namespace].conversion}`)
-			// 	this.log.debug(`[onStateChange] parentObject state changed ${changedValue}`)
-			// }
+				await this.logStateChange(id, state, linkedObjId, "parentObject");
 
-			if (!linkedObjState) {
-				// Für State gibt es noch keinen Wert
-				await this.setForeignStateChanged(linkedObjId, changedValue, state.ack);
-				this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set linkedObject state '${linkedObjId}'`)
-			} else {
-				// timestamp unterschied berechnen -> wird für entprellung benötigt
-				var tsDifference = state.ts - linkedObjState.ts;
-
-				if (linkedObjState.val != changedValue || linkedObjState.ack != state.ack) {
-					// State haben Wert -> Änderung des Wertes oder Ack
-					await this.setForeignStateChanged(linkedObjId, changedValue, state.ack);
-					this.log.debug(`[onStateChange] parentObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set linkedObject state '${linkedObjId}'`)
-				} else if (tsDifference > 250) {
-					// timestamp Änderungen mitbekommen -> Entprellzeit notwendig um keine dauerschleife zu erzeugen
-					await this.setForeignStateAsync(linkedObjId, changedValue, state.ack);
-					this.log.debug(`[onStateChange] parentObject state.ts '${id}' diffrence '${tsDifference.toString()}' --> set linkedObject state '${linkedObjId}'`)
-				}
+				await this.setForeignStateAsync(linkedObjId, changedValue, state.ack);
 			}
-		}
 
-		// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
-		else if (state && this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
-			// @ts-ignore
-			let parentObjId = Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id);
-			let parentObjState = await this.getForeignStateAsync(parentObjId);
+			// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
+			else if (this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
+				// @ts-ignore
+				let parentObjId = Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id);
 
-			let linkedObj = await this.getForeignObjectAsync(id);
+				// Wenn 'custom.isLinked = true', dann auf Änderung reagieren, da Verlinkung existiert
+				if (this.dicLinkedObjectsStatus[id] === true) {
 
-			let changedValue = state.val
-			// if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].conversion) {
-			// 	let conversion = this.reverseMathString(linkedObj.common.custom[this.namespace].conversion)
+					await this.logStateChange(id, state, parentObjId, "linkedObject");
 
-			// 	this.log.debug(`[onStateChange] linkedObject state changed ${conversion}`)
-
-			// 	changedValue = eval(`${changedValue}${linkedObj.common.custom[this.namespace].conversion}*-1`)
-			// 	this.log.debug(`[onStateChange] linkedObject state changed ${changedValue}`)
-			// }
-
-			// 'custom.isLinked = true'
-			if (this.dicLinkedObjectsStatus[id] === true) {
-				if (!parentObjState) {
-					// Für State gibt es noch keinen Wert
-					await this.setForeignStateChangedAsync(parentObjId, changedValue, state.ack);
-					this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set parentObject state '${parentObjId}'`)
-				} else {
-					// timestamp unterschied berechnen -> wird für entprellung benötigt
-					var tsDifference = state.ts - parentObjState.ts;
-					
-					if (parentObjState.val != changedValue || parentObjState.ack != state.ack) {
-						// State haben Wert -> Änderung des Wertes oder Ack
-						await this.setForeignStateChangedAsync(parentObjId, changedValue, state.ack);
-						this.log.debug(`[onStateChange] linkedObject state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set parentObject state '${parentObjId}'`)
-					} else if (tsDifference > 250) {
-						// timestamp Änderungen mitbekommen -> Entprellzeit notwendig um keine dauerschleife zu erzeugen
-						await this.setForeignStateAsync(parentObjId, changedValue, state.ack);
-						this.log.debug(`[onStateChange] parentObject state.ts '${id}' diffrence '${tsDifference.toString()}' --> set linkedObject state '${parentObjId}'`)
-					}
+					await this.setForeignStateAsync(parentObjId, changedValue, state.ack);
 				}
 			}
 		}
@@ -306,6 +259,33 @@ class Linkeddevices extends utils.Adapter {
 		// 	// The state was deleted
 		// 	this.log.info(`state ${id} deleted`);
 		// }
+	}
+
+	/**
+	 * @param {string} id
+	 * @param {ioBroker.State} state
+	 * @param {string} objId
+	 * @param {string} logPrefix
+	 */
+	async logStateChange(id, state, objId, logPrefix) {
+		let objState = await this.getForeignStateAsync(objId);
+
+		let logChangeStateFor = "parentObject";
+		if (logPrefix === "parentObject") {
+			logChangeStateFor = "linkedObject";
+		}
+
+		if (objState) {
+			if (state.val != objState.val || state.ack != state.ack) {
+				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}'`)
+			} else if (state.ts != objState.ts) {
+				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' timestamp changed --> set ${logChangeStateFor} state '${objId}'`)
+			} else {
+				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' other changes  --> set ${logChangeStateFor} state '${objId}'`)
+			}
+		} else {
+			this.log.debug(`[onStateChange] ${logPrefix} empty state '${id}' set to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}'`)
+		}
 	}
 
 	async initialObjects() {
