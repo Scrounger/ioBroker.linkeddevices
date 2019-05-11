@@ -25,6 +25,11 @@
 					<input type="text" id="parentId" size="30" readonly>
 					<span class="translate">linked with</span>
 			</div>
+
+			<div class="section s_test">
+				<input type="text" id="test" size="30" readonly>
+				<span class="translate">test</span>
+		</div>
 		</div>
 		
 		<div class="col s4 c_ParentObj_ExpertSettings">
@@ -37,11 +42,21 @@
 			</div>
 
 			<div class="section s_ParentObj_conversion">
-				<input type="text" data-field="conversion" size="30" disabled="true">
-				<span class="translate">conversion</span>
+				<div class="row">
+					<div class="col s2">
+						<select id="conversionType" disabled="true">
+							<option value="xml">+ | -</option>
+							<option value="bin">* | /</option>
+						</select>
+						<span class="translate">conversion</span>
+					</div>
+					<div class="col s10">
+						<input type="text" data-field="conversion" size="30" disabled="true">
+						<span class="translate">conversion</span>
+					</div>
+				</div>
 			</div>
 		</div>
-
 
 		<!-- <div class="input-field col s4 group-factor">
 			<input data-field="groupFactor" type="number" data-default="1" step=0.001 min=0.001 max=100/>
@@ -63,6 +78,7 @@
 	// - with attribute "data-default" (content independent)
 	// - with function in global variable "defaults". Function name is equal with adapter name.
 	//   as input function receives object with all information concerning it
+
 	if (typeof defaults !== 'undefined') {
 
 		defaults.linkeddevices = function (obj, instanceObj) {
@@ -111,16 +127,20 @@
 				}
 			}
 
+			$div.find('input[id="test"]').val(type);
+
 			$div.find('input[id="expertSettings"]').on('change', function () {
 				var checked = $(this).prop('checked');
 
 				if (checked) {
 					$div.find('input[data-field="unit"]').prop("disabled", false);
 					$div.find('input[data-field="conversion"]').prop("disabled", false);
-					showMessage("show a message");
+					$div.find('select[id=conversionType]').prop("disabled", false);
+					gMain.showMessage("Halllo");
 				} else {
 					$div.find('input[data-field="unit"]').prop("disabled", true);
 					$div.find('input[data-field="conversion"]').prop("disabled", true);
+					$div.find('select[id=conversionType]').prop("disabled", true);
 				}
 			});
 
@@ -141,6 +161,7 @@
 
 	if (typeof customPostOnSave !== 'undefined') {
 		customPostOnSave.linkeddevices = function ($div, instance) {
+			gMain.showMessage("Halllo");
 			return 'Please enter ID';
 			// if (!$div.find('input[data-field="test"]').val() === "") {
 			// 	return _('Please enter ID');
