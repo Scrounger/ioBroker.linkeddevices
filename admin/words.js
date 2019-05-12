@@ -74,8 +74,16 @@ systemDictionary = {
 		"en": "id of linked object",
 		"de": "Id des verlinkten Objektes",
 	},
-	"not allowed signs": {
+	"only numbers and math operators allowed": {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed!<br><br>Allowed operators: + - / * , . ( )",
 		"de": "Eingabe nicht erlaubt!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt!<br><br>Erlaubte Operatoren: + - / * , . ( )",
+	},
+	"number of decimal places": {
+		"en": "number of decimal places",
+		"de": "Anzahl Nachkommastellen",
+	},
+	"only numbers allowed": {
+		"en": "only numbers allowed",
+		"de": "Nur Nummern sind als Eingabe erlaubt!",
 	}
 };
