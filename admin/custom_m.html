@@ -14,37 +14,37 @@
 		<div class="col s4">
 			<div class="section s_ParentObj_Input_LinkedId">
 				<div class="row">
-					<div class="col s9">
+					<div class="col s8">
+						<label class="translate">prefixId</label>
 						<input type="text" id="prefixId" size="30">
-						<span class="translate">prefixId</span>					
 					</div>
-					<div class="col s3">
+					<div class="col s4">
+						<label class="translate">stateId</label>
 						<input type="text" id="stateId" size="30">
-						<span class="translate">stateId</span>
 					</div>					
 				</div>
 			</div>
 
 			<div class="section s_ParentObj_Name">
+				<label class="translate">name of linked object</label>
 				<input type="text" data-field="name" size="30">
-				<span class="translate">name of linked object</span>
 			</div>
 
 			<div class="section s_LinkedObj_parentId">
-					<input type="text" id="parentId" size="30" readonly>
-					<span class="translate">linked with</span>
+				<label class="translate">linked with</label>
+				<input type="text" id="parentId" size="30" readonly>					
 			</div>
 
 			<div class="section s_test">
-				<input type="text" id="test" size="30" readonly>
-				<span class="translate">test</span>
+				<label class="translate">test</label>
+				<input type="text" id="test" size="30" readonly>				
 			</div>
 		</div>
 		
 		<div class="col s4">
 			<div class="section s_ParentObj_LinkedId">
-				<input type="text" data-field="linkedId" size="30" readonly>
-				<span class="translate">id of linked object</span>
+				<label class="translate">composite id of linked object</label>
+				<input type="text" data-field="linkedId" size="30" readonly>				
 			</div>
 		</div>
 
@@ -62,8 +62,20 @@
 		</div>
 		<div class="col s4">
 			<div class="section s_ParentObj_hasUnit">
-				<input type="text" data-field="unit" size="30" disabled="true">
-				<span class="translate">change unit</span>
+				<div class="row">
+					<div class="col s3>
+						<p class="translate" align="bottom">unit</p>
+					</div>	
+					<div class="col s3">
+						<input type="text" id="currentUnit" size="30" disabled="true">
+					</div>
+					<div class="col s3">
+						<p class="translate" align="bottom">change to</p>
+					</div>					
+					<div class="col s3">
+						<input type="text" data-field="unit" size="30" disabled="true">
+					</div>					
+				</div>
 			</div>
 		
 			<div class="section s_ParentObj_conversion">

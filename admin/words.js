@@ -42,9 +42,9 @@ systemDictionary = {
 		"en": "enabled",
 		"de": "Aktiviert"
 	},
-	"id of linked object": {
-		"en": "id of linked object",
-		"de": "Id des verlinkten Objektes",
+	"composite id of linked object": {
+		"en": "composite id of linked object",
+		"de": "Zusammengesetze Id des verlinkten Objektes",
 	},
 	"name of linked object": {
 		"en": "name of linked object",
