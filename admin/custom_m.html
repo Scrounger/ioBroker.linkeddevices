@@ -122,11 +122,7 @@
 			// 	$div.find('input[id="test"]').val(JSON.stringify(myObj));
 			// }
 
-			if (currentObj && currentObj._id) {
-				var objId = currentObj._id;
-				$div.find('input[id="stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-				$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-			} else if (values["linkedId"]) {
+			if (values["linkedId"]) {
 				var linkedId = values["linkedId"];
 
 				if (values["linkedId"].indexOf(".") > 0) {
@@ -135,6 +131,10 @@
 				} else {
 					$div.find('input[id="stateId"]').val(linkedId);
 				}
+			} else if (currentObj && currentObj._id) {
+				var objId = currentObj._id;
+				$div.find('input[id="stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+				$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
 			}
 
 
