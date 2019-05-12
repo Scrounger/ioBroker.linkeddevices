@@ -73,5 +73,9 @@ systemDictionary = {
 	"id of linked object": {
 		"en": "id of linked object",
 		"de": "Id des verlinkten Objektes",
+	},
+	"not allowed signs": {
+		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed!<br><br>Allowed operators: + - / * , . ( )",
+		"de": "Eingabe nicht erlaubt!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt!<br><br>Erlaubte Operatoren: + - / * , . ( )",
 	}
 };

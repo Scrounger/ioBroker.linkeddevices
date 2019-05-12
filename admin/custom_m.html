@@ -57,7 +57,12 @@
 				<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
 				<input type="text" data-field="unit" size="30" disabled="true">
 			</div>
-		
+		</div>
+		<div class="col s4">
+			<div class="section s_ParentObj_readOnly_conversion">
+				<label class="translate">read only conversion</label>
+				<input type="text" data-field="readOnlyConversion" size="30" disabled="true"'>
+			</div>
 			<div class="section s_ParentObj_conversion">
 				<div class="row">
 					<div class="col s2">
@@ -67,7 +72,6 @@
 						</select>
 						<span class="translate">conversion</span>
 					</div>
-							
 					<div class="col s10">
 						<input type="text" data-field="conversion" size="30" disabled="true">
 						<span class="translate">conversion</span>
@@ -141,20 +145,46 @@
 				//parentObject
 				$div.find('.c_ParentObj_Enabled').show();
 				$div.find('.colParentObj_Input').show();
-				$div.find('.c_ParentObj_ExpertSettings').show();
+
 				$div.find('.s_ParentObj_Input_LinkedId').show();
 
 				$div.find('.c_LinkedObj_isLinked').hide();
 				$div.find('.s_LinkedObj_parentId').hide();
 
+				if (type === 'number' || type === 'string') {
+					// Experteneinstellungen anzeigen
+					$div.find('.c_ParentObj_ExpertSettings').show();
+				} else {
+					$div.find('.c_ParentObj_ExpertSettings').hide();
+				}
+
 				if (type === 'number') {
 					$div.find('.s_ParentObj_hasUnit').show();
 					$div.find('label[id="labelUnit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
-					$div.find('.s_ParentObj_conversion').show();
+					if (currentObj.common.read === true && currentObj.common.write === false) {
+						// Number ist readOnly
+						$div.find('.s_ParentObj_readOnly_conversion').show();
+						$div.find('.s_ParentObj_conversion').hide();
+
+						$div.find('input[data-field="readOnlyConversion"]').keyup(function () {
+							// Nur Nummern und math operators zulassen
+							let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
+
+							if (allowedSigns.test(this.value)) {
+								gMain.showError(_("not allowed signs"));
+							}
+							this.value = this.value.replace(allowedSigns, '');
+						});
+
+					} else {
+						$div.find('.s_ParentObj_conversion').show();
+						$div.find('.s_ParentObj_readOnly_conversion').hide();
+					}
 				} else {
 					$div.find('.s_ParentObj_hasUnit').hide();
 					$div.find('.s_ParentObj_conversion').hide();
+					$div.find('.s_ParentObj_readOnly_conversion').hide();
 				}
 
 				$div.find('input[id="prefixId"]').on('input', function () {
@@ -178,17 +208,20 @@
 						$div.find('input[data-field="linkedId"]').val(stateId);
 					}
 				});
+
+				$div.find('input[id="expertSettings"]').on('change', function () {
+					// var checked = $(this).prop('checked');
+
+					$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
+					$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
+					$div.find('input[data-field="readOnlyConversion"]').prop("disabled", !this.checked);
+					$div.find('select[id=conversionType]').prop("disabled", !this.checked);
+
+					gMain.showMessage("Halllo");
+				});
+
+
 			}
-
-			$div.find('input[id="expertSettings"]').on('change', function () {
-				// var checked = $(this).prop('checked');
-
-				$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
-				$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
-				$div.find('select[id=conversionType]').prop("disabled", !this.checked);
-
-				gMain.showMessage("Halllo");
-			});
 		}
 	}
 
