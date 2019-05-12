@@ -79,11 +79,11 @@ systemDictionary = {
 		"de": "Eingabe nicht erlaubt!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt!<br><br>Erlaubte Operatoren: + - / * , . ( )",
 	},
 	"number of decimal places": {
-		"en": "number of decimal places",
-		"de": "Anzahl Nachkommastellen",
+		"en": "number of decimal places for linked object",
+		"de": "Anzahl Nachkommastellen für verlinktes Objekt",
 	},
 	"only numbers allowed": {
 		"en": "only numbers allowed",
 		"de": "Nur Nummern sind als Eingabe erlaubt!",
-	}
+	},
 };

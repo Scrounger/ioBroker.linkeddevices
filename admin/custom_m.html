@@ -60,10 +60,10 @@
 						<input type="text" data-field="unit" size="30" disabled="true">
 					</div>
 				</div>
-				<div class="col s6 s_ParentObj_maxDigits">
+				<div class="col s6 s_ParentObj_maxDecimal">
 					<div class="section">
 						<label class="translate">number of decimal places</label>
-						<input type="text" data-field="maxDigits" size="30" disabled="true">
+						<input type="text" data-field="maxDecimal" size="30" disabled="true">
 					</div>
 				</div>
 			</div>
@@ -172,8 +172,8 @@
 					$div.find('.s_ParentObj_hasUnit').show();
 					$div.find('label[id="labelUnit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
-					$div.find('.s_ParentObj_maxDigits').show();
-					$div.find('input[data-field="maxDigits"]').keyup(function () {
+					$div.find('.s_ParentObj_maxDecimal').show();
+					$div.find('input[data-field="maxDecimal"]').keyup(function () {
 						// Nur Nummern und math operators zulassen
 						let allowedSigns = /[^0-9]/;
 
@@ -204,7 +204,7 @@
 					}
 				} else {
 					$div.find('.s_ParentObj_hasUnit').hide();
-					$div.find('.s_ParentObj_maxDigits').hide();
+					$div.find('.s_ParentObj_maxDecimal').hide();
 					$div.find('.s_ParentObj_conversion').hide();
 					$div.find('.s_ParentObj_readOnly_conversion').hide();
 				}
@@ -235,7 +235,7 @@
 					// var checked = $(this).prop('checked');
 
 					$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
-					$div.find('input[data-field="maxDigits"]').prop("disabled", !this.checked);
+					$div.find('input[data-field="maxDecimal"]').prop("disabled", !this.checked);
 					$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
 					$div.find('input[data-field="readOnlyConversion"]').prop("disabled", !this.checked);
 					$div.find('select[id=conversionType]').prop("disabled", !this.checked);
