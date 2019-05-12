@@ -12,7 +12,6 @@
 		</div>
 
 		<div class="col s4">
-
 			<div class="section s_ParentObj_Input_LinkedId">
 				<div class="row">
 					<div class="col s9">
@@ -25,10 +24,7 @@
 					</div>					
 				</div>
 			</div>
-			<div class="section s_ParentObj_LinkedId">
-				<input type="text" data-field="linkedId" size="30" readonly>
-				<span class="translate">id of linked object</span>
-			</div>
+
 			<div class="section s_ParentObj_Name">
 				<input type="text" data-field="name" size="30">
 				<span class="translate">name of linked object</span>
@@ -42,32 +38,13 @@
 			<div class="section s_test">
 				<input type="text" id="test" size="30" readonly>
 				<span class="translate">test</span>
-		</div>
+			</div>
 		</div>
 		
-		<div class="col s4 c_ParentObj_ExpertSettings">
-			<input type="checkbox" id="expertSettings"/>
-			<span class="translate">expert settings</span>
-
-			<div class="section s_ParentObj_hasUnit">
-				<input type="text" data-field="unit" size="30" disabled="true">
-				<span class="translate">change unit</span>
-			</div>
-
-			<div class="section s_ParentObj_conversion">
-				<div class="row">
-					<div class="col s2">
-						<select id="conversionType" disabled="true">
-							<option value="xml">+ | -</option>
-							<option value="bin">* | /</option>
-						</select>
-						<span class="translate">conversion</span>
-					</div>
-					<div class="col s10">
-						<input type="text" data-field="conversion" size="30" disabled="true">
-						<span class="translate">conversion</span>
-					</div>
-				</div>
+		<div class="col s4">
+			<div class="section s_ParentObj_LinkedId">
+				<input type="text" data-field="linkedId" size="30" readonly>
+				<span class="translate">id of linked object</span>
 			</div>
 		</div>
 
@@ -78,6 +55,36 @@
 
 		</div> -->
 	</div>
+	<div class="row c_ParentObj_ExpertSettings">
+		<div class="col s2">
+			<input type="checkbox" id="expertSettings"/>
+			<span class="translate">expert settings</span>
+		</div>
+		<div class="col s4">
+			<div class="section s_ParentObj_hasUnit">
+				<input type="text" data-field="unit" size="30" disabled="true">
+				<span class="translate">change unit</span>
+			</div>
+		
+			<div class="section s_ParentObj_conversion">
+				<div class="row">
+					<div class="col s2">
+						<select id="conversionType" disabled="true">
+							<option value="xml">+ | -</option>
+							<option value="bin">* | /</option>
+						</select>
+						<span class="translate">conversion</span>
+					</div>
+							
+					<div class="col s10">
+						<input type="text" data-field="conversion" size="30" disabled="true">
+						<span class="translate">conversion</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </script>
 
 <script type="text/javascript">
@@ -92,13 +99,11 @@
 	// - with function in global variable "defaults". Function name is equal with adapter name.
 	//   as input function receives object with all information concerning it
 
-	var myObj = null;
+	// Objekt holen für das der custom Dialog geöffnet wurde 
+	var currentObj = gMain.objects[gMain.navigateGetParams()];
 
 	if (typeof defaults !== 'undefined') {
-
 		defaults.linkeddevices = function (obj, instanceObj) {
-			myObj = obj;
-
 			return {
 				enabled: false,
 				unit: obj.common.unit
@@ -109,16 +114,16 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
-			// $div.find('input[id="test"]').val(JSON.stringify(values["obj"]));
-			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(gMain));
+			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
+			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(my.object));
 
 			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(this.linkeddevices.prototype));
 			// if(myObj){
 			// 	$div.find('input[id="test"]').val(JSON.stringify(myObj));
 			// }
 
-			if (myObj && myObj._id) {
-				var objId = myObj._id;
+			if (currentObj && currentObj._id) {
+				var objId = currentObj._id;
 				$div.find('input[id="stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
 				$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
 			} else if (values["linkedId"]) {
