@@ -608,21 +608,32 @@ class Linkeddevices extends utils.Adapter {
 	async getConvertedValue(id, value) {
 		let obj = await this.getForeignObjectAsync(id);
 
+		let convertedValue = value;
 		if (obj && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
-			if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion) {
-				// ReadOnly object mit conversion -> umrechnen
-				let calc = eval(`${value} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
+			try {
+				if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion) {
+					// ReadOnly object mit conversion -> umrechnen
+					let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
 
-				this.log.debug(`[getConvertedValue] read only state '${id}' changed to '${value}' with using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' new value is '${calc}'`)
+					this.log.debug(`[getConvertedValue] read only state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new value is '${calc}'`)
 
-				value = calc;
+					convertedValue = calc;
+				}
+			} catch (err) {
+				// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
+				this.log.error(`[getConvertedValue] error: ${err.message}`);
+				this.log.error(`[getConvertedValue] stack: ${err.stack}`);
+				this.log.error(`[getConvertedValue] there is something wrong with your conversion formula, check your input for '${id}'!`);
+
+				convertedValue = value;
 			}
 
 			if (obj.common.custom[this.namespace].maxDecimal) {
-				value = value.toFixed(obj.common.custom[this.namespace].maxDecimal)
+				// Nachkommastellen festlegen
+				convertedValue = convertedValue.toFixed(obj.common.custom[this.namespace].maxDecimal)
 			}
 		}
-		return value;
+		return convertedValue;
 	}
 
 	logDicLinkedObjectsStatus() {
