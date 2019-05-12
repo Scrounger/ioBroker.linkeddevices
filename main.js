@@ -231,6 +231,19 @@ class Linkeddevices extends utils.Adapter {
 			// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
 			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 				let linkedObjId = this.dicLinkedParentObjects[id];
+				let linkedObj = await this.getForeignObjectAsync(linkedObjId);
+
+				if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace]) {
+					if (linkedObj.common.read && !linkedObj.common.write && linkedObj.common.custom[this.namespace].readOnlyConversion){
+						// ReadOnly object
+						changedValue = eval(`${changedValue} ${linkedObj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
+					}
+
+					if (linkedObj.common.custom[this.namespace].maxDecimal){
+						changedValue = changedValue.toFixed(linkedObj.common.custom[this.namespace].maxDecimal)
+					}
+
+				}
 
 				await this.logStateChange(id, state, linkedObjId, "parentObject");
 
@@ -446,6 +459,18 @@ class Linkeddevices extends utils.Adapter {
 							conversion = parentObj.common.custom[this.namespace].conversion;
 						}
 
+						var readOnlyConversion = "";
+						if (parentObj.common.custom[this.namespace].readOnlyConversion) {
+							// conversion vorhanden, nur bei type = number
+							readOnlyConversion = parentObj.common.custom[this.namespace].readOnlyConversion;
+						}
+
+						var maxDecimal = "";
+						if (parentObj.common.custom[this.namespace].maxDecimal) {
+							// conversion vorhanden, nur bei type = number
+							maxDecimal = parentObj.common.custom[this.namespace].maxDecimal;
+						}
+
 						// custom settings von anderen Adaptern ggf. übernehmen
 						let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
 						if (existingLinkedObj && existingLinkedObj.common && existingLinkedObj.common.custom) {
@@ -465,7 +490,7 @@ class Linkeddevices extends utils.Adapter {
 
 						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
-						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion };
+						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion, "readOnlyConversion": readOnlyConversion, "maxDecimal": maxDecimal};
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// if (parentObj.common.custom[this.namespace].conversion) {
@@ -486,6 +511,7 @@ class Linkeddevices extends utils.Adapter {
 						// state für linkedObject  setzen, wird vom parent übernommen
 						let parentObjState = await this.getForeignStateAsync(parentObj._id);
 						if (parentObjState) {
+							//TODO conversion, maxDigits implementieren
 							await this.setForeignState(linkedId, parentObjState.val, true);
 						}
 
