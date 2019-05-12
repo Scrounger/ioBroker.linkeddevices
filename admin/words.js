@@ -75,8 +75,8 @@ systemDictionary = {
 		"de": "Id des verlinkten Objektes",
 	},
 	"only numbers and math operators allowed": {
-		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed!<br><br>Allowed operators: + - / * , . ( )",
-		"de": "Eingabe nicht erlaubt!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt!<br><br>Erlaubte Operatoren: + - / * , . ( )",
+		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: + - / * , . ( )",
+		"de": "Falsches Eingabeformat!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Erlaubte Operatoren: + - / * , . ( )",
 	},
 	"number of decimal places": {
 		"en": "number of decimal places for linked object",
@@ -85,5 +85,9 @@ systemDictionary = {
 	"only numbers allowed": {
 		"en": "only numbers allowed",
 		"de": "Nur Nummern sind als Eingabe erlaubt!",
+	},
+	"conversion for read only object": {
+		"en": "conversion for read only object",
+		"de": "Umrechnung für verlinktes 'read' Objekt",
 	},
 };

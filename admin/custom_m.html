@@ -70,7 +70,7 @@
 		</div>
 		<div class="col s4">
 			<div class="section s_ParentObj_readOnly_conversion">
-				<label class="translate">read only conversion</label>
+				<label class="translate">conversion for read only object</label>
 				<input type="text" data-field="readOnlyConversion" size="30" disabled="true"'>
 			</div>
 			<div class="section s_ParentObj_conversion">
@@ -192,9 +192,15 @@
 							// Nur Nummern und math operators zulassen
 							let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
 
-							if (allowedSigns.test(this.value)) {
-								gMain.showError(_("only numbers and math operators allowed"));
+							if (this.value.length > 0) {
+								if (allowedSigns.test(this.value)) {
+									gMain.showError(_("only numbers and math operators allowed"));
+								} else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
+									this.value = "";
+									gMain.showError(_("only numbers and math operators allowed"));
+								}
 							}
+
 							this.value = this.value.replace(allowedSigns, '');
 						});
 
