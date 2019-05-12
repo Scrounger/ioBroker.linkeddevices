@@ -15,11 +15,11 @@
 			<div class="section s_ParentObj_Input_LinkedId">
 				<div class="row">
 					<div class="col s8">
-						<label class="translate">prefixId</label>
+						<label class="translate">prefix for id of linked object</label>
 						<input type="text" id="prefixId" size="30">
 					</div>
 					<div class="col s4">
-						<label class="translate">stateId</label>
+						<label class="translate">id of linked object</label>
 						<input type="text" id="stateId" size="30">
 					</div>					
 				</div>
@@ -34,11 +34,6 @@
 				<label class="translate">linked with</label>
 				<input type="text" id="parentId" size="30" readonly>					
 			</div>
-
-			<div class="section s_test">
-				<label class="translate">test</label>
-				<input type="text" id="test" size="30" readonly>				
-			</div>
 		</div>
 		
 		<div class="col s4">
@@ -46,14 +41,11 @@
 				<label class="translate">composite id of linked object</label>
 				<input type="text" data-field="linkedId" size="30" readonly>				
 			</div>
+			<div class="section s_test">
+					<label class="translate">test</label>
+					<input type="text" id="test" size="30" readonly>				
+			</div>
 		</div>
-
-		<!-- <div class="input-field col s4 group-factor">
-			<input data-field="groupFactor" type="number" data-default="1" step=0.001 min=0.001 max=100/>
-			<label class="translate" for="groupFactor" >Counter factor</label>
-			<p class="translate">Conversion factor for consumption counter</p>
-
-		</div> -->
 	</div>
 	<div class="row c_ParentObj_ExpertSettings">
 		<div class="col s2">
@@ -62,20 +54,8 @@
 		</div>
 		<div class="col s4">
 			<div class="section s_ParentObj_hasUnit">
-				<div class="row">
-					<div class="col s3>
-						<p class="translate" align="bottom">unit</p>
-					</div>	
-					<div class="col s3">
-						<input type="text" id="currentUnit" size="30" disabled="true">
-					</div>
-					<div class="col s3">
-						<p class="translate" align="bottom">change to</p>
-					</div>					
-					<div class="col s3">
-						<input type="text" data-field="unit" size="30" disabled="true">
-					</div>					
-				</div>
+				<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
+				<input type="text" data-field="unit" size="30" disabled="true">
 			</div>
 		
 			<div class="section s_ParentObj_conversion">
@@ -127,12 +107,6 @@
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
-			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(my.object));
-
-			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(this.linkeddevices.prototype));
-			// if(myObj){
-			// 	$div.find('input[id="test"]').val(JSON.stringify(myObj));
-			// }
 
 			if (values["linkedId"]) {
 				var linkedId = values["linkedId"];
@@ -148,10 +122,6 @@
 				$div.find('input[id="stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
 				$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
 			}
-
-
-			// $div.find('input[data-field="test"]').val(values["isLinked"])
-			// $div.find('input[data-field="enabled"]').hide();
 
 			if (values["isLinked"] != undefined) {
 				//linkedObject
@@ -179,6 +149,8 @@
 
 				if (type === 'number') {
 					$div.find('.s_ParentObj_hasUnit').show();
+					$div.find('label[id="labelUnit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
+
 					$div.find('.s_ParentObj_conversion').show();
 				} else {
 					$div.find('.s_ParentObj_hasUnit').hide();
@@ -217,19 +189,6 @@
 
 				gMain.showMessage("Halllo");
 			});
-
-			// $div.find('input[data-field="groupFactor"]').prop("disabled", true);
-			// //$div.find('input[data-field="test"]').val(values);
-
-			// var isLinked = $div.find('input[data-field="isLinked"]').is(":checked");
-			// $div.find('input[data-field="test"]').val(JSON.stringify(values))
-
-			// if ($div.find('input[data-field="isLinked"]').is(":checked"))
-			// {
-			// 	$div.find('input[data-field="name"]').hide();
-			// }
-
-			// $div.find('textarea[id="area"]').val(parentId);
 		}
 	}
 

@@ -62,8 +62,16 @@ systemDictionary = {
 		"en": "expert settings",
 		"de": "Experteneinstellung",
 	},
-	"change unit": {
-		"en": "change unit",
-		"de": "Einheit ändern",
+	"change unit '{0}' for linked object to": {
+		"en": "change unit '{0}' for linked object to",
+		"de": "Ändere Einheit '{0}' für verlinktes Objekt in",
+	},
+	"prefix for id of linked object": {
+		"en": "prefix for id of linked object",
+		"de": "Präfix für Id des verlinkten Objektes",
+	},
+	"id of linked object": {
+		"en": "id of linked object",
+		"de": "Id des verlinkten Objektes",
 	}
 };
