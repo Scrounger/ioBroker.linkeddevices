@@ -12,8 +12,21 @@
 		</div>
 
 		<div class="col s4">
+
+			<div class="section s_ParentObj_Input_LinkedId">
+				<div class="row">
+					<div class="col s9">
+						<input type="text" id="prefixId" size="30">
+						<span class="translate">prefixId</span>					
+					</div>
+					<div class="col s3">
+						<input type="text" id="stateId" size="30">
+						<span class="translate">stateId</span>
+					</div>					
+				</div>
+			</div>
 			<div class="section s_ParentObj_LinkedId">
-				<input type="text" data-field="linkedId" size="30">
+				<input type="text" data-field="linkedId" size="30" readonly>
 				<span class="translate">id of linked object</span>
 			</div>
 			<div class="section s_ParentObj_Name">
@@ -79,9 +92,13 @@
 	// - with function in global variable "defaults". Function name is equal with adapter name.
 	//   as input function receives object with all information concerning it
 
+	var myObj = null;
+
 	if (typeof defaults !== 'undefined') {
 
 		defaults.linkeddevices = function (obj, instanceObj) {
+			myObj = obj;
+
 			return {
 				enabled: false,
 				unit: obj.common.unit
@@ -92,6 +109,30 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
+			// $div.find('input[id="test"]').val(JSON.stringify(values["obj"]));
+			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(gMain));
+
+			//$div.find('input[id="test"]').val(Object.getOwnPropertyNames(this.linkeddevices.prototype));
+			// if(myObj){
+			// 	$div.find('input[id="test"]').val(JSON.stringify(myObj));
+			// }
+
+			if (myObj && myObj._id) {
+				var objId = myObj._id;
+				$div.find('input[id="stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+				$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+			} else if (values["linkedId"]) {
+				var linkedId = values["linkedId"];
+
+				if (values["linkedId"].indexOf(".") > 0) {
+					$div.find('input[id="stateId"]').val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
+					$div.find('input[id="prefixId"]').val(linkedId.substring(0, linkedId.lastIndexOf(".")));
+				} else {
+					$div.find('input[id="stateId"]').val(linkedId);
+				}
+			}
+
+
 			// $div.find('input[data-field="test"]').val(values["isLinked"])
 			// $div.find('input[data-field="enabled"]').hide();
 
@@ -100,6 +141,7 @@
 				$div.find('.c_ParentObj_Enabled').hide();
 				$div.find('.s_ParentObj_LinkedId').hide();
 				$div.find('.s_ParentObj_Name').hide();
+				$div.find('.s_ParentObj_Input_LinkedId').hide();
 
 				$div.find('.c_LinkedObj_isLinked').show();
 				$div.find('input[id="isLinked"]').prop('checked', values["isLinked"]);
@@ -108,12 +150,12 @@
 				$div.find('input[id="parentId"]').val(values["parentId"]);
 
 				$div.find('.c_ParentObj_ExpertSettings').hide();
-
 			} else {
 				//parentObject
 				$div.find('.c_ParentObj_Enabled').show();
 				$div.find('.colParentObj_Input').show();
 				$div.find('.c_ParentObj_ExpertSettings').show();
+				$div.find('.s_ParentObj_Input_LinkedId').show();
 
 				$div.find('.c_LinkedObj_isLinked').hide();
 				$div.find('.s_LinkedObj_parentId').hide();
@@ -125,9 +167,29 @@
 					$div.find('.s_ParentObj_hasUnit').hide();
 					$div.find('.s_ParentObj_conversion').hide();
 				}
-			}
 
-			$div.find('input[id="test"]').val($div.find(type));
+				$div.find('input[id="prefixId"]').on('input', function () {
+					let prefixId = $div.find('input[id="prefixId"]').val();
+					let stateId = $div.find('input[id="stateId"]').val();
+
+					if (prefixId) {
+						$div.find('input[data-field="linkedId"]').val(prefixId + "." + stateId);
+					} else {
+						$div.find('input[data-field="linkedId"]').val(stateId);
+					}
+				});
+
+				$div.find('input[id="stateId"]').on('input', function () {
+					let prefixId = $div.find('input[id="prefixId"]').val();
+					let stateId = $div.find('input[id="stateId"]').val();
+
+					if (prefixId) {
+						$div.find('input[data-field="linkedId"]').val(prefixId + "." + stateId);
+					} else {
+						$div.find('input[data-field="linkedId"]').val(stateId);
+					}
+				});
+			}
 
 			$div.find('input[id="expertSettings"]').on('change', function () {
 				// var checked = $(this).prop('checked');
@@ -137,17 +199,6 @@
 				$div.find('select[id=conversionType]').prop("disabled", !this.checked);
 
 				gMain.showMessage("Halllo");
-				
-				// if (checked) {
-				// 	//$div.find('input[data-field="unit"]').prop("disabled", false);
-				// 	$div.find('input[data-field="conversion"]').prop("disabled", false);
-				// 	$div.find('select[id=conversionType]').prop("disabled", false);
-				// 	gMain.showMessage("Halllo");
-				// } else {
-				// 	// $div.find('input[data-field="unit"]').prop("disabled", true);
-				// 	$div.find('input[data-field="conversion"]').prop("disabled", true);
-				// 	$div.find('select[id=conversionType]').prop("disabled", true);
-				// }
 			});
 
 			// $div.find('input[data-field="groupFactor"]').prop("disabled", true);
