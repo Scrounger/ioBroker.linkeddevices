@@ -231,19 +231,9 @@ class Linkeddevices extends utils.Adapter {
 			// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
 			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 				let linkedObjId = this.dicLinkedParentObjects[id];
-				let linkedObj = await this.getForeignObjectAsync(linkedObjId);
 
-				if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace]) {
-					if (linkedObj.common.read && !linkedObj.common.write && linkedObj.common.custom[this.namespace].readOnlyConversion){
-						// ReadOnly object
-						changedValue = eval(`${changedValue} ${linkedObj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
-					}
-
-					if (linkedObj.common.custom[this.namespace].maxDecimal){
-						changedValue = changedValue.toFixed(linkedObj.common.custom[this.namespace].maxDecimal)
-					}
-
-				}
+				// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
+				changedValue = await this.getConvertedValue(linkedObjId, changedValue);
 
 				await this.logStateChange(id, state, linkedObjId, "parentObject");
 
@@ -273,6 +263,8 @@ class Linkeddevices extends utils.Adapter {
 		// 	this.log.info(`state ${id} deleted`);
 		// }
 	}
+
+
 
 	/**
 	 * @param {string} id
@@ -490,7 +482,7 @@ class Linkeddevices extends utils.Adapter {
 
 						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
-						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion, "readOnlyConversion": readOnlyConversion, "maxDecimal": maxDecimal};
+						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion, "readOnlyConversion": readOnlyConversion, "maxDecimal": maxDecimal };
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// if (parentObj.common.custom[this.namespace].conversion) {
@@ -511,8 +503,10 @@ class Linkeddevices extends utils.Adapter {
 						// state für linkedObject  setzen, wird vom parent übernommen
 						let parentObjState = await this.getForeignStateAsync(parentObj._id);
 						if (parentObjState) {
-							//TODO conversion, maxDigits implementieren
-							await this.setForeignState(linkedId, parentObjState.val, true);
+							// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
+							let changedValue = await this.getConvertedValue(linkedId, parentObjState.val)
+
+							await this.setForeignState(linkedId, changedValue, true);
 						}
 
 						// subscribe für parentObject 'state', um Änderungen mitzubekommen
@@ -564,6 +558,8 @@ class Linkeddevices extends utils.Adapter {
 		}
 	}
 
+	//#region Functions
+
 	/**
 	 * linkedId des linkedObjects erzeugen
 	 * @param {ioBroker.Object} parentObj
@@ -572,24 +568,6 @@ class Linkeddevices extends utils.Adapter {
 		// @ts-ignore
 		return this.namespace + "." + parentObj.common.custom[this.namespace].linkedId;
 	}
-
-
-	// /**
-	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-	//  * Using this method requires "common.message" property to be set to true in io-package.json
-	//  * @param {ioBroker.Message} obj
-	//  */
-	// onMessage(obj) {
-	// 	if (typeof obj === "object" && obj.message) {
-	// 		if (obj.command === "send") {
-	// 			// e.g. send email or pushover or whatever
-	// 			this.log.info("send command");
-
-	// 			// Send response in callback if required
-	// 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
-	// 		}
-	// 	}
-	// }
 
 	/**
 	 * Prüfen ob die angegebene linkedId schon verwendet wird
@@ -624,27 +602,27 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
-	 * @param {any[]} str
+	 * @param {string} id
+	 * @param {any} value
 	 */
-	reverseMathString(str) {
-		// Funktion um eine mathematische Formel zu inversion -> aus '+3/5' wird '-3*5'
-		let result = "";
+	async getConvertedValue(id, value) {
+		let obj = await this.getForeignObjectAsync(id);
 
-		for (var i = 0; i < str.length; i++) {
-			let char = str[i];
+		if (obj && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
+			if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion) {
+				// ReadOnly object mit conversion -> umrechnen
+				let calc = eval(`${value} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
 
-			if (char === "+") {
-				char = char.replace("+", "-");
-			} else if (char === "-") {
-				char = char.replace("-", "+");
-			} else if (char === "*") {
-				char = char.replace("*", "/");
-			} else if (char === "/") {
-				char = char.replace("/", "*");
+				this.log.debug(`[getConvertedValue] read only state '${id}' changed to '${value}' with using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' new value is '${calc}'`)
+
+				value = calc;
 			}
-			result = result + char;
+
+			if (obj.common.custom[this.namespace].maxDecimal) {
+				value = value.toFixed(obj.common.custom[this.namespace].maxDecimal)
+			}
 		}
-		return result;
+		return value;
 	}
 
 	logDicLinkedObjectsStatus() {
@@ -660,6 +638,8 @@ class Linkeddevices extends utils.Adapter {
 			this.log.silly("[logDicLinkedParentObjects] active linkedObjects " + JSON.stringify(this.dicLinkedParentObjects));
 		}
 	}
+
+	//#endregion
 }
 
 // @ts-ignore
