@@ -24,6 +24,12 @@ This adapter is inspired at [virtual devices script by Pman](https://forum.iobro
 
 ## Changelog
 
+### 0.0.4
+* (Scrounger) main function added
+* (Scrounger) change unit for linked objects
+* (Scrounger) set number of decimal places for linked objects
+* (Scrounger) set conversion for read only linked objects
+
 ### 0.0.1
 * (Scrounger) initial release
 
