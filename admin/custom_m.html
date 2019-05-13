@@ -74,18 +74,9 @@
 				<input type="text" data-field="readOnlyConversion" size="30" disabled="true"'>
 			</div>
 			<div class="section s_ParentObj_conversion">
-				<div class="row">
-					<div class="col s2">
-						<select id="conversionType" disabled="true">
-							<option value="xml">+ | -</option>
-							<option value="bin">* | /</option>
-						</select>
-						<span class="translate">conversion</span>
-					</div>
-					<div class="col s10">
-						<input type="text" data-field="conversion" size="30" disabled="true">
-						<span class="translate">conversion</span>
-					</div>
+				<div class="col s10">
+					<label class="translate">conversion for linked object</label>
+					<input type="text" data-field="conversion" size="30" disabled="true">					
 				</div>
 			</div>
 		</div>
@@ -194,10 +185,12 @@
 
 							if (this.value.length > 0) {
 								if (allowedSigns.test(this.value)) {
-									gMain.showError(_("only numbers and math operators allowed"));
+									// prüfen auf zulässige Zeichen
+									gMain.showError(_("only numbers and math operators allowed for read only object"));
 								} else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
+									// muss mit math operator beginnen
 									this.value = "";
-									gMain.showError(_("only numbers and math operators allowed"));
+									gMain.showError(_("only numbers and math operators allowed for read only object"));
 								}
 							}
 
@@ -206,6 +199,25 @@
 
 					} else {
 						$div.find('.s_ParentObj_conversion').show();
+						$div.find('input[data-field="conversion"]').keyup(function () {
+							// Nur Nummern und math operators * | / zulassen
+							let allowedSigns = /[^0-9\.\,\*\/]/;
+
+							if (this.value.length > 0) {
+								if (allowedSigns.test(this.value)) {
+									// prüfen auf zulässige Zeichen
+									gMain.showError(_("only numbers and math operators allowed"));
+								} else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
+									// muss mit math operator beginnen
+									this.value = "";
+									gMain.showError(_("only numbers and math operators allowed"));
+								}
+							}
+
+							this.value = this.value.replace(allowedSigns, '');
+
+						});
+
 						$div.find('.s_ParentObj_readOnly_conversion').hide();
 					}
 				} else {
@@ -248,8 +260,6 @@
 
 					//gMain.showMessage("Halllo");
 				});
-
-
 			}
 		}
 	}
