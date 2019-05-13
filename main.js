@@ -248,6 +248,9 @@ class Linkeddevices extends utils.Adapter {
 				// Wenn 'custom.isLinked = true', dann auf Änderung reagieren, da Verlinkung existiert
 				if (this.dicLinkedObjectsStatus[id] === true) {
 
+					// ggf. kann für das linkedObject eine Umrechnung festgelegt sein -> parentObject zurück rechnen
+					changedValue = await this.getConvertedValue(parentObjId, changedValue, true);
+
 					await this.logStateChange(id, state, parentObjId, "linkedObject");
 
 					await this.setForeignStateAsync(parentObjId, changedValue, state.ack);
@@ -605,18 +608,31 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} id
 	 * @param {any} value
 	 */
-	async getConvertedValue(id, value) {
+	async getConvertedValue(id, value, isParentObj = false) {
 		let obj = await this.getForeignObjectAsync(id);
 
 		let convertedValue = value;
 		if (obj && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
 			try {
-				if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion) {
+				if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion && !isParentObj) {
 					// ReadOnly object mit conversion -> umrechnen
 					let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
 
-					this.log.debug(`[getConvertedValue] read only state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new value is '${calc}'`)
+					this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
 
+					convertedValue = calc;
+				} else if (obj.common.custom[this.namespace].conversion) {
+					// object mit conversion -> umrechnen
+					let calc = 0;
+					if (!isParentObj) {
+						// Umrechnung für linkedObject -> parentObject state ändert sich
+						calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].conversion.replace(",", ".")}`);
+						this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].conversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+					} else {
+						// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
+						calc = eval(`${convertedValue} * 1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})`);
+						this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using conversion '1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})' -> new parentObject value is '${calc}'`)
+					}
 					convertedValue = calc;
 				}
 			} catch (err) {
@@ -628,8 +644,8 @@ class Linkeddevices extends utils.Adapter {
 				convertedValue = value;
 			}
 
-			if (obj.common.custom[this.namespace].maxDecimal) {
-				// Nachkommastellen festlegen
+			if (obj.common.custom[this.namespace].maxDecimal && !isParentObj) {
+				// nur für linkedObject Nachkommastellen festlegen
 				convertedValue = convertedValue.toFixed(obj.common.custom[this.namespace].maxDecimal)
 			}
 		}
