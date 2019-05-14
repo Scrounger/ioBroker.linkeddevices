@@ -50,7 +50,7 @@ class Linkeddevices extends utils.Adapter {
 		// this.log.info("config option1: " + this.config.option1);
 		// this.log.info("config option2: " + this.config.option2);
 
-		this.log.info(mathjs.format(mathjs.eval("122.5/3.132165"), { notation: 'fixed', precision: 2 }));
+
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -616,40 +616,46 @@ class Linkeddevices extends utils.Adapter {
 
 		let convertedValue = value;
 		if (obj && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
-			try {
-				if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion && !isParentObj) {
-					// ReadOnly object mit conversion -> umrechnen
-					let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
 
-					this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+			if (obj.common.type === "number") {
+				// Conversion nur für type 'number'
+				try {
+					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion && !isParentObj) {
+						// ReadOnly object mit conversion -> umrechnen
+						//let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
+						let calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`)
 
-					convertedValue = calc;
-				} else if (obj.common.custom[this.namespace].conversion) {
-					// object mit conversion -> umrechnen
-					let calc = 0;
-					if (!isParentObj) {
-						// Umrechnung für linkedObject -> parentObject state ändert sich
-						calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].conversion.replace(",", ".")}`);
-						this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].conversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
-					} else {
-						// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-						calc = eval(`${convertedValue} * 1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})`);
-						this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using conversion '1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})' -> new parentObject value is '${calc}'`)
+						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+
+						convertedValue = calc;
+					} else if (obj.common.custom[this.namespace].conversion) {
+						// object mit conversion -> umrechnen
+						let calc = 0;
+						if (!isParentObj) {
+							// Umrechnung für linkedObject -> parentObject state ändert sich
+							calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].conversion.replace(",", ".")}`);
+
+							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].conversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+						} else {
+							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
+							calc = mathjs.eval(`${convertedValue} * 1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})`);
+							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using conversion '1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})' -> new parentObject value is '${calc}'`)
+						}
+						convertedValue = calc;
 					}
-					convertedValue = calc;
+				} catch (err) {
+					// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
+					this.log.error(`[getConvertedValue] error: ${err.message}`);
+					this.log.error(`[getConvertedValue] stack: ${err.stack}`);
+					this.log.error(`[getConvertedValue] there is something wrong with your conversion formula, check your input for '${id}'!`);
+
+					convertedValue = value;
 				}
-			} catch (err) {
-				// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
-				this.log.error(`[getConvertedValue] error: ${err.message}`);
-				this.log.error(`[getConvertedValue] stack: ${err.stack}`);
-				this.log.error(`[getConvertedValue] there is something wrong with your conversion formula, check your input for '${id}'!`);
 
-				convertedValue = value;
-			}
-
-			if (obj.common.custom[this.namespace].maxDecimal && !isParentObj) {
-				// nur für linkedObject Nachkommastellen festlegen
-				convertedValue = convertedValue.toFixed(obj.common.custom[this.namespace].maxDecimal)
+				if (obj.common.custom[this.namespace].maxDecimal && !isParentObj) {
+					// nur für linkedObject Nachkommastellen festlegen
+					convertedValue = mathjs.format(convertedValue, { notation: 'fixed', precision: obj.common.custom[this.namespace].maxDecimal });
+				}
 			}
 		}
 		return convertedValue;
