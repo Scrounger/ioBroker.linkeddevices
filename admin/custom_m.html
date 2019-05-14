@@ -64,12 +64,12 @@
 	<div class="linkedObject_view">
 		<div class="row">
 			<div class="col s1">
-				<input type="checkbox" id="isLinked" disabled="true"/>
+				<input type="checkbox" id="CB_isLinked" disabled="true"/>
 				<span class="translate">is linked</span>
 			</div>
 			<div class="col s4">
 				<label class="translate">linked with</label>
-				<input type="text" id="parentId" readonly>	
+				<input type="text" id="IN_parentId" readonly>	
 			</div>
 		</div>
 	</div>
@@ -107,6 +107,8 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
+
+
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
 			if (values["linkedId"]) {
@@ -125,20 +127,12 @@
 			}
 
 			if (values["isLinked"] != undefined) {
-				//linkedObject			
+				// Custom Dialog für LinkedObject
+				initialize_LinkedObject();
 
-
-
-				$div.find('.linkedObject_view').show();
-				$div.find('input[id="isLinked"]').prop('checked', values["isLinked"]);
-
-				$div.find('input[id="parentId"]').val(values["parentId"]);
-
-				$div.find('.parentObject_view').hide();
 			} else {
-				//parentObject
-				$div.find('.parentObject_view').show();
-				$div.find('.linkedObject_view').hide();
+				// Custom Dialog für ParentObject
+				initialize_ParentObject();
 
 				if (type === 'number' || type === 'string') {
 					// Experteneinstellungen anzeigen
@@ -250,8 +244,24 @@
 					//gMain.showMessage("Halllo");
 				});
 			}
+
+			function initialize_LinkedObject() {
+				$div.find('.linkedObject_view').show();
+				$div.find('.parentObject_view').hide();
+
+				$div.find('input[id="CB_isLinked"]').prop('checked', values["isLinked"]);
+				$div.find('input[id="IN_parentId"]').val(values["parentId"]);
+			}
+
+			function initialize_ParentObject() {
+				$div.find('.parentObject_view').show();
+				$div.find('.linkedObject_view').hide();
+			}
+
 		}
 	}
+
+
 
 	if (typeof customPostOnSave !== 'undefined') {
 		customPostOnSave.linkeddevices = function ($div, instance) {
