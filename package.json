@@ -24,7 +24,15 @@
   "dependencies": {
     "@iobroker/adapter-core": "^1.0.3",
     "mathjs": "^5.10.0",
-    "@types/mathjs": "^5.0.1"
+    "@types/mathjs": "^5.0.1",
+    "complex.js": "2.0.11",
+    "decimal.js": "10.2.0",
+    "escape-latex": "1.2.0",
+    "fraction.js": "4.0.12",
+    "javascript-natural-sort": "0.7.1",
+    "seed-random": "2.2.0",
+    "tiny-emitter": "2.1.0",
+    "typed-function": "1.1.0"
   },
   "devDependencies": {
     "@iobroker/testing": "^1.2.0",

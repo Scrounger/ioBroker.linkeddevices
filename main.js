@@ -7,6 +7,7 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
+const mathjs = require("mathjs");
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -26,6 +27,8 @@ class Linkeddevices extends utils.Adapter {
 		this.on("stateChange", this.onStateChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
+
+
 
 	}
 
@@ -47,7 +50,7 @@ class Linkeddevices extends utils.Adapter {
 		// this.log.info("config option1: " + this.config.option1);
 		// this.log.info("config option2: " + this.config.option2);
 
-
+		this.log.info(mathjs.format(mathjs.eval("122.5/3.132165"), { notation: 'fixed', precision: 2 }));
 
 		/*
 		For every state in the system there has to be also an object of type state
