@@ -16,76 +16,63 @@
 				<div class="row">
 					<div class="col s8">
 						<label class="translate">prefix for id of linked object</label>
-						<input type="text" id="prefixId" size="30">
+						<input type="text" id="prefixId">
 					</div>
 					<div class="col s4">
 						<label class="translate">id of linked object</label>
-						<input type="text" id="stateId" size="30">
+						<input type="text" id="stateId">
 					</div>					
 				</div>
 			</div>
 			<div class="section s_ParentObj_Name">
 				<label class="translate">name of linked object</label>
-				<input type="text" data-field="name" size="30">
+				<input type="text" data-field="name">
 			</div>
 			<div class="section s_LinkedObj_parentId">
 				<label class="translate">linked with</label>
-				<input type="text" id="parentId" size="30" readonly>					
+				<input type="text" id="parentId" readonly>					
 			</div>
 		</div>
 		<div class="col s4">
 			<div class="section s_ParentObj_LinkedId">
 				<label class="translate">composite id of linked object</label>
-				<input type="text" data-field="linkedId" size="30" readonly>				
+				<input type="text" data-field="linkedId" readonly>				
 			</div>
 		</div>
 	</div>
+
 	<div class="section c_ParentObj_ExpertSettings">
 		<div class="row">
-			<div class="col s2">
-				<input type="checkbox" id="expertSettings"/>
-				<span class="translate">expert settings</span>
-			</div>
-			<div class="col s4">
-				<div class="row">
-					<div class="col s6 s_ParentObj_hasUnit">
-						<div class="section">
-							<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
-							<input type="text" data-field="unit" size="30" disabled="true">
-						</div>
-					</div>
-					<div class="col s6 s_ParentObj_maxDecimal">
-						<div class="section">
-							<label class="translate">number of decimal places</label>
-							<input type="text" data-field="maxDecimal" size="30" disabled="true">
-						</div>
-					</div>
-				</div>
-			</div>
-
+			<hr size="1" noshade style="margin-bottom: 10px">
 		</div>
-		<div class="row">
-			<div class="col s2">
+		<div class="row" >
+			<div class="col">
+				<input type="checkbox" id="expertSettings"/>
+				<span id="labelExpertSettings"class="translate">expert settings</span>				
 			</div>
-			<div class="col s4">
-				<div class="section s_ParentObj_readOnly_conversion">
-					<label class="translate">conversion for read only object</label>
-					<input type="text" data-field="readOnlyConversion" size="30" disabled="true"'>
-				</div>
-				<div class="section s_ParentObj_conversion">
-					<div class="col s10">
-						<label class="translate">conversion for linked object</label>
-						<input type="text" data-field="conversion" size="30" disabled="true">					
-					</div>
-				</div>
-			</div>		
+		</div>
+		<div class="row" style="margin-top: 20px">
+			<div class="col s3 s_ParentObj_hasUnit">
+				<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
+				<input type="text" data-field="unit" disabled="true">
+			</div>
+			<div class="col s3 s_ParentObj_maxDecimal">
+				<label class="translate">number of decimal places</label>
+				<input type="text" data-field="maxDecimal" disabled="true">
+			</div>
+			<div class="col s3 s_ParentObj_readOnly_conversion">
+				<label class="translate">conversion for read only object</label>
+				<input type="text" data-field="readOnlyConversion" disabled="true"'>
+			</div>
+			<div class="col s3 s_ParentObj_conversion">
+				<label class="translate">conversion for linked object</label>
+				<input type="text" data-field="conversion" disabled="true">					
+			</div>			
 		</div>
 	</div>
 	<div class="row">
-		<div class="section s_test">
-			<label class="translate">test</label>
-			<input type="text" id="test" size="30" readonly>				
-		</div>
+		<label class="translate">test</label>
+		<input type="text" id="test" readonly>				
 	</div>
 
 </script>
@@ -161,6 +148,7 @@
 				if (type === 'number' || type === 'string') {
 					// Experteneinstellungen anzeigen
 					$div.find('.c_ParentObj_ExpertSettings').show();
+					$div.find('span[id="labelExpertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
 				} else {
 					$div.find('.c_ParentObj_ExpertSettings').hide();
 				}
