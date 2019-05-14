@@ -287,7 +287,7 @@ class Linkeddevices extends utils.Adapter {
 		}
 
 		if (objState) {
-			if (state.val != objState.val || state.ack != state.ack) {
+			if (state.val != objState.val || state.ack != objState.ack) {
 				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}'`)
 			} else if (state.ts != objState.ts) {
 				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' timestamp changed --> set ${logChangeStateFor} state '${objId}'`)
