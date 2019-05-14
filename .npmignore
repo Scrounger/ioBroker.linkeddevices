@@ -24,3 +24,5 @@ admin/i18n
 
 # maintenance scripts
 maintenance/**
+
+/linkeddevices.code-workspace
