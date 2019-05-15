@@ -1,20 +1,20 @@
 <script type="text/x-iobroker" data-template-name="linkeddevices">
 	<div class="parentObject_view">
 		<div class="row">
-			<div class="col s1">
+			<div class="col s2">
 				<input type="checkbox" data-field="enabled" data-default="false"/>
 				<!-- this field is mandatory, just to find out if to include this settings or not</span-->
 				<span class="translate">enabled</span>
 			</div>
-			<div class="col s11">
+			<div class="col s10">
 				<div class="row">
 					<div class="col s4">
 						<label class="translate">prefix for id of linked object</label>
-						<input type="text" id="prefixId">
+						<input type="text" id="IN_prefixId">
 					</div>
 					<div class="col s2">
 						<label class="translate">id of linked object</label>
-						<input type="text" id="stateId">
+						<input type="text" id="IN_stateId">
 					</div>
 					<div class="col s6">
 						<label class="translate">composite id of linked object</label>
@@ -30,40 +30,42 @@
 			</div>
 		</div>
 
-		<div class="parentObject_view_expert">
+		<div class="parentObject_view_expertSettings">
 			<div class="row">
 				<hr size="1" noshade style="margin-bottom: 10px">
 			</div>
 			<div class="row" >
 				<div class="col">
-					<input type="checkbox" id="expertSettings"/>
-					<span id="labelExpertSettings"class="translate">expert settings</span>				
+					<input type="checkbox" id="CB_expertSettings"/>
+					<span id="labelExpertSettings" class="translate">expert settings</span>				
 				</div>
 			</div>
-			<div class="row" style="margin-top: 20px">
-				<div class="col s3 s_ParentObj_hasUnit">
-					<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
-					<input type="text" data-field="unit" disabled="true">
+			<div class="parentObject_view_expertSettings_Number">
+				<div class="row" style="margin-top: 20px">
+					<div class="col s3 s_ParentObj_hasUnit">
+						<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
+						<input type="text" data-field="unit" disabled="true">
+					</div>
+					<div class="col s3 s_ParentObj_maxDecimal">
+						<label class="translate">number of decimal places</label>
+						<input type="text" data-field="maxDecimal" disabled="true">
+					</div>
+					<div class="col s3 s_ParentObj_readOnly_conversion">
+						<label class="translate">conversion for read only object</label>
+						<input type="text" data-field="readOnlyConversion" disabled="true">
+					</div>
+					<div class="col s3 s_ParentObj_conversion">
+						<label class="translate">conversion for linked object</label>
+						<input type="text" data-field="conversion" disabled="true">					
+					</div>			
 				</div>
-				<div class="col s3 s_ParentObj_maxDecimal">
-					<label class="translate">number of decimal places</label>
-					<input type="text" data-field="maxDecimal" disabled="true">
-				</div>
-				<div class="col s3 s_ParentObj_readOnly_conversion">
-					<label class="translate">conversion for read only object</label>
-					<input type="text" data-field="readOnlyConversion" disabled="true">
-				</div>
-				<div class="col s3 s_ParentObj_conversion">
-					<label class="translate">conversion for linked object</label>
-					<input type="text" data-field="conversion" disabled="true">					
-				</div>			
 			</div>
 		</div>
 	</div>
 
 	<div class="linkedObject_view">
 		<div class="row">
-			<div class="col s1">
+			<div class="col s2">
 				<input type="checkbox" id="CB_isLinked" disabled="true"/>
 				<span class="translate">is linked</span>
 			</div>
@@ -111,20 +113,7 @@
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
-			if (values["linkedId"]) {
-				var linkedId = values["linkedId"];
 
-				if (values["linkedId"].indexOf(".") > 0) {
-					$div.find('input[id="stateId"]').val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
-					$div.find('input[id="prefixId"]').val(linkedId.substring(0, linkedId.lastIndexOf(".")));
-				} else {
-					$div.find('input[id="stateId"]').val(linkedId);
-				}
-			} else if (currentObj && currentObj._id) {
-				var objId = currentObj._id;
-				$div.find('input[id="stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-				$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-			}
 
 			if (values["isLinked"] != undefined) {
 				// Custom Dialog für LinkedObject
@@ -134,130 +123,198 @@
 				// Custom Dialog für ParentObject
 				initialize_ParentObject();
 
+				// EventHandler
+				events_ParentObject();
+
 				if (type === 'number' || type === 'string') {
-					// Experteneinstellungen anzeigen
-					$div.find('.parentObject_view_expert').show();
+					// Experteneinstellungen anzeigen, sofern für type vorhanden
+					$div.find('.parentObject_view_expertSettings').show();
 					$div.find('span[id="labelExpertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
-				} else {
-					$div.find('.parentObject_view_expert').hide();
-				}
 
-				if (type === 'number') {
-					$div.find('.s_ParentObj_hasUnit').show();
-					$div.find('label[id="labelUnit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
+					if (type === 'number') {
+						$div.find('.parentObject_view_expertSettings_Number').show();
+					} else {
+						$div.find('.parentObject_view_expertSettings_Number').hide();
+					}
 
-					$div.find('.s_ParentObj_maxDecimal').show();
-					$div.find('input[data-field="maxDecimal"]').keyup(function () {
-						// Nur Nummern und math operators zulassen
-						let allowedSigns = /[^0-9]/;
+					// Event für CheckBox ExpertSettings
+					$div.find('input[id="CB_expertSettings"]').on('change', function () {
+						// var checked = $(this).prop('checked');
 
-						if (allowedSigns.test(this.value)) {
-							gMain.showError(_("only numbers allowed"));
-						}
-						this.value = this.value.replace(allowedSigns, '');
+						$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
+						$div.find('input[data-field="maxDecimal"]').prop("disabled", !this.checked);
+						$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
+						$div.find('input[data-field="readOnlyConversion"]').prop("disabled", !this.checked);
+						$div.find('select[id=conversionType]').prop("disabled", !this.checked);
+
+						//gMain.showMessage("Halllo");
 					});
 
-					if (currentObj.common.read === true && currentObj.common.write === false) {
-						// Number ist readOnly
-						$div.find('.s_ParentObj_readOnly_conversion').show();
-						$div.find('.s_ParentObj_conversion').hide();
 
-						$div.find('input[data-field="readOnlyConversion"]').keyup(function () {
-							// Nur Nummern und math operators zulassen
-							let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
-
-							if (this.value.length > 0) {
-								if (allowedSigns.test(this.value)) {
-									// prüfen auf zulässige Zeichen
-									gMain.showError(_("only numbers and math operators allowed for read only object"));
-								} else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
-									// muss mit math operator beginnen
-									this.value = "";
-									gMain.showError(_("only numbers and math operators allowed for read only object"));
-								}
-							}
-
-							this.value = this.value.replace(allowedSigns, '');
-						});
-
-					} else {
-						$div.find('.s_ParentObj_conversion').show();
-						$div.find('input[data-field="conversion"]').keyup(function () {
-							// Nur Nummern und math operators * | / zulassen
-							let allowedSigns = /[^0-9\.\,\*\/]/;
-
-							if (this.value.length > 0) {
-								if (allowedSigns.test(this.value)) {
-									// prüfen auf zulässige Zeichen
-									gMain.showError(_("only numbers and math operators allowed"));
-								} else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
-									// muss mit math operator beginnen
-									this.value = "";
-									gMain.showError(_("only numbers and math operators allowed"));
-								}
-							}
-
-							this.value = this.value.replace(allowedSigns, '');
-
-						});
-
-						$div.find('.s_ParentObj_readOnly_conversion').hide();
-					}
 				} else {
-					$div.find('.s_ParentObj_hasUnit').hide();
-					$div.find('.s_ParentObj_maxDecimal').hide();
-					$div.find('.s_ParentObj_conversion').hide();
-					$div.find('.s_ParentObj_readOnly_conversion').hide();
+					$div.find('.parentObject_view_expertSettings').hide();
 				}
 
-				$div.find('input[id="prefixId"]').on('input', function () {
-					let prefixId = $div.find('input[id="prefixId"]').val();
-					let stateId = $div.find('input[id="stateId"]').val();
+				// if (type === 'number') {
+				// 	$div.find('.s_ParentObj_hasUnit').show();
+				// 	$div.find('label[id="labelUnit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
-					if (prefixId) {
-						$div.find('input[data-field="linkedId"]').val(prefixId + "." + stateId);
-					} else {
-						$div.find('input[data-field="linkedId"]').val(stateId);
-					}
-				});
+				// 	$div.find('.s_ParentObj_maxDecimal').show();
+				// 	$div.find('input[data-field="maxDecimal"]').keyup(function () {
+				// 		// Nur Nummern und math operators zulassen
+				// 		let allowedSigns = /[^0-9]/;
 
-				$div.find('input[id="stateId"]').on('input', function () {
-					let prefixId = $div.find('input[id="prefixId"]').val();
-					let stateId = $div.find('input[id="stateId"]').val();
+				// 		if (allowedSigns.test(this.value)) {
+				// 			gMain.showError(_("only numbers allowed"));
+				// 		}
+				// 		this.value = this.value.replace(allowedSigns, '');
+				// 	});
 
-					if (prefixId) {
-						$div.find('input[data-field="linkedId"]').val(prefixId + "." + stateId);
-					} else {
-						$div.find('input[data-field="linkedId"]').val(stateId);
-					}
-				});
+				// 	if (currentObj.common.read === true && currentObj.common.write === false) {
+				// 		// Number ist readOnly
+				// 		$div.find('.s_ParentObj_readOnly_conversion').show();
+				// 		$div.find('.s_ParentObj_conversion').hide();
 
-				$div.find('input[id="expertSettings"]').on('change', function () {
-					// var checked = $(this).prop('checked');
+				// 		$div.find('input[data-field="readOnlyConversion"]').keyup(function () {
+				// 			// Nur Nummern und math operators zulassen
+				// 			let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
 
-					$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
-					$div.find('input[data-field="maxDecimal"]').prop("disabled", !this.checked);
-					$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
-					$div.find('input[data-field="readOnlyConversion"]').prop("disabled", !this.checked);
-					$div.find('select[id=conversionType]').prop("disabled", !this.checked);
+				// 			if (this.value.length > 0) {
+				// 				if (allowedSigns.test(this.value)) {
+				// 					// prüfen auf zulässige Zeichen
+				// 					gMain.showError(_("only numbers and math operators allowed for read only object"));
+				// 				} else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
+				// 					// muss mit math operator beginnen
+				// 					this.value = "";
+				// 					gMain.showError(_("only numbers and math operators allowed for read only object"));
+				// 				}
+				// 			}
 
-					//gMain.showMessage("Halllo");
-				});
+				// 			this.value = this.value.replace(allowedSigns, '');
+				// 		});
+
+				// 	} else {
+				// 		$div.find('.s_ParentObj_conversion').show();
+				// 		$div.find('input[data-field="conversion"]').keyup(function () {
+				// 			// Nur Nummern und math operators * | / zulassen
+				// 			let allowedSigns = /[^0-9\.\,\*\/]/;
+
+				// 			if (this.value.length > 0) {
+				// 				if (allowedSigns.test(this.value)) {
+				// 					// prüfen auf zulässige Zeichen
+				// 					gMain.showError(_("only numbers and math operators allowed"));
+				// 				} else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
+				// 					// muss mit math operator beginnen
+				// 					this.value = "";
+				// 					gMain.showError(_("only numbers and math operators allowed"));
+				// 				}
+				// 			}
+
+				// 			this.value = this.value.replace(allowedSigns, '');
+
+				// 		});
+
+				// 		$div.find('.s_ParentObj_readOnly_conversion').hide();
+				// 	}
+				// } else {
+				// 	$div.find('.s_ParentObj_hasUnit').hide();
+				// 	$div.find('.s_ParentObj_maxDecimal').hide();
+				// 	$div.find('.s_ParentObj_conversion').hide();
+				// 	$div.find('.s_ParentObj_readOnly_conversion').hide();
+				// }
+
+
+
+
+
+				//TODO -> Id nicht erlaubte zeichen abfangen
 			}
 
 			function initialize_LinkedObject() {
+				// Custom Dialog für LinkedObject: Views initialisieren
 				$div.find('.linkedObject_view').show();
 				$div.find('.parentObject_view').hide();
 
+				// Checkbox Wert setzen
 				$div.find('input[id="CB_isLinked"]').prop('checked', values["isLinked"]);
+				// parentId anzeigen
 				$div.find('input[id="IN_parentId"]').val(values["parentId"]);
 			}
 
 			function initialize_ParentObject() {
+				// Custom Dialog für ParentObject: Views initialisieren
 				$div.find('.parentObject_view').show();
 				$div.find('.linkedObject_view').hide();
+
+				if (values["linkedId"]) {
+					// ParentObject ist verlinkt
+					var linkedId = values["linkedId"];
+
+					// linkedId aufteilen in prefix & stateId
+					if (values["linkedId"].indexOf(".") > 0) {
+						$div.find('input[id="IN_stateId"]').val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
+						$div.find('input[id="IN_prefixId"]').val(linkedId.substring(0, linkedId.lastIndexOf(".")));
+					} else {
+						$div.find('input[id="IN_stateId"]').val(linkedId);
+					}
+				} else if (currentObj && currentObj._id) {
+					// ParentObject ist noch nicht verlinkt
+					var objId = currentObj._id;
+
+					// stateId des ParentObjects holen
+					$div.find('input[id="IN_stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+					$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+				}
 			}
 
+			function events_ParentObject() {
+				$div.find('input[id="IN_prefixId"]').on('input', function () {
+					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
+					let notAllowedSigns = /[*?"'\[\]]/;
+
+					if (this.value.length > 0) {
+						if (notAllowedSigns.test(this.value)) {
+							// prüfen auf zulässige Zeichen
+							this.value = this.value.replace(notAllowedSigns, '');
+							gMain.showError(_("not allowed chars for Id"));
+						} else {
+							// 'linkedId' zusammensetzen
+							let prefixId = $div.find('input[id="IN_prefixId"]').val();
+							let stateId = $div.find('input[id="IN_stateId"]').val();
+
+							if (prefixId) {
+								$div.find('input[data-field="linkedId"]').val((prefixId + "." + stateId).replace("..", "."));
+							} else {
+								$div.find('input[data-field="linkedId"]').val(stateId);
+							}
+						}
+					}
+				});
+
+				$div.find('input[id="IN_stateId"]').on('input', function () {
+					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
+					let notAllowedSigns = /[*?"'\[\]]/;
+
+					if (this.value.length > 0) {
+						if (notAllowedSigns.test(this.value)) {
+							// prüfen auf zulässige Zeichen
+							this.value = this.value.replace(notAllowedSigns, '');
+							gMain.showError(_("not allowed chars for Id"));
+						} else {
+							// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
+							let prefixId = $div.find('input[id="IN_prefixId"]').val();
+							let stateId = $div.find('input[id="IN_stateId"]').val();
+
+							if (prefixId) {
+								$div.find('input[data-field="linkedId"]').val((prefixId + "." + stateId).replace("..", "."));
+							} else {
+								$div.find('input[data-field="linkedId"]').val(stateId);
+							}
+						}
+					}
+
+				});
+			}
 		}
 	}
 

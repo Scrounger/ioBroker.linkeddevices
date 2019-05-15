@@ -58,9 +58,9 @@ systemDictionary = {
 		"en": "linked with",
 		"de": "verlinkt mit",
 	},
-	"expert settings": {
-		"en": "expert settings",
-		"de": "Experteneinstellung",
+	"expert settings for type '{0}'": {
+		"en": "expert settings for type '{0}'",
+		"de": "Experteneinstellung für Typ '{0}'",
 	},
 	"change unit '{0}' for linked object to": {
 		"en": "change unit '{0}' for linked object to",
@@ -97,5 +97,13 @@ systemDictionary = {
 	"conversion for linked object": {
 		"en": "conversion for linked object",
 		"de": "Umrechnung für verlinktes Objekt",
+	},
+	"number": {
+		"en": "number",
+		"de": "Zahl",
+	},
+	"not allowed chars for Id": {
+		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
+		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
 	}
 };
