@@ -110,11 +110,7 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
-
-
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
-
-
 
 			if (values["isLinked"] != undefined) {
 				// Custom Dialog für LinkedObject
@@ -129,82 +125,9 @@
 
 				// ExpertSettings initialisieren
 				initialize_ExpertSettings();
-
-
-
-				// if (type === 'number') {
-
-				// 	$div.find('.s_ParentObj_maxDecimal').show();
-				// 	$div.find('input[data-field="maxDecimal"]').keyup(function () {
-				// 		// Nur Nummern und math operators zulassen
-				// 		let allowedSigns = /[^0-9]/;
-
-				// 		if (allowedSigns.test(this.value)) {
-				// 			gMain.showError(_("only numbers allowed"));
-				// 		}
-				// 		this.value = this.value.replace(allowedSigns, '');
-				// 	});
-
-				// 	if (currentObj.common.read === true && currentObj.common.write === false) {
-				// 		// Number ist readOnly
-				// 		$div.find('.view_expertSettings_Number_conversion_readOnly').show();
-				// 		$div.find('.view_expertSettings_Number_conversion').hide();
-
-				// 		$div.find('input[data-field="readOnlyConversion"]').keyup(function () {
-				// 			// Nur Nummern und math operators zulassen
-				// 			let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
-
-				// 			if (this.value.length > 0) {
-				// 				if (allowedSigns.test(this.value)) {
-				// 					// prüfen auf zulässige Zeichen
-				// 					gMain.showError(_("only numbers and math operators allowed for read only object"));
-				// 				} else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
-				// 					// muss mit math operator beginnen
-				// 					this.value = "";
-				// 					gMain.showError(_("only numbers and math operators allowed for read only object"));
-				// 				}
-				// 			}
-
-				// 			this.value = this.value.replace(allowedSigns, '');
-				// 		});
-
-				// 	} else {
-				// 		$div.find('.view_expertSettings_Number_conversion').show();
-				// 		$div.find('input[data-field="conversion"]').keyup(function () {
-				// 			// Nur Nummern und math operators * | / zulassen
-				// 			let allowedSigns = /[^0-9\.\,\*\/]/;
-
-				// 			if (this.value.length > 0) {
-				// 				if (allowedSigns.test(this.value)) {
-				// 					// prüfen auf zulässige Zeichen
-				// 					gMain.showError(_("only numbers and math operators allowed"));
-				// 				} else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
-				// 					// muss mit math operator beginnen
-				// 					this.value = "";
-				// 					gMain.showError(_("only numbers and math operators allowed"));
-				// 				}
-				// 			}
-
-				// 			this.value = this.value.replace(allowedSigns, '');
-
-				// 		});
-
-				// 		$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
-				// 	}
-				// } else {
-				// 	$div.find('.s_ParentObj_hasUnit').hide();
-				// 	$div.find('.s_ParentObj_maxDecimal').hide();
-				// 	$div.find('.view_expertSettings_Number_conversion').hide();
-				// 	$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
-				// }
-
-
-
-
-
-				//TODO -> Id nicht erlaubte zeichen abfangen
 			}
 
+			//#region Initialize
 			function initialize_LinkedObject() {
 				// Custom Dialog für LinkedObject: Views initialisieren
 				$div.find('.linkedObject_view').show();
@@ -279,9 +202,13 @@
 					$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
 				}
 
-
+				// Event Handler für ExpertSettings mit type 'number'
+				events_ExpertSettings_Number();
 			}
 
+			//#endregion
+
+			//#region Events
 			function events_ParentObject() {
 				$div.find('input[id="IN_prefixId"]').on('input', function () {
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
@@ -344,10 +271,59 @@
 					//gMain.showMessage("Halllo");
 				});
 			}
+
+			function events_ExpertSettings_Number() {
+				// Anzahl Nachkommastellen - Eingabe prüfen
+				$div.find('input[data-field="maxDecimal"]').keyup(function () {
+					// Nur Nummern zulassen
+					let allowedSigns = /[^0-9]/;
+
+					if (allowedSigns.test(this.value)) {
+						gMain.showError(_("only numbers allowed"));
+					}
+					this.value = this.value.replace(allowedSigns, '');
+				});
+
+				// Umrechnung für read & write - Eingabe prüfen
+				$div.find('input[data-field="conversion"]').keyup(function () {
+					// Nur Nummern und math operators * | / zulassen
+					let allowedSigns = /[^0-9\.\,\*\/]/;
+
+					if (this.value.length > 0) {
+						if (allowedSigns.test(this.value)) {
+							// prüfen auf zulässige Zeichen
+							gMain.showError(_("only numbers and math operators allowed"));
+						} else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
+							// muss mit math operator beginnen
+							this.value = "";
+							gMain.showError(_("only numbers and math operators allowed"));
+						}
+					}
+					this.value = this.value.replace(allowedSigns, '');
+				});
+
+				// Umrechnung für read only - Eingabe prüfen
+				$div.find('input[data-field="readOnlyConversion"]').keyup(function () {
+					// Nur Nummern und math operators zulassen
+					let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
+
+					if (this.value.length > 0) {
+						if (allowedSigns.test(this.value)) {
+							// prüfen auf zulässige Zeichen
+							gMain.showError(_("only numbers and math operators allowed for read only object"));
+						} else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
+							// muss mit math operator beginnen
+							this.value = "";
+							gMain.showError(_("only numbers and math operators allowed for read only object"));
+						}
+					}
+					this.value = this.value.replace(allowedSigns, '');
+				});
+			}
+
+			//#endregion
 		}
 	}
-
-
 
 	if (typeof customPostOnSave !== 'undefined') {
 		customPostOnSave.linkeddevices = function ($div, instance) {
