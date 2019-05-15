@@ -37,13 +37,13 @@
 			<div class="row" >
 				<div class="col">
 					<input type="checkbox" id="CB_expertSettings"/>
-					<span id="labelExpertSettings" class="translate">expert settings</span>				
+					<span id="SP_expertSettings" class="translate">expert settings</span>				
 				</div>
 			</div>
-			<div class="parentObject_view_expertSettings_Number">
+			<div class="parentObject_view_expertSettings_Number" disabled="true">
 				<div class="row" style="margin-top: 20px">
 					<div class="col s3 s_ParentObj_hasUnit">
-						<label id="labelUnit" class="translate">change unit '{0}' for linked object to</label>
+						<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>
 						<input type="text" data-field="unit" disabled="true">
 					</div>
 					<div class="col s3 s_ParentObj_maxDecimal">
@@ -126,38 +126,14 @@
 				// EventHandler
 				events_ParentObject();
 
-				if (type === 'number' || type === 'string') {
-					// Experteneinstellungen anzeigen, sofern für type vorhanden
-					$div.find('.parentObject_view_expertSettings').show();
-					$div.find('span[id="labelExpertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
-
-					if (type === 'number') {
-						$div.find('.parentObject_view_expertSettings_Number').show();
-					} else {
-						$div.find('.parentObject_view_expertSettings_Number').hide();
-					}
-
-					// Event für CheckBox ExpertSettings
-					$div.find('input[id="CB_expertSettings"]').on('change', function () {
-						// var checked = $(this).prop('checked');
-
-						$div.find('input[data-field="unit"]').prop("disabled", !this.checked);
-						$div.find('input[data-field="maxDecimal"]').prop("disabled", !this.checked);
-						$div.find('input[data-field="conversion"]').prop("disabled", !this.checked);
-						$div.find('input[data-field="readOnlyConversion"]').prop("disabled", !this.checked);
-						$div.find('select[id=conversionType]').prop("disabled", !this.checked);
-
-						//gMain.showMessage("Halllo");
-					});
+				// ExpertSettings initialisieren
+				initialize_ParentObject_ExpertSettings();
 
 
-				} else {
-					$div.find('.parentObject_view_expertSettings').hide();
-				}
 
 				// if (type === 'number') {
 				// 	$div.find('.s_ParentObj_hasUnit').show();
-				// 	$div.find('label[id="labelUnit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
+				// 	$div.find('label[id="LB_unit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
 				// 	$div.find('.s_ParentObj_maxDecimal').show();
 				// 	$div.find('input[data-field="maxDecimal"]').keyup(function () {
@@ -267,6 +243,46 @@
 				}
 			}
 
+			function initialize_ParentObject_ExpertSettings() {
+				if (type === 'number' || type === 'string') {
+					// Experteneinstellungen anzeigen, sofern für type vorhanden
+					$div.find('.parentObject_view_expertSettings').show();
+					$div.find('span[id="SP_expertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
+
+					//zuerst alle views ausblenden
+					$div.find('.parentObject_view_expertSettings_Number').hide();
+
+					// Views abhängig vom type anzeigen oder ausblenden
+					if (type === 'number') {
+						initialize_ParentObject_ExpertSettings_Number();
+					}
+
+					// EventHandler für alle ExpertSettings
+					events_ParentObject_ExpertSettings();
+
+				} else {
+					$div.find('.parentObject_view_expertSettings').hide();
+				}
+			}
+
+			function initialize_ParentObject_ExpertSettings_Number() {
+				// ExpertSettings für type 'number' initialisieren
+				$div.find('.parentObject_view_expertSettings_Number').show();
+
+				$div.find('label[id="LB_unit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
+
+				// Number ist read only
+				if (currentObj.common.read === true && currentObj.common.write === false) {
+					$div.find('.s_ParentObj_readOnly_conversion').show();
+					$div.find('.s_ParentObj_conversion').hide();
+				} else {
+					$div.find('.s_ParentObj_conversion').show();
+					$div.find('.s_ParentObj_readOnly_conversion').hide();
+				}
+
+
+			}
+
 			function events_ParentObject() {
 				$div.find('input[id="IN_prefixId"]').on('input', function () {
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
@@ -313,6 +329,19 @@
 						}
 					}
 
+				});
+			}
+
+			function events_ParentObject_ExpertSettings() {
+				// Event für CheckBox ExpertSettings
+				$div.find('input[id="CB_expertSettings"]').on('change', function () {
+					// var checked = $(this).prop('checked');
+
+					if (type === 'number') {
+						$div.find('.parentObject_view_expertSettings_Number').prop("disabled", !this.checked);
+					}
+
+					gMain.showMessage("Halllo");
 				});
 			}
 		}
