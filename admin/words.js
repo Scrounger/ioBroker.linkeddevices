@@ -90,8 +90,8 @@ systemDictionary = {
 		"en": "only numbers allowed",
 		"de": "Nur Nummern sind als Eingabe erlaubt!",
 	},
-	"conversion for read only object": {
-		"en": "conversion for read only object",
+	"conversion for 'read' object": {
+		"en": "conversion for 'read' object",
 		"de": "Umrechnung für verlinktes 'read' Objekt",
 	},
 	"conversion for linked object": {
