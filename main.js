@@ -652,9 +652,14 @@ class Linkeddevices extends utils.Adapter {
 					convertedValue = value;
 				}
 
+				this.log.info("maxDecimal: " + obj.common.custom[this.namespace].maxDecimal);
+				this.log.info("maxDecimal - parseInt: " + parseInt(obj.common.custom[this.namespace].maxDecimal));
+				this.log.info("maxDecimal - JSON.stringify: " + JSON.stringify(obj.common.custom[this.namespace].maxDecimal));
+
 				if (obj.common.custom[this.namespace].maxDecimal && !isParentObj) {
 					// nur für linkedObject Nachkommastellen festlegen
 					convertedValue = mathjs.round(convertedValue, obj.common.custom[this.namespace].maxDecimal);
+					parseInt
 				}
 			}
 		}
