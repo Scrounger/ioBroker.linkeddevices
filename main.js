@@ -464,7 +464,7 @@ class Linkeddevices extends utils.Adapter {
 						}
 
 						var maxDecimal = "";
-						if (parentObj.common.custom[this.namespace].maxDecimal) {
+						if (parseInt(parentObj.common.custom[this.namespace].maxDecimal) != NaN) {
 							// conversion vorhanden, nur bei type = number
 							maxDecimal = parentObj.common.custom[this.namespace].maxDecimal;
 						}
@@ -652,14 +652,12 @@ class Linkeddevices extends utils.Adapter {
 					convertedValue = value;
 				}
 
-				this.log.info("maxDecimal: " + obj.common.custom[this.namespace].maxDecimal);
-				this.log.info("maxDecimal - parseInt: " + parseInt(obj.common.custom[this.namespace].maxDecimal));
-				this.log.info("maxDecimal - JSON.stringify: " + JSON.stringify(obj.common.custom[this.namespace].maxDecimal));
-
-				if (obj.common.custom[this.namespace].maxDecimal && !isParentObj) {
-					// nur für linkedObject Nachkommastellen festlegen
-					convertedValue = mathjs.round(convertedValue, obj.common.custom[this.namespace].maxDecimal);
-					parseInt
+				if (!isParentObj && (obj.common.custom[this.namespace].maxDecimal || obj.common.custom[this.namespace].maxDecimal === 0)) {
+					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
+					var num = parseInt(obj.common.custom[this.namespace].maxDecimal);
+					if (num != NaN) {
+						convertedValue = mathjs.round(convertedValue, num);
+					}
 				}
 			}
 		}
