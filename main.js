@@ -654,7 +654,7 @@ class Linkeddevices extends utils.Adapter {
 
 				if (obj.common.custom[this.namespace].maxDecimal && !isParentObj) {
 					// nur für linkedObject Nachkommastellen festlegen
-					convertedValue = mathjs.format(convertedValue, { notation: 'fixed', precision: obj.common.custom[this.namespace].maxDecimal });
+					convertedValue = mathjs.round(convertedValue, obj.common.custom[this.namespace].maxDecimal);
 				}
 			}
 		}
