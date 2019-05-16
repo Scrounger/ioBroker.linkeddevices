@@ -105,5 +105,17 @@ systemDictionary = {
 	"not allowed chars for Id": {
 		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
 		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
+	},
+	"don't convert": {
+		"en": "don't convert",
+		"de": "nicht umwandeln",
+	},
+	"convert to Boolean": {
+		"en": "convert to Boolean",
+		"de": "in Boolean umwandeln",
+	},
+	"convert to String": {
+		"en": "convert to String",
+		"de": "in String umwandeln",
 	}
 };

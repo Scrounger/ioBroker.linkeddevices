@@ -42,6 +42,16 @@
 			</div>
 			<div class="view_expertSettings_Number" disabled="true">
 				<div class="row" style="margin-top: 20px">
+					<div class="view_expertSettings_Number_Read_Converter">
+						<div class="col s3">
+							<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>				
+							<select data-field="convertTo" data-default="None">
+								<option value="None" class="translate">don't convert</option>
+								<option value="Boolean" class="translate">convert to Boolean</option>
+								<option value="String" class="translate">convert to String</option>
+							</select>
+						</div>
+					</div>					
 					<div class="col s3">
 						<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>
 						<input type="text" data-field="unit" disabled="true">
@@ -110,6 +120,11 @@
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
+
+			$div.ready(function () {
+				// Event Document ready -> hier kann select disabled = 'true' gesetzt werden, da sonst options weg sind bzw. enabled nicht geht
+				$div.find('.view_expertSettings_Number_Read_Converter').find('*').prop('disabled', true);
+			});
 
 			if (values["isLinked"] != undefined) {
 				// Custom Dialog für LinkedObject
