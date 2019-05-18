@@ -135,8 +135,14 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
-			var expertSettingsActivated = values["expertSettings"];
-			var selectedNumberConverter = values["convertTo"];
+			var isCustomEnabled = false;
+			if (values["enabled"]) isCustomEnabled = values["enabled"];
+
+			var expertSettingsActivated = false;
+			if (values["expertSettings"]) expertSettingsActivated = values["expertSettings"];
+
+			var selectedNumberConverter = "";
+			if (values["convertTo"]) selectedNumberConverter = values["convertTo"];
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
@@ -201,7 +207,7 @@
 			}
 
 			function initialize_ExpertSettings() {
-				if (type === 'number' || type === 'string') {
+				if (isCustomEnabled && (type === 'number' || type === 'string')) {
 					// Experteneinstellungen anzeigen, sofern für type vorhanden
 					$div.find('.view_expertSettings').show();
 					$div.find('span[id="SP_expertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
@@ -276,6 +282,12 @@
 
 			//#region Events
 			function events_ParentObject() {
+				$div.find('input[data-field="enabled"]').on('change', function () {
+					// var checked = $(this).prop('checked');
+					isCustomEnabled = this.checked;
+					initialize_ExpertSettings();
+				});
+
 				$div.find('input[id="IN_prefixId"]').on('input', function () {
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
 					let notAllowedSigns = /[*?"'\[\]]/;
