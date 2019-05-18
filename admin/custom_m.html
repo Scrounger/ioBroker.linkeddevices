@@ -42,7 +42,7 @@
 			</div>
 			<div class="view_expertSettings_Number" disabled="true">
 				<div class="row" style="margin-top: 20px">
-					<div class="view_expertSettings_Number_Read_Converter">
+					<div class="view_expertSettings_Number_Converter">
 						<div class="col s3">
 							<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>				
 							<select data-field="convertTo" data-default="None">
@@ -123,7 +123,7 @@
 
 			$div.ready(function () {
 				// Event Document ready -> hier kann select disabled = 'true' gesetzt werden, da sonst options weg sind bzw. enabled nicht geht
-				$div.find('.view_expertSettings_Number_Read_Converter').find('*').prop('disabled', true);
+				$div.find('.view_expertSettings_Number_Converter').find('*').prop('disabled', true);
 			});
 
 			if (values["isLinked"] != undefined) {
