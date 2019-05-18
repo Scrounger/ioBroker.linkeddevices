@@ -15,10 +15,9 @@
 ## linkeddevices adapter for ioBroker
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YHPPW474N5CKQ&source=url)
 
-Create linked objects (datapoints) from your used devices, objects or datapoints to have it in one place. 
-Define your own structure for the linked object by settings individual ids. 
+Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and scripts work again.
 
-Advantage is that there is on place where all your objects are defined that can be used in scripts or vis. If you have to change your hardware, you must only update your linked objects and script or vis will work again.
+With the adapter you can convert objects or convert them to other types (not yet fully implemented).
 
 This adapter is inspired at [virtual devices script by Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
