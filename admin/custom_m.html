@@ -47,7 +47,7 @@
 						<select data-field="convertTo" data-default="">
 							<option value="" 			class="translate">do not convert</option>
 							<option value="boolean" 	class="translate">Boolean</option>
-							<option value="string" 	class="translate">String</option>
+							<option value="string" 		class="translate">String</option>
 						</select>
 					</div>
 					<div class="view_expertSettings_Number_Converter_None">										
@@ -73,7 +73,7 @@
 							<label class="translate">condition 'true' for linked object</label>
 							<input type="text" data-field="condition_number_boolean_linked_object">
 						</div>
-						<div class="view_expertSettings_Number_Converter_Boolean_Not_read_only">
+						<div class="view_expertSettings_Number_Converter_Boolean_notReadOnly">
 							<div class="col s3">
 								<label class="translate">value if linked object is 'true'</label>
 								<input type="number" data-field="true_value_number_boolean_parent_object">
@@ -135,6 +135,32 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
+			// alle ComboBoxen in vars packen
+			var ComboBox = {};
+			ComboBox.enabled = $div.find('input[data-field="enabled"]');
+			ComboBox.expertSettings = $div.find('input[data-field="expertSettings"]');
+			ComboBox.isLinked = $div.find('input[id="CB_isLinked"]');
+
+			// alle groups in vars packen
+			var Group = {};
+			Group.linkedObject = $div.find('.linkedObject_view');
+			Group.parentObject = $div.find('.parentObject_view');
+			Group.expertSettings = $div.find('.view_expertSettings');
+			Group.expertSettings_Number = $div.find('.view_expertSettings_Number');
+			Group.expertSettings_Number_Converter_None = $div.find('.view_expertSettings_Number_Converter_None');
+			Group.expertSettings_Number_Converter_Boolean = $div.find('.view_expertSettings_Number_Converter_Boolean');
+			Group.expertSettings_Number_Converter_Boolean_notReadOnly = $div.find('.view_expertSettings_Number_Converter_Boolean_notReadOnly');
+
+			// alle input in vars packen
+			var Input = {};
+			Input.parentId = $div.find('input[id="IN_parentId"]');
+			Input.stateId = $div.find('input[id="IN_stateId"]');
+			Input.prefixId = $div.find('input[id="IN_prefixId"]');
+			Input.linkedId = $div.find('input[data-field="linkedId"]');
+
+
+
+
 			var isCustomEnabled = false;
 			if (values["enabled"]) isCustomEnabled = values["enabled"];
 
@@ -171,19 +197,19 @@
 			//#region Initialize
 			function initialize_LinkedObject() {
 				// Custom Dialog für LinkedObject: Views initialisieren
-				$div.find('.linkedObject_view').show();
-				$div.find('.parentObject_view').hide();
+				Group.linkedObject.show();
+				Group.parentObject.hide();
 
 				// Checkbox Wert setzen
-				$div.find('input[id="CB_isLinked"]').prop('checked', values["isLinked"]);
+				ComboBox.isLinked.prop('checked', values["isLinked"]);
 				// parentId anzeigen
-				$div.find('input[id="IN_parentId"]').val(values["parentId"]);
+				Input.parentId.val(values["parentId"]);
 			}
 
 			function initialize_ParentObject() {
 				// Custom Dialog für ParentObject: Views initialisieren
-				$div.find('.parentObject_view').show();
-				$div.find('.linkedObject_view').hide();
+				Group.parentObject.show();
+				Group.linkedObject.hide();
 
 				if (values["linkedId"]) {
 					// ParentObject ist verlinkt
@@ -191,25 +217,25 @@
 
 					// linkedId aufteilen in prefix & stateId
 					if (values["linkedId"].indexOf(".") > 0) {
-						$div.find('input[id="IN_stateId"]').val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
-						$div.find('input[id="IN_prefixId"]').val(linkedId.substring(0, linkedId.lastIndexOf(".")));
+						Input.stateId.val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
+						Input.prefixId.val(linkedId.substring(0, linkedId.lastIndexOf(".")));
 					} else {
-						$div.find('input[id="IN_stateId"]').val(linkedId);
+						Input.stateId.val(linkedId);
 					}
 				} else if (currentObj && currentObj._id) {
 					// ParentObject ist noch nicht verlinkt
 					var objId = currentObj._id;
 
 					// stateId des ParentObjects holen
-					$div.find('input[id="IN_stateId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-					$div.find('input[data-field="linkedId"]').val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+					Input.stateId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+					Input.linkedId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
 				}
 			}
 
 			function initialize_ExpertSettings() {
 				if (isCustomEnabled && (type === 'number' || type === 'string')) {
 					// Experteneinstellungen anzeigen, sofern für type vorhanden
-					$div.find('.view_expertSettings').show();
+					Group.expertSettings.show();
 					$div.find('span[id="SP_expertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
 
 					// Views initalisieren
@@ -219,7 +245,7 @@
 					events_ExpertSettings();
 
 				} else {
-					$div.find('.view_expertSettings').hide();
+					Group.expertSettings.hide();
 				}
 			}
 
@@ -228,13 +254,13 @@
 
 				// wenn expertSettings aktiviert sind und typ = number -> Eingabefelder anzeigen
 				if (type === 'number' && expertSettingsActivated) {
-					$div.find('.view_expertSettings_Number').show();
+					Group.expertSettings_Number.show();
 
 					$div.find('label[id="LB_unit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
 					// Prüfen ob Typ Konverter ausgewählt ist
 					if (selectedNumberConverter === "") {
-						$div.find('.view_expertSettings_Number_Converter_None').show();
+						Group.expertSettings_Number_Converter_None.show();
 
 						// Number ist read only
 						if (currentObj.common.read === true && currentObj.common.write === false) {
@@ -245,26 +271,26 @@
 							$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
 						}
 
-						$div.find('.view_expertSettings_Number_Converter_Boolean').hide();
-						$div.find('.view_expertSettings_Number_Converter_Boolean').find("input").val("");
+						Group.expertSettings_Number_Converter_Boolean.hide();
+						Group.expertSettings_Number_Converter_Boolean.find("input").val("");
 					} else if (selectedNumberConverter === "boolean") {
-						$div.find('.view_expertSettings_Number_Converter_Boolean').show();
+						Group.expertSettings_Number_Converter_Boolean.show();
 
 						// Number ist read only
 						if (currentObj.common.read === true && currentObj.common.write === false) {
-							$div.find('.view_expertSettings_Number_Converter_Boolean_Not_read_only').hide();
+							Group.expertSettings_Number_Converter_Boolean_notReadOnly.hide();
 						} else {
-							$div.find('.view_expertSettings_Number_Converter_Boolean_Not_read_only').show();
+							Group.expertSettings_Number_Converter_Boolean_notReadOnly.show();
 						}
 
-						$div.find('.view_expertSettings_Number_Converter_None').hide();
-						$div.find('.view_expertSettings_Number_Converter_None').find("input").val("");
+						Group.expertSettings_Number_Converter_None.hide();
+						Group.expertSettings_Number_Converter_None.find("input").val("");
 
 					} else if (selectedNumberConverter === "string") {
-						$div.find('.view_expertSettings_Number_Converter_None').hide();
-						$div.find('.view_expertSettings_Number_Converter_None').find("input").val("");
-						$div.find('.view_expertSettings_Number_Converter_Boolean').hide();
-						$div.find('.view_expertSettings_Number_Converter_Boolean').find("input").val("");
+						Group.expertSettings_Number_Converter_None.hide();
+						Group.expertSettings_Number_Converter_None.find("input").val("");
+						Group.expertSettings_Number_Converter_Boolean.hide();
+						Group.expertSettings_Number_Converter_Boolean.find("input").val("");
 					}
 
 					// Event Handler für ExpertSettings mit type 'number'
@@ -272,9 +298,9 @@
 
 				} else {
 					// Ausblenden und alle Eingaben löschen
-					$div.find('.view_expertSettings_Number').hide();
-					$div.find('.view_expertSettings_Number').find("input").val("");
-					$div.find('.view_expertSettings_Number').find("select").val("");
+					Group.expertSettings_Number.hide();
+					Group.expertSettings_Number.find("input").val("");
+					Group.expertSettings_Number.find("select").val("");
 				}
 			}
 
@@ -282,13 +308,13 @@
 
 			//#region Events
 			function events_ParentObject() {
-				$div.find('input[data-field="enabled"]').on('change', function () {
+				ComboBox.enabled.on('change', function () {
 					// var checked = $(this).prop('checked');
 					isCustomEnabled = this.checked;
 					initialize_ExpertSettings();
 				});
 
-				$div.find('input[id="IN_prefixId"]').on('input', function () {
+				Input.prefixId.on('input', function () {
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
 					let notAllowedSigns = /[*?"'\[\]]/;
 
@@ -299,19 +325,19 @@
 							gMain.showError(_("not allowed chars for Id"));
 						} else {
 							// 'linkedId' zusammensetzen
-							let prefixId = $div.find('input[id="IN_prefixId"]').val();
-							let stateId = $div.find('input[id="IN_stateId"]').val();
+							let prefixId = Input.prefixId.val();
+							let stateId = Input.stateId.val();
 
 							if (prefixId) {
-								$div.find('input[data-field="linkedId"]').val((prefixId + "." + stateId).replace("..", "."));
+								Input.linkedId.val((prefixId + "." + stateId).replace("..", "."));
 							} else {
-								$div.find('input[data-field="linkedId"]').val(stateId);
+								Input.linkedId.val(stateId);
 							}
 						}
 					}
 				});
 
-				$div.find('input[id="IN_stateId"]').on('input', function () {
+				Input.stateId.on('input', function () {
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
 					let notAllowedSigns = /[*?"'\[\]]/;
 
@@ -322,13 +348,13 @@
 							gMain.showError(_("not allowed chars for Id"));
 						} else {
 							// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
-							let prefixId = $div.find('input[id="IN_prefixId"]').val();
-							let stateId = $div.find('input[id="IN_stateId"]').val();
+							let prefixId = Input.prefixId.val();
+							let stateId = Input.stateId.val();
 
 							if (prefixId) {
-								$div.find('input[data-field="linkedId"]').val((prefixId + "." + stateId).replace("..", "."));
+								Input.linkedId.val((prefixId + "." + stateId).replace("..", "."));
 							} else {
-								$div.find('input[data-field="linkedId"]').val(stateId);
+								Input.linkedId.val(stateId);
 							}
 						}
 					}
@@ -338,7 +364,7 @@
 
 			function events_ExpertSettings() {
 				// Event für CheckBox ExpertSettings
-				$div.find('input[data-field="expertSettings"]').on('change', function () {
+				ComboBox.expertSettings.on('change', function () {
 					// var checked = $(this).prop('checked');
 					expertSettingsActivated = this.checked;
 					initialize_ExpertSettings_Number();
