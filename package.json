@@ -1,7 +1,7 @@
 {
   "name": "iobroker.linkeddevices",
   "version": "0.1.0",
-  "description": "Create linked datapoints of your devices to use it in vis or scripts. Advantage is that there is only one place where your used datapoints need to be defined (e.g. change hardware)",
+  "description": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
   "author": {
     "name": "Scrounger",
     "email": "scrounger@gmx.net"
