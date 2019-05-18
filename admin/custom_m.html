@@ -42,31 +42,31 @@
 			</div>
 			<div class="view_expertSettings_Number">
 				<div class="row" style="margin-top: 20px">
-					<div class="view_expertSettings_Number_Converter">
+					<div class="col s3">
+						<label class="translate">convert linked object to type</label>				
+						<select data-field="convertTo" data-default="">
+							<option value="" 			class="translate">do not convert</option>
+							<option value="Boolean" 	class="translate">Boolean</option>
+							<option value="String" 	class="translate">String</option>
+						</select>
+					</div>
+					<div class="view_expertSettings_Number_Converter_None">										
 						<div class="col s3">
-							<label class="translate">convert linked object to type</label>				
-							<select data-field="convertTo" data-default="">
-								<option value="" class="translate">do not convert</option>
-								<option value="Boolean" class="translate">Boolean</option>
-								<option value="String" class="translate">String</option>
-							</select>
+							<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>
+							<input type="text" data-field="unit">
 						</div>
-					</div>					
-					<div class="col s3">
-						<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>
-						<input type="text" data-field="unit">
-					</div>
-					<div class="col s3">
-						<label class="translate">number of decimal places</label>
-						<input type="text" data-field="maxDecimal">
-					</div>
-					<div class="col s3 view_expertSettings_Number_conversion">
-						<label class="translate">conversion for linked object</label>
-						<input type="text" data-field="conversion">					
-					</div>					
-					<div class="col s3 view_expertSettings_Number_conversion_readOnly">
-						<label class="translate">conversion for 'read' object</label>
-						<input type="text" data-field="readOnlyConversion">
+						<div class="col s3">
+							<label class="translate">number of decimal places</label>
+							<input type="text" data-field="maxDecimal">
+						</div>
+						<div class="col s3 view_expertSettings_Number_conversion">
+							<label class="translate">conversion for linked object</label>
+							<input type="text" data-field="conversion">					
+						</div>					
+						<div class="col s3 view_expertSettings_Number_conversion_readOnly">
+							<label class="translate">conversion for 'read' object</label>
+							<input type="text" data-field="readOnlyConversion">
+						</div>
 					</div>			
 				</div>
 			</div>
@@ -120,6 +120,7 @@
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
 			var expertSettingsActivated = values["expertSettings"];
+			var selectedNumberConverter = values["convertTo"];
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
@@ -203,26 +204,42 @@
 			function initialize_ExpertSettings_Number() {
 				// ExpertSettings für type 'number' initialisieren				
 
-				// wenn expertSettings aktiviert sind -> Eingabefelder anzeigen
+				// wenn expertSettings aktiviert sind und typ = number -> Eingabefelder anzeigen
 				if (type === 'number' && expertSettingsActivated) {
 					$div.find('.view_expertSettings_Number').show();
 
 					$div.find('label[id="LB_unit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
-					// Number ist read only
-					if (currentObj.common.read === true && currentObj.common.write === false) {
-						$div.find('.view_expertSettings_Number_conversion_readOnly').show();
-						$div.find('.view_expertSettings_Number_conversion').hide();
-					} else {
-						$div.find('.view_expertSettings_Number_conversion').show();
-						$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
+					// Prüfen ob Typ Konverter ausgewählt ist
+					if (selectedNumberConverter === "") {
+						$div.find('.view_expertSettings_Number_Converter_None').show();
+
+						// Number ist read only
+						if (currentObj.common.read === true && currentObj.common.write === false) {
+							$div.find('.view_expertSettings_Number_conversion_readOnly').show();
+							$div.find('.view_expertSettings_Number_conversion').hide();
+						} else {
+							$div.find('.view_expertSettings_Number_conversion').show();
+							$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
+						}
+
+					} else if (selectedNumberConverter === "Boolean") {						
+						$div.find('.view_expertSettings_Number_Converter_None').hide();
+						$div.find('.view_expertSettings_Number_Converter_None').find("input").val("");
+
+					} else if (selectedNumberConverter === "String") {
+						$div.find('.view_expertSettings_Number_Converter_None').hide();
+						$div.find('.view_expertSettings_Number_Converter_None').find("input").val("");
 					}
 
 					// Event Handler für ExpertSettings mit type 'number'
 					events_ExpertSettings_Number();
 
 				} else {
+					// Ausblenden und alle Eingaben löschen
 					$div.find('.view_expertSettings_Number').hide();
+					$div.find('.view_expertSettings_Number').find("input").val("");
+					$div.find('.view_expertSettings_Number').find("select").val("");
 				}
 			}
 
@@ -333,6 +350,11 @@
 						}
 					}
 					this.value = this.value.replace(allowedSigns, '');
+				});
+
+				$div.find('select[data-field="convertTo"]').on('change', function () {
+					selectedNumberConverter = this.value;
+					initialize_ExpertSettings_Number();
 				});
 			}
 
