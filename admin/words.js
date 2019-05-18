@@ -106,16 +106,20 @@ systemDictionary = {
 		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
 		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
 	},
-	"don't convert": {
-		"en": "don't convert",
+	"do not convert": {
+		"en": "do not convert",
 		"de": "nicht umwandeln",
 	},
-	"convert to Boolean": {
-		"en": "convert to Boolean",
-		"de": "in Boolean umwandeln",
+	"Boolean": {
+		"en": "Boolean",
+		"de": "Logikwert",
 	},
-	"convert to String": {
-		"en": "convert to String",
-		"de": "in String umwandeln",
-	}
+	"String": {
+		"en": "String",
+		"de": "Zeichenkette",
+	},
+	"convert linked object to type": {
+		"en": "convert linked object to type",
+		"de": "Konvertiere verlinktes Objekt in Typ",
+	},
 };
