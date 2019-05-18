@@ -36,37 +36,37 @@
 			</div>
 			<div class="row" >
 				<div class="col">
-					<input type="checkbox" id="CB_expertSettings"/>
+					<input type="checkbox" data-field="expertSettings"/>
 					<span id="SP_expertSettings" class="translate">expert settings</span>				
 				</div>
 			</div>
-			<div class="view_expertSettings_Number" disabled="true">
+			<div class="view_expertSettings_Number">
 				<div class="row" style="margin-top: 20px">
 					<div class="view_expertSettings_Number_Converter">
 						<div class="col s3">
 							<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>				
-							<select data-field="convertTo" data-default="None">
-								<option value="None" class="translate">don't convert</option>
-								<option value="Boolean" class="translate" disabled="true">convert to Boolean</option>
-								<option value="String" class="translate" disabled="true">convert to String</option>
+							<select data-field="convertTo" data-default="">
+								<option value="" class="translate">don't convert</option>
+								<option value="Boolean" class="translate">convert to Boolean</option>
+								<option value="String" class="translate">convert to String</option>
 							</select>
 						</div>
 					</div>					
 					<div class="col s3">
 						<label id="LB_unit" class="translate">change unit '{0}' for linked object to</label>
-						<input type="text" data-field="unit" disabled="true">
+						<input type="text" data-field="unit">
 					</div>
 					<div class="col s3">
 						<label class="translate">number of decimal places</label>
-						<input type="text" data-field="maxDecimal" disabled="true">
+						<input type="text" data-field="maxDecimal">
 					</div>
 					<div class="col s3 view_expertSettings_Number_conversion">
 						<label class="translate">conversion for linked object</label>
-						<input type="text" data-field="conversion" disabled="true">					
+						<input type="text" data-field="conversion">					
 					</div>					
 					<div class="col s3 view_expertSettings_Number_conversion_readOnly">
 						<label class="translate">conversion for 'read' object</label>
-						<input type="text" data-field="readOnlyConversion" disabled="true">
+						<input type="text" data-field="readOnlyConversion">
 					</div>			
 				</div>
 			</div>
@@ -122,8 +122,10 @@
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
 			$div.ready(function () {
+				//$div.find('.view_expertSettings_Number').hide();
 				// Event Document ready -> hier kann select disabled = 'true' gesetzt werden, da sonst options weg sind bzw. enabled nicht geht
-				$div.find('.view_expertSettings_Number_Converter').find('*').prop('disabled', true);
+				//$div.find('.view_expertSettings_Number_Converter').find('*').prop('disabled', true);
+				
 			});
 
 			if (values["isLinked"] != undefined) {
@@ -180,13 +182,13 @@
 			}
 
 			function initialize_ExpertSettings() {
+				// alle type abhängigen expertSettings zunächst ausblenden
+				$div.find('.view_expertSettings_Number').hide();
+
 				if (type === 'number' || type === 'string') {
 					// Experteneinstellungen anzeigen, sofern für type vorhanden
 					$div.find('.view_expertSettings').show();
 					$div.find('span[id="SP_expertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
-
-					//zuerst alle views ausblenden
-					$div.find('.view_expertSettings_Number').hide();
 
 					// Views abhängig vom type anzeigen oder ausblenden
 					if (type === 'number') {
@@ -202,8 +204,13 @@
 			}
 
 			function initialize_ExpertSettings_Number() {
-				// ExpertSettings für type 'number' initialisieren
-				$div.find('.view_expertSettings_Number').show();
+				// ExpertSettings für type 'number' initialisieren				
+				
+				// wenn expertSettings aktiviert sind -> Eingabefelder anzeigen
+				if (values["expertSettings"]) {
+					$div.find('.view_expertSettings_Number').show();
+				}
+
 
 				$div.find('label[id="LB_unit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
@@ -274,15 +281,18 @@
 
 			function events_ExpertSettings() {
 				// Event für CheckBox ExpertSettings
-				$div.find('input[id="CB_expertSettings"]').on('change', function () {
+				$div.find('input[data-field="expertSettings"]').on('change', function () {
 					// var checked = $(this).prop('checked');
 
-					if (type === 'number') {
-						// alle Elemente aktivieren / deaktivieren
-						$div.find('.view_expertSettings_Number').find(":input").prop("disabled", !this.checked);
+					if (type === 'number' && this.checked) {
+						// alle notwendigen Number Elemente anzeigen
+						$div.find('.view_expertSettings_Number').show();
+					} else {
+						// Alle Element ausblenden und zurücksetzen
+						$div.find('.view_expertSettings_Number').hide();
+						$div.find('.view_expertSettings_Number').find("input").val("");
+						$div.find('.view_expertSettings_Number').find("select").val("");
 					}
-
-					//gMain.showMessage("Halllo");
 				});
 			}
 
