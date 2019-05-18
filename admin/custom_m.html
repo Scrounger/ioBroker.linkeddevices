@@ -46,8 +46,8 @@
 						<label class="translate">convert linked object to type</label>				
 						<select data-field="convertTo" data-default="">
 							<option value="" 			class="translate">do not convert</option>
-							<option value="Boolean" 	class="translate">Boolean</option>
-							<option value="String" 	class="translate">String</option>
+							<option value="boolean" 	class="translate">Boolean</option>
+							<option value="string" 	class="translate">String</option>
 						</select>
 					</div>
 					<div class="view_expertSettings_Number_Converter_None">										
@@ -66,6 +66,22 @@
 						<div class="col s3 view_expertSettings_Number_conversion_readOnly">
 							<label class="translate">conversion for 'read' object</label>
 							<input type="text" data-field="readOnlyConversion">
+						</div>
+					</div>
+					<div class="view_expertSettings_Number_Converter_Boolean">
+						<div class="col s3">
+							<label class="translate">condition 'true' for linked object</label>
+							<input type="text" data-field="condition_number_boolean_linked_object">
+						</div>
+						<div class="view_expertSettings_Number_Converter_Boolean_Not_read_only">
+							<div class="col s3">
+								<label class="translate">value if linked object is 'true'</label>
+								<input type="number" data-field="true_value_number_boolean_parent_object">
+							</div>
+							<div class="col s3">
+								<label class="translate">value if linked object is 'false'</label>
+								<input type="number" data-field="false_value_number_boolean_parent_object">
+							</div>												
 						</div>
 					</div>			
 				</div>
@@ -223,13 +239,26 @@
 							$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
 						}
 
-					} else if (selectedNumberConverter === "Boolean") {						
+						$div.find('.view_expertSettings_Number_Converter_Boolean').hide();
+						$div.find('.view_expertSettings_Number_Converter_Boolean').find("input").val("");
+					} else if (selectedNumberConverter === "boolean") {
+						$div.find('.view_expertSettings_Number_Converter_Boolean').show();
+
+						// Number ist read only
+						if (currentObj.common.read === true && currentObj.common.write === false) {
+							$div.find('.view_expertSettings_Number_Converter_Boolean_Not_read_only').hide();
+						} else {
+							$div.find('.view_expertSettings_Number_Converter_Boolean_Not_read_only').show();
+						}
+
 						$div.find('.view_expertSettings_Number_Converter_None').hide();
 						$div.find('.view_expertSettings_Number_Converter_None').find("input").val("");
 
-					} else if (selectedNumberConverter === "String") {
+					} else if (selectedNumberConverter === "string") {
 						$div.find('.view_expertSettings_Number_Converter_None').hide();
 						$div.find('.view_expertSettings_Number_Converter_None').find("input").val("");
+						$div.find('.view_expertSettings_Number_Converter_Boolean').hide();
+						$div.find('.view_expertSettings_Number_Converter_Boolean').find("input").val("");
 					}
 
 					// Event Handler für ExpertSettings mit type 'number'

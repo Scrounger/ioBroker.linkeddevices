@@ -122,4 +122,16 @@ systemDictionary = {
 		"en": "convert linked object to type",
 		"de": "Konvertiere verlinktes Objekt in Typ",
 	},
+	"condition 'true' for linked object": {
+		"en": "condition 'true' for linked object",
+		"de": "Bedingung 'true' für verlinktes Objekt",
+	},
+	"value if linked object is 'true'": {
+		"en": "value if linked object is 'true'",
+		"de": "Wert wenn verlinktes Objekt 'true' ist",
+	},
+	"value if linked object is 'false'": {
+		"en": "value if linked object is 'false'",
+		"de": "Wert wenn verlinktes Objekt 'false' ist",
+	}
 };
