@@ -24,6 +24,11 @@ This adapter is inspired at [virtual devices script by Pman](https://forum.iobro
 
 ## Changelog
 
+### 0.1.0
+* (Scrounger) custom dialog layout changed
+* (Scrounger) conversion bug fixes
+* (Scrounger) change unit bug fixes
+
 ### 0.0.4
 * (Scrounger) main function added
 * (Scrounger) change unit for linked objects
