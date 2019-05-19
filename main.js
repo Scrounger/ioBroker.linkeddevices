@@ -454,22 +454,8 @@ class Linkeddevices extends utils.Adapter {
 						// custom attribute übergeben, sofern vorhanden (Vermutung muss vor custom von anderen erfolgen)
 						var linkedObjectCustom = this.getLinkedObjectCustomData(parentObj, linkedId);
 
-						// custom settings von anderen Adaptern ggf. übernehmen
-						let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
-						if (existingLinkedObj && existingLinkedObj.common && existingLinkedObj.common.custom) {
-							// linkedObject wurde geändert (nicht linkedId), alle customs vom linkedObject übernehmen -> würde sonst vom parentObject übernommen werden
-							this.log.debug(`[createLinkedObject] keep custom settings '${JSON.stringify(existingLinkedObj.common.custom)}' for linkedObject '${linkedId}'`)
-							linkedObj.common.custom = existingLinkedObj.common.custom;
-						} else {
-							if (oldLinkedObj && oldLinkedObj.common && oldLinkedObj.common.custom) {
-								// linkedObject wurde linkedId geändert -> custom vom alten linkedObject übernehmen
-								linkedObj.common.custom = oldLinkedObj.common.custom;
-								this.log.debug(`[createLinkedObject] move custom settings '${JSON.stringify(oldLinkedObj.common.custom)}' from '${oldLinkedObj._id}' to linkedObject '${linkedId}'`)
-							} else {
-								// linkeObject existiert nicht, alle customs von anderen Adaptern entfernen
-								linkedObj.common.custom = {};
-							}
-						}
+						// Übernehmen custom data von anderen Adaptern
+						await this.setLinkedObjectExistingCustomData(linkedId, linkedObj, oldLinkedObj);
 
 						// custom an linkedObject übergeben
 						linkedObj.common.custom[this.namespace] = linkedObjectCustom;
@@ -558,7 +544,7 @@ class Linkeddevices extends utils.Adapter {
 	/**
 	 * Custom data für linkedObejct erzeugen
 	 * @param {ioBroker.Object} parentObj
-	 * @param {string | number} linkedId
+	 * @param {string} linkedId
 	 */
 	getLinkedObjectCustomData(parentObj, linkedId) {
 		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "isLinked": true }
@@ -588,6 +574,31 @@ class Linkeddevices extends utils.Adapter {
 		}
 
 		return Object.assign(linkedObjectCustom, expertSettings);
+	}
+
+	/**
+	 * Sofern von anderen Adaptern custom data existieren, müssen diese bei Änderungen am linkedObject übernommen werden	 
+	 * @param {string} linkedId
+	 * @param {ioBroker.Object} linkedObj
+	 * @param {ioBroker.Object} oldLinkedObj
+	 */
+	async setLinkedObjectExistingCustomData(linkedId, linkedObj, oldLinkedObj) {
+		// custom settings von anderen Adaptern ggf. übernehmen
+		let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
+		if (existingLinkedObj && existingLinkedObj.common && existingLinkedObj.common.custom) {
+			// linkedObject wurde geändert (nicht linkedId), alle customs vom linkedObject übernehmen -> würde sonst vom parentObject übernommen werden
+			this.log.debug(`[setLinkedObjectExistingCustomData] keep custom settings '${JSON.stringify(existingLinkedObj.common.custom)}' for linkedObject '${linkedId}'`)
+			linkedObj.common.custom = existingLinkedObj.common.custom;
+		} else {
+			if (oldLinkedObj && oldLinkedObj.common && oldLinkedObj.common.custom) {
+				// linkedObject wurde linkedId geändert -> custom vom alten linkedObject übernehmen
+				linkedObj.common.custom = oldLinkedObj.common.custom;
+				this.log.debug(`[setLinkedObjectExistingCustomData] move custom settings '${JSON.stringify(oldLinkedObj.common.custom)}' from '${oldLinkedObj._id}' to linkedObject '${linkedId}'`)
+			} else {
+				// linkeObject existiert nicht, alle customs von anderen Adaptern entfernen
+				linkedObj.common.custom = {};
+			}
+		}
 	}
 
 	/**
