@@ -82,9 +82,9 @@ systemDictionary = {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: / * , .",
 		"de": "Falsches Eingabeformat!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Erlaubte Operatoren: / * , .",
 	},
-	"number of decimal places": {
-		"en": "number of decimal places for linked object",
-		"de": "Anzahl Nachkommastellen für verlinktes Objekt",
+	"max. number of decimal places": {
+		"en": "max. number of decimal places for linked object",
+		"de": "max. Anzahl Nachkommastellen für verlinktes Objekt",
 	},
 	"only numbers allowed": {
 		"en": "only numbers allowed",

@@ -463,10 +463,10 @@ class Linkeddevices extends utils.Adapter {
 							readOnlyConversion = parentObj.common.custom[this.namespace].readOnlyConversion;
 						}
 
-						var maxDecimal = "";
-						if (parseInt(parentObj.common.custom[this.namespace].maxDecimal) != NaN) {
+						var number_maxDecimal = "";
+						if (parseInt(parentObj.common.custom[this.namespace].number_maxDecimal) != NaN) {
 							// conversion vorhanden, nur bei type = number
-							maxDecimal = parentObj.common.custom[this.namespace].maxDecimal;
+							number_maxDecimal = parentObj.common.custom[this.namespace].number_maxDecimal;
 						}
 
 						// custom settings von anderen Adaptern ggf. übernehmen
@@ -488,7 +488,7 @@ class Linkeddevices extends utils.Adapter {
 
 						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
-						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion, "readOnlyConversion": readOnlyConversion, "maxDecimal": maxDecimal };
+						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion, "readOnlyConversion": readOnlyConversion, "number_maxDecimal": number_maxDecimal };
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// if (parentObj.common.custom[this.namespace].conversion) {
@@ -652,9 +652,9 @@ class Linkeddevices extends utils.Adapter {
 					convertedValue = value;
 				}
 
-				if (!isParentObj && (obj.common.custom[this.namespace].maxDecimal || obj.common.custom[this.namespace].maxDecimal === 0)) {
+				if (!isParentObj && (obj.common.custom[this.namespace].number_maxDecimal || obj.common.custom[this.namespace].number_maxDecimal === 0)) {
 					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
-					var num = parseInt(obj.common.custom[this.namespace].maxDecimal);
+					var num = parseInt(obj.common.custom[this.namespace].number_maxDecimal);
 					if (num != NaN) {
 						convertedValue = mathjs.round(convertedValue, num);
 					}

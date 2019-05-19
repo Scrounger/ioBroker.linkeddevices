@@ -56,8 +56,8 @@
 							<input type="text" data-field="number_unit">
 						</div>
 						<div class="col s3">
-							<label class="translate">number of decimal places</label>
-							<input type="text" data-field="maxDecimal">
+							<label class="translate">max. number of decimal places</label>
+							<input type="text" data-field="number_maxDecimal">
 						</div>
 						<div class="col s3 view_expertSettings_Number_conversion">
 							<label class="translate">conversion for linked object</label>
@@ -201,7 +201,7 @@
 				Input.stateId = $div.find('input[id="IN_stateId"]');
 				Input.prefixId = $div.find('input[id="IN_prefixId"]');
 				Input.linkedId = $div.find('input[data-field="linkedId"]');
-				Input.maxDecimal = $div.find('input[data-field="maxDecimal"]');
+				Input.number_maxDecimal = $div.find('input[data-field="number_maxDecimal"]');
 				Input.conversion = $div.find('input[data-field="conversion"]');
 				Input.readOnlyConversion = $div.find('input[data-field="readOnlyConversion"]');
 
@@ -386,7 +386,7 @@
 
 			function events_ExpertSettings_Number() {
 				// Anzahl Nachkommastellen - Eingabe prüfen
-				Input.maxDecimal.keyup(function () {
+				Input.number_maxDecimal.keyup(function () {
 					// Nur Nummern zulassen
 					let allowedSigns = /[^0-9]/;
 
