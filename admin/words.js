@@ -90,12 +90,12 @@ systemDictionary = {
 		"en": "only numbers allowed",
 		"de": "Nur Nummern sind als Eingabe erlaubt!",
 	},
-	"conversion for 'read' object": {
-		"en": "conversion for 'read' object",
+	"calculation for 'read' object": {
+		"en": "calculation for 'read' object",
 		"de": "Umrechnung für verlinktes 'read' Objekt",
 	},
-	"conversion for linked object": {
-		"en": "conversion for linked object",
+	"calculation for linked object": {
+		"en": "calculation for linked object",
 		"de": "Umrechnung für verlinktes Objekt",
 	},
 	"number": {
