@@ -135,32 +135,7 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
-			// alle ComboBoxen in vars packen
-			var ComboBox = {};
-			ComboBox.enabled = $div.find('input[data-field="enabled"]');
-			ComboBox.expertSettings = $div.find('input[data-field="expertSettings"]');
-			ComboBox.isLinked = $div.find('input[id="CB_isLinked"]');
-
-			// alle groups in vars packen
-			var Group = {};
-			Group.linkedObject = $div.find('.linkedObject_view');
-			Group.parentObject = $div.find('.parentObject_view');
-			Group.expertSettings = $div.find('.view_expertSettings');
-			Group.expertSettings_Number = $div.find('.view_expertSettings_Number');
-			Group.expertSettings_Number_Converter_None = $div.find('.view_expertSettings_Number_Converter_None');
-			Group.expertSettings_Number_Converter_Boolean = $div.find('.view_expertSettings_Number_Converter_Boolean');
-			Group.expertSettings_Number_Converter_Boolean_notReadOnly = $div.find('.view_expertSettings_Number_Converter_Boolean_notReadOnly');
-
-			// alle input in vars packen
-			var Input = {};
-			Input.parentId = $div.find('input[id="IN_parentId"]');
-			Input.stateId = $div.find('input[id="IN_stateId"]');
-			Input.prefixId = $div.find('input[id="IN_prefixId"]');
-			Input.linkedId = $div.find('input[data-field="linkedId"]');
-
-
-
-
+			// vars die sich verändern können und für conditions benötigt werden
 			var isCustomEnabled = false;
 			if (values["enabled"]) isCustomEnabled = values["enabled"];
 
@@ -179,6 +154,9 @@
 
 			});
 
+			// Divs in vars packen
+			initialize_Divs();
+
 			if (values["isLinked"] != undefined) {
 				// Custom Dialog für LinkedObject
 				initialize_LinkedObject();
@@ -195,6 +173,45 @@
 			}
 
 			//#region Initialize
+			function initialize_Divs() {
+				// alle ComboBoxen in vars packen
+				var ComboBox = {};
+				ComboBox.enabled = $div.find('input[data-field="enabled"]');
+				ComboBox.expertSettings = $div.find('input[data-field="expertSettings"]');
+				ComboBox.isLinked = $div.find('input[id="CB_isLinked"]');
+
+				// alle groups in vars packen
+				var Group = {};
+				Group.linkedObject = $div.find('.linkedObject_view');
+				Group.parentObject = $div.find('.parentObject_view');
+				Group.expertSettings = $div.find('.view_expertSettings');
+				Group.expertSettings_Number = $div.find('.view_expertSettings_Number');
+				Group.expertSettings_Number_Converter_None = $div.find('.view_expertSettings_Number_Converter_None');
+				Group.expertSettings_Number_Converter_Boolean = $div.find('.view_expertSettings_Number_Converter_Boolean');
+				Group.expertSettings_Number_Converter_Boolean_notReadOnly = $div.find('.view_expertSettings_Number_Converter_Boolean_notReadOnly');
+				Group.expertSettings_Number_Conversion = $div.find('.view_expertSettings_Number_conversion');
+				Group.expertSettings_Number_Conversion_ReadOnly = $div.find('.view_expertSettings_Number_conversion_readOnly');
+
+				// alle input in vars packen
+				var Input = {};
+				Input.parentId = $div.find('input[id="IN_parentId"]');
+				Input.stateId = $div.find('input[id="IN_stateId"]');
+				Input.prefixId = $div.find('input[id="IN_prefixId"]');
+				Input.linkedId = $div.find('input[data-field="linkedId"]');
+				Input.maxDecimal = $div.find('input[data-field="maxDecimal"]');
+				Input.conversion = $div.find('input[data-field="conversion"]');
+				Input.readOnlyConversion = $div.find('input[data-field="readOnlyConversion"]');
+
+				// alle select in var packen
+				var Select = {};
+				Select.convertTo = $div.find('select[data-field="convertTo"]');
+
+				// alle label / span in var packen
+				var Label = {};
+				Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
+				Label.unit = $div.find('label[id="LB_unit"]');
+			}
+
 			function initialize_LinkedObject() {
 				// Custom Dialog für LinkedObject: Views initialisieren
 				Group.linkedObject.show();
@@ -236,7 +253,7 @@
 				if (isCustomEnabled && (type === 'number' || type === 'string')) {
 					// Experteneinstellungen anzeigen, sofern für type vorhanden
 					Group.expertSettings.show();
-					$div.find('span[id="SP_expertSettings"]').text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
+					Label.expertSettings.text(_("expert settings for type '{0}'").replace("{0}", _(currentObj.common.type)));
 
 					// Views initalisieren
 					initialize_ExpertSettings_Number();
@@ -256,7 +273,7 @@
 				if (type === 'number' && expertSettingsActivated) {
 					Group.expertSettings_Number.show();
 
-					$div.find('label[id="LB_unit"]').text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
+					Label.unit.text(_("change unit '{0}' for linked object to").replace("{0}", currentObj.common.unit));
 
 					// Prüfen ob Typ Konverter ausgewählt ist
 					if (selectedNumberConverter === "") {
@@ -264,11 +281,11 @@
 
 						// Number ist read only
 						if (currentObj.common.read === true && currentObj.common.write === false) {
-							$div.find('.view_expertSettings_Number_conversion_readOnly').show();
-							$div.find('.view_expertSettings_Number_conversion').hide();
+							Group.expertSettings_Number_Conversion_ReadOnly.show();
+							Group.expertSettings_Number_Conversion.hide();
 						} else {
-							$div.find('.view_expertSettings_Number_conversion').show();
-							$div.find('.view_expertSettings_Number_conversion_readOnly').hide();
+							Group.expertSettings_Number_Conversion.show();
+							Group.expertSettings_Number_Conversion_ReadOnly.hide();
 						}
 
 						Group.expertSettings_Number_Converter_Boolean.hide();
@@ -368,7 +385,7 @@
 
 			function events_ExpertSettings_Number() {
 				// Anzahl Nachkommastellen - Eingabe prüfen
-				$div.find('input[data-field="maxDecimal"]').keyup(function () {
+				Input.maxDecimal.keyup(function () {
 					// Nur Nummern zulassen
 					let allowedSigns = /[^0-9]/;
 
@@ -379,7 +396,7 @@
 				});
 
 				// Umrechnung für read & write - Eingabe prüfen
-				$div.find('input[data-field="conversion"]').keyup(function () {
+				Input.conversion.keyup(function () {
 					// Nur Nummern und math operators * | / zulassen
 					let allowedSigns = /[^0-9\.\,\*\/]/;
 
@@ -397,7 +414,7 @@
 				});
 
 				// Umrechnung für read only - Eingabe prüfen
-				$div.find('input[data-field="readOnlyConversion"]').keyup(function () {
+				Input.readOnlyConversion.keyup(function () {
 					// Nur Nummern und math operators zulassen
 					let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
 
@@ -414,7 +431,7 @@
 					this.value = this.value.replace(allowedSigns, '');
 				});
 
-				$div.find('select[data-field="convertTo"]').on('change', function () {
+				Select.convertTo.on('change', function () {
 					selectedNumberConverter = this.value;
 					initialize_ExpertSettings_Number();
 				});
