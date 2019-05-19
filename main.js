@@ -457,10 +457,10 @@ class Linkeddevices extends utils.Adapter {
 							number_calculation = parentObj.common.custom[this.namespace].number_calculation;
 						}
 
-						var readOnlyConversion = "";
-						if (parentObj.common.custom[this.namespace].readOnlyConversion) {
+						var number_calculation_readOnly = "";
+						if (parentObj.common.custom[this.namespace].number_calculation_readOnly) {
 							// calculation vorhanden, nur bei type = number
-							readOnlyConversion = parentObj.common.custom[this.namespace].readOnlyConversion;
+							number_calculation_readOnly = parentObj.common.custom[this.namespace].number_calculation_readOnly;
 						}
 
 						var number_maxDecimal = "";
@@ -488,7 +488,7 @@ class Linkeddevices extends utils.Adapter {
 
 						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
-						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "number_calculation": number_calculation, "readOnlyConversion": readOnlyConversion, "number_maxDecimal": number_maxDecimal };
+						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "number_calculation": number_calculation, "number_calculation_readOnly": number_calculation_readOnly, "number_maxDecimal": number_maxDecimal };
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// if (parentObj.common.custom[this.namespace].number_calculation) {
@@ -620,12 +620,12 @@ class Linkeddevices extends utils.Adapter {
 			if (obj.common.type === "number") {
 				// number_calculation nur für type 'number'
 				try {
-					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion && !isParentObj) {
+					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].number_calculation_readOnly && !isParentObj) {
 						// ReadOnly object mit calculation -> umrechnen
-						//let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
-						let calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`)
+						//let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].number_calculation_readOnly.replace(",", ".")}`);
+						let calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].number_calculation_readOnly.replace(",", ".")}`)
 
-						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using calculation '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using calculation '${obj.common.custom[this.namespace].number_calculation_readOnly.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
 
 						convertedValue = calc;
 					} else if (obj.common.custom[this.namespace].number_calculation) {

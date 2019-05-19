@@ -65,7 +65,7 @@
 						</div>					
 						<div class="col s3 view_expertSettings_Number_conversion_readOnly">
 							<label class="translate">conversion for 'read' object</label>
-							<input type="text" data-field="readOnlyConversion">
+							<input type="text" data-field="number_calculation_readOnly">
 						</div>
 					</div>
 					<div class="view_expertSettings_Number_Converter_Boolean">
@@ -203,7 +203,7 @@
 				Input.linkedId = $div.find('input[data-field="linkedId"]');
 				Input.number_maxDecimal = $div.find('input[data-field="number_maxDecimal"]');
 				Input.number_calculation = $div.find('input[data-field="number_calculation"]');
-				Input.readOnlyConversion = $div.find('input[data-field="readOnlyConversion"]');
+				Input.number_calculation_readOnly = $div.find('input[data-field="number_calculation_readOnly"]');
 
 				// alle select in var packen
 				Select.number_converTo = $div.find('select[data-field="number_converTo"]');
@@ -415,7 +415,7 @@
 				});
 
 				// Umrechnung für read only - Eingabe prüfen
-				Input.readOnlyConversion.keyup(function () {
+				Input.number_calculation_readOnly.keyup(function () {
 					// Nur Nummern und math operators zulassen
 					let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
 
