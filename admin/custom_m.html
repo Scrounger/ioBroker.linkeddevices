@@ -135,6 +135,12 @@
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
+			var ComboBox = {};
+			var Group = {};
+			var Input = {};
+			var Select = {};
+			var Label = {};
+
 			// vars die sich verändern können und für conditions benötigt werden
 			var isCustomEnabled = false;
 			if (values["enabled"]) isCustomEnabled = values["enabled"];
@@ -175,13 +181,11 @@
 			//#region Initialize
 			function initialize_Divs() {
 				// alle ComboBoxen in vars packen
-				var ComboBox = {};
 				ComboBox.enabled = $div.find('input[data-field="enabled"]');
 				ComboBox.expertSettings = $div.find('input[data-field="expertSettings"]');
 				ComboBox.isLinked = $div.find('input[id="CB_isLinked"]');
 
-				// alle groups in vars packen
-				var Group = {};
+				// alle groups in vars packen			
 				Group.linkedObject = $div.find('.linkedObject_view');
 				Group.parentObject = $div.find('.parentObject_view');
 				Group.expertSettings = $div.find('.view_expertSettings');
@@ -193,7 +197,6 @@
 				Group.expertSettings_Number_Conversion_ReadOnly = $div.find('.view_expertSettings_Number_conversion_readOnly');
 
 				// alle input in vars packen
-				var Input = {};
 				Input.parentId = $div.find('input[id="IN_parentId"]');
 				Input.stateId = $div.find('input[id="IN_stateId"]');
 				Input.prefixId = $div.find('input[id="IN_prefixId"]');
@@ -203,11 +206,9 @@
 				Input.readOnlyConversion = $div.find('input[data-field="readOnlyConversion"]');
 
 				// alle select in var packen
-				var Select = {};
 				Select.convertTo = $div.find('select[data-field="convertTo"]');
 
 				// alle label / span in var packen
-				var Label = {};
 				Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
 				Label.unit = $div.find('label[id="LB_unit"]');
 			}
