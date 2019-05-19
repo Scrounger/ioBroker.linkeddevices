@@ -446,9 +446,9 @@ class Linkeddevices extends utils.Adapter {
 						linkedObj.common.desc = "Created by linkeddevices";
 
 						//Experteneinstellungen für common attribute übergeben (Vermutung muss vor custom erfolgen)
-						if (parentObj.common.custom[this.namespace].unit) {
-							// unit
-							linkedObj.common.unit = parentObj.common.custom[this.namespace].unit;
+						if (parentObj.common.custom[this.namespace].number_unit) {
+							// number_unit
+							linkedObj.common.unit = parentObj.common.custom[this.namespace].number_unit;
 						}
 
 						var conversion = "";
