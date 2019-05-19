@@ -44,7 +44,7 @@
 				<div class="row" style="margin-top: 20px">
 					<div class="col s3">
 						<label class="translate">convert linked object to type</label>				
-						<select data-field="convertTo" data-default="">
+						<select data-field="number_converTo" data-default="">
 							<option value="" 			class="translate">do not convert</option>
 							<option value="boolean" 	class="translate">Boolean</option>
 							<option value="string" 		class="translate">String</option>
@@ -149,7 +149,7 @@
 			if (values["expertSettings"]) expertSettingsActivated = values["expertSettings"];
 
 			var selectedNumberConverter = "";
-			if (values["convertTo"]) selectedNumberConverter = values["convertTo"];
+			if (values["number_converTo"]) selectedNumberConverter = values["number_converTo"];
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
@@ -206,7 +206,7 @@
 				Input.readOnlyConversion = $div.find('input[data-field="readOnlyConversion"]');
 
 				// alle select in var packen
-				Select.convertTo = $div.find('select[data-field="convertTo"]');
+				Select.number_converTo = $div.find('select[data-field="number_converTo"]');
 
 				// alle label / span in var packen
 				Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
@@ -432,7 +432,7 @@
 					this.value = this.value.replace(allowedSigns, '');
 				});
 
-				Select.convertTo.on('change', function () {
+				Select.number_converTo.on('change', function () {
 					selectedNumberConverter = this.value;
 					initialize_ExpertSettings_Number();
 				});
