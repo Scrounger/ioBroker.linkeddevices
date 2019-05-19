@@ -451,21 +451,21 @@ class Linkeddevices extends utils.Adapter {
 							linkedObj.common.unit = parentObj.common.custom[this.namespace].number_unit;
 						}
 
-						var conversion = "";
-						if (parentObj.common.custom[this.namespace].conversion) {
-							// conversion vorhanden, nur bei type = number
-							conversion = parentObj.common.custom[this.namespace].conversion;
+						var number_calculation = "";
+						if (parentObj.common.custom[this.namespace].number_calculation) {
+							// number_calculation vorhanden, nur bei type = number
+							number_calculation = parentObj.common.custom[this.namespace].number_calculation;
 						}
 
 						var readOnlyConversion = "";
 						if (parentObj.common.custom[this.namespace].readOnlyConversion) {
-							// conversion vorhanden, nur bei type = number
+							// calculation vorhanden, nur bei type = number
 							readOnlyConversion = parentObj.common.custom[this.namespace].readOnlyConversion;
 						}
 
 						var number_maxDecimal = "";
 						if (parseInt(parentObj.common.custom[this.namespace].number_maxDecimal) != NaN) {
-							// conversion vorhanden, nur bei type = number
+							// calculation vorhanden, nur bei type = number
 							number_maxDecimal = parentObj.common.custom[this.namespace].number_maxDecimal;
 						}
 
@@ -488,11 +488,11 @@ class Linkeddevices extends utils.Adapter {
 
 						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
 						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
-						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "conversion": conversion, "readOnlyConversion": readOnlyConversion, "number_maxDecimal": number_maxDecimal };
+						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "number_calculation": number_calculation, "readOnlyConversion": readOnlyConversion, "number_maxDecimal": number_maxDecimal };
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
-						// if (parentObj.common.custom[this.namespace].conversion) {
-						// 	linkedObj.common.custom[this.namespace].conversion = parentObj.common.custom[this.namespace].conversion;
+						// if (parentObj.common.custom[this.namespace].number_calculation) {
+						// 	linkedObj.common.custom[this.namespace].number_calculation = parentObj.common.custom[this.namespace].number_calculation;
 						// }
 
 						// LinkedObjekt erzeugen oder Änderungen schreiben
@@ -618,28 +618,28 @@ class Linkeddevices extends utils.Adapter {
 		if (obj && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
 
 			if (obj.common.type === "number") {
-				// Conversion nur für type 'number'
+				// number_calculation nur für type 'number'
 				try {
 					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].readOnlyConversion && !isParentObj) {
-						// ReadOnly object mit conversion -> umrechnen
+						// ReadOnly object mit calculation -> umrechnen
 						//let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`);
 						let calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}`)
 
-						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using calculation '${obj.common.custom[this.namespace].readOnlyConversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
 
 						convertedValue = calc;
-					} else if (obj.common.custom[this.namespace].conversion) {
-						// object mit conversion -> umrechnen
+					} else if (obj.common.custom[this.namespace].number_calculation) {
+						// object mit number_calculation -> umrechnen
 						let calc = 0;
 						if (!isParentObj) {
 							// Umrechnung für linkedObject -> parentObject state ändert sich
-							calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].conversion.replace(",", ".")}`);
+							calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].number_calculation.replace(",", ".")}`);
 
-							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using conversion '${obj.common.custom[this.namespace].conversion.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using calculation '${obj.common.custom[this.namespace].number_calculation.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
 						} else {
 							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-							calc = mathjs.eval(`${convertedValue} * 1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})`);
-							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using conversion '1/(1${obj.common.custom[this.namespace].conversion.replace(",", ".")})' -> new parentObject value is '${calc}'`)
+							calc = mathjs.eval(`${convertedValue} * 1/(1${obj.common.custom[this.namespace].number_calculation.replace(",", ".")})`);
+							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using calculation '1/(1${obj.common.custom[this.namespace].number_calculation.replace(",", ".")})' -> new parentObject value is '${calc}'`)
 						}
 						convertedValue = calc;
 					}
@@ -647,7 +647,7 @@ class Linkeddevices extends utils.Adapter {
 					// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
 					this.log.error(`[getConvertedValue] error: ${err.message}`);
 					this.log.error(`[getConvertedValue] stack: ${err.stack}`);
-					this.log.error(`[getConvertedValue] there is something wrong with your conversion formula, check your input for '${id}'!`);
+					this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your input for '${id}'!`);
 
 					convertedValue = value;
 				}
