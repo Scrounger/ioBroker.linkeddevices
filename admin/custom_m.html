@@ -318,21 +318,19 @@
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
 					let notAllowedSigns = /[*?"'\[\]]/;
 
-					if (this.value.length > 0) {
-						if (notAllowedSigns.test(this.value)) {
-							// prüfen auf zulässige Zeichen
-							this.value = this.value.replace(notAllowedSigns, '');
-							gMain.showError(_("not allowed chars for Id"));
-						} else {
-							// 'linkedId' zusammensetzen
-							let prefixId = Input.prefixId.val();
-							let stateId = Input.stateId.val();
+					if (this.value.length > 0 && notAllowedSigns.test(this.value)) {
+						// prüfen auf zulässige Zeichen
+						this.value = this.value.replace(notAllowedSigns, '');
+						gMain.showError(_("not allowed chars for Id"));
+					} else {
+						// 'linkedId' zusammensetzen
+						let prefixId = Input.prefixId.val();
+						let stateId = Input.stateId.val();
 
-							if (prefixId) {
-								Input.linkedId.val((prefixId + "." + stateId).replace("..", "."));
-							} else {
-								Input.linkedId.val(stateId);
-							}
+						if (prefixId) {
+							Input.linkedId.val((prefixId + "." + stateId).replace("..", "."));
+						} else {
+							Input.linkedId.val(stateId);
 						}
 					}
 				});
@@ -341,24 +339,21 @@
 					// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
 					let notAllowedSigns = /[*?"'\[\]]/;
 
-					if (this.value.length > 0) {
-						if (notAllowedSigns.test(this.value)) {
-							// prüfen auf zulässige Zeichen
-							this.value = this.value.replace(notAllowedSigns, '');
-							gMain.showError(_("not allowed chars for Id"));
-						} else {
-							// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
-							let prefixId = Input.prefixId.val();
-							let stateId = Input.stateId.val();
+					if (this.value.length > 0 && notAllowedSigns.test(this.value)) {
+						// prüfen auf zulässige Zeichen
+						this.value = this.value.replace(notAllowedSigns, '');
+						gMain.showError(_("not allowed chars for Id"));
+					} else {
+						// Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
+						let prefixId = Input.prefixId.val();
+						let stateId = Input.stateId.val();
 
-							if (prefixId) {
-								Input.linkedId.val((prefixId + "." + stateId).replace("..", "."));
-							} else {
-								Input.linkedId.val(stateId);
-							}
+						if (prefixId) {
+							Input.linkedId.val((prefixId + "." + stateId).replace("..", "."));
+						} else {
+							Input.linkedId.val(stateId);
 						}
 					}
-
 				});
 			}
 
