@@ -622,24 +622,27 @@ class Linkeddevices extends utils.Adapter {
 				try {
 					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].number_calculation_readOnly && !isParentObj) {
 						// ReadOnly object mit calculation -> umrechnen
-						//let calc = eval(`${convertedValue} ${obj.common.custom[this.namespace].number_calculation_readOnly.replace(",", ".")}`);
-						let calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].number_calculation_readOnly.replace(",", ".")}`)
+						let number_calculation_readOnly = obj.common.custom[this.namespace].number_calculation_readOnly.replace(/,/g, ".");
+						let calc = mathjs.eval(`${convertedValue} ${number_calculation_readOnly}`)
 
-						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using calculation '${obj.common.custom[this.namespace].number_calculation_readOnly.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using calculation '${number_calculation_readOnly}' -> new linkedObject value is '${calc}'`)
 
 						convertedValue = calc;
 					} else if (obj.common.custom[this.namespace].number_calculation) {
 						// object mit number_calculation -> umrechnen
+						let number_calculation = obj.common.custom[this.namespace].number_calculation.replace(/,/g, ".");
 						let calc = 0;
+
+
 						if (!isParentObj) {
 							// Umrechnung für linkedObject -> parentObject state ändert sich
-							calc = mathjs.eval(`${convertedValue} ${obj.common.custom[this.namespace].number_calculation.replace(",", ".")}`);
+							calc = mathjs.eval(`${convertedValue} ${number_calculation}`);
 
-							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using calculation '${obj.common.custom[this.namespace].number_calculation.replace(",", ".")}' -> new linkedObject value is '${calc}'`)
+							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using calculation '${number_calculation}' -> new linkedObject value is '${calc}'`)
 						} else {
 							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-							calc = mathjs.eval(`${convertedValue} * 1/(1${obj.common.custom[this.namespace].number_calculation.replace(",", ".")})`);
-							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using calculation '1/(1${obj.common.custom[this.namespace].number_calculation.replace(",", ".")})' -> new parentObject value is '${calc}'`)
+							calc = mathjs.eval(`${convertedValue} * 1/(1${number_calculation})`);
+							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using calculation '1/(1${number_calculation})' -> new parentObject value is '${calc}'`)
 						}
 						convertedValue = calc;
 					}
