@@ -451,14 +451,11 @@ class Linkeddevices extends utils.Adapter {
 							linkedObj.common.unit = parentObj.common.custom[this.namespace].number_unit;
 						}
 
-						// custom attribute übergeben, sofern vorhanden (Vermutung muss vor custom von anderen erfolgen)
-						var linkedObjectCustom = this.getLinkedObjectCustomData(parentObj, linkedId);
-
 						// Übernehmen custom data von anderen Adaptern
-						await this.setLinkedObjectExistingCustomData(linkedId, linkedObj, oldLinkedObj);
+						await this.setExistingCustomData(linkedId, linkedObj, oldLinkedObj);
 
-						// custom an linkedObject übergeben
-						linkedObj.common.custom[this.namespace] = linkedObjectCustom;
+						// custom data (expert settings) an linkedObject übergeben
+						linkedObj.common.custom[this.namespace] = this.getCustomData(parentObj, linkedId);
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// LinkedObjekt erzeugen oder Änderungen schreiben
@@ -546,7 +543,7 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object} parentObj
 	 * @param {string} linkedId
 	 */
-	getLinkedObjectCustomData(parentObj, linkedId) {
+	getCustomData(parentObj, linkedId) {
 		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "isLinked": true }
 
 		var expertSettings = {};
@@ -567,9 +564,9 @@ class Linkeddevices extends utils.Adapter {
 			}
 
 			if (Object.keys(expertSettings).length > 0) {
-				this.log.debug(`[getLinkedObjectCustomData] expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
+				this.log.debug(`[getCustomData] expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
 			} else {
-				this.log.debug(`[getLinkedObjectCustomData] no expert settings for '${linkedId}'`)
+				this.log.debug(`[getCustomData] no expert settings for '${linkedId}'`)
 			}
 		}
 
@@ -582,7 +579,7 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object} linkedObj
 	 * @param {ioBroker.Object} oldLinkedObj
 	 */
-	async setLinkedObjectExistingCustomData(linkedId, linkedObj, oldLinkedObj) {
+	async setExistingCustomData(linkedId, linkedObj, oldLinkedObj) {
 		// custom settings von anderen Adaptern ggf. übernehmen
 		let existingLinkedObj = Object();
 		let isMoved = false;
@@ -608,18 +605,18 @@ class Linkeddevices extends utils.Adapter {
 					adapterArr.push(adapter);
 
 					if (!isMoved) {
-						this.log.silly(`[setLinkedObjectExistingCustomData] keep custom data for "${adapter}":${JSON.stringify(existingLinkedObj.common.custom[adapter])} for linkedObject '${linkedId}'`)
+						this.log.silly(`[setExistingCustomData] keep custom data for "${adapter}":${JSON.stringify(existingLinkedObj.common.custom[adapter])} for linkedObject '${linkedId}'`)
 					} else {
-						this.log.silly(`[setLinkedObjectExistingCustomData] move custom data for "${adapter}":${JSON.stringify(existingLinkedObj.common.custom[adapter])} from '${existingLinkedObj._id}' to linkedObject '${linkedId}'`)
+						this.log.silly(`[setExistingCustomData] move custom data for "${adapter}":${JSON.stringify(existingLinkedObj.common.custom[adapter])} from '${existingLinkedObj._id}' to linkedObject '${linkedId}'`)
 					}
 				}
 			}
 
 			if (adapterArr.length > 0) {
 				if (!isMoved) {
-					this.log.debug(`[setLinkedObjectExistingCustomData] keep custom data for adapters: '${adapterArr.toString().replace(/,/g, ", ")}' for linkedObject '${linkedId}'`)
+					this.log.debug(`[setExistingCustomData] keep custom data for adapters: '${adapterArr.toString().replace(/,/g, ", ")}' for linkedObject '${linkedId}'`)
 				} else {
-					this.log.debug(`[setLinkedObjectExistingCustomData] move custom data for adapters: '${adapterArr.toString().replace(/,/g, ", ")}' from '${existingLinkedObj._id}' to linkedObject '${linkedId}'`)
+					this.log.debug(`[setExistingCustomData] move custom data for adapters: '${adapterArr.toString().replace(/,/g, ", ")}' from '${existingLinkedObj._id}' to linkedObject '${linkedId}'`)
 				}
 			}
 		}
