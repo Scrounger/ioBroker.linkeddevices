@@ -584,19 +584,43 @@ class Linkeddevices extends utils.Adapter {
 	 */
 	async setLinkedObjectExistingCustomData(linkedId, linkedObj, oldLinkedObj) {
 		// custom settings von anderen Adaptern ggf. übernehmen
-		let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
-		if (existingLinkedObj && existingLinkedObj.common && existingLinkedObj.common.custom) {
-			// linkedObject wurde geändert (nicht linkedId), alle customs vom linkedObject übernehmen -> würde sonst vom parentObject übernommen werden
-			this.log.debug(`[setLinkedObjectExistingCustomData] keep custom settings '${JSON.stringify(existingLinkedObj.common.custom)}' for linkedObject '${linkedId}'`)
-			linkedObj.common.custom = existingLinkedObj.common.custom;
+		let existingLinkedObj = Object();
+		let isMoved = false;
+
+		if (oldLinkedObj && oldLinkedObj.common && oldLinkedObj.common.custom) {
+			// linkedObject wurde 'linkedId' geändert
+			existingLinkedObj = oldLinkedObj;
+			isMoved = true;
 		} else {
-			if (oldLinkedObj && oldLinkedObj.common && oldLinkedObj.common.custom) {
-				// linkedObject wurde linkedId geändert -> custom vom alten linkedObject übernehmen
-				linkedObj.common.custom = oldLinkedObj.common.custom;
-				this.log.debug(`[setLinkedObjectExistingCustomData] move custom settings '${JSON.stringify(oldLinkedObj.common.custom)}' from '${oldLinkedObj._id}' to linkedObject '${linkedId}'`)
-			} else {
-				// linkeObject existiert nicht, alle customs von anderen Adaptern entfernen
-				linkedObj.common.custom = {};
+			// linkedObject wurde geändert (nicht 'linkedId')
+			existingLinkedObj = await this.getForeignObjectAsync(linkedId);
+		}
+
+		if (existingLinkedObj && existingLinkedObj.common && existingLinkedObj.common.custom) {
+			// custom data anderer adapter übernehmen
+			let adapterArr = [];
+			for (var adapter in existingLinkedObj.common.custom) {
+
+				if (adapter != this.namespace) {
+					// @ts-ignore
+					linkedObj.common.custom[adapter] = existingLinkedObj.common.custom[adapter];
+
+					adapterArr.push(adapter);
+
+					if (!isMoved) {
+						this.log.silly(`[setLinkedObjectExistingCustomData] keep custom data for "${adapter}":${JSON.stringify(existingLinkedObj.common.custom[adapter])} for linkedObject '${linkedId}'`)
+					} else {
+						this.log.silly(`[setLinkedObjectExistingCustomData] move custom data for "${adapter}":${JSON.stringify(existingLinkedObj.common.custom[adapter])} from '${existingLinkedObj._id}' to linkedObject '${linkedId}'`)
+					}
+				}
+			}
+
+			if (adapterArr.length > 0) {
+				if (!isMoved) {
+					this.log.debug(`[setLinkedObjectExistingCustomData] keep custom data for adapters: '${adapterArr.toString().replace(/,/g, ", ")}' for linkedObject '${linkedId}'`)
+				} else {
+					this.log.debug(`[setLinkedObjectExistingCustomData] move custom data for adapters: '${adapterArr.toString().replace(/,/g, ", ")}' from '${existingLinkedObj._id}' to linkedObject '${linkedId}'`)
+				}
 			}
 		}
 	}
