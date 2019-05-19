@@ -451,23 +451,8 @@ class Linkeddevices extends utils.Adapter {
 							linkedObj.common.unit = parentObj.common.custom[this.namespace].number_unit;
 						}
 
-						var number_calculation = "";
-						if (parentObj.common.custom[this.namespace].number_calculation) {
-							// number_calculation vorhanden, nur bei type = number
-							number_calculation = parentObj.common.custom[this.namespace].number_calculation;
-						}
-
-						var number_calculation_readOnly = "";
-						if (parentObj.common.custom[this.namespace].number_calculation_readOnly) {
-							// calculation vorhanden, nur bei type = number
-							number_calculation_readOnly = parentObj.common.custom[this.namespace].number_calculation_readOnly;
-						}
-
-						var number_maxDecimal = "";
-						if (parseInt(parentObj.common.custom[this.namespace].number_maxDecimal) != NaN) {
-							// calculation vorhanden, nur bei type = number
-							number_maxDecimal = parentObj.common.custom[this.namespace].number_maxDecimal;
-						}
+						// custom attribute übergeben, sofern vorhanden (Vermutung muss vor custom von anderen erfolgen)
+						var linkedObjectCustom = this.getLinkedObjectCustomData(parentObj, linkedId);
 
 						// custom settings von anderen Adaptern ggf. übernehmen
 						let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
@@ -486,14 +471,9 @@ class Linkeddevices extends utils.Adapter {
 							}
 						}
 
-						// custom überschreiben, notwenig weil sonst linkedId von parent drin steht
-						// enabled notwendig weil sonst bei Verwendung von custom stettings anderer Adapter nach Edit die linkedDevices custom settings weg sind
-						linkedObj.common.custom[this.namespace] = { "enabled": true, "parentId": parentObj._id, "isLinked": true, "number_calculation": number_calculation, "number_calculation_readOnly": number_calculation_readOnly, "number_maxDecimal": number_maxDecimal };
+						// custom an linkedObject übergeben
+						linkedObj.common.custom[this.namespace] = linkedObjectCustom;
 						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
-
-						// if (parentObj.common.custom[this.namespace].number_calculation) {
-						// 	linkedObj.common.custom[this.namespace].number_calculation = parentObj.common.custom[this.namespace].number_calculation;
-						// }
 
 						// LinkedObjekt erzeugen oder Änderungen schreiben
 						await this.setForeignObjectAsync(linkedId, linkedObj);
@@ -573,6 +553,41 @@ class Linkeddevices extends utils.Adapter {
 	getLinkedObjectId(parentObj) {
 		// @ts-ignore
 		return this.namespace + "." + parentObj.common.custom[this.namespace].linkedId;
+	}
+
+	/**
+	 * Custom data für linkedObejct erzeugen
+	 * @param {ioBroker.Object} parentObj
+	 * @param {string | number} linkedId
+	 */
+	getLinkedObjectCustomData(parentObj, linkedId) {
+		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "isLinked": true }
+
+		var expertSettings = {};
+		if (parentObj && parentObj.common && parentObj.common.custom) {
+			if (parseInt(parentObj.common.custom[this.namespace].number_maxDecimal) != NaN && (parentObj.common.custom[this.namespace].number_maxDecimal != "" || parentObj.common.custom[this.namespace].number_maxDecimal === 0)) {
+				// calculation vorhanden, nur bei type = number
+				expertSettings.number_maxDecimal = parentObj.common.custom[this.namespace].number_maxDecimal;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_calculation) {
+				// number_calculation vorhanden, nur bei type = number
+				expertSettings.number_calculation = parentObj.common.custom[this.namespace].number_calculation;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_calculation_readOnly) {
+				// calculation vorhanden, nur bei type = number
+				expertSettings.number_calculation_readOnly = parentObj.common.custom[this.namespace].number_calculation_readOnly;
+			}
+
+			if (Object.keys(expertSettings).length > 0) {
+				this.log.debug(`[getLinkedObjectCustomData] expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
+			} else {
+				this.log.debug(`[getLinkedObjectCustomData] no expert settings for '${linkedId}'`)
+			}
+		}
+
+		return Object.assign(linkedObjectCustom, expertSettings);
 	}
 
 	/**
