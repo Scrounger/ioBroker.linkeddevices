@@ -455,7 +455,6 @@ class Linkeddevices extends utils.Adapter {
 
 						this.log.info("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
 					}
-
 				}
 			}
 		} catch (err) {
@@ -537,6 +536,14 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].number_unit) {
 				// 'number_unit' von expert settings übernehmen
 				expertSettings.unit = parentObj.common.custom[this.namespace].number_unit;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_min || parentObj.common.custom[this.namespace].number_min === 0) {
+				expertSettings.min = parentObj.common.custom[this.namespace].number_min;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_max || parentObj.common.custom[this.namespace].number_max === 0) {
+				expertSettings.max = parentObj.common.custom[this.namespace].number_max;
 			}
 
 			if (Object.keys(expertSettings).length > 0) {
