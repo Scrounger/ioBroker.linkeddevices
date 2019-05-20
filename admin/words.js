@@ -40,98 +40,218 @@ systemDictionary = {
 	},
 	"enabled": {
 		"en": "enabled",
-		"de": "Aktiviert"
+		"de": "aktiviert",
+		"ru": "включен",
+		"pt": "ativado",
+		"nl": "ingeschakeld",
+		"fr": "activée",
+		"it": "abilitato",
+		"es": "habilitado",
+		"pl": "włączone",
+		"zh-cn": "启用"
 	},
 	"composite id of linked object": {
 		"en": "composite id of linked object",
 		"de": "Zusammengesetze Id des verlinkten Objektes",
+		"ru": "составной идентификатор связанного объекта",
+		"pt": "ID composta do objeto vinculado",
+		"nl": "samengestelde ID van gekoppeld object",
+		"fr": "ID composite d'objet lié",
+		"it": "ID composito dell'oggetto collegato",
+		"es": "ID compuesto del objeto vinculado",
+		"pl": "id złożony połączonego obiektu",
+		"zh-cn": "链接对象的复合id"
 	},
 	"name of linked object": {
 		"en": "name of linked object",
-		"de": "Name des verlinkten Objektes",
+		"de": "Name des verknüpften Objekts",
+		"ru": "название связанного объекта",
+		"pt": "nome do objeto vinculado",
+		"nl": "naam van gekoppeld object",
+		"fr": "nom de l'objet lié",
+		"it": "nome dell'oggetto collegato",
+		"es": "nombre del objeto vinculado",
+		"pl": "nazwa połączonego obiektu",
+		"zh-cn": "链接对象的名称"
 	},
 	"is linked": {
 		"en": "is linked",
 		"de": "verlinkt",
+		"ru": "связан",
+		"pt": "está associado",
+		"nl": "is gelinkt",
+		"fr": "est lié",
+		"it": "è collegato",
+		"es": "está vinculado",
+		"pl": "jest połączone",
+		"zh-cn": "已连接"
 	},
 	"linked with": {
 		"en": "linked with",
 		"de": "verlinkt mit",
+		"ru": "связан с",
+		"pt": "ligado com",
+		"nl": "gelinkt met",
+		"fr": "lié à",
+		"it": "collegato con",
+		"es": "Vinculado con",
+		"pl": "połączony z",
+		"zh-cn": "与连接"
 	},
-	"expert settings for type '{0}'": {
-		"en": "expert settings for type '{0}'",
-		"de": "Experteneinstellung für Typ '{0}'",
+	"expert settings for linked object with type '{0}'": {
+		"en": "expert settings for linked object with type '{0}'",
+		"de": "Experteneinstellungen für verlinktes Objekt vom Typ '{0}'",
+		"ru": "экспертные настройки для связанного объекта с типом '{0}'",
+		"pt": "configurações de especialista para objeto vinculado com o tipo '{0}'",
+		"nl": "expertinstellingen voor gekoppeld object met type '{0}'",
+		"fr": "paramètres experts pour un objet lié de type '{0}'",
+		"it": "impostazioni avanzate per l'oggetto collegato con tipo '{0}'",
+		"es": "Configuraciones expertas para objetos vinculados con tipo '{0}'",
+		"pl": "ustawienia eksperckie dla obiektu połączonego z typem „{0}”",
+		"zh-cn": "类型为“{0}”的链接对象的专家设置"
 	},
-	"change unit '{0}' for linked object to": {
-		"en": "change unit '{0}' for linked object to",
-		"de": "Ändere Einheit '{0}' für verlinktes Objekt in",
+	"change unit '{0}' to": {
+		"en": "change unit '{0}' to",
+		"de": "Ändere Einheit '{0}' in",
+		"ru": "измените единицу измерения {0} на",
+		"pt": "mudar a unidade '{0}' para",
+		"nl": "verander eenheid '{0}' in",
+		"fr": "remplacez l'unité '{0}' par",
+		"it": "cambia unità '{0}' a",
+		"es": "cambia la unidad '{0}' a",
+		"pl": "zmień jednostkę „{0}” na",
+		"zh-cn": "将单位“{0}”更改为"
 	},
 	"prefix for id of linked object": {
 		"en": "prefix for id of linked object",
-		"de": "Präfix für Id des verlinkten Objektes",
+		"de": "Präfix für ID des verlinkten Objektes",
+		"ru": "префикс для идентификатора связанного объекта",
+		"pt": "prefixo para id do objeto vinculado",
+		"nl": "voorvoegsel voor id van gekoppeld object",
+		"fr": "préfixe pour l'identifiant de l'objet lié",
+		"it": "prefisso per l'id dell'oggetto collegato",
+		"es": "prefijo para id del objeto vinculado",
+		"pl": "prefiks dla id połączonego obiektu",
+		"zh-cn": "链接对象的id的前缀"
 	},
 	"id of linked object": {
 		"en": "id of linked object",
-		"de": "Id des verlinkten Objektes",
+		"de": "ID des verlinkten Objekts",
+		"ru": "идентификатор связанного объекта",
+		"pt": "ID do objeto vinculado",
+		"nl": "id van gekoppeld object",
+		"fr": "id de l'objet lié",
+		"it": "id di oggetto collegato",
+		"es": "Id del objeto vinculado",
+		"pl": "id połączonego obiektu",
+		"zh-cn": "链接对象的id"
 	},
 	"only numbers and math operators allowed for read only object": {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: + - / * , . ( )",
-		"de": "Falsches Eingabeformat!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Erlaubte Operatoren: + - / * , . ( )",
+		"de": "Zeichen nicht erlaubt! <br> Nur Zahlen und mathematische Operatoren sind erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen. <br> <br> Zulässige Operatoren: + - / *,. ()",
+		"ru": "запрещенные знаки! <br> Разрешены только цифры и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Допустимые операторы: + - / *,. ()",
+		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos são permitidos! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: + - / *,. ()",
+		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators zijn toegestaan! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: + - / *,. ()",
+		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés! La saisie doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: + - / *,. ()",
+		"it": "segni non consentiti! <br> Sono consentiti solo numeri e operatori matematici! L'input deve iniziare con l'operatore matematico. <br> <br> Operatori consentiti: + - / *,. ()",
+		"es": "¡Signos no permitidos! <br> ¡Sólo se permiten operadores de números y matemáticas! La entrada debe comenzar con el operador matemático. <br> <br> Operadores permitidos: + - / *,. ()",
+		"pl": "niedozwolone znaki! <br> Tylko liczby i operatory matematyczne są dozwolone! Wejście musi zaczynać się od operatora matematycznego. <br> <br> Dozwolone operatory: + - / *,. ()",
+		"zh-cn": "不允许的标志！<br>只允许数字和数学运算符！输入必须以数学运算符开头。<br> <br>允许的运算符：+  -  / * ,. （）"
 	},
 	"only numbers and math operators allowed": {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: / * , .",
-		"de": "Falsches Eingabeformat!<br>Es sind nur Nummern oder mathematische Operatoren erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Erlaubte Operatoren: / * , .",
+		"de": "Zeichen nicht erlaubt! <br> Nur Zahlen und mathematische Operatoren sind erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen. <br> <br> Zulässige Operatoren: / *,.",
+		"ru": "запрещенные знаки! <br> Разрешены только цифры и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: / *,.",
+		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos são permitidos! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: / *,.",
+		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators zijn toegestaan! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: / *,.",
+		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés! La saisie doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: / *,.",
+		"it": "segni non consentiti! <br> Sono consentiti solo numeri e operatori matematici! L'input deve iniziare con l'operatore matematico. <br> <br> Operatori consentiti: / *,.",
+		"es": "¡Signos no permitidos! <br> ¡Sólo se permiten operadores de números y matemáticas! La entrada debe comenzar con el operador matemático. <br> <br> Operadores permitidos: / *,.",
+		"pl": "niedozwolone znaki! <br> Tylko liczby i operatory matematyczne są dozwolone! Wejście musi zaczynać się od operatora matematycznego. <br> <br> Dozwolone operatory: / *,.",
+		"zh-cn": "不允许的标志！<br>只允许数字和数学运算符！输入必须以数学运算符开头。<br> <br>允许的运算符：/ * ,."
 	},
 	"max. number of decimal places": {
-		"en": "max. number of decimal places for linked object",
-		"de": "max. Anzahl Nachkommastellen für verlinktes Objekt",
+		"en": "max. number of decimal places",
+		"de": "max. Anzahl der Nachkommastellen",
+		"ru": "Максимум. количество знаков после запятой",
+		"pt": "max. número de casas decimais",
+		"nl": "max. aantal decimalen",
+		"fr": "max. nombre de décimales",
+		"it": "max. numero di cifre decimali",
+		"es": "max. número de decimales",
+		"pl": "max. liczba miejsc dziesiętnych",
+		"zh-cn": "最大。小数位数"
 	},
 	"only numbers allowed": {
 		"en": "only numbers allowed",
 		"de": "Nur Nummern sind als Eingabe erlaubt!",
+		"ru": "разрешены только цифры",
+		"pt": "somente números permitidos",
+		"nl": "alleen cijfers toegestaan",
+		"fr": "seuls les nombres autorisés",
+		"it": "solo numeri consentiti",
+		"es": "solo números permitidos",
+		"pl": "dozwolone są tylko liczby",
+		"zh-cn": "只允许数字"
 	},
 	"calculation for 'read' object": {
 		"en": "calculation for 'read' object",
 		"de": "Umrechnung für verlinktes 'read' Objekt",
+		"ru": "расчет для «прочитанного» объекта",
+		"pt": "cálculo para objeto 'read'",
+		"nl": "berekening voor 'lees' object",
+		"fr": "calcul pour objet 'lu'",
+		"it": "calcolo per oggetto 'lettura'",
+		"es": "cálculo para el objeto 'leer'",
+		"pl": "obliczanie obiektu „czytaj”",
+		"zh-cn": "计算'读'对象"
 	},
 	"calculation for linked object": {
 		"en": "calculation for linked object",
-		"de": "Umrechnung für verlinktes Objekt",
+		"de": "Umrechnung für verlinktes Objekt"
 	},
 	"number": {
 		"en": "number",
-		"de": "Zahl",
+		"de": "Zahl"
 	},
 	"not allowed chars for Id": {
 		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
-		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
+		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]"
 	},
 	"do not convert": {
 		"en": "do not convert",
-		"de": "nicht umwandeln",
+		"de": "nicht umwandeln"
 	},
 	"Boolean": {
 		"en": "Boolean",
-		"de": "Logikwert",
+		"de": "Logikwert"
 	},
 	"String": {
 		"en": "String",
-		"de": "Zeichenkette",
+		"de": "Zeichenkette"
 	},
 	"convert linked object to type": {
-		"en": "convert linked object to type",
-		"de": "Konvertiere verlinktes Objekt in Typ",
+		"en": "convert to type",
+		"de": "Konvertiere in Typ"
 	},
 	"condition 'true' for linked object": {
 		"en": "condition 'true' for linked object",
-		"de": "Bedingung 'true' für verlinktes Objekt",
+		"de": "Bedingung 'true' für verlinktes Objekt"
 	},
 	"value if linked object is 'true'": {
 		"en": "value if linked object is 'true'",
-		"de": "Wert wenn verlinktes Objekt 'true' ist",
+		"de": "Wert wenn verlinktes Objekt 'true' ist"
 	},
 	"value if linked object is 'false'": {
 		"en": "value if linked object is 'false'",
-		"de": "Wert wenn verlinktes Objekt 'false' ist",
+		"de": "Wert wenn verlinktes Objekt 'false' ist"
+	},
+	"change min '{0}' to": {
+		"en": "change min '{0}' to",
+		"de": "Ändere min '{0}' in"
+	},
+	"change max '{0}' to": {
+		"en": "change max '{0}' to",
+		"de": "Ändere max '{0}' in"
 	}
 };
