@@ -416,47 +416,19 @@ class Linkeddevices extends utils.Adapter {
 						this.log.error("[createLinkedObject] linkedId: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
 
 					} else {
-						//TODO: prüfen ob definierte linkedId schon in Verwendung
-
-						// 'custom.linkedId' korrekt -> linkedObject erzeugen bzw. aktualisieren
-						var linkedId = this.getLinkedObjectId(parentObj);
-
-						let name = null;
-						if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
-							// Property 'name' von Objekt übernehmen, sofern vorhanden
-							name = parentObj.common.custom[this.namespace].name;
-							this.log.debug("[createLinkedObject] using custom name '" + name + "' for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
-						} else {
-							// 'name' wird von parent übernommen
-							name = parentObj.common.name;
-							if (parentObj.common.name) {
-								this.log.info("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "'). Use object name: '" + parentObj.common.name + "'");
-							} else {
-								this.log.info("[createLinkedObject] no custom name defined for: '" + linkedId + "' (parentObj: '" + parentObj._id + "')");
-							}
-						}
-
 						// LinkedObjekt daten übergeben
 						let linkedObj = Object();
 						linkedObj.type = parentObj.type;
-						linkedObj.common = parentObj.common;
-						linkedObj.common.name = name;
-						linkedObj.common.icon = "linkeddevices_small.png"
-						//linkedObj.native = parentObj.native;
-						linkedObj.common.desc = "Created by linkeddevices";
 
-						//Experteneinstellungen für common attribute übergeben (Vermutung muss vor custom erfolgen)
-						if (parentObj.common.custom[this.namespace].number_unit) {
-							// number_unit
-							linkedObj.common.unit = parentObj.common.custom[this.namespace].number_unit;
-						}
+						// common data mit expert settings an linkedObject übergeben
+						linkedObj.common = this.getCommonData(parentObj, linkedId);
 
 						// Übernehmen custom data von anderen Adaptern
 						await this.setExistingCustomData(linkedId, linkedObj, oldLinkedObj);
 
 						// custom data (expert settings) an linkedObject übergeben
 						linkedObj.common.custom[this.namespace] = this.getCustomData(parentObj, linkedId);
-						this.log.debug(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
+						this.log.silly(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
 
 						// LinkedObjekt erzeugen oder Änderungen schreiben
 						await this.setForeignObjectAsync(linkedId, linkedObj);
@@ -481,7 +453,7 @@ class Linkeddevices extends utils.Adapter {
 						// subscribe für parentObject 'state', um Änderungen mitzubekommen
 						await this.subscribeForeignStatesAsync(parentObj._id);
 
-						this.log.debug("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
+						this.log.info("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
 					}
 
 				}
@@ -543,6 +515,45 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.Object} parentObj
 	 * @param {string} linkedId
 	 */
+	getCommonData(parentObj, linkedId) {
+		// Common Data vom parentObject übergeben
+		var commonData = parentObj.common;
+
+		// durch den Adapter erzeugte common data
+		commonData.icon = "linkeddevices_small.png"
+		commonData.desc = "Created by linkeddevices";
+		//linkedObj.native = parentObj.native;
+
+		// common data aus expert settings übergeben, sofern vorhanden
+		let expertSettings = {};
+		if (parentObj && parentObj.common && parentObj.common.custom) {
+
+			if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
+				// 'name' von expert settings übernehmen
+				expertSettings.name = parentObj.common.custom[this.namespace].name;
+			} 
+
+			// Experteneinstellungen für common attribute übergeben (Vermutung muss vor custom erfolgen)
+			if (parentObj.common.custom[this.namespace].number_unit) {
+				// 'number_unit' von expert settings übernehmen
+				expertSettings.unit = parentObj.common.custom[this.namespace].number_unit;
+			}
+
+			if (Object.keys(expertSettings).length > 0) {
+				this.log.debug(`[getCommonData] common expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
+			} else {
+				this.log.debug(`[getCommonData] no common expert settings for '${linkedId}'`)
+			}
+		}
+
+		return Object.assign(commonData, expertSettings);
+	}
+
+	/**
+	 * Custom data für linkedObejct erzeugen
+	 * @param {ioBroker.Object} parentObj
+	 * @param {string} linkedId
+	 */
 	getCustomData(parentObj, linkedId) {
 		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "isLinked": true }
 
@@ -564,9 +575,9 @@ class Linkeddevices extends utils.Adapter {
 			}
 
 			if (Object.keys(expertSettings).length > 0) {
-				this.log.debug(`[getCustomData] expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
+				this.log.debug(`[getCustomData] custom expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
 			} else {
-				this.log.debug(`[getCustomData] no expert settings for '${linkedId}'`)
+				this.log.debug(`[getCustomData] no custom expert settings for '${linkedId}'`)
 			}
 		}
 
