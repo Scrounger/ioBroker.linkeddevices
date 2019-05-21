@@ -784,7 +784,12 @@ class Linkeddevices extends utils.Adapter {
 					this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${false}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`)
 
 				} else {
-					//TODO: warn meldung dass kein wert für true / false vorhanden -> keine übergabe wert von parent nehmen
+					// keine expertSettings hinterlegt für Wert true bzw. false
+					let parentObjState = await this.getForeignStateAsync(id);
+					if (parentObjState) {
+						convertedValue = parentObjState.val;
+						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${id}' -> fallback to parentObject value '${parentObjState.val}'`)
+					}
 				}
 			}
 
