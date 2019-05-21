@@ -270,8 +270,6 @@ class Linkeddevices extends utils.Adapter {
 		// }
 	}
 
-
-
 	/**
 	 * @param {string} id
 	 * @param {ioBroker.State} state
@@ -770,8 +768,43 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 			}
+
+			if (!isParentObj && `${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "number_to_boolean") {
+				// number -> boolean: linkedObject state laut condition umwandeln
+				let result = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
+				
+				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> new linkedObject value is '${result}'`)
+
+				convertedValue = result;
+			}
 		}
 		return convertedValue;
+	}
+
+	/**
+	 * @param {number} value
+	 * @param {string} condition
+	 */
+	numToBoolConditionParser(value, condition) {
+		if (condition.startsWith("=") && value === parseInt(condition.replace("=", ""))) {
+			return true;
+		}
+		if (condition.startsWith("!=") && value != parseInt(condition.replace("!=", ""))) {
+			return true;
+		}
+		if (condition.startsWith(">=") && value >= parseInt(condition.replace(">=", ""))) {
+			return true;
+		}
+		if (condition.startsWith("<=") && value <= parseInt(condition.replace("<=", ""))) {
+			return true;
+		}
+		if (condition.startsWith(">") && value > parseInt(condition.replace(">", ""))) {
+			return true;
+		}
+		if (condition.startsWith("<") && value < parseInt(condition.replace("<", ""))) {
+			return true;
+		}
+		return false;
 	}
 
 	logDicLinkedObjectsStatus() {
