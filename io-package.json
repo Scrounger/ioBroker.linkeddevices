@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.1.5",
+		"version": "0.2.0",
 		"news": {
+			"0.2.0": {
+				"en": "number to boolean converter added",
+				"de": "number to boolean converter hinzugefügt",
+				"ru": "добавлено преобразование числа в булево",
+				"pt": "número para conversor booleano adicionado",
+				"nl": "number to boolean converter toegevoegd",
+				"fr": "nombre en convertisseur booléen ajouté",
+				"it": "numero al convertitore booleano aggiunto",
+				"es": "número al convertidor booleano añadido",
+				"pl": "dodany konwerter liczby na logiczną",
+				"zh-cn": "添加了布尔转换器的数字"
+			},
 			"0.0.1": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung",

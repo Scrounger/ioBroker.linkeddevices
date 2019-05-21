@@ -24,6 +24,11 @@ This adapter is inspired at [virtual devices script by Pman](https://forum.iobro
 
 ## Changelog
 
+### 0.2.0
+* (Scrounger) number to boolean converter added
+* (Scrounger) number expert settings for min, max added
+* (Scrounger) bug fixes
+
 ### 0.1.5
 * (Scrounger) expert settings properties renamed -> you must recreate your expert settings for all parent objects !!!
 * (Scrounger) custom dialog prepared for convert to other type
