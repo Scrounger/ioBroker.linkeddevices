@@ -253,5 +253,9 @@ systemDictionary = {
 	"change max '{0}' to": {
 		"en": "change max '{0}' to",
 		"de": "Ändere max '{0}' in"
+	},
+	"only numbers and mathematical operators allowed as a condition": {
+		"en": "not allowed signs!<br>Only numbers and mathematical operators allowed as a condition! Input must start with math operator.<br><br>Allowed operators: = != > < >= <=",
+		"de": "Zeichen nicht erlaubt!<br>Nur Zahlen und mathematische Operatoren als Bedingung erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Zulässige Operatoren: = != > < >= <="
 	}
 };

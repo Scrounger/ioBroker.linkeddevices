@@ -221,6 +221,10 @@
 				Input.number_calculation = $div.find('input[data-field="number_calculation"]');
 				Input.number_calculation_readOnly = $div.find('input[data-field="number_calculation_readOnly"]');
 
+				Input.number_to_boolean_condition = $div.find('input[data-field="number_to_boolean_condition"]');
+				Input.number_to_boolean_value_true = $div.find('input[data-field="number_to_boolean_value_true"]');
+				Input.number_to_boolean_value_false = $div.find('input[data-field="number_to_boolean_value_false"]');
+
 				// alle select in var packen
 				Select.number_converTo = $div.find('select[data-field="number_converTo"]');
 
@@ -476,6 +480,28 @@
 					selectedNumberConverter = this.value;
 					initialize_ExpertSettings_Number();
 				});
+
+				Input.number_to_boolean_condition.keyup(function () {
+					// Nur Nummern und math operators * | / zulassen
+					let allowedSigns = /[^0-9\.\,\=\!\>\<]/;
+
+					if (this.value.length > 0) {
+						if (allowedSigns.test(this.value)) {
+							// prüfen auf zulässige Zeichen
+							gMain.showError(_("only numbers and mathematical operators allowed as a condition"));
+						} else if (!this.value.startsWith("=") && !this.value.startsWith("<") && !this.value.startsWith(">") && !this.value.startsWith("!")) {
+							// muss mit math operator beginnen
+							this.value = "";
+							gMain.showError(_("only numbers and mathematical operators allowed as a condition"));
+						} else if (this.value.startsWith("!") && !this.value.startsWith("!=") && this.value.length > 1) {
+							// muss mit math operator beginnen
+							this.value = "";
+							gMain.showError(_("only numbers and mathematical operators allowed as a condition"));
+						}
+					}
+					this.value = this.value.replace(allowedSigns, '');
+				});
+
 			}
 
 			//#endregion
