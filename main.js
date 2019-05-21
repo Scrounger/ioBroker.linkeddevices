@@ -453,7 +453,11 @@ class Linkeddevices extends utils.Adapter {
 						// subscribe für parentObject 'state', um Änderungen mitzubekommen
 						await this.subscribeForeignStatesAsync(parentObj._id);
 
-						this.log.info("[createLinkedObject] linkedObject '" + parentObj._id + "' to '" + linkedId + "'");
+						if (parentObj.common.type === linkedObj.common.type) {
+							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' to '${linkedId}'`);
+						} else {
+							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' (${parentObj.common.type}) to '${linkedId}' (${linkedObj.common.type})`);
+						}
 					}
 				}
 			}
@@ -510,7 +514,7 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
-	 * Custom data für linkedObejct erzeugen
+	 * Common data für linkedObject erzeugen
 	 * @param {ioBroker.Object} parentObj
 	 * @param {string} linkedId
 	 */
@@ -527,23 +531,45 @@ class Linkeddevices extends utils.Adapter {
 		let expertSettings = {};
 		if (parentObj && parentObj.common && parentObj.common.custom) {
 
-			if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
-				// 'name' von expert settings übernehmen
-				expertSettings.name = parentObj.common.custom[this.namespace].name;
-			} 
-
-			// Experteneinstellungen für common attribute übergeben (Vermutung muss vor custom erfolgen)
-			if (parentObj.common.custom[this.namespace].number_unit) {
-				// 'number_unit' von expert settings übernehmen
-				expertSettings.unit = parentObj.common.custom[this.namespace].number_unit;
+			// Zunächst prüfen ob es typ konvertierung in expert settings eingestellt ist
+			if (parentObj.common.custom[this.namespace].number_converTo) {
+				expertSettings.type = parentObj.common.custom[this.namespace].number_converTo;
 			}
 
-			if (parentObj.common.custom[this.namespace].number_min || parentObj.common.custom[this.namespace].number_min === 0) {
-				expertSettings.min = parentObj.common.custom[this.namespace].number_min;
-			}
+			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
+				// Keine Typ Konvertierung -> expert Settings laden
 
-			if (parentObj.common.custom[this.namespace].number_max || parentObj.common.custom[this.namespace].number_max === 0) {
-				expertSettings.max = parentObj.common.custom[this.namespace].number_max;
+				if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length || parentObj.common.custom[this.namespace].name != "") {
+					// 'name' von expert settings übernehmen
+					expertSettings.name = parentObj.common.custom[this.namespace].name;
+				}
+
+				// Experteneinstellungen für common attribute übergeben
+				if (parentObj.common.custom[this.namespace].number_unit) {
+					// number: 'number_unit' von expert settings übernehmen
+					expertSettings.unit = parentObj.common.custom[this.namespace].number_unit;
+				}
+
+				if (parentObj.common.custom[this.namespace].number_min || parentObj.common.custom[this.namespace].number_min === 0) {
+					// number: 'number_min' von expert settings übernehmen
+					expertSettings.min = parentObj.common.custom[this.namespace].number_min;
+				}
+
+				if (parentObj.common.custom[this.namespace].number_max || parentObj.common.custom[this.namespace].number_max === 0) {
+					// number: 'number_max' von expert settings übernehmen
+					expertSettings.max = parentObj.common.custom[this.namespace].number_max;
+				}
+
+			} else {
+				// Typ wurde geändert
+				if (`${parentObj.common.type}_to_${expertSettings.type}` === "number_to_boolean") {
+					// number -> boolean: typ spezifische properties entfernen, ändern oder hinzufügen
+					delete commonData.unit;
+					delete commonData.max;
+					delete commonData.min;
+					commonData.def = false;
+
+				}
 			}
 
 			if (Object.keys(expertSettings).length > 0) {
@@ -553,7 +579,7 @@ class Linkeddevices extends utils.Adapter {
 			}
 		}
 
-		return Object.assign(commonData, expertSettings);
+		return Object.assign({}, commonData, expertSettings);
 	}
 
 	/**
@@ -562,7 +588,8 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} linkedId
 	 */
 	getCustomData(parentObj, linkedId) {
-		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "isLinked": true }
+		// @ts-ignore
+		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "parentType": parentObj.common.type, "isLinked": true }
 
 		var expertSettings = {};
 		if (parentObj && parentObj.common && parentObj.common.custom) {
@@ -581,6 +608,21 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.number_calculation_readOnly = parentObj.common.custom[this.namespace].number_calculation_readOnly;
 			}
 
+			if (parentObj.common.custom[this.namespace].number_to_boolean_condition) {
+				// number -> boolean: linkedObject Bedingung für True
+				expertSettings.number_to_boolean_condition = parentObj.common.custom[this.namespace].number_to_boolean_condition;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_to_boolean_value_true) {
+				// number -> boolean: parentObject Wert für True
+				expertSettings.number_to_boolean_value_true = parentObj.common.custom[this.namespace].number_to_boolean_value_true;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_to_boolean_value_false) {
+				// number -> boolean: parentObject Wert für False
+				expertSettings.number_to_boolean_value_false = parentObj.common.custom[this.namespace].number_to_boolean_value_false;
+			}
+
 			if (Object.keys(expertSettings).length > 0) {
 				this.log.debug(`[getCustomData] custom expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
 			} else {
@@ -588,7 +630,7 @@ class Linkeddevices extends utils.Adapter {
 			}
 		}
 
-		return Object.assign(linkedObjectCustom, expertSettings);
+		return Object.assign({}, linkedObjectCustom, expertSettings);
 	}
 
 	/**
