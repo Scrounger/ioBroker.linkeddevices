@@ -771,12 +771,27 @@ class Linkeddevices extends utils.Adapter {
 
 			if (!isParentObj && `${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "number_to_boolean") {
 				// number -> boolean: linkedObject state laut condition umwandeln
-				let result = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
-
-				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${result}'`)
-
-				convertedValue = result;
+				convertedValue = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
+				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
 			}
+
+			if (isParentObj && `${obj.common.type}_to_${obj.common.custom[this.namespace].number_converTo}` === "number_to_boolean") {
+				// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
+				if (value && (obj.common.custom[this.namespace].number_to_boolean_value_true || obj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
+					// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
+					convertedValue = parseFloat(obj.common.custom[this.namespace].number_to_boolean_value_true);
+					this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${true}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`)
+
+				} else if (!value && (obj.common.custom[this.namespace].number_to_boolean_value_false || obj.common.custom[this.namespace].number_to_boolean_value_false === 0)) {
+					// linkedObject auf 'false' geändert -> hinterlegten Wert für 'true' übergeben
+					convertedValue = parseFloat(obj.common.custom[this.namespace].number_to_boolean_value_false);
+					this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${false}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`)
+
+				} else {
+					//TODO: warn meldung dass kein wert für true / false vorhanden -> keine übergabe wert von parent nehmen
+				}
+			}
+
 		}
 		return convertedValue;
 	}
