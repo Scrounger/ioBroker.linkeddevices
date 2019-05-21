@@ -728,28 +728,24 @@ class Linkeddevices extends utils.Adapter {
 					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].number_calculation_readOnly && !isParentObj) {
 						// ReadOnly object mit calculation -> umrechnen
 						let number_calculation_readOnly = obj.common.custom[this.namespace].number_calculation_readOnly.replace(/,/g, ".");
-						let calc = mathjs.eval(`${convertedValue} ${number_calculation_readOnly}`)
+						convertedValue = mathjs.eval(`${value} ${number_calculation_readOnly}`)
 
-						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${convertedValue}', using calculation '${number_calculation_readOnly}' -> new linkedObject value is '${calc}'`)
+						this.log.debug(`[getConvertedValue] read only parentObject state '${id}' changed to '${value}', using calculation '${number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`)
 
-						convertedValue = calc;
 					} else if (obj.common.custom[this.namespace].number_calculation) {
 						// object mit number_calculation -> umrechnen
 						let number_calculation = obj.common.custom[this.namespace].number_calculation.replace(/,/g, ".");
-						let calc = 0;
-
 
 						if (!isParentObj) {
 							// Umrechnung für linkedObject -> parentObject state ändert sich
-							calc = mathjs.eval(`${convertedValue} ${number_calculation}`);
+							convertedValue = mathjs.eval(`${value} ${number_calculation}`);
 
-							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using calculation '${number_calculation}' -> linkedObject value is '${calc}'`)
+							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using calculation '${number_calculation}' -> linkedObject value is '${convertedValue}'`)
 						} else {
 							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-							calc = mathjs.eval(`${convertedValue} * 1/(1${number_calculation})`);
-							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using calculation '1/(1${number_calculation})' -> parentObject value is '${calc}'`)
+							convertedValue = mathjs.eval(`${value} * 1/(1${number_calculation})`);
+							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${value}', using calculation '1/(1${number_calculation})' -> parentObject value is '${convertedValue}'`)
 						}
-						convertedValue = calc;
 					}
 				} catch (err) {
 					// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
@@ -762,9 +758,9 @@ class Linkeddevices extends utils.Adapter {
 
 				if (!isParentObj && (obj.common.custom[this.namespace].number_maxDecimal || obj.common.custom[this.namespace].number_maxDecimal === 0)) {
 					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
-					var num = parseInt(obj.common.custom[this.namespace].number_maxDecimal);
-					if (num != NaN) {
-						convertedValue = mathjs.round(convertedValue, num);
+					var maxDecimal = parseInt(obj.common.custom[this.namespace].number_maxDecimal);
+					if (maxDecimal != NaN) {
+						convertedValue = mathjs.round(convertedValue, maxDecimal);
 					}
 				}
 			}
