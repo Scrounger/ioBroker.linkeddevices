@@ -743,11 +743,11 @@ class Linkeddevices extends utils.Adapter {
 							// Umrechnung für linkedObject -> parentObject state ändert sich
 							calc = mathjs.eval(`${convertedValue} ${number_calculation}`);
 
-							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using calculation '${number_calculation}' -> new linkedObject value is '${calc}'`)
+							this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using calculation '${number_calculation}' -> linkedObject value is '${calc}'`)
 						} else {
 							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
 							calc = mathjs.eval(`${convertedValue} * 1/(1${number_calculation})`);
-							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using calculation '1/(1${number_calculation})' -> new parentObject value is '${calc}'`)
+							this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${convertedValue}', using calculation '1/(1${number_calculation})' -> parentObject value is '${calc}'`)
 						}
 						convertedValue = calc;
 					}
@@ -772,8 +772,8 @@ class Linkeddevices extends utils.Adapter {
 			if (!isParentObj && `${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "number_to_boolean") {
 				// number -> boolean: linkedObject state laut condition umwandeln
 				let result = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
-				
-				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> new linkedObject value is '${result}'`)
+
+				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${convertedValue}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${result}'`)
 
 				convertedValue = result;
 			}
@@ -786,22 +786,24 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} condition
 	 */
 	numToBoolConditionParser(value, condition) {
-		if (condition.startsWith("=") && value === parseInt(condition.replace("=", ""))) {
+		condition = condition.replace(/,/g, ".");
+
+		if (condition.startsWith("=") && value === parseFloat(condition.replace("=", ""))) {
 			return true;
 		}
-		if (condition.startsWith("!=") && value != parseInt(condition.replace("!=", ""))) {
+		if (condition.startsWith("!=") && value != parseFloat(condition.replace("!=", ""))) {
 			return true;
 		}
-		if (condition.startsWith(">=") && value >= parseInt(condition.replace(">=", ""))) {
+		if (condition.startsWith(">=") && value >= parseFloat(condition.replace(">=", ""))) {
 			return true;
 		}
-		if (condition.startsWith("<=") && value <= parseInt(condition.replace("<=", ""))) {
+		if (condition.startsWith("<=") && value <= parseFloat(condition.replace("<=", ""))) {
 			return true;
 		}
-		if (condition.startsWith(">") && value > parseInt(condition.replace(">", ""))) {
+		if (condition.startsWith(">") && value > parseFloat(condition.replace(">", ""))) {
 			return true;
 		}
-		if (condition.startsWith("<") && value < parseInt(condition.replace("<", ""))) {
+		if (condition.startsWith("<") && value < parseFloat(condition.replace("<", ""))) {
 			return true;
 		}
 		return false;
