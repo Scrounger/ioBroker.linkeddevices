@@ -37,7 +37,7 @@
 			<div class="row" >
 				<div class="col">
 					<input type="checkbox" data-field="expertSettings"/>
-					<span id="SP_expertSettings" class="translate">expert settings for linked object with type '{0}'</span>				
+					<span id="SP_expertSettings" />				
 				</div>
 			</div>
 			<div class="view_expertSettings_Number">
@@ -54,7 +54,7 @@
 						<div class="view_expertSettings_Number_Converter_None">	
 							<div class="row">
 								<div class="col s3">
-									<label id="LB_number_unit" class="translate">change unit '{0}' to</label>
+									<label id="LB_number_unit" />
 									<input type="text" data-field="number_unit">
 								</div>
 								<div class="col s3">
@@ -62,11 +62,11 @@
 									<input type="text" data-field="number_maxDecimal">
 								</div>
 								<div class="col s3">
-									<label id="LB_number_min" class="translate">change min '{0}' to</label>
+									<label id="LB_number_min" />
 									<input type="text" data-field="number_min">
 								</div>
 								<div class="col s3">
-									<label id="LB_number_max" class="translate">change max '{0}' to</label>
+									<label id="LB_number_max" />
 									<input type="text" data-field="number_max">
 								</div>
 							</div>
@@ -276,7 +276,7 @@
 				if (isCustomEnabled && (type === 'number' || type === 'string')) {
 					// Experteneinstellungen anzeigen, sofern für type vorhanden
 					Group.expertSettings.show();
-					Label.expertSettings.text(_("expert settings for linked object with type '{0}'").replace("{0}", _(currentObj.common.type)));
+					Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
 
 					// Views initalisieren
 					initialize_ExpertSettings_Number();
@@ -296,9 +296,9 @@
 				if (type === 'number' && expertSettingsActivated) {
 					Group.expertSettings_Number.show();
 
-					Label.number_unit.text(_("change unit '{0}' to").replace("{0}", currentObj.common.unit));
-					Label.number_max.text(_("change max '{0}' to").replace("{0}", currentObj.common.max));
-					Label.number_min.text(_("change min '{0}' to").replace("{0}", currentObj.common.min));
+					Label.number_unit.text(_("change unit '%s' to", currentObj.common.unit));
+					Label.number_max.text(_("change max '%s' to", currentObj.common.max));
+					Label.number_min.text(_("change min '%s' to", currentObj.common.min));
 
 					// Prüfen ob Typ Konverter ausgewählt ist
 					if (selectedNumberConverter === "") {

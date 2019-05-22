@@ -98,29 +98,29 @@ systemDictionary = {
 		"pl": "połączony z",
 		"zh-cn": "与连接"
 	},
-	"expert settings for linked object with type '{0}'": {
-		"en": "expert settings for linked object with type '{0}'",
-		"de": "Experteneinstellungen für verlinktes Objekt vom Typ '{0}'",
-		"ru": "экспертные настройки для связанного объекта с типом '{0}'",
-		"pt": "configurações de especialista para objeto vinculado com o tipo '{0}'",
-		"nl": "expertinstellingen voor gekoppeld object met type '{0}'",
-		"fr": "paramètres experts pour un objet lié de type '{0}'",
-		"it": "impostazioni avanzate per l'oggetto collegato con tipo '{0}'",
-		"es": "Configuraciones expertas para objetos vinculados con tipo '{0}'",
-		"pl": "ustawienia eksperckie dla obiektu połączonego z typem „{0}”",
-		"zh-cn": "类型为“{0}”的链接对象的专家设置"
+	"expert settings for linked object with type '%s'": {
+		"en": "expert settings for linked object with type '%s'",
+		"de": "Experteneinstellungen für verlinktes Objekt vom Typ '%s'",
+		"ru": "экспертные настройки для связанного объекта с типом '%s'",
+		"pt": "configurações de especialista para objeto vinculado com o tipo '%s'",
+		"nl": "expertinstellingen voor gekoppeld object met type '%s'",
+		"fr": "paramètres experts pour un objet lié de type '%s'",
+		"it": "impostazioni avanzate per l'oggetto collegato con tipo '%s'",
+		"es": "Configuraciones expertas para objetos vinculados con tipo '%s'",
+		"pl": "ustawienia eksperckie dla obiektu połączonego z typem '%s'",
+		"zh-cn": "类型为'%s'的链接对象的专家设置"
 	},
-	"change unit '{0}' to": {
-		"en": "change unit '{0}' to",
-		"de": "Ändere Einheit '{0}' in",
-		"ru": "измените единицу измерения {0} на",
-		"pt": "mudar a unidade '{0}' para",
-		"nl": "verander eenheid '{0}' in",
-		"fr": "remplacez l'unité '{0}' par",
-		"it": "cambia unità '{0}' a",
-		"es": "cambia la unidad '{0}' a",
-		"pl": "zmień jednostkę „{0}” na",
-		"zh-cn": "将单位“{0}”更改为"
+	"change unit '%s' to": {
+		"en": "change unit '%s' to",
+		"de": "Ändere Einheit '%s' in",
+		"ru": "измените единицу измерения %s на",
+		"pt": "mudar a unidade '%s' para",
+		"nl": "verander eenheid '%s' in",
+		"fr": "remplacez l'unité '%s' par",
+		"it": "cambia unità '%s' a",
+		"es": "cambia la unidad '%s' a",
+		"pl": "zmień jednostkę „%s” na",
+		"zh-cn": "将单位“%s”更改为"
 	},
 	"prefix for id of linked object": {
 		"en": "prefix for id of linked object",
@@ -246,13 +246,13 @@ systemDictionary = {
 		"en": "value if linked object is 'false'",
 		"de": "Wert wenn verlinktes Objekt 'false' ist"
 	},
-	"change min '{0}' to": {
-		"en": "change min '{0}' to",
-		"de": "Ändere min '{0}' in"
+	"change min '%s' to": {
+		"en": "change min '%s' to",
+		"de": "Ändere min '%s' in"
 	},
-	"change max '{0}' to": {
-		"en": "change max '{0}' to",
-		"de": "Ändere max '{0}' in"
+	"change max '%d' to": {
+		"en": "change max '%s' to",
+		"de": "Ändere max '%s' in"
 	},
 	"only numbers and mathematical operators allowed as a condition": {
 		"en": "not allowed signs!<br>Only numbers and mathematical operators allowed as a condition! Input must start with math operator.<br><br>Allowed operators: = != > < >= <=",
