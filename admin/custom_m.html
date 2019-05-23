@@ -136,11 +136,23 @@
 </script>
 
 <script type="text/javascript">
-	$.get("adapter/linkeddevices/words.js", function (script) {
-		let translation = script.substring(script.indexOf('{'), script.length);
-		translation = translation.substring(0, translation.lastIndexOf(';'));
-		$.extend(systemDictionary, JSON.parse(translation));
-	});
+	// $.get("adapter/linkeddevices/words.js", function (script) {
+	// 	let translation = script.substring(script.indexOf('{'), script.length);
+	// 	translation = translation.substring(0, translation.lastIndexOf(';'));
+	// 	$.extend(systemDictionary, JSON.parse(translation));
+	// });
+
+	$.get({
+		url: 'adapter/linkeddevices/words.js',
+		success: function (result) {
+			if (result.isOk) {
+				let translation = script.substring(script.indexOf('{'), script.length);
+				translation = translation.substring(0, translation.lastIndexOf(';'));
+				$.extend(systemDictionary, translation);
+			}
+		},
+		async: false
+	})
 
 	// There are two ways how to predefine default settings:
 	// - with attribute "data-default" (content independent)
@@ -161,6 +173,12 @@
 
 	if (typeof customPostInits !== 'undefined') {
 		customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
+
+			$.get("adapter/linkeddevices/words.js", function (script) {
+				let translation = script.substring(script.indexOf('{'), script.length);
+				translation = translation.substring(0, translation.lastIndexOf(';'));
+				$.extend(systemDictionary, JSON.parse(translation));
+			});
 
 			var ComboBox = {};
 			var Group = {};
@@ -366,8 +384,8 @@
 						Group.expertSettings_Number_Converter_Multi.find("input").val("");
 					} else if (selectedNumberConverter === "multi") {
 						Group.expertSettings_Number_Converter_Multi.show()
-						
-						Group.expertSettings_Number_Converter_None.hide();						
+
+						Group.expertSettings_Number_Converter_None.hide();
 						Group.expertSettings_Number_Converter_None.find("input").val("");
 						Group.expertSettings_Number_Converter_Boolean.hide();
 						Group.expertSettings_Number_Converter_Boolean.find("input").val("");
