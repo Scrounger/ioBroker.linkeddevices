@@ -38,18 +38,6 @@ systemDictionary = {
 		"pl": "option2",
 		"zh-cn": "option2"
 	},
-	"enabled": {
-		"en": "enabled",
-		"de": "aktiviert",
-		"ru": "включен",
-		"pt": "ativado",
-		"nl": "ingeschakeld",
-		"fr": "activée",
-		"it": "abilitato",
-		"es": "habilitado",
-		"pl": "włączone",
-		"zh-cn": "启用"
-	},
 	"composite id of linked object": {
 		"en": "composite id of linked object",
 		"de": "Zusammengesetze Id des verlinkten Objektes",
@@ -222,14 +210,6 @@ systemDictionary = {
 		"en": "do not convert",
 		"de": "nicht umwandeln"
 	},
-	"Boolean": {
-		"en": "Boolean",
-		"de": "Logikwert"
-	},
-	"String": {
-		"en": "String",
-		"de": "Zeichenkette"
-	},
 	"convert linked object to type": {
 		"en": "convert to type",
 		"de": "Konvertiere in Typ"
@@ -257,5 +237,13 @@ systemDictionary = {
 	"only numbers and mathematical operators allowed as a condition": {
 		"en": "not allowed signs!<br>Only numbers and mathematical operators allowed as a condition! Input must start with math operator.<br><br>Allowed operators: = != > < >= <=",
 		"de": "Zeichen nicht erlaubt!<br>Nur Zahlen und mathematische Operatoren als Bedingung erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Zulässige Operatoren: = != > < >= <="
+	},
+	"conditions string": {
+		"en": "conditions string",
+		"de": "Zeichenkette mit Bedingungen"
+	},
+	"conditions multi": {
+		"en": "conditions multi",
+		"de": "Werteliste mit Bedingungen"
 	}
 };

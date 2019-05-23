@@ -46,8 +46,9 @@
 						<label class="translate">convert linked object to type</label>
 						<select data-field="number_converTo" data-default="">
 							<option value="" class="translate">do not convert</option>
-							<option value="boolean" class="translate">Boolean</option>
-							<option value="string" class="translate">String</option>
+							<option value="boolean" class="translate">boolean</option>
+							<option value="string" class="translate">string</option>
+							<option value="multi" class="translate">multi</option>
 						</select>
 					</div>
 					<div class="col s10">
@@ -95,6 +96,18 @@
 									<label class="translate">value if linked object is 'false'</label>
 									<input type="number" data-field="number_to_boolean_value_false">
 								</div>
+							</div>
+						</div>
+						<div class="view_expertSettings_Number_Converter_String">
+							<div class="col s3">
+								<label class="translate">conditions string</label>
+								<input type="text" data-field="number_to_string_condition">
+							</div>
+						</div>
+						<div class="view_expertSettings_Number_Converter_Multi">
+							<div class="col s3">
+								<label class="translate">conditions multi</label>
+								<input type="text" data-field="number_to_multi_condition">
 							</div>
 						</div>
 					</div>
@@ -209,6 +222,9 @@
 				Group.expertSettings_Number_Converter_Boolean_notReadOnly = $div.find('.view_expertSettings_Number_Converter_Boolean_notReadOnly');
 				Group.expertSettings_Number_Conversion = $div.find('.view_expertSettings_Number_conversion');
 				Group.expertSettings_Number_Conversion_ReadOnly = $div.find('.view_expertSettings_Number_conversion_readOnly');
+				Group.expertSettings_Number_Converter_String = $div.find('.view_expertSettings_Number_Converter_String');
+				Group.expertSettings_Number_Converter_Multi = $div.find('.view_expertSettings_Number_Converter_Multi');
+
 
 				// alle input in vars packen
 				Input.parentId = $div.find('input[id="IN_parentId"]');
@@ -220,10 +236,13 @@
 				Input.number_min = $div.find('input[data-field="number_min"]');
 				Input.number_calculation = $div.find('input[data-field="number_calculation"]');
 				Input.number_calculation_readOnly = $div.find('input[data-field="number_calculation_readOnly"]');
+				Input.number_to_multi_condition = $div.find('input[data-field="number_to_multi_condition"]');
 
 				Input.number_to_boolean_condition = $div.find('input[data-field="number_to_boolean_condition"]');
 				Input.number_to_boolean_value_true = $div.find('input[data-field="number_to_boolean_value_true"]');
 				Input.number_to_boolean_value_false = $div.find('input[data-field="number_to_boolean_value_false"]');
+
+				Input.number_to_string_condition = $div.find('input[data-field="number_to_string_condition"]');
 
 				// alle select in var packen
 				Select.number_converTo = $div.find('select[data-field="number_converTo"]');
@@ -315,6 +334,10 @@
 
 						Group.expertSettings_Number_Converter_Boolean.hide();
 						Group.expertSettings_Number_Converter_Boolean.find("input").val("");
+						Group.expertSettings_Number_Converter_String.hide()
+						Group.expertSettings_Number_Converter_String.find("input").val("");
+						Group.expertSettings_Number_Converter_Multi.hide()
+						Group.expertSettings_Number_Converter_Multi.find("input").val("");
 					} else if (selectedNumberConverter === "boolean") {
 						Group.expertSettings_Number_Converter_Boolean.show();
 
@@ -327,12 +350,29 @@
 
 						Group.expertSettings_Number_Converter_None.hide();
 						Group.expertSettings_Number_Converter_None.find("input").val("");
+						Group.expertSettings_Number_Converter_String.hide()
+						Group.expertSettings_Number_Converter_String.find("input").val("");
+						Group.expertSettings_Number_Converter_Multi.hide()
+						Group.expertSettings_Number_Converter_Multi.find("input").val("");
 
 					} else if (selectedNumberConverter === "string") {
+						Group.expertSettings_Number_Converter_String.show()
+
 						Group.expertSettings_Number_Converter_None.hide();
 						Group.expertSettings_Number_Converter_None.find("input").val("");
 						Group.expertSettings_Number_Converter_Boolean.hide();
 						Group.expertSettings_Number_Converter_Boolean.find("input").val("");
+						Group.expertSettings_Number_Converter_Multi.hide()
+						Group.expertSettings_Number_Converter_Multi.find("input").val("");
+					} else if (selectedNumberConverter === "multi") {
+						Group.expertSettings_Number_Converter_Multi.show()
+						
+						Group.expertSettings_Number_Converter_None.hide();						
+						Group.expertSettings_Number_Converter_None.find("input").val("");
+						Group.expertSettings_Number_Converter_Boolean.hide();
+						Group.expertSettings_Number_Converter_Boolean.find("input").val("");
+						Group.expertSettings_Number_Converter_String.hide()
+						Group.expertSettings_Number_Converter_String.find("input").val("");
 					}
 
 					// Event Handler für ExpertSettings mit type 'number'
@@ -341,8 +381,7 @@
 				} else {
 					// Ausblenden und alle Eingaben löschen
 					Group.expertSettings_Number.hide();
-					Group.expertSettings_Number.find("input").val("");
-					Group.expertSettings_Number.find("select").val("");
+					Group.expertSettings_Number.find("input, select").val("");
 				}
 			}
 
