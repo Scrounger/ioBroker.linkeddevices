@@ -245,5 +245,89 @@ systemDictionary = {
 	"conditions multi": {
 		"en": "conditions multi",
 		"de": "Werteliste mit Bedingungen"
+	},
+	"string": {
+		"en": "string",
+		"de": "Zeichenkette",
+		"ru": "Строка",
+		"pt": "string",
+		"nl": "Tekenreeks",
+		"fr": "chaîne",
+		"it": "stringa",
+		"es": "cadena de caracteres",
+		"pl": "strunowy",
+		"zh-cn": "串"
+	},
+	"boolean": {
+		"en": "boolean",
+		"de": "Logikwert",
+		"ru": "Логическая переменная",
+		"pt": "valor lógico",
+		"nl": "boolean",
+		"fr": "booléen",
+		"it": "Booleano",
+		"es": "booleano",
+		"pl": "boolean",
+		"zh-cn": "布尔"
+	},
+	"multi": {
+		"en": "multistate",
+		"de": "Werteliste",
+		"ru": "Перечисление",
+		"pt": "lista de valores",
+		"nl": "waardenlijst",
+		"fr": "liste de valeurs",
+		"it": "Multistate",
+		"es": "lista de valores",
+		"pl": "multistate",
+		"zh-cn": "多态"
+	},
+	"enabled": {
+		"en": "enabled",
+		"de": "Aktiviert",
+		"ru": "активно",
+		"pt": "ativado",
+		"nl": "ingeschakeld",
+		"fr": "activée",
+		"it": "abilitato",
+		"es": "activado",
+		"pl": "włączony",
+		"zh-cn": "启用"
+	},
+	"Cancel": {
+		"en": "Cancel",
+		"de": "Abbrechen",
+		"ru": "Отмена",
+		"pt": "Cancelar",
+		"nl": "Annuleren",
+		"fr": "Annuler",
+		"it": "Annulla",
+		"es": "Cancelar",
+		"pl": "Anuluj",
+		"zh-cn": "取消"
+	},
+	"Settings for %s": {
+		"en": "Settings for %s",
+		"de": "Einstellungen für %s",
+		"ru": "Настройки для %s",
+		"pt": "Configurações para %s",
+		"nl": "Instellingen voor %s",
+		"fr": "Paramètres pour %s",
+		"it": "Impostazioni per %s",
+		"es": "Configuraciones para %s",
+		"pl": "Ustawienia dla %s",
+		"zh-cn": "%s的设置"
+	},
+	"Save": {
+		"en": "Save",
+		"de": "Speichern",
+		"ru": "Сохранить",
+		"pt": "Gravar",
+		"nl": "Opslaan",
+		"fr": "sauvegarder",
+		"it": "Salvare",
+		"es": "Grabar",
+		"pl": "Zapisać",
+		"zh-cn": "保存"
 	}
 };
