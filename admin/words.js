@@ -230,7 +230,7 @@ systemDictionary = {
 		"en": "change min '%s' to",
 		"de": "Ändere min '%s' in"
 	},
-	"change max '%d' to": {
+	"change max '%s' to": {
 		"en": "change max '%s' to",
 		"de": "Ändere max '%s' in"
 	},
@@ -329,5 +329,28 @@ systemDictionary = {
 		"es": "Grabar",
 		"pl": "Zapisać",
 		"zh-cn": "保存"
+	},
+	"Are you sure? Changes are not saved.": {
+		"en": "Are you sure? Changes are not saved.",
+		"de": "Sind Sie sicher? Die Änderungen sind nicht gespeichert.",
+		"ru": "Изменения не сохранены. Всё равно закрыть?",
+		"pt": "Você tem certeza? As alterações não estão gravadas.",
+		"nl": "Weet je het zeker? Wijzigingen worden niet opgeslagen.",
+		"fr": "Êtes-vous sûr? Les modifications ne sont pas enregistrées.",
+		"it": "Sei sicuro? Le modifiche non verranno salvate.",
+		"es": "¿Estás seguro? Los cambios no se guardan.",
+		"pl": "Jesteś pewny? Zmiany nie są zapisywane.",
+		"zh-cn": "你确定吗？更改未保存。"
+	},
+	"Please confirm": { 
+		"en": "Please confirm", 
+		"de": "Bitte bestätigen", 
+		"ru": "Пожалуйста подтвердите", 
+		"pt": "Por favor confirme", 
+		"nl": "Bevestig alstublieft", 
+		"fr": "Veuillez confirmer", 
+		"it": "Si prega di confermare", 
+		"es": "Por favor, confirme", 
+		"pl": "Proszę potwierdzić", "zh-cn": "请确认" 
 	}
 };
