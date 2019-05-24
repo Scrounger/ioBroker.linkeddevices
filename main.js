@@ -535,13 +535,13 @@ class Linkeddevices extends utils.Adapter {
 				this.log.silly(`[getCommonData] using custom name '${commonData.name}' for '${linkedId}'`)
 			}
 
-			// Zunächst prüfen ob es typ konvertierung in expert settings eingestellt ist
+			// Zunächst prüfen ob typ konvertierung in expert settings eingestellt ist
 			if (parentObj.common.custom[this.namespace].number_converTo) {
 				expertSettings.type = parentObj.common.custom[this.namespace].number_converTo;
 			}
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
-				// Keine Typ Konvertierung -> expert Settings laden
+				// Keine Typ Konvertierung -> expert Settings laden, die Auswirkung auf common haben
 
 				// Experteneinstellungen für common attribute übergeben
 				if (parentObj.common.custom[this.namespace].number_unit) {
@@ -567,7 +567,6 @@ class Linkeddevices extends utils.Adapter {
 					delete commonData.max;
 					delete commonData.min;
 					commonData.def = false;
-
 				}
 			}
 
