@@ -113,6 +113,34 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="view_expertSettings_Boolean">
+				<div class="row" style="margin-top: 20px">
+					<div class="col s2">
+						<label class="translate">convert linked object to type</label>
+						<select data-field="boolean_converTo" data-default="">
+							<option value="" class="translate">do not convert</option>
+							<option value="string" class="translate">string</option>
+						</select>
+					</div>
+					<div class="col s10">
+						<div class="view_expertSettings_Boolean_Converter_String">
+							<div class="row">
+								<div class="col s3">
+									<label class="translate">value if object is 'true'</label>
+									<input type="text" data-field="boolean_to_string_value_true">
+								</div>
+								<div class="col s3">
+									<label class="translate">value if object is 'false'</label>
+									<input type="text" data-field="boolean_to_string_value_false">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+
+
 		</div>
 	</div>
 
@@ -196,6 +224,9 @@
 			var selectedNumberConverter = "";
 			if (values["number_converTo"]) selectedNumberConverter = values["number_converTo"];
 
+			var selectedBooleanConverter = "";
+			if (values["boolean_converTo"]) selectedBooleanConverter = values["boolean_converTo"];
+
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
 			$div.ready(function () {
@@ -234,6 +265,8 @@
 				Group.linkedObject = $div.find('.linkedObject_view');
 				Group.parentObject = $div.find('.parentObject_view');
 				Group.expertSettings = $div.find('.view_expertSettings');
+
+				// Group: type 'number'
 				Group.expertSettings_Number = $div.find('.view_expertSettings_Number');
 				Group.expertSettings_Number_Converter_None = $div.find('.view_expertSettings_Number_Converter_None');
 				Group.expertSettings_Number_Converter_Boolean = $div.find('.view_expertSettings_Number_Converter_Boolean');
@@ -243,27 +276,38 @@
 				Group.expertSettings_Number_Converter_String = $div.find('.view_expertSettings_Number_Converter_String');
 				Group.expertSettings_Number_Converter_Multi = $div.find('.view_expertSettings_Number_Converter_Multi');
 
+				// Group: type 'boolean'
+				Group.expertSettings_Boolean = $div.find('.view_expertSettings_Boolean');
+				Group.expertSettings_Boolean_Converter_String = $div.find('.view_expertSettings_Boolean_Converter_String');
+
+
 
 				// alle input in vars packen
 				Input.parentId = $div.find('input[id="IN_parentId"]');
 				Input.stateId = $div.find('input[id="IN_stateId"]');
 				Input.prefixId = $div.find('input[id="IN_prefixId"]');
 				Input.linkedId = $div.find('input[data-field="linkedId"]');
+
+				// Input: type 'number'
 				Input.number_maxDecimal = $div.find('input[data-field="number_maxDecimal"]');
 				Input.number_max = $div.find('input[data-field="number_max"]');
 				Input.number_min = $div.find('input[data-field="number_min"]');
 				Input.number_calculation = $div.find('input[data-field="number_calculation"]');
 				Input.number_calculation_readOnly = $div.find('input[data-field="number_calculation_readOnly"]');
 				Input.number_to_multi_condition = $div.find('input[data-field="number_to_multi_condition"]');
-
 				Input.number_to_boolean_condition = $div.find('input[data-field="number_to_boolean_condition"]');
 				Input.number_to_boolean_value_true = $div.find('input[data-field="number_to_boolean_value_true"]');
 				Input.number_to_boolean_value_false = $div.find('input[data-field="number_to_boolean_value_false"]');
-
 				Input.number_to_string_condition = $div.find('input[data-field="number_to_string_condition"]');
+
+				// Input: type 'boolean'
+				Input.boolean_to_string_value_true = $div.find('input[data-field="boolean_to_string_value_true"]');
+				Input.boolean_to_string_value_false = $div.find('input[data-field="boolean_to_string_value_false"]');
+
 
 				// alle select in var packen
 				Select.number_converTo = $div.find('select[data-field="number_converTo"]');
+				Select.boolean_converTo = $div.find('select[data-field="boolean_converTo"]');
 
 				// alle label / span in var packen
 				Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
@@ -310,13 +354,14 @@
 			}
 
 			function initialize_ExpertSettings() {
-				if (isCustomEnabled && (type === 'number' || type === 'string')) {
+				if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean')) {
 					// Experteneinstellungen anzeigen, sofern für type vorhanden
 					Group.expertSettings.show();
 					Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
 
 					// Views initalisieren
 					initialize_ExpertSettings_Number();
+					initialize_ExpertSettings_Boolean();
 
 					// EventHandler für alle ExpertSettings
 					events_ExpertSettings();
@@ -403,6 +448,33 @@
 				}
 			}
 
+			function initialize_ExpertSettings_Boolean() {
+				// ExpertSettings für type 'boolean' initialisieren				
+
+				// wenn expertSettings aktiviert sind und typ = boolean -> Eingabefelder anzeigen
+				if (type === 'boolean' && expertSettingsActivated) {
+					Group.expertSettings_Boolean.show();
+
+					// Prüfen ob Typ Konverter ausgewählt ist
+					if (selectedBooleanConverter === "") {
+						Group.expertSettings_Boolean_Converter_String.hide();
+						Group.expertSettings_Boolean_Converter_String.find("input").val("");
+
+					} else if (selectedBooleanConverter === "string") {
+						Group.expertSettings_Boolean_Converter_String.show();
+
+					}
+
+					// Event Handler für ExpertSettings mit type 'boolean'
+					events_ExpertSettings_Boolean();
+
+				} else {
+					// Ausblenden und alle Eingaben löschen
+					Group.expertSettings_Boolean.hide();
+					Group.expertSettings_Boolean.find("input, select").val("");
+				}
+			}
+
 			//#endregion
 
 			//#region Events
@@ -461,7 +533,9 @@
 				ComboBox.expertSettings.on('change', function () {
 					// var checked = $(this).prop('checked');
 					expertSettingsActivated = this.checked;
+					
 					initialize_ExpertSettings_Number();
+					initialize_ExpertSettings_Boolean();
 				});
 			}
 
@@ -561,6 +635,14 @@
 
 			}
 
+			function events_ExpertSettings_Boolean() {
+
+				Select.boolean_converTo.on('change', function () {
+					selectedBooleanConverter = this.value;
+					initialize_ExpertSettings_Boolean();
+				});
+
+			}
 			//#endregion
 		}
 	}
