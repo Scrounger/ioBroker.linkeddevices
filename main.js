@@ -731,7 +731,7 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} id
 	 * @param {any} value
 	 */
-	async getConvertedValue(id, value, isParentObj = false) {
+	async getConvertedValue(id, value, targetIsParentObj = false) {
 		let obj = await this.getForeignObjectAsync(id);
 
 		let convertedValue = value;
@@ -740,7 +740,7 @@ class Linkeddevices extends utils.Adapter {
 			if (obj.common.type === "number") {
 				// number_calculation nur für type 'number'
 				try {
-					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].number_calculation_readOnly && !isParentObj) {
+					if (obj.common.read && !obj.common.write && obj.common.custom[this.namespace].number_calculation_readOnly && !targetIsParentObj) {
 						// ReadOnly object mit calculation -> umrechnen
 						let number_calculation_readOnly = obj.common.custom[this.namespace].number_calculation_readOnly.replace(/,/g, ".");
 						convertedValue = mathjs.eval(`${value} ${number_calculation_readOnly}`)
@@ -751,7 +751,7 @@ class Linkeddevices extends utils.Adapter {
 						// object mit number_calculation -> umrechnen
 						let number_calculation = obj.common.custom[this.namespace].number_calculation.replace(/,/g, ".");
 
-						if (!isParentObj) {
+						if (!targetIsParentObj) {
 							// Umrechnung für linkedObject -> parentObject state ändert sich
 							convertedValue = mathjs.eval(`${value} ${number_calculation}`);
 
@@ -771,7 +771,7 @@ class Linkeddevices extends utils.Adapter {
 					convertedValue = value;
 				}
 
-				if (!isParentObj && (obj.common.custom[this.namespace].number_maxDecimal || obj.common.custom[this.namespace].number_maxDecimal === 0)) {
+				if (!targetIsParentObj && (obj.common.custom[this.namespace].number_maxDecimal || obj.common.custom[this.namespace].number_maxDecimal === 0)) {
 					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
 					var maxDecimal = parseInt(obj.common.custom[this.namespace].number_maxDecimal);
 					if (maxDecimal != NaN) {
@@ -781,16 +781,16 @@ class Linkeddevices extends utils.Adapter {
 			}
 
 			if (`${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "number_to_boolean" || `${obj.common.type}_to_${obj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
-				
+
 				// parentObject state hat sich geändert
-				if (!isParentObj) {
+				if (!targetIsParentObj) {
 					// number -> boolean: linkedObject state laut condition umwandeln
 					convertedValue = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
 					this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
 				}
 
 				// linkedObject state hat sich geändert
-				if (isParentObj) {
+				if (targetIsParentObj) {
 					// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
 					if (value && (obj.common.custom[this.namespace].number_to_boolean_value_true || obj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
 						// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
@@ -809,6 +809,46 @@ class Linkeddevices extends utils.Adapter {
 							convertedValue = parentObjState.val;
 							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${id}' -> fallback to parentObject value '${parentObjState.val}'`)
 						}
+					}
+				}
+			}
+
+			if (`${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "boolean_to_string" || `${obj.common.type}_to_${obj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
+				this.log.info("Hier!!!");
+
+				// parentObject state hat sich geändert
+				if (!targetIsParentObj) {
+					if (value && obj.common.custom[this.namespace].boolean_to_string_value_true) {
+						convertedValue = obj.common.custom[this.namespace].boolean_to_string_value_true;
+						this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using value '${obj.common.custom[this.namespace].boolean_to_string_value_true}' -> linkedObject value is '${convertedValue}'`);
+
+					} else if (!value && obj.common.custom[this.namespace].boolean_to_string_value_false) {
+						convertedValue = obj.common.custom[this.namespace].boolean_to_string_value_false;
+						this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using value '${obj.common.custom[this.namespace].boolean_to_string_value_false}' -> linkedObject value is '${convertedValue}'`);
+
+					} else {
+						// keine expertSettings hinterlegt für Wert true bzw. false
+						convertedValue = value.toString();
+						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${id}' -> fallback to parentObject value '${convertedValue}'`);
+					}
+				}
+
+				// linkedObject state hat sich geändert
+				if (targetIsParentObj) {
+					if (obj.common.custom[this.namespace].boolean_to_string_value_true && value === obj.common.custom[this.namespace].boolean_to_string_value_true) {
+						convertedValue = true;
+						this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${value}', using value '${true}' -> parentObject value is '${convertedValue}'`);
+
+					} else if (obj.common.custom[this.namespace].boolean_to_string_value_true && value === obj.common.custom[this.namespace].boolean_to_string_value_false) {
+						convertedValue = false;
+						this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${value}', using value '${false}' -> parentObject value is '${convertedValue}'`);
+
+					} else {
+						// keine expertSettings hinterlegt für Wert true bzw. false oder string unbekannt
+						this.log.info("nix: " + obj._id);
+
+						convertedValue = obj.common.def;
+						this.log.warn(`[getConvertedValue] value wrong or no values for 'true' / 'false'set in expert settings of parentObject '${id}' -> fallback to parentObject default '${convertedValue}'`);
 					}
 				}
 			}
