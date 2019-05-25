@@ -780,34 +780,41 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 
-			if (!isParentObj && `${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "number_to_boolean") {
-				// number -> boolean: linkedObject state laut condition umwandeln
-				convertedValue = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
-				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
-			}
+			if (`${obj.common.custom[this.namespace].parentType}_to_${obj.common.type}` === "number_to_boolean" || `${obj.common.type}_to_${obj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
+				
+				// parentObject state hat sich geändert
+				if (!isParentObj) {
+					// number -> boolean: linkedObject state laut condition umwandeln
+					convertedValue = this.numToBoolConditionParser(value, obj.common.custom[this.namespace].number_to_boolean_condition);
+					this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
+				}
 
-			if (isParentObj && `${obj.common.type}_to_${obj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
-				// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
-				if (value && (obj.common.custom[this.namespace].number_to_boolean_value_true || obj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
-					// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
-					convertedValue = parseFloat(obj.common.custom[this.namespace].number_to_boolean_value_true);
-					this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${true}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`)
+				// linkedObject state hat sich geändert
+				if (isParentObj) {
+					// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
+					if (value && (obj.common.custom[this.namespace].number_to_boolean_value_true || obj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
+						// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
+						convertedValue = parseFloat(obj.common.custom[this.namespace].number_to_boolean_value_true);
+						this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${true}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`)
 
-				} else if (!value && (obj.common.custom[this.namespace].number_to_boolean_value_false || obj.common.custom[this.namespace].number_to_boolean_value_false === 0)) {
-					// linkedObject auf 'false' geändert -> hinterlegten Wert für 'true' übergeben
-					convertedValue = parseFloat(obj.common.custom[this.namespace].number_to_boolean_value_false);
-					this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${false}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`)
+					} else if (!value && (obj.common.custom[this.namespace].number_to_boolean_value_false || obj.common.custom[this.namespace].number_to_boolean_value_false === 0)) {
+						// linkedObject auf 'false' geändert -> hinterlegten Wert für 'true' übergeben
+						convertedValue = parseFloat(obj.common.custom[this.namespace].number_to_boolean_value_false);
+						this.log.debug(`[getConvertedValue] linkedObject state '${id}' changed to '${false}', using value '${obj.common.custom[this.namespace].number_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`)
 
-				} else {
-					// keine expertSettings hinterlegt für Wert true bzw. false
-					let parentObjState = await this.getForeignStateAsync(id);
-					if (parentObjState) {
-						convertedValue = parentObjState.val;
-						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${id}' -> fallback to parentObject value '${parentObjState.val}'`)
+					} else {
+						// keine expertSettings hinterlegt für Wert true bzw. false
+						let parentObjState = await this.getForeignStateAsync(id);
+						if (parentObjState) {
+							convertedValue = parentObjState.val;
+							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${id}' -> fallback to parentObject value '${parentObjState.val}'`)
+						}
 					}
 				}
 			}
+
 		}
+
 		return convertedValue;
 	}
 
