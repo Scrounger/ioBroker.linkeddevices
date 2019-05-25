@@ -831,8 +831,6 @@ class Linkeddevices extends utils.Adapter {
 			}
 
 			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "boolean_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
-				this.log.info("Hier!!!");
-
 				// parentObject state hat sich geändert
 				if (!targetIsParentObj) {
 					if (value && targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
@@ -856,14 +854,18 @@ class Linkeddevices extends utils.Adapter {
 						convertedValue = true;
 						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${true}' -> parentObject value is '${convertedValue}'`);
 
-					} else if (targetObj.common.custom[this.namespace].boolean_to_string_value_true && value === targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
+					} else if (targetObj.common.custom[this.namespace].boolean_to_string_value_false && value === targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
 						convertedValue = false;
 						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${false}' -> parentObject value is '${convertedValue}'`);
 
 					} else {
 						// keine expertSettings hinterlegt für Wert true bzw. false oder string unbekannt
 						convertedValue = targetObj.common.def;
-						this.log.warn(`[getConvertedValue] value wrong or no values for 'true' / 'false'set in expert settings of parentObject '${targetId}' -> fallback to parentObject default '${convertedValue}'`);
+						if (!targetObj.common.custom[this.namespace].boolean_to_string_value_true || !targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
+							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${targetId}' -> fallback to parentObject value '${convertedValue}'`);
+						} else {
+							this.log.warn(`[getConvertedValue] value not set as 'true' / 'false' in expert settings of parentObject '${targetId}' -> fallback to parentObject default '${convertedValue}'`);
+						}
 					}
 				}
 			}
