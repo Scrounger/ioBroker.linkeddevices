@@ -24,6 +24,10 @@ This adapter is inspired at [virtual devices script by Pman](https://forum.iobro
 
 ## Changelog
 
+### 0.2.1
+* (Scrounger) boolean to string converter added
+* (Scrounger) bug fixes
+
 ### 0.2.0
 * (Scrounger) number to boolean converter added
 * (Scrounger) number expert settings for min, max added
