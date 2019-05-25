@@ -536,10 +536,11 @@ class Linkeddevices extends utils.Adapter {
 			}
 
 			// Zunächst prüfen ob typ konvertierung in expert settings eingestellt ist
-			if (parentObj.common.custom[this.namespace].number_converTo) {
-				expertSettings.type = parentObj.common.custom[this.namespace].number_converTo;
-			} else if (parentObj.common.custom[this.namespace].boolean_converTo) {
-				expertSettings.type = parentObj.common.custom[this.namespace].boolean_converTo;
+			if (parentObj.common.custom[this.namespace].number_convertTo) {
+				expertSettings.type = parentObj.common.custom[this.namespace].number_convertTo;
+
+			} else if (parentObj.common.custom[this.namespace].boolean_convertTo) {
+				expertSettings.type = parentObj.common.custom[this.namespace].boolean_convertTo;
 			}
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
@@ -569,6 +570,8 @@ class Linkeddevices extends utils.Adapter {
 					delete commonData.max;
 					delete commonData.min;
 					commonData.def = false;
+				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "boolean_to_string") {
+					commonData.def = "";
 				}
 			}
 
@@ -621,6 +624,16 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].number_to_boolean_value_false) {
 				// number -> boolean: parentObject Wert für False
 				expertSettings.number_to_boolean_value_false = parentObj.common.custom[this.namespace].number_to_boolean_value_false;
+			}
+
+			if (parentObj.common.custom[this.namespace].boolean_to_string_value_false) {
+				// boolean -> string: linkedObject Wert für False
+				expertSettings.boolean_to_string_value_false = parentObj.common.custom[this.namespace].boolean_to_string_value_false;
+			}
+
+			if (parentObj.common.custom[this.namespace].boolean_to_string_value_true) {
+				// boolean -> string: linkedObject Wert für True
+				expertSettings.boolean_to_string_value_true = parentObj.common.custom[this.namespace].boolean_to_string_value_true;
 			}
 
 			if (Object.keys(expertSettings).length > 0) {
@@ -773,7 +786,7 @@ class Linkeddevices extends utils.Adapter {
 				this.log.debug(`[getConvertedValue] parentObject state '${id}' changed to '${value}', using condition '${obj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
 			}
 
-			if (isParentObj && `${obj.common.type}_to_${obj.common.custom[this.namespace].number_converTo}` === "number_to_boolean") {
+			if (isParentObj && `${obj.common.type}_to_${obj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
 				// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
 				if (value && (obj.common.custom[this.namespace].number_to_boolean_value_true || obj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
 					// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
@@ -794,7 +807,6 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 			}
-
 		}
 		return convertedValue;
 	}
