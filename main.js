@@ -538,6 +538,8 @@ class Linkeddevices extends utils.Adapter {
 			// Zunächst prüfen ob typ konvertierung in expert settings eingestellt ist
 			if (parentObj.common.custom[this.namespace].number_converTo) {
 				expertSettings.type = parentObj.common.custom[this.namespace].number_converTo;
+			} else if (parentObj.common.custom[this.namespace].boolean_converTo) {
+				expertSettings.type = parentObj.common.custom[this.namespace].boolean_converTo;
 			}
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {

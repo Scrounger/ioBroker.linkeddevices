@@ -44,7 +44,7 @@
 				<div class="row" style="margin-top: 20px">
 					<div class="col s2">
 						<label class="translate">convert linked object to type</label>
-						<select data-field="number_converTo" data-default="">
+						<select data-field="number_convertTo" data-default="">
 							<option value="" class="translate">do not convert</option>
 							<option value="boolean" class="translate">boolean</option>
 							<option value="string" class="translate" disabled="true">string</option>
@@ -118,7 +118,7 @@
 				<div class="row" style="margin-top: 20px">
 					<div class="col s2">
 						<label class="translate">convert linked object to type</label>
-						<select data-field="boolean_converTo" data-default="">
+						<select data-field="boolean_convertTo" data-default="">
 							<option value="" class="translate">do not convert</option>
 							<option value="string" class="translate">string</option>
 						</select>
@@ -222,10 +222,10 @@
 			if (values["expertSettings"]) expertSettingsActivated = values["expertSettings"];
 
 			var selectedNumberConverter = "";
-			if (values["number_converTo"]) selectedNumberConverter = values["number_converTo"];
+			if (values["number_convertTo"]) selectedNumberConverter = values["number_convertTo"];
 
 			var selectedBooleanConverter = "";
-			if (values["boolean_converTo"]) selectedBooleanConverter = values["boolean_converTo"];
+			if (values["boolean_convertTo"]) selectedBooleanConverter = values["boolean_convertTo"];
 
 			$div.find('input[id="test"]').val(JSON.stringify(currentObj));
 
@@ -306,8 +306,8 @@
 
 
 				// alle select in var packen
-				Select.number_converTo = $div.find('select[data-field="number_converTo"]');
-				Select.boolean_converTo = $div.find('select[data-field="boolean_converTo"]');
+				Select.number_convertTo = $div.find('select[data-field="number_convertTo"]');
+				Select.boolean_convertTo = $div.find('select[data-field="boolean_convertTo"]');
 
 				// alle label / span in var packen
 				Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
@@ -607,7 +607,7 @@
 					this.value = this.value.replace(allowedSigns, '');
 				});
 
-				Select.number_converTo.on('change', function () {
+				Select.number_convertTo.on('change', function () {
 					selectedNumberConverter = this.value;
 					initialize_ExpertSettings_Number();
 				});
@@ -637,7 +637,7 @@
 
 			function events_ExpertSettings_Boolean() {
 
-				Select.boolean_converTo.on('change', function () {
+				Select.boolean_convertTo.on('change', function () {
 					selectedBooleanConverter = this.value;
 					initialize_ExpertSettings_Boolean();
 				});
