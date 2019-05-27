@@ -480,5 +480,17 @@ systemDictionary = {
 		"es": "valor si el objeto es 'falso'",
 		"pl": "wartość, jeśli obiekt jest „fałszywy”",
 		"zh-cn": "对象为'false'时的值"
-	  }
+	},
+	"settings can only be adjusted in the object to which it is linked!": {
+		"en": "settings can only be adjusted in the object to which it is linked!",
+		"de": "Einstellungen können nur in dem Objekt vorgenommen werden, mit dem es verlinkt ist!",
+		"ru": "Настройки можно настроить только в том объекте, с которым он связан!",
+		"pt": "configurações só podem ser ajustadas no objeto ao qual está vinculado!",
+		"nl": "instellingen kunnen alleen worden aangepast in het object waaraan het is gekoppeld!",
+		"fr": "les réglages ne peuvent être ajustés que dans l'objet auquel il est lié!",
+		"it": "le impostazioni possono essere modificate solo nell'oggetto a cui è collegato!",
+		"es": "La configuración solo se puede ajustar en el objeto al que está vinculado.",
+		"pl": "ustawienia można regulować tylko w obiekcie, z którym jest połączony!",
+		"zh-cn": "设置只能在与其链接的对象中进行调整！"
+	}
 };
