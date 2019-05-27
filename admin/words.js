@@ -196,55 +196,159 @@ systemDictionary = {
 	},
 	"calculation for linked object": {
 		"en": "calculation for linked object",
-		"de": "Umrechnung für verlinktes Objekt"
+		"de": "Umrechnung für verlinktes Objekt",
+		"ru": "расчет для связанного объекта",
+		"pt": "cálculo para objeto vinculado",
+		"nl": "berekening voor gekoppeld object",
+		"fr": "calcul pour objet lié",
+		"it": "calcolo per oggetto collegato",
+		"es": "cálculo para objeto vinculado",
+		"pl": "obliczenia dla połączonego obiektu",
+		"zh-cn": "链接对象的计算"
 	},
 	"number": {
 		"en": "number",
-		"de": "Zahl"
+		"de": "Zahl",
+		"ru": "Число",
+		"pt": "número",
+		"nl": "getal",
+		"fr": "nombre",
+		"it": "Numero",
+		"es": "numero",
+		"pl": "numer",
+		"zh-cn": "数"
 	},
 	"not allowed chars for Id": {
 		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
-		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]"
+		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
+		"ru": "запрещенные символы для идентификатора! <br> <br> Недопустимые символы: *? \\ \"'[]",
+		"pt": "não permitido chars para Id! <br> <br> Não é permitido chars: *? \\ \"'[]",
+		"nl": "niet toegestane tekens voor ID! <br> <br> Niet toegestaan ​​tekens: *? \\ \"'[]",
+		"fr": "caractères non autorisés pour Id! <br> <br> Caractères non autorisés: *? \\ \"'[]",
+		"it": "caratteri non consentiti per ID! <br> <br> Caratteri non consentiti: *? \\ \"'[]",
+		"es": "caracteres no permitidos para Id! <br> <br> caracteres no permitidos: *? \\ \"'[]",
+		"pl": "niedozwolone znaki dla Id! <br> <br> Nie dozwolone znaki: *? „” []",
+		"zh-cn": "id不允许使用字符！<br> <br>不允许使用字符：*？ \\''[]"
 	},
 	"do not convert": {
 		"en": "do not convert",
-		"de": "nicht umwandeln"
+		"de": "nicht umwandeln",
+		"ru": "не конвертировать",
+		"pt": "não converter",
+		"nl": "niet converteren",
+		"fr": "ne pas convertir",
+		"it": "non convertire",
+		"es": "no convertir",
+		"pl": "nie konwertuj",
+		"zh-cn": "不要转换"
 	},
 	"convert linked object to type": {
 		"en": "convert to type",
-		"de": "Konvertiere in Typ"
+		"de": "Konvertiere in Typ",
+		"ru": "преобразовать в тип",
+		"pt": "converter em tipo",
+		"nl": "converteren naar type",
+		"fr": "convertir en type",
+		"it": "convertire in tipo",
+		"es": "convertir a tipo",
+		"pl": "przekonwertować na typ",
+		"zh-cn": "转换为类型"
 	},
 	"condition 'true' for linked object": {
 		"en": "condition 'true' for linked object",
-		"de": "Bedingung 'true' für verlinktes Objekt"
+		"de": "Bedingung 'true' für verlinktes Objekt",
+		"ru": "условие 'true' для связанного объекта",
+		"pt": "condição 'true' para objeto vinculado",
+		"nl": "voorwaarde 'waar' voor gekoppeld object",
+		"fr": "condition 'true' pour objet lié",
+		"it": "condizione 'true' per oggetto collegato",
+		"es": "Condición 'true' para objeto vinculado",
+		"pl": "warunek „prawda” dla połączonego obiektu",
+		"zh-cn": "条件'true'表示链接对象"
 	},
 	"value if linked object is 'true'": {
 		"en": "value if linked object is 'true'",
-		"de": "Wert wenn verlinktes Objekt 'true' ist"
+		"de": "Wert wenn verlinktes Objekt 'true' ist",
+		"ru": "значение, если связанный объект равен 'true'",
+		"pt": "valor se o objeto vinculado for 'verdadeiro'",
+		"nl": "waarde als gekoppeld object 'waar' is",
+		"fr": "valeur si l'objet lié est 'true'",
+		"it": "valore se l'oggetto collegato è 'vero'",
+		"es": "valor si el objeto vinculado es 'verdadero'",
+		"pl": "wartość, jeśli powiązany obiekt jest „prawdziwy”",
+		"zh-cn": "链接对象为'true'时的值"
 	},
 	"value if linked object is 'false'": {
 		"en": "value if linked object is 'false'",
-		"de": "Wert wenn verlinktes Objekt 'false' ist"
+		"de": "Wert wenn verlinktes Objekt 'false' ist",
+		"ru": "значение, если связанный объект имеет значение «ложь»",
+		"pt": "valor se o objeto vinculado for 'falso'",
+		"nl": "waarde als gekoppeld object 'false' is",
+		"fr": "valeur si l'objet lié est 'false'",
+		"it": "valore se l'oggetto collegato è 'falso'",
+		"es": "valor si el objeto vinculado es 'falso'",
+		"pl": "wartość, jeśli połączony obiekt jest „fałszywy”",
+		"zh-cn": "链接对象为'false'时的值"
 	},
 	"change min '%s' to": {
 		"en": "change min '%s' to",
-		"de": "Ändere min '%s' in"
+		"de": "Ändere min '%s' in",
+		"ru": "измените min '%s' на",
+		"pt": "altere min '%s' para",
+		"nl": "verander min '%s' in",
+		"fr": "remplacez min '%s' par",
+		"it": "cambia min '%s' in",
+		"es": "cambiar min '%s' a",
+		"pl": "zmień min '%s' na",
+		"zh-cn": "将min'％s'更改为"
 	},
 	"change max '%s' to": {
 		"en": "change max '%s' to",
-		"de": "Ändere max '%s' in"
+		"de": "Ändere max '%s' auf",
+		"ru": "изменить максимум \"% s\" на",
+		"pt": "altere max '%s' para",
+		"nl": "verander max '%s' in",
+		"fr": "remplacez max '%s' par",
+		"it": "modifica max '%s' a",
+		"es": "cambiar max '%s' a",
+		"pl": "zmień max '%s' na",
+		"zh-cn": "将max'％s'更改为"
 	},
 	"only numbers and mathematical operators allowed as a condition": {
 		"en": "not allowed signs!<br>Only numbers and mathematical operators allowed as a condition! Input must start with math operator.<br><br>Allowed operators: = != > < >= <=",
-		"de": "Zeichen nicht erlaubt!<br>Nur Zahlen und mathematische Operatoren als Bedingung erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Zulässige Operatoren: = != > < >= <="
+		"de": "Zeichen nicht erlaubt!<br>Nur Zahlen und mathematische Operatoren als Bedingung erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Zulässige Operatoren: = != > < >= <=",
+		"ru": "запрещенные знаки! <br> В качестве условия допускаются только числа и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: =! => <> = <=",
+		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos permitidos como condição! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: =! => <> = <=",
+		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators toegestaan ​​als voorwaarde! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: =! => <> = <=",
+		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés comme condition! L'entrée doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: =! => <> = <=",
+		"it": "segni non consentiti! <br> Solo numeri e operatori matematici ammessi come condizione! L'input deve iniziare con l'operatore matematico. <br> <br> Operatori consentiti: =! => <> = <=",
+		"es": "¡Signos no permitidos! <br> ¡Sólo se permiten números y operadores matemáticos como condición! La entrada debe comenzar con el operador matemático. <br> <br> Operadores permitidos: =! => <> = <=",
+		"pl": "niedozwolone znaki! <br> Tylko liczby i operatory matematyczne dozwolone jako warunek! Wejście musi zaczynać się od operatora matematycznego. <br> <br> Dozwolone operatory: =! => <> = <=",
+		"zh-cn": "不允许的标志！<br>只允许数字和数学运算符作为条件！输入必须以数学运算符开头。<br> <br>允许的运算符：=！=> <> = <="
 	},
 	"conditions string": {
 		"en": "conditions string",
-		"de": "Zeichenkette mit Bedingungen"
+		"de": "Zeichenkette mit Bedingungen",
+		"ru": "строка условий",
+		"pt": "condições de string",
+		"nl": "voorwaarden string",
+		"fr": "conditions chaîne",
+		"it": "stringa di condizioni",
+		"es": "cadena de condiciones",
+		"pl": "warunki ciąg",
+		"zh-cn": "条件字符串"
 	},
 	"conditions multi": {
 		"en": "conditions multi",
-		"de": "Werteliste mit Bedingungen"
+		"de": "Werteliste mit Bedingungen",
+		"ru": "условия мульти",
+		"pt": "condições multi",
+		"nl": "voorwaarden multi",
+		"fr": "conditions multi",
+		"it": "condizioni multi",
+		"es": "condiciones multi",
+		"pl": "warunki multi",
+		"zh-cn": "条件多"
 	},
 	"string": {
 		"en": "string",
@@ -342,15 +446,39 @@ systemDictionary = {
 		"pl": "Jesteś pewny? Zmiany nie są zapisywane.",
 		"zh-cn": "你确定吗？更改未保存。"
 	},
-	"Please confirm": { 
-		"en": "Please confirm", 
-		"de": "Bitte bestätigen", 
-		"ru": "Пожалуйста подтвердите", 
-		"pt": "Por favor confirme", 
-		"nl": "Bevestig alstublieft", 
-		"fr": "Veuillez confirmer", 
-		"it": "Si prega di confermare", 
-		"es": "Por favor, confirme", 
-		"pl": "Proszę potwierdzić", "zh-cn": "请确认" 
-	}
+	"Please confirm": {
+		"en": "Please confirm",
+		"de": "Bitte bestätigen",
+		"ru": "Пожалуйста подтвердите",
+		"pt": "Por favor confirme",
+		"nl": "Bevestig alstublieft",
+		"fr": "Veuillez confirmer",
+		"it": "Si prega di confermare",
+		"es": "Por favor, confirme",
+		"pl": "Proszę potwierdzić", "zh-cn": "请确认"
+	},
+	"value if object is 'true'": {
+		"en": "value if object is 'true'",
+		"de": "Wert wenn Objekt 'true' ist",
+		"ru": "значение, если объект равен 'true'",
+		"pt": "valor se o objeto for 'verdadeiro'",
+		"nl": "waarde als object 'waar' is",
+		"fr": "valeur si l'objet est 'true'",
+		"it": "valore se l'oggetto è 'vero'",
+		"es": "valor si el objeto es 'verdadero'",
+		"pl": "wartość, jeśli obiekt jest „prawdziwy”",
+		"zh-cn": "对象为'true'时的值"
+	},
+	"value if object is 'false'": {
+		"en": "value if object is 'false'",
+		"de": "Wert wenn Objekt 'false' ist",
+		"ru": "значение, если объект «ложь»",
+		"pt": "valor se o objeto for 'falso'",
+		"nl": "waarde als object 'false' is",
+		"fr": "valeur si l'objet est 'false'",
+		"it": "valore se l'oggetto è 'falso'",
+		"es": "valor si el objeto es 'falso'",
+		"pl": "wartość, jeśli obiekt jest „fałszywy”",
+		"zh-cn": "对象为'false'时的值"
+	  }
 };
