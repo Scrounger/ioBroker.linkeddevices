@@ -112,10 +112,16 @@
 			$('#events .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function () {
 				let id = $(this).data('index');
 				initSelectId(function (sid) {
-					sid.selectId('show', $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(), function (newId) {
+					sid.selectId('show', null, function (newId) {
 						if (newId) {
 							$('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
 							socket.emit('getObject', newId, function (err, obj) {
+
+								if(obj._id.includes(adapter + '.' + instance) ){
+									showMessage("nix da!");
+									return
+								}
+
 								$('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
 							});
 						}
@@ -155,7 +161,7 @@
 						unselectAll: _('Deselect all'),
 						invertSelection: _('Invert selection')
 					},
-					columns: ['image', 'name', 'role', 'room']
+					columns: ['image', 'name']
 				});
 				callback(selectId);
 			});
@@ -594,6 +600,9 @@
 			background: gray;
 			color: white;
 		}
+		#dialog-select-member {
+            z-index: 9999 !important;
+        }
 	</style>
 </head>
 
