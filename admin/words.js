@@ -492,5 +492,17 @@ systemDictionary = {
 		"es": "La configuración solo se puede ajustar en el objeto al que está vinculado.",
 		"pl": "ustawienia można regulować tylko w obiekcie, z którym jest połączony!",
 		"zh-cn": "设置只能在与其链接的对象中进行调整！"
+	},
+	"Select": {
+		"en": "Select",
+		"de": "Auswählen",
+		"ru": "Выбрать",
+		"pt": "Selecione",
+		"nl": "kiezen",
+		"fr": "Sélectionner",
+		"it": "Selezionare",
+		"es": "Seleccione",
+		"pl": "Wybierz",
+		"zh-cn": "选择"
 	}
 };

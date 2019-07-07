@@ -47,7 +47,6 @@
 						;
 				}
 			});
-			onChange(false);
 
 
 			getIsAdapterAlive(function (isAlive) {
@@ -56,22 +55,6 @@
 				// $btnRefresh.on('click', function () {
 				// 	readLinkedObjects();
 				// });
-
-				var $btnBaum = $('.btn-baum');
-
-				$btnBaum.on('click', function () {
-					var id = 0;
-					initSelectId(function (sid) {
-						sid.selectId('show', $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(), function (newId) {
-							if (newId) {
-								$('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
-								socket.emit('getObject', newId, function (err, obj) {
-									$('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
-								});
-							}
-						});
-					});
-				});
 			});
 
 			// Tabelle füllen
@@ -104,6 +87,8 @@
 				}
 			});
 
+			onChange(false);
+
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
 		}
@@ -124,19 +109,19 @@
 		}
 
 		function tableOnReady() {
-            $('#events .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function () {
-                let id = $(this).data('index');
-                initSelectId(function (sid) {
-                    sid.selectId('show', $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(), function (newId) {
-                        if (newId) {
-                            $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
-                            socket.emit('getObject', newId, function (err, obj) {
-                                $('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
-                            });
-                        }
-                    });
-                });
-            });
+			$('#events .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function () {
+				let id = $(this).data('index');
+				initSelectId(function (sid) {
+					sid.selectId('show', $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(), function (newId) {
+						if (newId) {
+							$('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
+							socket.emit('getObject', newId, function (err, obj) {
+								$('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
+							});
+						}
+					});
+				});
+			});
 		}
 
 		var selectId;
@@ -610,49 +595,62 @@
 <body>
 
 	<div class="m adapter-container">
-
 		<div class="row">
-			<div class="col s12 m4 l2">
-				<img src="linkeddevices.png" class="logo">
-			</div>
-		</div>
-
-		<!-- Put your content here -->
-
-		<!-- For example columns with settings: -->
-		<div class="row">
-			<div class="col s6 input-field">
-				<input type="checkbox" class="value" id="notDeleteDeadLinkedObjects" />
-				<label for="notDeleteDeadLinkedObjects" class="translate">notDeleteDeadLinkedObjects</label>
-			</div>
-
-			<div class="col s6 input-field">
-				<input type="text" class="value" id="option2" />
-				<label for="option2" class="translate">option2</label>
-			</div>
-		</div>
-		<div class="row">
-			<a class="waves-effect waves-light btn btn-refresh" style="margin-top: 5px;"><i
-					class="material-icons left">refresh</i><span class="translate">Reload entities</span></a>
-			<a class="waves-effect waves-light btn btn-baum" style="margin-top: 5px;" data-invisible="true"><i
-					class="material-icons left">check</i><span class="translate">Show Objekt-Baum</span></a>
-		</div>
-		<div class="row">
-			<div class="col s12" id="events">
-				<div class="table-values-div">
-					<table class="table-values">
-						<thead>
-							<tr>
-								<th data-name="_index"></th>
-								<th data-name="linkedId" data-type="text" class="translate">id of linked object</th>
-								<th data-buttons="edit" style="width: 70px"></th>
-								<th data-name="parentId" data-type="text" class="translate">linked with</th>
-								<th data-name="isLinked" style="width: 70px" data-style="width: 70px"
-									data-type="checkbox" class="translate">is linked</th>
-							</tr>
-						</thead>
-					</table>
+			<div class="row">
+				<div class="col s12 m4 l2">
+					<img src="linkeddevices.png" class="logo">
 				</div>
+			</div>
+
+			<!-- Put your content here -->
+
+			<!-- For example columns with settings: -->
+			<div class="row">
+				<div class="col s6 input-field">
+					<input type="checkbox" class="value" id="notDeleteDeadLinkedObjects" />
+					<label for="notDeleteDeadLinkedObjects" class="translate">notDeleteDeadLinkedObjects</label>
+				</div>
+
+				<div class="col s6 input-field">
+					<input type="text" class="value" id="option2" />
+					<label for="option2" class="translate">option2</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12" id="events">
+					<div class="table-values-div">
+						<table class="table-values">
+							<thead>
+								<tr>
+									<th data-name="_index"></th>
+									<th data-name="linkedId" data-type="text" class="translate">id of linked object</th>
+									<th data-buttons="edit" style="width: 70px"></th>
+									<th data-name="parentId" data-type="text" class="translate">linked with</th>
+									<th data-name="isLinked" style="width: 70px" data-style="width: 70px"
+										data-type="checkbox" class="translate">is linked</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Layout für Select Objekt Id Dialog -->
+		<div id="dialog-select-member" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<div class="row">
+					<div class="col s12 title"></div>
+				</div>
+				<div class="row">
+					<div class="col s12 dialog-content">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a class="modal-action modal-close waves-effect waves-green btn btn-set"><i
+						class="large material-icons left">check</i><span class="translate">Select</span></a>
+				<a class="modal-action modal-close waves-effect waves-green btn btn-close"><i
+						class="large material-icons left ">close</i><span class="translate">Cancel</span></a>
 			</div>
 		</div>
 	</div>
