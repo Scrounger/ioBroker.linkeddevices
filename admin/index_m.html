@@ -41,6 +41,14 @@
 			onChange(false);
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
+
+			getIsAdapterAlive(function (isAlive) {
+				var $btnRefresh = $('.btn-refresh');
+
+				$btnRefresh.on('click', function () {
+					readLinkedObjects();
+				});
+			});
 		}
 
 		// This will be called by the admin adapter when the user presses the save button
@@ -57,8 +65,58 @@
 			});
 			callback(obj);
 		}
+
+		function readLinkedObjects() {
+			// var cacheSelectorState  = $('linkeddevices.*');
+
+			// cacheSelectorState.each(function (id, i) {
+			// 	showMessage(id);
+			// });
+
+
+			getObject("linkeddevices.0.LEVEL", function (err, obj) {
+				if (err) {
+					showMessage(err);
+				} else {
+					//showMessage(JSON.stringify(obj));
+					showMessage(obj.common.unit);
+				}
+			});
+		}
+
 	</script>
 
+	<style>
+		.entity-id {
+			font-weight: bold;
+			vertical-align: top;
+			font-size: 14px;
+			cursor: pointer;
+		}
+
+		.div-entities {
+			width: 100%;
+			height: calc(100% - 50px);
+			overflow: auto;
+		}
+
+		.div-entities thead {
+			background: gray;
+			color: white;
+		}
+
+		.div-entities tbody {
+			font-size: 14px;
+		}
+
+		.div-entities tbody .attributes {
+			font-size: 10px;
+		}
+
+		.div-entities tbody td {
+			padding: 3px 5px;
+		}
+	</style>
 </head>
 
 <body>
@@ -85,9 +143,26 @@
 				<label for="option2" class="translate">option2</label>
 			</div>
 		</div>
+		<div class="row">
+			<a class="waves-effect waves-light btn btn-refresh" style="margin-top: 5px;"><i
+					class="material-icons left">refresh</i><span class="translate">Reload entities</span></a>
+		</div>
+		<div class="row">
+			<div class="div-entities">
+				<table>
+					<thead>
+						<tr>
+							<th class="translate">id of linked object</th>
+							<th class="translate">linked with</th>
+						</tr>
+					</thead>
+					<tbody id="entities">
 
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-
 </body>
 
 </html>
