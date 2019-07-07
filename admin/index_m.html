@@ -51,17 +51,25 @@
 
 
 			getIsAdapterAlive(function (isAlive) {
-				var $btnRefresh = $('.btn-refresh');
+				// var $btnRefresh = $('.btn-refresh');
 
-				$btnRefresh.on('click', function () {
-					readLinkedObjects();
-				});
+				// $btnRefresh.on('click', function () {
+				// 	readLinkedObjects();
+				// });
 
 				var $btnBaum = $('.btn-baum');
 
 				$btnBaum.on('click', function () {
+					var id = 0;
 					initSelectId(function (sid) {
-						showMessage(sid);
+						sid.selectId('show', $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(), function (newId) {
+							if (newId) {
+								$('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
+								socket.emit('getObject', newId, function (err, obj) {
+									$('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
+								});
+							}
+						});
 					});
 				});
 			});
@@ -89,7 +97,8 @@
 					}
 
 					// Daten an Tabelle übergeben und anzeigen
-					myValues2table('events', tableData, onChange);
+					myValues2table('events', tableData, onChange, tableOnReady);
+
 				} else {
 					showError(err.message);
 				}
@@ -112,6 +121,22 @@
 				}
 			});
 			callback(obj);
+		}
+
+		function tableOnReady() {
+            $('#events .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function () {
+                let id = $(this).data('index');
+                initSelectId(function (sid) {
+                    sid.selectId('show', $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(), function (newId) {
+                        if (newId) {
+                            $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
+                            socket.emit('getObject', newId, function (err, obj) {
+                                $('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
+                            });
+                        }
+                    });
+                });
+            });
 		}
 
 		var selectId;
@@ -149,25 +174,6 @@
 				});
 				callback(selectId);
 			});
-		}
-
-		function readLinkedObjects() {
-			try {
-				getForeignObjects('linkeddevices.*', function (err, list) {
-					if (err) {
-						showMessage(err);
-					} else {
-						//showMessage(JSON.stringify(list));
-						//showMessage(obj.common.unit);
-
-						//showMessage("jaaa");
-						addToTable('events', [{ "linkedId": "test_refresh", "parentId": "test", "enabled": true }, "test2", "test3"]);
-					}
-				});
-
-			} catch (err) {
-				showMessage(err);
-			}
 		}
 
 		function getForeignObjects(pattern, callback) {
@@ -593,8 +599,12 @@
 		}
 
 	</script>
-
-
+	<style>
+		.table-values thead {
+			background: gray;
+			color: white;
+		}
+	</style>
 </head>
 
 <body>
@@ -635,10 +645,10 @@
 							<tr>
 								<th data-name="_index"></th>
 								<th data-name="linkedId" data-type="text" class="translate">id of linked object</th>
+								<th data-buttons="edit" style="width: 70px"></th>
 								<th data-name="parentId" data-type="text" class="translate">linked with</th>
 								<th data-name="isLinked" style="width: 70px" data-style="width: 70px"
 									data-type="checkbox" class="translate">is linked</th>
-								<!-- <th data-buttons="edit" style="width: 70px"></th> -->
 							</tr>
 						</thead>
 					</table>
