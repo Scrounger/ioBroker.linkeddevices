@@ -75,7 +75,7 @@
 								parentId = linkedObj.common.custom[myNamespace].parentId
 							}
 
-							tableData.push({ "linkedId": id, "parentId": parentId, "isLinked": linkedObj.common.custom[myNamespace].isLinked });
+							tableData.push({ "linkedId": id, "parentId": parentId, "isLinked": linkedObj.common.custom[myNamespace].isLinked, });
 						}
 					}
 
@@ -309,7 +309,7 @@
 								style = (names[i].style ? names[i].style : 'text-align: right;');
 								line += (v + 1);
 							} else if (names[i].type === 'checkbox') {
-								// Mod für disabled Checkbox
+								// Mod: disabled Checkbox
 								line += '<input style="' + (names[i].style || '') + '" class="values-input filled-in" type="checkbox" data-index="' + v + '" data-name="' + names[i].name + '" ' + (values[v][names[i].name] ? 'checked' : '') + '" data-old-value="' + (values[v][names[i].name] === undefined ? '' : values[v][names[i].name]) + '" disabled="true"/>';
 								if (isMaterialize) {
 									line += '<span></span>';
@@ -333,7 +333,7 @@
 								}
 								line += '</select>';
 							} else {
-								// Mod für readonly input (text)
+								// Mod: readonly input (text)
 								line += '<input class="values-input" style="' + (names[i].style ? names[i].style : 'width: 100%') + '" type="' + names[i].type + '" data-index="' + v + '" data-name="' + names[i].name + '" readonly/>';
 							}
 						}
@@ -349,7 +349,12 @@
 									}
 								} else {
 									if (isMaterialize) {
-										line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">add</i></a>';
+										// Mod: abhängig ob verlinkt ist edit Button disabled
+										if (JSON.stringify(values[v].isLinked) === "true") {
+											line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light" disabled="true"><i class="material-icons">add</i></a>';
+										} else {
+											line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">add</i></a>';
+										}
 									} else {
 										line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
 									}
