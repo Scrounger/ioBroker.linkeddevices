@@ -53,7 +53,7 @@ function load(settings, onChange) {
             }
 
             // Daten an Tabelle übergeben und anzeigen
-            myValues2table('events', tableData, onChange, tableOnReady);
+            myValues2table('events', sortByKey(tableData, "linkedId"), onChange, tableOnReady);
 
         } else {
             showError(err.message);
@@ -147,6 +147,13 @@ function getForeignObjects(pattern, callback) {
         } else {
             if (callback) callback(null);
         }
+    });
+}
+
+function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 }
 
@@ -582,7 +589,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                         $(this).find('i').html('build');     //Icon festlegen
                     }
                     $(this).on('click', function () {
-                        var id = $(this).data('index');                        
+                        var id = $(this).data('index');
                     }).attr('title', _('Settings'));
                 }
         });
