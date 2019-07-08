@@ -82,7 +82,7 @@ function save(callback) {
 }
 
 function tableOnReady() {
-    $('#events .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function () {
+    $('#events .table-values-div .table-values .values-buttons[data-command="assignLink"]').on('click', function () {
         let id = $(this).data('index');
         initSelectId(function (sid) {
             sid.selectId('show', null, function (newId) {
@@ -326,14 +326,18 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                             } else {
                                 line += '<button data-command="' + buttons[i][b] + '" class="values-buttons" disabled>&nbsp;</button>';
                             }
+                        } else if (buttons[i][b] === 'assignLink') {
+                            // Mod: abhängig ob verlinkt ist Button disabled
+                            if (isMaterialize) {
+                                if (JSON.stringify(values[v].isLinked) === "true") {
+                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light" disabled="true"><i class="material-icons">link</i></a>';
+                                } else {
+                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">link</i></a>';
+                                }
+                            }
                         } else {
                             if (isMaterialize) {
-                                // Mod: abhängig ob verlinkt ist edit Button disabled
-                                if (JSON.stringify(values[v].isLinked) === "true") {
-                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light" disabled="true"><i class="material-icons">add</i></a>';
-                                } else {
-                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">add</i></a>';
-                                }
+                                line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">add</i></a>';
                             } else {
                                 line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
                             }
@@ -532,6 +536,33 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                             }, 100);
                         }
                     });
+                } else if (command === 'assignLink') {
+                    // Mod: eigener button
+                    if (!isMaterialize) {
+                        $(this).button({
+                            icons: { primary: 'ui-icon-pencil' },
+                            text: false
+                        })
+                            .css({ width: '1em', height: '1em' });
+                    } else {
+                        $(this).find('i').html('link');     //Icon festlegen
+                    }
+                    $(this).on('click', function () {
+                        var id = $(this).data('index');
+                        if (typeof editLine === 'function') {
+                            setTimeout(function () {
+                                editLine(id, JSON.parse(JSON.stringify(values[id])), function (err, id, newValues) {
+                                    if (!err) {
+                                        if (JSON.stringify(values[id]) !== JSON.stringify(newValues)) {
+                                            onChange && onChange();
+                                            values[id] = newValues;
+                                            myValues2table(divId, values, onChange, onReady);
+                                        }
+                                    }
+                                });
+                            }, 100);
+                        }
+                    }).attr('title', _('assign link'));
                 }
         });
 

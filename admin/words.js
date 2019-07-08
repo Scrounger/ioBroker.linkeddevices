@@ -504,5 +504,17 @@ systemDictionary = {
 		"es": "Seleccione",
 		"pl": "Wybierz",
 		"zh-cn": "选择"
+	},
+	"assign link": {
+		"en": "assign link",
+		"de": "Link zuweisen",
+		"ru": "назначить ссылку",
+		"pt": "atribuir link",
+		"nl": "link toewijzen",
+		"fr": "attribuer un lien",
+		"it": "assegna il collegamento",
+		"es": "asignar enlace",
+		"pl": "przypisz link",
+		"zh-cn": "分配链接"
 	}
 };
