@@ -576,5 +576,17 @@ systemDictionary = {
 		"es": "asignar enlace",
 		"pl": "przypisz link",
 		"zh-cn": "分配链接"
+	},
+	"Overview of all linked objects": {
+		"en": "Overview of all linked objects",
+		"de": "Übersicht aller verlinkten Objekte",
+		"ru": "Обзор всех связанных объектов",
+		"pt": "Visão geral de todos os objetos vinculados",
+		"nl": "Overzicht van alle gekoppelde objecten",
+		"fr": "Vue d'ensemble de tous les objets liés",
+		"it": "Panoramica di tutti gli oggetti collegati",
+		"es": "Resumen de todos los objetos vinculados",
+		"pl": "Przegląd wszystkich połączonych obiektów",
+		"zh-cn": "所有链接对象的概述"
 	}
 };
