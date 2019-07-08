@@ -115,6 +115,7 @@ function initSelectId(callback) {
             imgPath: '../../lib/css/fancytree/',
             filter: { type: 'state' },
             name: 'scenes-select-state',
+            expertModeRegEx: /^system\.|^iobroker\.|^_|^[\w-]+$|^enum\.|^[\w-]+\.admin|^script\./,
             texts: {
                 select: _('Select'),
                 cancel: _('Cancel'),
@@ -581,7 +582,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                     // Mod: eigener button für custom dlg
                     if (!isMaterialize) {
                         $(this).button({
-                            icons: { primary: 'ui-icon-pencil' },
+                            icons: { primary: 'ui-icon-gear' },
                             text: false
                         })
                             .css({ width: '1em', height: '1em' });
