@@ -398,6 +398,18 @@ systemDictionary = {
 		"pl": "włączony",
 		"zh-cn": "启用"
 	},
+	"active": {
+		"en": "active",
+		"de": "aktiv",
+		"ru": "активно",
+		"pt": "ativo",
+		"nl": "actief",
+		"fr": "actif",
+		"it": "Attivo",
+		"es": "activo",
+		"pl": "aktywny",
+		"zh-cn": "激活"
+	},
 	"Cancel": {
 		"en": "Cancel",
 		"de": "Abbrechen",
@@ -409,6 +421,18 @@ systemDictionary = {
 		"es": "Cancelar",
 		"pl": "Anuluj",
 		"zh-cn": "取消"
+	},
+	"Settings": {
+		"en": "Settings",
+		"de": "Einstellungen",
+		"ru": "Настройки",
+		"pt": "Configurações",
+		"nl": "instellingen",
+		"fr": "Paramètres",
+		"it": "impostazioni",
+		"es": "Configuración",
+		"pl": "Ustawienia",
+		"zh-cn": "设置"
 	},
 	"Settings for %s": {
 		"en": "Settings for %s",
@@ -422,6 +446,18 @@ systemDictionary = {
 		"pl": "Ustawienia dla %s",
 		"zh-cn": "%s的设置"
 	},
+	"Storage of %s": {
+		"en": "Storage of <span class=\"name\">%s</span>",
+		"de": "Einstellungen von <span class=\"name\">%s</span>",
+		"ru": "Настройки для <span class=\"name\">%s</span>",
+		"pt": "História de <span class=\"name\">%s</span>",
+		"nl": "Opslag van <span class=\"name\">%s</span>",
+		"fr": "Stockage de <span class=\"name\">%s</span>",
+		"it": "Memorizzazione di %s",
+		"es": "Configuraciones de <span class=\"name\">%s</span>",
+		"pl": "Przechowywanie <span class=\"name\"> %s </span>",
+		"zh-cn": "存储<span class=\"name\">%s</span>"
+	},
 	"Save": {
 		"en": "Save",
 		"de": "Speichern",
@@ -433,6 +469,30 @@ systemDictionary = {
 		"es": "Grabar",
 		"pl": "Zapisać",
 		"zh-cn": "保存"
+	},
+	"Table": {
+		"en": "Table",
+		"de": "Tabelle",
+		"ru": "Таблица",
+		"pt": "Tabela",
+		"nl": "Tabel",
+		"fr": "Table",
+		"it": "tabella",
+		"es": "Tabla",
+		"pl": "Stół",
+		"zh-cn": "表"
+	},
+	"Chart": {
+		"en": "Chart",
+		"de": "Grafik",
+		"ru": "График",
+		"pt": "Gráfico",
+		"nl": "tabel",
+		"fr": "Graphique",
+		"it": "diagramma",
+		"es": "Gráfico",
+		"pl": "Wykres",
+		"zh-cn": "图表"
 	},
 	"Are you sure? Changes are not saved.": {
 		"en": "Are you sure? Changes are not saved.",
