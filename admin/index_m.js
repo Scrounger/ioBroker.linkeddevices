@@ -334,6 +334,26 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                                 } else {
                                     line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">link</i></a>';
                                 }
+                            } else {
+                                if (JSON.stringify(values[v].isLinked) === "true") {
+                                    line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons" disabled="true"></button>';
+                                } else {
+                                    line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
+                                }
+                            }
+                        } else if (buttons[i][b] === 'openCustom') {
+                            if (isMaterialize) {
+                                if (JSON.stringify(values[v].isLinked) === "true") {
+                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">link</i></a>';
+                                } else {
+                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light" disabled="true"><i class="material-icons">link</i></a>';
+                                }
+                            } else {
+                                if (JSON.stringify(values[v].isLinked) === "true") {
+                                    line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
+                                } else {
+                                    line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons" disabled="true"></button>';
+                                }
                             }
                         } else {
                             if (isMaterialize) {
@@ -537,7 +557,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                         }
                     });
                 } else if (command === 'assignLink') {
-                    // Mod: eigener button
+                    // Mod: eigener button für link
                     if (!isMaterialize) {
                         $(this).button({
                             icons: { primary: 'ui-icon-pencil' },
@@ -549,20 +569,21 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                     }
                     $(this).on('click', function () {
                         var id = $(this).data('index');
-                        if (typeof editLine === 'function') {
-                            setTimeout(function () {
-                                editLine(id, JSON.parse(JSON.stringify(values[id])), function (err, id, newValues) {
-                                    if (!err) {
-                                        if (JSON.stringify(values[id]) !== JSON.stringify(newValues)) {
-                                            onChange && onChange();
-                                            values[id] = newValues;
-                                            myValues2table(divId, values, onChange, onReady);
-                                        }
-                                    }
-                                });
-                            }, 100);
-                        }
                     }).attr('title', _('assign link'));
+                } else if (command === 'openCustom') {
+                    // Mod: eigener button für custom dlg
+                    if (!isMaterialize) {
+                        $(this).button({
+                            icons: { primary: 'ui-icon-pencil' },
+                            text: false
+                        })
+                            .css({ width: '1em', height: '1em' });
+                    } else {
+                        $(this).find('i').html('build');     //Icon festlegen
+                    }
+                    $(this).on('click', function () {
+                        var id = $(this).data('index');                        
+                    }).attr('title', _('Settings'));
                 }
         });
 
