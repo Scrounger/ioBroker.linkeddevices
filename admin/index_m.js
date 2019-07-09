@@ -1,4 +1,12 @@
 // This will be called by the admin adapter when the settings page loads
+const ORDER = {
+    ASC: 'asc',
+    DESC: 'desc'
+}
+
+var sortLinkedId = ORDER.ASC;
+var sortParentId = ORDER.DESC;
+
 function load(settings, onChange) {
     // Namespace bauen
     var myNamespace = adapter + '.' + instance
@@ -53,10 +61,40 @@ function load(settings, onChange) {
             }
 
             // Daten an Tabelle übergeben und anzeigen
-            myValues2table('events', sortByKey(tableData, "linkedId"), onChange, tableOnReady);
+            myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
 
         } else {
             showError(err.message);
+        }
+    });
+
+    $('.sort_linkedId').on('click', function () {
+        var tableData = table2values('events');
+
+        switch (sortLinkedId) {
+            case ORDER.ASC:
+                sortLinkedId = ORDER.DESC;
+                myValues2table('events', sortByKey(tableData, "linkedId", false), onChange, tableOnReady);
+                break;
+            case ORDER.DESC:
+                sortLinkedId = ORDER.ASC;
+                myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
+                break;
+        }
+    });
+
+    $('.sort_parentId').on('click', function () {
+        var tableData = table2values('events');
+
+        switch (sortParentId) {
+            case ORDER.ASC:
+                sortParentId = ORDER.DESC;
+                myValues2table('events', sortByKey(tableData, "parentId", false), onChange, tableOnReady);
+                break;
+            case ORDER.DESC:
+                sortParentId = ORDER.ASC;
+                myValues2table('events', sortByKey(tableData, "parentId", true), onChange, tableOnReady);
+                break;
         }
     });
 
@@ -151,10 +189,16 @@ function getForeignObjects(pattern, callback) {
     });
 }
 
-function sortByKey(array, key) {
+function sortByKey(array, key, sortASC) {
     return array.sort(function (a, b) {
-        var x = a[key]; var y = b[key];
-        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        var x = a[key];
+        var y = b[key];
+
+        if (sortASC) {
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        } else {
+            return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+        }
     });
 }
 
