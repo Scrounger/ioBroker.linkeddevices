@@ -68,7 +68,7 @@ function load(settings, onChange) {
         }
     });
 
-    $('.sort_linkedId').on('click', function () {
+    $('th[data-name="linkedId"]').on('click', function () {
         var tableData = table2values('events');
 
         switch (sortLinkedId) {
@@ -83,7 +83,7 @@ function load(settings, onChange) {
         }
     });
 
-    $('.sort_parentId').on('click', function () {
+    $('th[data-name="parentId"]').on('click', function () {
         var tableData = table2values('events');
 
         switch (sortParentId) {
