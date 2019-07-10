@@ -61,7 +61,7 @@ function load(settings, onChange) {
             }
 
             // Daten an Tabelle übergeben und anzeigen
-            $('th[data-name="linkedId"]').text(`▲ ${_("id of linked object")}`);
+            $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
             myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
 
         } else {
@@ -77,12 +77,12 @@ function load(settings, onChange) {
             case ORDER.ASC:
                 sortLinkedId = ORDER.DESC;
                 myValues2table('events', sortByKey(tableData, "linkedId", false), onChange, tableOnReady);
-                $(this).text(`▼ ${_("id of linked object")}`);
+                $(this).text(`${_("id of linked object")} ▾`);
                 break;
             case ORDER.DESC:
                 sortLinkedId = ORDER.ASC;
                 myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
-                $(this).text(`▲ ${_("id of linked object")}`);
+                $(this).text(`${_("id of linked object")} ▴`);
                 break;
         }
     });
@@ -95,12 +95,12 @@ function load(settings, onChange) {
             case ORDER.ASC:
                 sortParentId = ORDER.DESC;
                 myValues2table('events', sortByKey(tableData, "parentId", false), onChange, tableOnReady);
-                $(this).text(`▼ ${_("linked with")}`);
+                $(this).text(`${_("linked with")} ▾`);
                 break;
             case ORDER.DESC:
                 sortParentId = ORDER.ASC;
                 myValues2table('events', sortByKey(tableData, "parentId", true), onChange, tableOnReady);
-                $(this).text(`▲ ${_("linked with")}`);
+                $(this).text(`${_("linked with")} ▴`);
                 break;
         }
     });
