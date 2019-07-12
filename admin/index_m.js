@@ -6,6 +6,7 @@ const ORDER = {
 
 var sortLinkedId = ORDER.ASC;
 var sortParentId = ORDER.DESC;
+var sortParentName = ORDER.DESC;
 var myNamespace;
 
 async function load(settings, onChange) {
@@ -43,41 +44,8 @@ async function load(settings, onChange) {
     // Table erzeugen
     createTable(onChange);
 
-    $('th[data-name="linkedId"]').on('click', function () {
-        var tableData = table2values('events');
-        $('th[data-name="parentId"]').text(_("linked with"))
-
-        switch (sortLinkedId) {
-            case ORDER.ASC:
-                sortLinkedId = ORDER.DESC;
-                myValues2table('events', sortByKey(tableData, "linkedId", false), onChange, tableOnReady);
-                $(this).text(`${_("id of linked object")} ▾`);
-                break;
-            case ORDER.DESC:
-                sortLinkedId = ORDER.ASC;
-                myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
-                $(this).text(`${_("id of linked object")} ▴`);
-                break;
-        }
-    });
-
-    $('th[data-name="parentId"]').on('click', function () {
-        var tableData = table2values('events');
-        $('th[data-name="linkedId"]').text(_("id of linked object"))
-
-        switch (sortParentId) {
-            case ORDER.ASC:
-                sortParentId = ORDER.DESC;
-                myValues2table('events', sortByKey(tableData, "parentId", false), onChange, tableOnReady);
-                $(this).text(`${_("linked with")} ▾`);
-                break;
-            case ORDER.DESC:
-                sortParentId = ORDER.ASC;
-                myValues2table('events', sortByKey(tableData, "parentId", true), onChange, tableOnReady);
-                $(this).text(`${_("linked with")} ▴`);
-                break;
-        }
-    });
+    // GUI Events
+    events(onChange);
 
     onChange(false);
 
@@ -107,7 +75,7 @@ async function createTable(onChange) {
         // Alle linkedDevices Objekte der Instanz holen
         let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
 
-        if (linkedDevicesList) {
+        if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
             for (var id in linkedDevicesList) {
                 // benötigte Daten in Array für tableFkt packen
                 let linkedObj = linkedDevicesList[id];
@@ -134,8 +102,75 @@ async function createTable(onChange) {
             // Daten an Tabelle übergeben und anzeigen
             $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
             myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
+        } else {
+            $('div[id=events]').hide();
         }
+    } catch (err) {
+        showError(err);
+    }
+}
 
+function events(onChange) {
+    try {
+        // linkedId column header click event
+        $('th[data-name="linkedId"]').on('click', function () {
+            var tableData = table2values('events');
+            $('th[data-name="parentId"]').text(_("linked with"))
+            $('th[data-name="parentName"]').text(_("name"));
+
+            switch (sortLinkedId) {
+                case ORDER.ASC:
+                    sortLinkedId = ORDER.DESC;
+                    myValues2table('events', sortByKey(tableData, "linkedId", false), onChange, tableOnReady);
+                    $(this).text(`${_("id of linked object")} ▾`);
+                    break;
+                case ORDER.DESC:
+                    sortLinkedId = ORDER.ASC;
+                    myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
+                    $(this).text(`${_("id of linked object")} ▴`);
+                    break;
+            }
+        });
+
+        // parentId column header click event
+        $('th[data-name="parentId"]').on('click', function () {
+            var tableData = table2values('events');
+            $('th[data-name="linkedId"]').text(_("id of linked object"))
+            $('th[data-name="parentName"]').text(_("name"));
+
+            switch (sortParentId) {
+                case ORDER.ASC:
+                    sortParentId = ORDER.DESC;
+                    myValues2table('events', sortByKey(tableData, "parentId", false), onChange, tableOnReady);
+                    $(this).text(`${_("linked with")} ▾`);
+                    break;
+                case ORDER.DESC:
+                    sortParentId = ORDER.ASC;
+                    myValues2table('events', sortByKey(tableData, "parentId", true), onChange, tableOnReady);
+                    $(this).text(`${_("linked with")} ▴`);
+                    break;
+            }
+        });
+
+        // parentName column header click event
+        $('th[data-name="parentName"]').on('click', function () {
+            var tableData = table2values('events');
+            $('th[data-name="linkedId"]').text(_("id of linked object"))
+            $('th[data-name="parentId"]').text(_("linked with"))
+
+            switch (sortParentName) {
+                case ORDER.ASC:
+                    sortParentName = ORDER.DESC;
+                    myValues2table('events', sortByKey(tableData, "parentName", false), onChange, tableOnReady);
+                    $(this).text(`${_("name")} ▾`);
+                    break;
+                case ORDER.DESC:
+                    sortParentName = ORDER.ASC;
+                    myValues2table('events', sortByKey(tableData, "parentName", true), onChange, tableOnReady);
+                    $(this).text(`${_("name")} ▴`);
+                    break;
+            }
+        });
     } catch (err) {
         showError(err);
     }
@@ -198,16 +233,6 @@ function initSelectId(callback) {
             columns: ['image', 'name']
         });
         callback(selectId);
-    });
-}
-
-function getForeignObjects(pattern, callback) {
-    socket.emit('getForeignObjects', pattern, function (err, res) {
-        if (!err && res) {
-            if (callback) callback(err, res);
-        } else {
-            if (callback) callback(null);
-        }
     });
 }
 
