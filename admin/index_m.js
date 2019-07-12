@@ -4,9 +4,18 @@ const ORDER = {
     DESC: 'desc'
 }
 
+const SORT = {
+    linkedId: 'linkedId',
+    parentId: 'parentId',
+    parentName: 'parentName'
+}
+
 var sortLinkedId = ORDER.ASC;
 var sortParentId = ORDER.DESC;
 var sortParentName = ORDER.DESC;
+
+var currentSort = SORT.linkedId;
+
 var myNamespace;
 
 async function load(settings, onChange) {
@@ -45,7 +54,7 @@ async function load(settings, onChange) {
     createTable(onChange);
 
     // GUI Events
-    events(onChange);
+    await events(onChange);
 
     onChange(false);
 
@@ -68,12 +77,39 @@ function save(callback) {
     callback(obj);
 }
 
-async function createTable(onChange) {
+async function createTable(onChange, filterText = null) {
     try {
-        let tableData = [];		// Array für tableFkt
+        let tableData = await getTableData();	// Array für tableFkt
 
+        if (tableData) {
+
+            if (filterText != null) {
+                // Tabelle filtern
+                tableData = tableData.filter(function (res) {
+                    return res.linkedId.toUpperCase().includes(filterText.toUpperCase()) ||
+                        res.parentId.toUpperCase().includes(filterText.toUpperCase()) ||
+                        res.parentName.toUpperCase().includes(filterText.toUpperCase());
+                });
+            }
+
+            showMessage(currentSort);
+
+            // Daten an Tabelle übergeben und anzeigen
+            $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
+            myValues2table('events', sortByKey(tableData, currentSort, true), onChange, tableOnReady);
+        } else {
+            $('div[id=events]').hide();
+        }
+    } catch (err) {
+        showError("createTable: " + err);
+    }
+}
+
+async function getTableData() {
+    try {
         // Alle linkedDevices Objekte der Instanz holen
         let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
+        let tableData = [];
 
         if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
             for (var id in linkedDevicesList) {
@@ -99,24 +135,24 @@ async function createTable(onChange) {
                 }
             }
 
-            // Daten an Tabelle übergeben und anzeigen
-            $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
-            myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
+            return tableData;
         } else {
-            $('div[id=events]').hide();
+            return null;
         }
     } catch (err) {
-        showError(err);
+        showError("getTableData: " + err);
     }
 }
 
-function events(onChange) {
+async function events(onChange) {
     try {
         // linkedId column header click event
         $('th[data-name="linkedId"]').on('click', function () {
             var tableData = table2values('events');
             $('th[data-name="parentId"]').text(_("linked with"))
             $('th[data-name="parentName"]').text(_("name"));
+
+            currentSort = SORT.linkedId;
 
             switch (sortLinkedId) {
                 case ORDER.ASC:
@@ -138,6 +174,8 @@ function events(onChange) {
             $('th[data-name="linkedId"]').text(_("id of linked object"))
             $('th[data-name="parentName"]').text(_("name"));
 
+            currentSort = SORT.parentId;
+
             switch (sortParentId) {
                 case ORDER.ASC:
                     sortParentId = ORDER.DESC;
@@ -158,6 +196,8 @@ function events(onChange) {
             $('th[data-name="linkedId"]').text(_("id of linked object"))
             $('th[data-name="parentId"]').text(_("linked with"))
 
+            currentSort = SORT.parentName;
+
             switch (sortParentName) {
                 case ORDER.ASC:
                     sortParentName = ORDER.DESC;
@@ -171,6 +211,14 @@ function events(onChange) {
                     break;
             }
         });
+
+        // filter list
+        await $('input[id="filterList"').on('input', function () {
+            let text = $(this).val();
+
+            createTable(onChange, text);
+        });
+
     } catch (err) {
         showError(err);
     }

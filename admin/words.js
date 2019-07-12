@@ -588,5 +588,29 @@ systemDictionary = {
 		"es": "Resumen de todos los objetos vinculados",
 		"pl": "Przegląd wszystkich połączonych obiektów",
 		"zh-cn": "所有链接对象的概述"
-	}
+	},
+	"name": {
+		"en": "name",
+		"de": "Name",
+		"ru": "Имя",
+		"pt": "nome",
+		"nl": "Naam",
+		"fr": "prénom",
+		"it": "nome",
+		"es": "nome", 
+		"pl": "Nazwa", 
+		"zh-cn": "名称"
+	},
+	"browse the table": {
+		"en": "browse the table",
+		"de": "Tabelle durchsuchen",
+		"ru": "просмотреть таблицу",
+		"pt": "navegue pela mesa",
+		"nl": "blader door de tafel",
+		"fr": "parcourir la table",
+		"it": "sfoglia il tavolo",
+		"es": "navegar por la mesa",
+		"pl": "przeglądaj stół",
+		"zh-cn": "浏览表格"
+	  }
 };
