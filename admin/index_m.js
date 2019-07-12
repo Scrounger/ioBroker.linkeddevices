@@ -15,6 +15,7 @@ var sortParentId = ORDER.DESC;
 var sortParentName = ORDER.DESC;
 
 var currentSort = SORT.linkedId;
+var currentOrder = ORDER.DESC;
 
 var myNamespace;
 
@@ -51,6 +52,7 @@ async function load(settings, onChange) {
 
 
     // Table erzeugen
+    $(`th[data-name=${currentSort}]`).text(`${$(`th[data-name=${currentSort}]`).text()} ▴`);
     createTable(onChange);
 
     // GUI Events
@@ -92,11 +94,8 @@ async function createTable(onChange, filterText = null) {
                 });
             }
 
-            showMessage(currentSort);
+            sortData(tableData, currentSort, onChange);
 
-            // Daten an Tabelle übergeben und anzeigen
-            $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
-            myValues2table('events', sortByKey(tableData, currentSort, true), onChange, tableOnReady);
         } else {
             $('div[id=events]').hide();
         }
@@ -134,7 +133,6 @@ async function getTableData() {
                     tableData.push({ "linkedId": id, "parentId": parentId, "isLinked": linkedObj.common.custom[myNamespace].isLinked, "parentName": parentName });
                 }
             }
-
             return tableData;
         } else {
             return null;
@@ -149,72 +147,30 @@ async function events(onChange) {
         // linkedId column header click event
         $('th[data-name="linkedId"]').on('click', function () {
             var tableData = table2values('events');
-            $('th[data-name="parentId"]').text(_("linked with"))
-            $('th[data-name="parentName"]').text(_("name"));
-
-            currentSort = SORT.linkedId;
-
-            switch (sortLinkedId) {
-                case ORDER.ASC:
-                    sortLinkedId = ORDER.DESC;
-                    myValues2table('events', sortByKey(tableData, "linkedId", false), onChange, tableOnReady);
-                    $(this).text(`${_("id of linked object")} ▾`);
-                    break;
-                case ORDER.DESC:
-                    sortLinkedId = ORDER.ASC;
-                    myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
-                    $(this).text(`${_("id of linked object")} ▴`);
-                    break;
-            }
+            sortData(tableData, SORT.linkedId, onChange);
         });
 
         // parentId column header click event
         $('th[data-name="parentId"]').on('click', function () {
             var tableData = table2values('events');
-            $('th[data-name="linkedId"]').text(_("id of linked object"))
-            $('th[data-name="parentName"]').text(_("name"));
-
-            currentSort = SORT.parentId;
-
-            switch (sortParentId) {
-                case ORDER.ASC:
-                    sortParentId = ORDER.DESC;
-                    myValues2table('events', sortByKey(tableData, "parentId", false), onChange, tableOnReady);
-                    $(this).text(`${_("linked with")} ▾`);
-                    break;
-                case ORDER.DESC:
-                    sortParentId = ORDER.ASC;
-                    myValues2table('events', sortByKey(tableData, "parentId", true), onChange, tableOnReady);
-                    $(this).text(`${_("linked with")} ▴`);
-                    break;
-            }
+            sortData(tableData, SORT.parentId, onChange);
         });
 
         // parentName column header click event
         $('th[data-name="parentName"]').on('click', function () {
             var tableData = table2values('events');
-            $('th[data-name="linkedId"]').text(_("id of linked object"))
-            $('th[data-name="parentId"]').text(_("linked with"))
-
-            currentSort = SORT.parentName;
-
-            switch (sortParentName) {
-                case ORDER.ASC:
-                    sortParentName = ORDER.DESC;
-                    myValues2table('events', sortByKey(tableData, "parentName", false), onChange, tableOnReady);
-                    $(this).text(`${_("name")} ▾`);
-                    break;
-                case ORDER.DESC:
-                    sortParentName = ORDER.ASC;
-                    myValues2table('events', sortByKey(tableData, "parentName", true), onChange, tableOnReady);
-                    $(this).text(`${_("name")} ▴`);
-                    break;
-            }
+            sortData(tableData, SORT.parentName, onChange);
         });
 
         // filter list
         await $('input[id="filterList"').on('input', function () {
             let text = $(this).val();
+
+            if (currentOrder === ORDER.ASC) {
+                currentOrder = ORDER.DESC;
+            } else {
+                currentOrder = ORDER.ASC;
+            }
 
             createTable(onChange, text);
         });
@@ -306,6 +262,42 @@ async function getObject(id) {
             }
         });
     });
+}
+
+function sortData(data, key, onChange) {
+
+    if (currentSort === key) {
+        // sort order ändert sich, order symbol im col header anpassen
+        let col = $(`th[data-name=${currentSort}]`);
+        let colText = $(`th[data-name=${currentSort}]`).text();
+
+        if (currentOrder === ORDER.ASC) {
+            myValues2table('events', sortByKey(data, currentSort, false), onChange, tableOnReady);
+            currentOrder = ORDER.DESC
+
+            if (colText.includes("▴")) {
+                col.text(colText.replace("▴", "▾"));
+            }
+        } else {
+            myValues2table('events', sortByKey(data, currentSort, true), onChange, tableOnReady);
+            currentOrder = ORDER.ASC
+
+            if (colText.includes("▾")) {
+                col.text(colText.replace("▾", "▴"));
+            }
+        }
+    } else {
+        // sort col ändert sich
+        currentOrder = ORDER.ASC;
+        currentSort = key;
+        $(`th[data-name=${"linkedId"}]`).text(`${$(`th[data-name=${"linkedId"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
+        $(`th[data-name=${"parentId"}]`).text(`${$(`th[data-name=${"parentId"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
+        $(`th[data-name=${"parentName"}]`).text(`${$(`th[data-name=${"parentName"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
+
+        myValues2table('events', sortByKey(data, currentSort, true), onChange, tableOnReady);
+
+        $(`th[data-name=${currentSort}]`).text(`${$(`th[data-name=${currentSort}]`).text()} ▴`);
+    }
 }
 
 function sortByKey(array, key, sortASC) {
