@@ -6,10 +6,11 @@ const ORDER = {
 
 var sortLinkedId = ORDER.ASC;
 var sortParentId = ORDER.DESC;
+var myNamespace;
 
-function load(settings, onChange) {
+async function load(settings, onChange) {
     // Namespace bauen
-    var myNamespace = adapter + '.' + instance
+    myNamespace = adapter + '.' + instance;
 
     // example: select elements with id=key and class=value and insert value
     if (!settings) return;
@@ -38,36 +39,9 @@ function load(settings, onChange) {
         // });
     });
 
-    // Tabelle füllen
-    getForeignObjects(myNamespace + '.*', function (err, list) {
-        // alle linkedObject der Instanz holen
-        if (!err) {
-            let tableData = [];		// Array für tableFkt
 
-            for (var id in list) {
-                // benötigte Daten in Array für tableFkt packen
-                let linkedObj = list[id];
-
-                if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[myNamespace]) {
-                    let parentId = '';
-
-                    if (linkedObj.common.custom[myNamespace].isLinked) {
-                        // Verlinkung exitsiert -> parentId übergeben
-                        parentId = linkedObj.common.custom[myNamespace].parentId
-                    }
-
-                    tableData.push({ "linkedId": id, "parentId": parentId, "isLinked": linkedObj.common.custom[myNamespace].isLinked, });
-                }
-            }
-
-            // Daten an Tabelle übergeben und anzeigen
-            $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
-            myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
-
-        } else {
-            showError(err.message);
-        }
-    });
+    // Table erzeugen
+    createTable(onChange);
 
     $('th[data-name="linkedId"]').on('click', function () {
         var tableData = table2values('events');
@@ -124,6 +98,47 @@ function save(callback) {
         }
     });
     callback(obj);
+}
+
+async function createTable(onChange) {
+    try {
+        let tableData = [];		// Array für tableFkt
+
+        // Alle linkedDevices Objekte der Instanz holen
+        let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
+
+        if (linkedDevicesList) {
+            for (var id in linkedDevicesList) {
+                // benötigte Daten in Array für tableFkt packen
+                let linkedObj = linkedDevicesList[id];
+
+                if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[myNamespace]) {
+                    let parentId = '';
+                    var parentName = '';
+
+                    if (linkedObj.common.custom[myNamespace].isLinked) {
+                        // Verlinkung exitsiert -> parentId übergeben
+                        parentId = linkedObj.common.custom[myNamespace].parentId
+
+                        // Name des parent Objektes holen
+                        let parentObj = await getObject(parentId);
+                        if (parentObj && parentObj.common && parentObj.common.name) {
+                            parentName = parentObj.common.name;
+                        }
+                    }
+
+                    tableData.push({ "linkedId": id, "parentId": parentId, "isLinked": linkedObj.common.custom[myNamespace].isLinked, "parentName": parentName });
+                }
+            }
+
+            // Daten an Tabelle übergeben und anzeigen
+            $('th[data-name="linkedId"]').text(`${_("id of linked object")} ▴`);
+            myValues2table('events', sortByKey(tableData, "linkedId", true), onChange, tableOnReady);
+        }
+
+    } catch (err) {
+        showError(err);
+    }
 }
 
 function tableOnReady() {
@@ -193,6 +208,30 @@ function getForeignObjects(pattern, callback) {
         } else {
             if (callback) callback(null);
         }
+    });
+}
+
+async function getForeignObjects(pattern) {
+    return new Promise((resolve, reject) => {
+        socket.emit('getForeignObjects', pattern, function (err, res) {
+            if (!err && res) {
+                resolve(res);
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
+async function getObject(id) {
+    return new Promise((resolve, reject) => {
+        socket.emit('getObject', id, function (err, res) {
+            if (!err && res) {
+                resolve(res);
+            } else {
+                resolve(null);
+            }
+        });
     });
 }
 
