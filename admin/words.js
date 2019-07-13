@@ -660,5 +660,17 @@ systemDictionary = {
 		"es": "Error",
 		"pl": "Błąd",
 		"zh-cn": "错误"
-	}
+	},
+	"Via 'Settings' in the menu 'Object' you can create a new linked object.": {
+		"en": "Via 'Settings' in the menu 'Object' you can create a new linked object.",
+		"de": "Über 'Einstellungen' im Menü 'Objekt' kannst Du ein neues verlinktes Objekt erstellen.",
+		"ru": "Через «Настройки» в меню «Объект» вы можете создать новый связанный объект.",
+		"pt": "Através de 'Configurações' no menu 'Objeto' você pode criar um novo objeto vinculado.",
+		"nl": "Via 'Instellingen' in het menu 'Object' kunt u een nieuw gekoppeld object maken.",
+		"fr": "Via \"Paramètres\" dans le menu \"Objet\", vous pouvez créer un nouvel objet lié.",
+		"it": "Tramite \"Impostazioni\" nel menu \"Oggetto\" è possibile creare un nuovo oggetto collegato.",
+		"es": "A través de 'Configuración' en el menú 'Objeto' puede crear un nuevo objeto vinculado.",
+		"pl": "Poprzez „Ustawienia” w menu „Obiekt” możesz utworzyć nowy połączony obiekt.",
+		"zh-cn": "通过菜单“对象”中的“设置”，您可以创建一个新的链接对象。"
+	  }
 };
