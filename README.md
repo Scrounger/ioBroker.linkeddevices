@@ -20,7 +20,11 @@ Create linked objects (datapoints) of your devices with a self-defined structure
 
 With the adapter you can convert objects or convert them to other types (not yet fully implemented).
 
+<img src="screenshots/structure.png?sanitize=true&raw=true" title="Beispiel für selbst definierte Struktur" width="400"/>
+
 This adapter is inspired at [virtual devices script by Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
+
+## Konfiguration
 
 ## Changelog
 
