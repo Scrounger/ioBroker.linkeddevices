@@ -46,13 +46,18 @@ Weiter könnt ihr noch folgende Einstellungen vornehmen:
 |  Eingabefeld | Beschreibung  |
 |---|---|
 | Name des verlinkten Objekts | Hier könnt ihr einen Namen für das verlinkte Objekte festlegen |
-| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Typ des Objektes sind. Zusätzliche Informationen hierzu findest du weiter unten|
+| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Typ des Objektes sind. [Zusätzliche Informationen hierzu findest du weiter unten](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-x)|
 
 **Beispiel:** Die oben im Screenshot dargestellten Eingaben erzeugen das folgende verlinkte Objekt:
 <img src="screenshots/example_create_linkedObject.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'X'
+Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden Objektes, könnt Ihr weitere Einstellungen, wie z.B. Umrechnungen oder Umwandlungen in einen anderen Typ für das verlinkte Objekt einstellen.
 
+### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl' readonly
+<img src="screenshots/expert_settings_number.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+
+#### nicht umwandeln
 
 
 ## Changelog
