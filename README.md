@@ -26,10 +26,22 @@ This adapter is inspired at [virtual devices script by Pman](https://forum.iobro
 
 ## Objekt (Datenpunkt) verlinken
 Ein Objekt (Datenpunkt) kannst du über den Button 'Einstellungen' im Menü 'Objekt' erstellen.
-<img src="screenshots/object_tree_custom_button.png?sanitize=true&raw=true" title="Beispiel für selbst definierte Struktur"/>
+<img src="screenshots/object_tree_custom_button.png?sanitize=true&raw=true" title="Menü 'Objekt'"/>
 
 ### Objekt (Datenpunkt) Einstellung
-<img src="screenshots/custom_dialog.png?sanitize=true&raw=true" title="Beispiel für selbst definierte Struktur"/>
+<img src="screenshots/custom_dialog.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+
+|  Eingabefeld | Beschreibung  |
+|---|---|
+| Aktiviert | ein Verlinkung für das Objekt aktivieren |
+| Präfix für ID des verlinkten Objektes | Bezeichung die der Id des verlinkten Objektes vorangestellt werden soll |
+| ID des verlinkten Objekts | Id des verlinkten Objektes |
+| Zusammengesetze Id des verlinkten Objektes | Zeigt an wie die Id des verlinkten Objektes aussehen wird - Zusammensetzung von *'Präfix für ID des verlinkten Objektes' + 'ID des verlinkten Objekts'* |
+| Name des verlinkten Objekts | Hier könnt ihr einen Namen für das verlinkte Objekte festlegen |
+| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen abhängig vom Typ des Objektes, weitere Informationen dazu siehe unten |
+
+**Beispiel:** Die oben im Screenshot dargestellten Eingaben erzeugen das folgende verlinkte Objekt:
+<img src="screenshots/example_create_linkedObject.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
 
 
 ## Changelog

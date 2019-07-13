@@ -52,7 +52,7 @@ systemDictionary = {
 	},
 	"name of linked object": {
 		"en": "name of linked object",
-		"de": "Name des verknüpften Objekts",
+		"de": "Name des verlinkten Objekts",
 		"ru": "название связанного объекта",
 		"pt": "nome do objeto vinculado",
 		"nl": "naam van gekoppeld object",
