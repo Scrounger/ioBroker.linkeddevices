@@ -180,26 +180,61 @@ async function events(onChange) {
     }
 }
 
-function tableOnReady() {
+async function tableOnReady() {
     $('#events .table-values-div .table-values .values-buttons[data-command="assignLink"]').on('click', function () {
-        let id = $(this).data('index');
+        let rowNum = $(this).data('index');
         initSelectId(function (sid) {
-            sid.selectId('show', null, function (newId) {
-                if (newId) {
-                    $('#events .values-input[data-name="linkedId"][data-index="' + id + '"]').val(newId).trigger('change');
-                    socket.emit('getObject', newId, function (err, obj) {
+            sid.selectId('show', null, function (parentId) {
 
-                        if (obj._id.includes(adapter + '.' + instance)) {
-                            showMessage("nix da!");
-                            return
-                        }
-
-                        $('#events .values-input[data-name="parentId"][data-index="' + id + '"]').val(obj._id).trigger('change');
-                    });
+                if (parentId) {
+                    assignParentObject(rowNum, parentId);
                 }
             });
         });
     });
+}
+
+async function assignParentObject(rowNum, parentId) {
+    try {
+        let parentObj = await getObject(parentId);
+
+        // Prüfen ob ausgewähltes Objekt bereits verlinkt ist bzw. ein linkedObject ist
+        if (parentObj && parentObj.common && parentObj.common.custom && parentObj.common.custom[myNamespace]) {
+
+            if (parentObj.common.custom[myNamespace].isLinked) {
+                // ist linkedObject
+                showError(_("link to an already linked object of the same instance is not possible!"));
+            } else {
+                // ist bereits verlinkt
+                showError(_("the selected object is already linked with '%s'!", myNamespace + "." + parentObj.common.custom[myNamespace].linkedId));
+            }
+            return;
+        }
+
+        // linkedObject holen
+        let linkedId = $('#events .values-input[data-name="linkedId"][data-index="' + rowNum + '"]').val();
+        let linkedObject = await getObject(linkedId);
+
+        // Falls type conversion vorhanden, prüfen ob zugewiesenes parentObject vom richtigen type ist
+        if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
+
+            if(linkedObject.common.custom[myNamespace].parentType != parentObj.common.type){
+                showError(_("the selected object is of type '%s'.<br>The linked object needs an object of type '%s'!", _(parentObj.common.type), _(linkedObject.common.custom[myNamespace].parentType)));
+                return;
+            }
+        }
+
+        //showMessage(JSON.stringify(linkedObject));
+
+        
+        // Daten in table schreiben
+        $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val(parentObj._id).trigger('change');
+        if (parentObj && parentObj.common && parentObj.common.name) {
+            $('#events .values-input[data-name="parentName"][data-index="' + rowNum + '"]').val(parentObj.common.name).trigger('change');
+        }
+    } catch (err) {
+        showError("assignParentObject: " + err);
+    }
 }
 
 var selectId;

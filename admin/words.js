@@ -597,8 +597,8 @@ systemDictionary = {
 		"nl": "Naam",
 		"fr": "prénom",
 		"it": "nome",
-		"es": "nome", 
-		"pl": "Nazwa", 
+		"es": "nome",
+		"pl": "Nazwa",
 		"zh-cn": "名称"
 	},
 	"browse the table": {
@@ -612,5 +612,53 @@ systemDictionary = {
 		"es": "navegar por la mesa",
 		"pl": "przeglądaj stół",
 		"zh-cn": "浏览表格"
-	  }
+	},
+	"link to an already linked object of the same instance is not possible!": {
+		"en": "link to an already linked object of the same instance is not possible!",
+		"de": "Eine Verlinkung zu einem bereits verlinkten Objekt derselben Instanz ist nicht möglich!",
+		"ru": "ссылка на уже связанный объект того же экземпляра невозможна!",
+		"pt": "link para um objeto já vinculado da mesma instância não é possível!",
+		"nl": "link naar een reeds gekoppeld object van dezelfde instantie is niet mogelijk!",
+		"fr": "un lien vers un objet déjà lié de la même instance n'est pas possible!",
+		"it": "il collegamento a un oggetto già collegato della stessa istanza non è possibile!",
+		"es": "¡El enlace a un objeto ya enlazado de la misma instancia no es posible!",
+		"pl": "link do już połączonego obiektu tej samej instancji nie jest możliwy!",
+		"zh-cn": "链接到同一实例的已链接对象是不可能的！"
+	},
+	"the selected object is already linked with '%s'!": {
+		"en": "the selected object is already linked with '%s'!",
+		"de": "das ausgewählte Objekt ist bereits mit '%s' verlinkt!",
+		"ru": "выбранный объект уже связан с ''%s'!",
+		"pt": "o objeto selecionado já está vinculado a '%s'!",
+		"nl": "het geselecteerde object is al gekoppeld aan '%s'!",
+		"fr": "l'objet sélectionné est déjà lié à '%s'!",
+		"it": "l'oggetto selezionato è già collegato con '%s'!",
+		"es": "el objeto seleccionado ya está vinculado con '%s'!",
+		"pl": "wybrany obiekt jest już powiązany z '%s'!",
+		"zh-cn": "所选对象已与'％s'链接!"
+	},
+	"the selected object is of type '%s'.<br>The linked object needs an object of type '%s'!": {
+		"en": "the selected object is of type '%s'.<br>The linked object needs an object of type '%s'!",
+		"de": "Das ausgewählte Objekt ist vom Typ '%s'.<br>Das verlinkte Objekt benötigt aber ein Objekt vom Typ '%s'!",
+		"ru": "выбранный объект имеет тип '%s' \"'.<br>Связанному объекту нужен объект типа '%s'!",
+		"pt": "o objeto selecionado é do tipo '%s'.<br>O objeto vinculado precisa de um objeto do tipo '%s'!",
+		"nl": "het geselecteerde object is van het type '%s'.<br>Het gekoppelde object heeft een object van het type '%s' nodig!",
+		"fr": "l'objet sélectionné est de type '%s'.<br>L'objet lié a besoin d'un objet de type '%s'!",
+		"it": "l'oggetto selezionato è di tipo '%s'.<br>L'oggetto collegato ha bisogno di un oggetto di tipo '%s'!",
+		"es": "El objeto seleccionado es de tipo '%s'.<br>El objeto vinculado necesita un objeto de tipo '%s'!",
+		"pl": "wybrany obiekt jest typu '%s'.<br>Połączony obiekt potrzebuje obiektu typu '%s'!",
+		"zh-cn": "所选对象的类型为'％s'。链接对象需要一个'％s'类型的对象！"
+	},
+	"Error": {
+		"en": "Error",
+		"de": "Fehler",
+		"ru": "Ошибка",
+		"pt": "Erro",
+		"nl": "Fout",
+		"fr": "Erreur",
+		"it": "Errore",
+		"es": "Error",
+		"pl": "Błąd",
+		"zh-cn": "错误"
+	}
 };
