@@ -57,16 +57,36 @@ Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden Objek
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl' readonly
 <img src="screenshots/expert_settings_number_readonly.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
 
-#### Konvertiere in Typ 'nicht umwandeln'
+#### 'Zahl' readonly: Konvertiere in Typ 'nicht umwandeln'
 <img src="screenshots/expert_settings_number_readonly_no_conversion.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel |
 |---|---|---|---|
-| Ändere Einheit 'Wh' in | Einheit für das verlinkte Objekt festlegen | keine Beschränkung | Objekt hat Einheit 'kWh', verlinktes Objekt hat Einheit 'Wh' |
-| max. Anzahl der Nachkommastellen | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | Zahlen | Wert des Objekt '100.561', Wert des verlinkten Objekt '101' |
-| Ändere min '0' in | minimaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
-| Ändere max '838860.699219' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
-| Umrechnung für verlinktes 'read' Objekt | mathematische Umrechnung des Wertes des Objektes | + - / *,. () & Zahlen | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
+| Ändere Einheit 'X' in | Einheit für das verlinkte Objekt festlegen | keine Beschränkung | Objekt hat Einheit 'kWh', verlinktes Objekt hat Einheit 'Wh' |
+| max. Anzahl der Nachkommastellen | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | Zahlen | Wert des Objekts '100.561' ergibt für das verlinkte Objekt den Wert '101' |
+| Ändere min 'X' in | minimaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
+| Ändere max 'X' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
+| Umrechnung für verlinktes 'read' Objekt | mathematische Umrechnung des Wertes des Objektes | _+ - / *,. ()_ + *Zahlen* | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
+
+#### 'Zahl' readonly: Konvertiere in Typ 'Logikwert'
+<img src="screenshots/expert_settings_number_readonly_convert_to_boolean.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel |
+|---|---|---|---|
+| Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
+
+### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl'
+
+#### 'Zahl': Konvertiere in Typ 'nicht umwandeln'
+<img src="screenshots/expert_settings_number_no_conversion.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel |
+|---|---|---|---|
+| Ändere Einheit 'X' in | Einheit für das verlinkte Objekt festlegen | keine Beschränkung | Objekt hat keine Einheit, verlinktes Objekt hat Einheit '%' |
+| max. Anzahl der Nachkommastellen | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | Zahlen | Wert des Objekts '100.561' ergibt für das verlinkte Objekt den Wert '101' |
+| Ändere min 'X' in | minimaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
+| Ändere max 'X' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
+| Umrechnung für verlinktes Objekt | mathematische Umrechnung des Wertes des Objektes | _/ *,._ + *Zahlen* | Wert des Objektes '180' mit Umrechnung '*100/255' zeigt beim verlinkten Objekt den Wert '280.6889' an. Umgekehrt wird der Kehrwert bei der Berechnung gebildet, d.h. wenn das verlinte Objekt den Wert '71' hat, hat das Objekt den Wert '180'. Das kann z.B. für Hue Lampen verwendet werden, um den Wertebereich von '0-255' in '0%-100%' umzuwandeln |
 
 ## Changelog
 
