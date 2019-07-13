@@ -61,7 +61,10 @@ if (typeof customPostInits !== 'undefined') {
         var selectedBooleanConverter = "";
         if (values["boolean_convertTo"]) selectedBooleanConverter = values["boolean_convertTo"];
 
-        $div.find('input[id="test"]').val(JSON.stringify(currentObj));
+        // $div.find('input[id="test"]').val(JSON.stringify(currentObj));
+        //$div.find('input[id="test"]').val(Object.keys(gMain));
+
+        $div.find('input[id="test"]').val(gMain.systemConfig.common.language);
 
         $div.ready(function () {
             //$div.find('.view_Number').hide();
@@ -191,7 +194,13 @@ if (typeof customPostInits !== 'undefined') {
             if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean')) {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
-                Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
+
+                if(type === 'number' && currentObj.common.write === false){
+                    Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type) + " (read only)"));
+                }else{
+                    Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
+                }
+                
 
                 // Views initalisieren
                 initialize_ExpertSettings_Number();
