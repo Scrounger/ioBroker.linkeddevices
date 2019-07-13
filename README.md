@@ -46,7 +46,7 @@ Weiter könnt ihr noch folgende Einstellungen vornehmen:
 |  Eingabefeld | Beschreibung  |
 |---|---|
 | Name des verlinkten Objekts | Hier könnt ihr einen Namen für das verlinkte Objekte festlegen |
-| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Typ des Objektes sind. [Zusätzliche Informationen hierzu findest du weiter unten](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-x)|
+| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Typ des Objektes sind. ([Zusätzliche Informationen hierzu findest du weiter unten](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-x)) <ul><li>[Zahl readonly](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl-readonly)</li><li>[Zahl](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl)</li></ul> |
 
 **Beispiel:** Die oben im Screenshot dargestellten Eingaben erzeugen das folgende verlinkte Objekt:
 <img src="screenshots/example_create_linkedObject.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
@@ -73,7 +73,7 @@ Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden Objek
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
-| Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* & *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
+| Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
 
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl'
 
