@@ -55,10 +55,18 @@ Weiter könnt ihr noch folgende Einstellungen vornehmen:
 Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden Objektes, könnt Ihr weitere Einstellungen, wie z.B. Umrechnungen oder Umwandlungen in einen anderen Typ für das verlinkte Objekt einstellen.
 
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl' readonly
-<img src="screenshots/expert_settings_number.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+<img src="screenshots/expert_settings_number_readonly.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
 
-#### nicht umwandeln
+#### Konvertiere in Typ 'nicht umwandeln'
+<img src="screenshots/expert_settings_number_readonly_no_conversion.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
 
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel |
+|---|---|---|---|
+| Ändere Einheit 'Wh' in | Einheit für das verlinkte Objekt festlegen | keine Beschränkung | Objekt hat Einheit 'kWh', verlinktes Objekt hat Einheit 'Wh' |
+| max. Anzahl der Nachkommastellen | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | Zahlen | Wert des Objekt '100.561', Wert des verlinkten Objekt '101' |
+| Ändere min '0' in | minimaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
+| Ändere max '838860.699219' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
+| Umrechnung für verlinktes 'read' Objekt | mathematische Umrechnung des Wertes des Objektes | + - / *,. () & Zahlen | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
 
 ## Changelog
 
