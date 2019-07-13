@@ -24,12 +24,15 @@ With the adapter you can convert objects or convert them to other types (not yet
 
 This adapter is inspired at [virtual devices script by Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
-## Objekt (Datenpunkt) verlinken
+# Objekt (Datenpunkt) verlinken
 Ein Objekt (Datenpunkt) kannst du über den Button 'Einstellungen' im Menü 'Objekt' erstellen.
+
 <img src="screenshots/object_tree_custom_button.png?sanitize=true&raw=true" title="Menü 'Objekt'"/>
 
-### Objekt (Datenpunkt) Einstellung
+## Objekt (Datenpunkt) Einstellungen
 <img src="screenshots/custom_dialog.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+
+Die folgenden Grundeinstellungen müssen für das verlinkte Objekt vorgenommen werden:
 
 |  Eingabefeld | Beschreibung  |
 |---|---|
@@ -37,11 +40,19 @@ Ein Objekt (Datenpunkt) kannst du über den Button 'Einstellungen' im Menü 'Objek
 | Präfix für ID des verlinkten Objektes | Bezeichung die der Id des verlinkten Objektes vorangestellt werden soll |
 | ID des verlinkten Objekts | Id des verlinkten Objektes |
 | Zusammengesetze Id des verlinkten Objektes | Zeigt an wie die Id des verlinkten Objektes aussehen wird - Zusammensetzung von *'Präfix für ID des verlinkten Objektes' + 'ID des verlinkten Objekts'* |
+
+Weiter könnt ihr noch folgende Einstellungen vornehmen:
+
+|  Eingabefeld | Beschreibung  |
+|---|---|
 | Name des verlinkten Objekts | Hier könnt ihr einen Namen für das verlinkte Objekte festlegen |
-| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen abhängig vom Typ des Objektes, weitere Informationen dazu siehe unten |
+| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Typ des Objektes sind. Zusätzliche Informationen hierzu findest du weiter unten|
 
 **Beispiel:** Die oben im Screenshot dargestellten Eingaben erzeugen das folgende verlinkte Objekt:
 <img src="screenshots/example_create_linkedObject.png?sanitize=true&raw=true" title="Objekt Einstellungen"/>
+
+## Experteneinstellungen für verlinktes Objekt vom Typ 'X'
+
 
 
 ## Changelog
