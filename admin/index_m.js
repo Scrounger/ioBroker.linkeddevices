@@ -66,7 +66,7 @@ async function load(settings, onChange) {
 }
 
 // This will be called by the admin adapter when the user presses the save button
-function save(callback) {
+async function save(callback) {
     // example: select elements with class=value and build settings object
     var obj = {};
     $('.value').each(function () {
@@ -77,7 +77,108 @@ function save(callback) {
             obj[$this.attr('id')] = $this.val();
         }
     });
+
+    // Daten aus Tabelle holen, denen ein neues ParentIbjekt zugewisen wurde
+    var tableData = table2values('events').filter(function (res) {
+        return res.isLinked === false && res.parentId
+    });
+
+    if (Object.keys(tableData).length > 0) {
+        tableData.forEach(function (tableItem) {
+
+            saveAssignedParentObjects(tableItem);
+        });
+    }
     callback(obj);
+}
+
+async function saveAssignedParentObjects(tableItem) {
+    // notwendige custom daten an neu zugeordnete parentObjekte übergeben
+    try {
+        linkedObject = await getObject(tableItem.linkedId);
+        parentObject = await getObject(tableItem.parentId);
+
+
+        if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
+            if (parentObject && parentObject.common) {
+                let existingParentObjectCustom = [];
+
+                // Custom von anderen Adaptern des parentObjects holen
+                if (parentObject.common.custom) {
+                    if (adapter != myNamespace) {
+                        existingParentObjectCustom.push(adapter, parentObject.common.custom[adapter]);
+                    }
+                }
+
+                // common Daten des linkedObjects holen, die beim parentObject in den Settings konfiguriert werden können
+                let name = "";
+                let number_unit = "";
+                let number_max = "";
+                let number_min = "";
+
+                let convertToKey = "";          // var um 'type'_converTo zu bauen
+                let convertToValue = "";
+
+                if (linkedObject.common.name) {
+                    if (parentObject.common.name && parentObject.common.name != linkedObject.common.name) {
+                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
+                        name = linkedObject.common.name;
+                    }
+                }
+
+                if (linkedObject.common.unit) {
+                    if (parentObject.common.unit && parentObject.common.unit != linkedObject.common.unit) {
+                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
+                        number_unit = linkedObject.common.unit;
+                    }
+                }
+
+                if (linkedObject.common.max) {
+                    if (parentObject.common.max && parentObject.common.max != linkedObject.common.max) {
+                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
+                        number_max = linkedObject.common.max;
+                    }
+                }
+
+                if (linkedObject.common.min) {
+                    if (parentObject.common.min && parentObject.common.min != linkedObject.common.min) {
+                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
+                        number_min = linkedObject.common.min;
+                    }
+                }
+
+                if (linkedObject.common.type) {
+                    if (parentObject.common.type && parentObject.common.type != linkedObject.common.type) {
+                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
+                        convertToKey = parentObject.common.type + "_convertTo";
+                        convertToValue = linkedObject.common.type;
+                    }
+                }
+
+
+
+
+
+
+                let linkedObjCustom;
+                if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
+                    linkedObjCustom = linkedObject.common.custom[myNamespace];
+
+                    linkedObjCustom.parentId = parentObject._id;
+                    delete linkedObjCustom.isLinked;
+                }
+
+
+                //showMessage(JSON.stringify(linkedObjCustom));
+
+                //showMessage(convertToKey + ": " + convertToValue);
+
+
+            }
+        }
+    } catch (err) {
+        showError("saveAssignedParentObjects: " + err);
+    }
 }
 
 async function createTable(onChange, filterText = null) {
@@ -198,6 +299,15 @@ async function tableOnReady() {
             });
         });
     });
+
+    $('#events .table-values-div .table-values .values-buttons[data-command="openCustom"]').on('click', function () {
+        let rowNum = $(this).data('index');
+        let parentId = $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val();
+        let url = `${window.location.origin}/#tab-objects/customs/${parentId}`;
+        
+        window.open(url);
+        //window.open(url, "_top");
+    });
 }
 
 async function assignParentObject(rowNum, parentId) {
@@ -224,7 +334,7 @@ async function assignParentObject(rowNum, parentId) {
         // Falls type conversion vorhanden, prüfen ob zugewiesenes parentObject vom richtigen type ist
         if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
 
-            if(linkedObject.common.custom[myNamespace].parentType != parentObj.common.type){
+            if (linkedObject.common.custom[myNamespace].parentType != parentObj.common.type) {
                 showError(_("the selected object is of type '%s'.<br>The linked object needs an object of type '%s'!", _(parentObj.common.type), _(linkedObject.common.custom[myNamespace].parentType)));
                 return;
             }
@@ -232,7 +342,7 @@ async function assignParentObject(rowNum, parentId) {
 
         //showMessage(JSON.stringify(linkedObject));
 
-        
+
         // Daten in table schreiben
         $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val(parentObj._id).trigger('change');
         if (parentObj && parentObj.common && parentObj.common.name) {
