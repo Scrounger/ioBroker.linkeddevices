@@ -7,7 +7,8 @@ const ORDER = {
 const SORT = {
     linkedId: 'linkedId',
     parentId: 'parentId',
-    parentName: 'parentName'
+    parentName: 'parentName',
+    isLinked: 'isLinked'
 }
 
 var sortLinkedId = ORDER.ASC;
@@ -160,6 +161,11 @@ async function events(onChange) {
         $('th[data-name="parentName"]').on('click', function () {
             var tableData = table2values('events');
             sortData(tableData, SORT.parentName, onChange);
+        });
+
+        $('th[data-name="isLinked"]').on('click', function () {
+            var tableData = table2values('events');
+            sortData(tableData, SORT.isLinked, onChange);
         });
 
         // filter list
@@ -328,6 +334,7 @@ function sortData(data, key, onChange) {
         $(`th[data-name=${"linkedId"}]`).text(`${$(`th[data-name=${"linkedId"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
         $(`th[data-name=${"parentId"}]`).text(`${$(`th[data-name=${"parentId"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
         $(`th[data-name=${"parentName"}]`).text(`${$(`th[data-name=${"parentName"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
+        $(`th[data-name=${"isLinked"}]`).text(`${$(`th[data-name=${"isLinked"}]`).text().replace(" ▴", "  ").replace(" ▾", "  ")}`);
 
         myValues2table('events', sortByKey(data, currentSort, true), onChange, tableOnReady);
 
