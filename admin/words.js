@@ -672,5 +672,17 @@ systemDictionary = {
 		"es": "A través del botón 'Configuración' en el menú 'Objeto' puede crear un nuevo objeto vinculado.",
 		"pl": "Za pomocą przycisku „Ustawienia” w menu „Obiekt” możesz utworzyć nowy połączony obiekt.",
 		"zh-cn": "通过菜单“对象”中的“设置”按钮，您可以创建新的链接对象。"
-	  }
+	},
+	"no linked objects available": {
+		"en": "no linked objects available",
+		"de": "Keine verlinkten Objekte vorhanden",
+		"ru": "нет связанных объектов",
+		"pt": "não há objetos vinculados disponíveis",
+		"nl": "geen gekoppelde objecten beschikbaar",
+		"fr": "aucun objet lié disponible",
+		"it": "nessun oggetto collegato disponibile",
+		"es": "no hay objetos vinculados disponibles",
+		"pl": "brak dostępnych połączonych obiektów",
+		"zh-cn": "没有可用的链接对象"
+	}
 };

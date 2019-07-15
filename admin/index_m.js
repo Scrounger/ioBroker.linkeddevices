@@ -156,7 +156,7 @@ async function saveAssignedParentObjects(tableItem) {
                 }
 
 
-
+                //TODO: 
 
 
 
@@ -186,6 +186,7 @@ async function createTable(onChange, filterText = null) {
         let tableData = await getTableData();	// Array für tableFkt
 
         if (tableData) {
+            $('h6[id=noTableData]').hide();
 
             if (filterText != null) {
                 // Tabelle filtern
@@ -199,7 +200,7 @@ async function createTable(onChange, filterText = null) {
             sortData(tableData, currentSort, onChange);
 
         } else {
-            $('div[id=events]').hide();
+            $('h6[id=noTableData]').show();
         }
     } catch (err) {
         showError("createTable: " + err);
