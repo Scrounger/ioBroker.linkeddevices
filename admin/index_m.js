@@ -98,82 +98,111 @@ async function saveAssignedParentObjects(tableItem) {
         linkedObject = await getObject(tableItem.linkedId);
         parentObject = await getObject(tableItem.parentId);
 
-
         if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
             if (parentObject && parentObject.common) {
-                let existingParentObjectCustom = [];
-
-                // Custom von anderen Adaptern des parentObjects holen
-                if (parentObject.common.custom) {
-                    if (adapter != myNamespace) {
-                        existingParentObjectCustom.push(adapter, parentObject.common.custom[adapter]);
-                    }
-                }
 
                 // common Daten des linkedObjects holen, die beim parentObject in den Settings konfiguriert werden können
-                let name = "";
-                let number_unit = "";
-                let number_max = "";
-                let number_min = "";
+                let customForParentObj = {};
 
-                let convertToKey = "";          // var um 'type'_converTo zu bauen
-                let convertToValue = "";
+                let expertSettings = false;
 
                 if (linkedObject.common.name) {
-                    if (parentObject.common.name && parentObject.common.name != linkedObject.common.name) {
-                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
-                        name = linkedObject.common.name;
+                    if (parentObject.common.name) {
+                        if (parentObject.common.name != linkedObject.common.name) {
+                            // nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+                            customForParentObj["name"] = linkedObject.common.name;
+                        }
+                    } else {
+                        customForParentObj["name"] = linkedObject.common.name;
                     }
                 }
 
                 if (linkedObject.common.unit) {
-                    if (parentObject.common.unit && parentObject.common.unit != linkedObject.common.unit) {
-                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
-                        number_unit = linkedObject.common.unit;
+                    if (parentObject.common.unit) {
+                        if (parentObject.common.unit != linkedObject.common.unit) {
+                            // nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+                            customForParentObj["number_unit"] = linkedObject.common.unit;
+                            expertSettings = true;
+                        }
+                    } else {
+                        customForParentObj["number_unit"] = linkedObject.common.unit;
+                        expertSettings = true;
                     }
                 }
 
                 if (linkedObject.common.max) {
-                    if (parentObject.common.max && parentObject.common.max != linkedObject.common.max) {
-                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
-                        number_max = linkedObject.common.max;
+                    if (parentObject.common.max) {
+                        if (parentObject.common.max != linkedObject.common.max) {
+                            // nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+                            customForParentObj["number_max"] = linkedObject.common.max;
+                            expertSettings = true;
+                        }
+                    } else {
+                        customForParentObj["number_max"] = linkedObject.common.max;
+                        expertSettings = true;
                     }
                 }
 
                 if (linkedObject.common.min) {
-                    if (parentObject.common.min && parentObject.common.min != linkedObject.common.min) {
-                        // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
-                        number_min = linkedObject.common.min;
+                    if (parentObject.common.min) {
+                        if (parentObject.common.min != linkedObject.common.min) {
+                            // nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+                            customForParentObj["number_min"] = linkedObject.common.min;
+                            expertSettings = true;
+                        }
+                    } else {
+                        customForParentObj["number_min"] = linkedObject.common.min;
+                        expertSettings = true;
                     }
                 }
 
                 if (linkedObject.common.type) {
                     if (parentObject.common.type && parentObject.common.type != linkedObject.common.type) {
                         // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
-                        convertToKey = parentObject.common.type + "_convertTo";
-                        convertToValue = linkedObject.common.type;
+                        let convertToKey = parentObject.common.type + "_convertTo";
+                        customForParentObj[convertToKey] = linkedObject.common.type;
+                        expertSettings = true;
                     }
                 }
 
+                // custom Data vom linked Object holen und um nicht benötigte keys für das parentObject bereinigen
+                let customFromLinkedObject = linkedObject.common.custom[myNamespace];
 
-                //TODO: 
-
-
-
-                let linkedObjCustom;
-                if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
-                    linkedObjCustom = linkedObject.common.custom[myNamespace];
-
-                    linkedObjCustom.parentId = parentObject._id;
-                    delete linkedObjCustom.isLinked;
+                if (customFromLinkedObject.enabled) {
+                    delete customFromLinkedObject.enabled;
                 }
 
+                if (customFromLinkedObject.parentId) {
+                    delete customFromLinkedObject.parentId;
+                }
 
-                //showMessage(JSON.stringify(linkedObjCustom));
+                if (customFromLinkedObject.parentType) {
+                    delete customFromLinkedObject.parentType;
+                }
 
-                //showMessage(convertToKey + ": " + convertToValue);
+                if (customFromLinkedObject.isLinked || !customFromLinkedObject.isLinked) {
+                    delete customFromLinkedObject.isLinked;
+                }
 
+                // bereinigt custom Data und common Data vom linkedObject zusammenführen
+                Object.assign(customForParentObj, customFromLinkedObject);
 
+                // weitere benötigte Daten hinzufügen
+                customForParentObj.enabled = true;
+                customForParentObj.linkedId = linkedObject._id.replace(myNamespace + ".", "");
+                customForParentObj.expertSettings = expertSettings;
+
+                // custom Data an parentObject übergeben
+                if (parentObject.common.custom) {
+                    // custom von anderen Adaptern vorhanden
+                    parentObject.common.custom[myNamespace] = customForParentObj;
+                } else {
+                    // kein custom vorhanden
+                    parentObject.common.custom = {[myNamespace] : customForParentObj};
+                }
+
+                // parentObject aktualisieren -> linkedObject Daten werden automatisch wegen neustart des Adapters nach dem speichern aktualisiert
+                await setForeignObject(parentObject);
             }
         }
     } catch (err) {
@@ -305,7 +334,7 @@ async function tableOnReady() {
         let rowNum = $(this).data('index');
         let parentId = $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val();
         let url = `${window.location.origin}/#tab-objects/customs/${parentId}`;
-        
+
         window.open(url);
         //window.open(url, "_top");
     });
@@ -407,6 +436,18 @@ async function getForeignObjects(pattern) {
 async function getObject(id) {
     return new Promise((resolve, reject) => {
         socket.emit('getObject', id, function (err, res) {
+            if (!err && res) {
+                resolve(res);
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
+async function setForeignObject(obj){
+    new Promise((resolve, reject) => {
+        socket.emit('setObject', obj._id, obj, function (err, res) {
             if (!err && res) {
                 resolve(res);
             } else {
