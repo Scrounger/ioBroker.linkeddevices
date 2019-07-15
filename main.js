@@ -209,8 +209,7 @@ class Linkeddevices extends utils.Adapter {
 					this.log.info("[onObjectChange] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
 				}
 			}
-
-			//TODO: bereits verlinktes parentObject wurde gelöscht
+			//INFO: bereits verlinktes parentObject wurde gelöscht -> wird nicht über objectChange erkannt
 		}
 
 		// if (obj) {
