@@ -6,14 +6,14 @@ Geräten in einer selbst definierten Struktur zu erstellen.
 Durch die zentralisierte Darstellung an einem Ort können die Objekte
 einfach z.B. in Vis oder Skripten verwendet werden. Weiterhin müssen
 z.B. bei einem Hardwareaustausch nur die verknüpften Objekte neu erstellt
-werden müssen und alle Vis Views und Skripte funktionieren sofort wieder.
+werden, alle Vis Views und Skripte funktionieren sofort wieder.
 
 Außerdem können mit dem Adapter Objekte in andere Typen konvertiert
 werden (noch nicht vollständig implementiert).
 
 ![Strukture](media/structure.png)
 
-Dieser Adapter ist inspieriert durch das [Virtual Devices Skript von Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
+Dieser Adapter ist inspiriert durch das [Virtual Devices Skript von Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
 ## Objekt (Datenpunkt) verlinken
 Ein Objekt (Datenpunkt) kann über den Button `Einstellungen` im Menü
