@@ -32,7 +32,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 **English adapter description you can finde [here]().**
 
-**Die deutsche Beschreibung ist [hier](doc/de/readme.md) zu finden.**
+**Die deutsche Beschreibung ist [hier](doc/de/README.md) zu finden.**
 
 
 
