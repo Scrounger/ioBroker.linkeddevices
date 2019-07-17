@@ -26,13 +26,13 @@ vis views and scripts works again.
 With the adapter you can also convert objects or convert them to
 other types (not yet fully implemented).
 
-![Strukture](media/structure.png)
+![Strukture](screenshots/structure.png)
 
 This adapter is inspired from [virtual devices script by Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
-**English adapter descibtion you can finde [here]().**
+**English adapter description you can finde [here]().**
 
-**Die deutsche Beschreibung ist [hier]() zu finden.**
+**Die deutsche Beschreibung ist [hier](doc/de/readme.md) zu finden.**
 
 
 
