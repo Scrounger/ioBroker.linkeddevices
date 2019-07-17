@@ -42,7 +42,7 @@ Weiterhin sind noch folgende Einstellungen möglich:
 |  Eingabefeld | Beschreibung  |
 |---|---|
 | Name des verlinkten Objekts | Hier kann ein Name für das verlinkte Objekte festlegt werden |
-| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Objekttyp sind. ([Zusätzliche Informationen hierzu weiter unten](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-x)) <ul><li>[Zahl (readonly)](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl-readonly)</li><li>[Zahl](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl)</li></ul> |
+| Experteneinstellungen für verlinktes Objekt vom Typ 'X' | weitere Einstellungen die abhängig vom Objekttyp sind. ([Zusätzliche Informationen hierzu weiter unten](#experteneinstellungen-für-verlinktes-objekt-vom-typ-x)) <ul><li>[Zahl (readonly)](#experteneinstellungen-für-verlinktes-objekt-vom-typ-zahl-readonly)</li><li>[Zahl](#experteneinstellungen-für-verlinktes-objekt-vom-typ-zahl)</li></ul> |
 
 
 
@@ -51,7 +51,7 @@ das folgende verlinkte Objekt:
 
 ![Strukture](media/example_create_linkedObject.png)
 
-## Experteneinstellungen für verlinktes Objekt vom Typ 'X'
+## Experteneinstellungen für verlinktes Objekt vom Typ X
 
 Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden
 Objektes, können weitere Einstellungen, wie z.B. Umrechnungen oder
