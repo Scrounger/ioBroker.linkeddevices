@@ -1,6 +1,5 @@
 # ioBroker linkeddevices adapter
 
-!> Achtung, Seite befindet sich noch in Bearbeitung
 
 Mit diesem Adapter ist es möglich eigene Objekte (Datenpunkte) von
 Geräten in einer selbst definierten Struktur zu erstellen.
@@ -16,7 +15,7 @@ werden (noch nicht vollständig implementiert).
 
 Dieser Adapter ist inspieriert durch das [Virtual Devices Skript von Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
-# Objekt (Datenpunkt) verlinken
+## Objekt (Datenpunkt) verlinken
 Ein Objekt (Datenpunkt) kann über den Button `Einstellungen` im Menü
 `Objekt` erstellt werden.
 
