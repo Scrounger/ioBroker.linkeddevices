@@ -53,7 +53,7 @@ das folgende verlinkte Objekt:
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ X
 
-Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden
+Abhängig vom Typ (Zahl, Logikwert, Zeichenkette, etc.) des zu verlinkenden
 Objektes, können weitere Einstellungen, wie z.B. Umrechnungen oder
 Umwandlungen in einen anderen Typ für das verlinkte Objekt eingestellt
 werden.
