@@ -30,48 +30,47 @@ Further settings:
 
 
 
-**Example:** Die oben im Screenshot dargestellten Eingaben erzeugen
-das folgende verlinkte Objekt:
+**Example:**  The inputs shown in the screenshot above generates the
+following linked object:
 
 ![Strukture](media/example_create_linkedObject.PNG)
 
 ## expert settings for linked object with type X
 
-Abhängig vom Typ (Zahl, Logigwert, Zeichenkette, etc.) des zu verlinkenden
-Objektes, können weitere Einstellungen, wie z.B. Umrechnungen oder
-Umwandlungen in einen anderen Typ für das verlinkte Objekt eingestellt
-werden.
+Depending on the object type (number, logic value, string, etc.) to be
+linked, further settings such as calculations or conversions to a
+different type can be set for the linked object.
 
 ### expert settings for linked object with type *number (readonly)*
-![Strukture](media/expert_settings_number_readonly.PNG)
+[Strukture](media/expert_settings_number_readonly.PNG)
 
 #### number (readonly): do not convert
-![Strukture](media/expert_settings_number_readonly_no_conversion.PNG)
+[Strukture](media/expert_settings_number_readonly_no_conversion.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
-| change unit '%' to | Einheit für das verlinkte Objekt festlegen | keine Beschränkung | Objekt hat Einheit 'kWh', verlinktes Objekt hat Einheit 'Wh' |
-| max. number of decimal places | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | numbers | Wert des Objekts '100.561' ergibt für das verlinkte Objekt den Wert '101' |
-| change min '0' to | minimaler Wert der das verlinkte Objekt annehmen darf | numbers | - |
-| change max '100' to | maximaler Wert der das verlinkte Objekt annehmen darf | numbers | - |
-| calculation for 'read' object | mathematische Umrechnung des Wertes des Objektes | _+ - / *,. ()_ & *numbers* | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
+| change unit '%' to | Set the unit for the linked object | no restriction | Object has unit 'kWh', linked object has unit 'Wh' |
+| max. number of decimal places | set max. number of decimal places for linked object | numbers | Value of the object '100.561' results in the value '101' for the linked object |
+| change min '0' to | minimum value allowed for the linked object | numbers | - |
+| change max '100' to | maximum value that the linked object is allowed to accept | numbers | - |
+| calculation for 'read' object | mathematical conversion of the object value | _+ - / *,. ()_ & *numbers* | Value of the object '279688.9' with conversion '/ 1000' indicates the value '280.6889' for the linked object |
 
 #### number (readonly): condition 'true' for linked object
-![Strukture](media/expert_settings_number_readonly_convert_to_boolean.PNG)
+[Strukture](media/expert_settings_number_readonly_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
-| value if linked object is 'true' | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *numbers* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
+| value if linked object is 'true' | Object value for which the linked object should be set to 'true' | *= != > < >= <=* + *numbers* | For values '> 100' of the object, the linked object is 'true' |
 
 ### expert settings for linked object with type 'number'
 
 #### number: concert to type do not convert
-![Strukture](media/expert_settings_number_no_conversion.PNG)
+[Strukture](media/expert_settings_number_no_conversion.PNG)
 
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
-| change unit '%' to | Einheit für das verlinkte Objekt festlegen | keine Beschränkung | Objekt hat keine Einheit, verlinktes Objekt hat Einheit '%' |
+| change unit '%' to | Set the unit for the linked objec | keine Beschränkung | Objekt hat keine Einheit, verlinktes Objekt hat Einheit '%' |
 | max. number of decimal places | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | numbers | Wert des Objekts '100.561' ergibt für das verlinkte Objekt den Wert '101' |
 | change min '0' to | minimaler Wert der das verlinkte Objekt annehmen darf | numbers | - |
 | change max '100' to | maximaler Wert der das verlinkte Objekt annehmen darf | numbers | - |
