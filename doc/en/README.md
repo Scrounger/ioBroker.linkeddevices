@@ -35,16 +35,16 @@ following linked object:
 
 ![Strukture](media/example_create_linkedObject.png)
 
-## expert settings for linked object with type X
+## Expert settings for linked object with type X
 
 Depending on the object type (number, logic value, string, etc.) to be
 linked, further settings such as calculations or conversions to a
 different type can be set for the linked object.
 
-### expert settings for linked object with type *number (readonly)*
+### Expert settings for linked object with type *number (readonly)*
 ![Strukture](media/expert_settings_number_readonly.PNG)
 
-#### number (readonly): do not convert
+#### Number (readonly): do not convert
 ![Strukture](media/expert_settings_number_readonly_no_conversion.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
@@ -55,28 +55,28 @@ different type can be set for the linked object.
 | change max '100' to | maximum value that the linked object is allowed to accept | numbers | - |
 | calculation for 'read' object | mathematical conversion of the object value | _+ - / *,. ()_ & *numbers* | Value of the object '279688.9' with conversion '/ 1000' indicates the value '280.6889' for the linked object |
 
-#### number (readonly): condition 'true' for linked object
+#### Number (readonly): condition 'true' for linked object
 ![Strukture](media/expert_settings_number_readonly_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
 | value if linked object is 'true' | Object value for which the linked object should be set to 'true' | *= != > < >= <=* + *numbers* | For values '> 100' of the object, the linked object is 'true' |
 
-### expert settings for linked object with type 'number'
+### Expert settings for linked object with type 'number'
 
-#### number: concert to type do not convert
+#### Number: concert to type do not convert
 ![Strukture](media/expert_settings_number_no_conversion.PNG)
 
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
-| change unit '%' to | Set the unit for the linked objec | keine Beschränkung | Objekt hat keine Einheit, verlinktes Objekt hat Einheit '%' |
+| change unit '%' to | Set the unit for the linked objec | no restriction | Object has no unit, linked object has unit '%' |
 | max. number of decimal places | set max. number of decimal places for linked object | numbers | Value of the object '100.561' results in the value '101' for the linked object |
 | change min '0' to | minimum value allowed for the linked object | numbers | - |
 | change max '100' to | maximum value that the linked object is allowed to accept | numbers | - |
 | calculation for 'read' object | mathematical conversion of the object value  | _/ *,._ & *numbers* | Object value  '180' with conversion '* 100/255' indicates the value '71' for the linked object. Conversely, the reciprocal is formed in the calculation, that is, when the linked object has the value '71', the object has the value '180'.. This can e.g. used for Hue lamps to convert the range of values from '0-255' to '0% -100%' |
 
-#### number: convert to type boolean
+#### Number: convert to type boolean
 ![Strukture](media/expert_settings_number_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
