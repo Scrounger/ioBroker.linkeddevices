@@ -33,7 +33,7 @@ Weiterhin sind noch folgende Einstellungen möglich:
 **Example:** Die oben im Screenshot dargestellten Eingaben erzeugen
 das folgende verlinkte Objekt:
 
-![Strukture](media/example_create_linkedObject.png)
+![Strukture](media/example_create_linkedObject.PNG)
 
 ## expert settings for linked object with type X
 
@@ -43,10 +43,10 @@ Umwandlungen in einen anderen Typ für das verlinkte Objekt eingestellt
 werden.
 
 ### expert settings for linked object with type 'number (readonly)'
-![Strukture](media/expert_settings_number_readonly.png)
+![Strukture](media/expert_settings_number_readonly.PNG)
 
 #### number (readonly): do not convert
-![Strukture](media/expert_settings_number_readonly_no_conversion.png)
+![Strukture](media/expert_settings_number_readonly_no_conversion.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
@@ -57,7 +57,7 @@ werden.
 | calculation for 'read' object | mathematische Umrechnung des Wertes des Objektes | _+ - / *,. ()_ & *numbers* | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
 
 #### number (readonly): condition 'true' for linked object
-![Strukture](media/expert_settings_number_readonly_convert_to_boolean.png)
+![Strukture](media/expert_settings_number_readonly_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
@@ -66,7 +66,7 @@ werden.
 ### expert settings for linked object with type 'number'
 
 #### number: concert to type do not convert
-![Strukture](media/expert_settings_number_no_conversion.png)
+![Strukture](media/expert_settings_number_no_conversion.PNG)
 
 
 |  input box | describtion  | allowed input | example (see picture) |
@@ -78,7 +78,7 @@ werden.
 | calculation for linked object | mathematische Umrechnung des Wertes des Objektes | _/ *,._ & *numbers* | Wert des Objektes '180' mit Umrechnung '*100/255' zeigt beim verlinkten Objekt den Wert '71' an. Umgekehrt wird der Kehrwert bei der Berechnung gebildet, d.h. wenn das verlinte Objekt den Wert '71' hat, hat das Objekt den Wert '180'. Das kann z.B. für Hue Lampen verwendet werden, um den Wertebereich von '0-255' in '0%-100%' umzuwandeln |
 
 #### number: convert to type boolean
-![Strukture](media/expert_settings_number_convert_to_boolean.png)
+![Strukture](media/expert_settings_number_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
