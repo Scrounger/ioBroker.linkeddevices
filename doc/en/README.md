@@ -26,7 +26,7 @@ Further settings:
 |  input box | describtion  |
 |---|---|
 | name of linked object | Here you can specify a name for the linked objects |
-| expert settings for linked object with type X | other settings that depend on the object type. ([Additional information below](#expert-settings-for-linked-object-with-type-x)) <ul><li>[number (readonly)](#expert-settings-for-linked-object-with-type-number-readonly)</li><li>[number](#expert-settings-for-linked-object-with-type-'number')</li></ul> |
+| expert settings for linked object with type X | other settings that depend on the object type. ([Additional information below](#expert-settings-for-linked-object-with-type-x)) <ul><li>[number (readonly)](#expert-settings-for-linked-object-with-type-number-readonly)</li><li>[number](#expert-settings-for-linked-object-with-type-number)</li></ul> |
 
 
 
