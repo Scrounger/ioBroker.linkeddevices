@@ -33,7 +33,7 @@ Further settings:
 **Example:**  The inputs shown in the screenshot above generates the
 following linked object:
 
-![Strukture](media/example_create_linkedObject.PNG)
+![Strukture](media/example_create_linkedObject.png)
 
 ## expert settings for linked object with type X
 
