@@ -16,17 +16,17 @@ The following basic settings must be made for the linked object:
 
 |  input box | describtion  |
 |---|---|
-| enabled | die Verlinkung für das Objekt aktivieren |
-| prefix for id of linked object | Bezeichung die der ID des verlinkten Objektes vorangestellt werden soll |
-| id of linked object | ID des verlinkten Objektes |
-| composite id of linked object | Zeigt an wie die Id des verlinkten Objektes aussehen wird - Zusammensetzung von *Präfix für ID des verlinkten Objektes* & *ID des verlinkten Objekts*
+| enabled | activate object linking |
+| prefix for id of linked object | Name to be prefixed with the ID of the linked object |
+| id of linked object | ID of the linked object |
+| composite id of linked object | Shows how the ID of the linked object will look like - Composition of *prefix for id of linked object* & *ID of the linked object*
 
-Weiterhin sind noch folgende Einstellungen möglich:
+Further settings:
 
 |  input box | describtion  |
 |---|---|
-| name of linked object | Hier kann ein Name für das verlinkte Objekte festlegt werden |
-| expert settings for linked object with type X | weitere Einstellungen die abhängig vom Objekttyp sind. ([Zusätzliche Informationen hierzu weiter unten](#experteneinstellungen-für-verlinktes-objekt-vom-typ-x)) <ul><li>[number (readonly)](#experteneinstellungen-für-verlinktes-objekt-vom-typ-zahl-readonly)</li><li>[number](#experteneinstellungen-für-verlinktes-objekt-vom-typ-zahl)</li></ul> |
+| name of linked object | Here you can specify a name for the linked objects |
+| expert settings for linked object with type X | other settings that depend on the object type. ([Additional information below](#expert-settings-for-linked-object-with-type-x)) <ul><li>[number (readonly)](#expert-settings-for-linked-object-with-type-'number-(readonly)')</li><li>[number](#expert-settings-for-linked-object-with-type-'number')</li></ul> |
 
 
 
