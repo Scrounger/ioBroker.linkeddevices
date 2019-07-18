@@ -30,7 +30,7 @@ Weiterhin sind noch folgende Einstellungen möglich:
 
 
 
-**Beispiel:** Die oben im Screenshot dargestellten Eingaben erzeugen
+**Example:** Die oben im Screenshot dargestellten Eingaben erzeugen
 das folgende verlinkte Objekt:
 
 ![Strukture](media/example_create_linkedObject.png)
