@@ -42,10 +42,10 @@ linked, further settings such as calculations or conversions to a
 different type can be set for the linked object.
 
 ### expert settings for linked object with type *number (readonly)*
-[Strukture](media/expert_settings_number_readonly.PNG)
+![Strukture](media/expert_settings_number_readonly.PNG)
 
 #### number (readonly): do not convert
-[Strukture](media/expert_settings_number_readonly_no_conversion.PNG)
+![Strukture](media/expert_settings_number_readonly_no_conversion.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
@@ -56,7 +56,7 @@ different type can be set for the linked object.
 | calculation for 'read' object | mathematical conversion of the object value | _+ - / *,. ()_ & *numbers* | Value of the object '279688.9' with conversion '/ 1000' indicates the value '280.6889' for the linked object |
 
 #### number (readonly): condition 'true' for linked object
-[Strukture](media/expert_settings_number_readonly_convert_to_boolean.PNG)
+![Strukture](media/expert_settings_number_readonly_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
@@ -65,23 +65,23 @@ different type can be set for the linked object.
 ### expert settings for linked object with type 'number'
 
 #### number: concert to type do not convert
-[Strukture](media/expert_settings_number_no_conversion.PNG)
+![Strukture](media/expert_settings_number_no_conversion.PNG)
 
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
 | change unit '%' to | Set the unit for the linked objec | keine Beschränkung | Objekt hat keine Einheit, verlinktes Objekt hat Einheit '%' |
-| max. number of decimal places | max. Anzahl der Nachkommastellen für das verlinkte Objekt festlegen | numbers | Wert des Objekts '100.561' ergibt für das verlinkte Objekt den Wert '101' |
-| change min '0' to | minimaler Wert der das verlinkte Objekt annehmen darf | numbers | - |
-| change max '100' to | maximaler Wert der das verlinkte Objekt annehmen darf | numbers | - |
-| calculation for linked object | mathematische Umrechnung des Wertes des Objektes | _/ *,._ & *numbers* | Wert des Objektes '180' mit Umrechnung '*100/255' zeigt beim verlinkten Objekt den Wert '71' an. Umgekehrt wird der Kehrwert bei der Berechnung gebildet, d.h. wenn das verlinte Objekt den Wert '71' hat, hat das Objekt den Wert '180'. Das kann z.B. für Hue Lampen verwendet werden, um den Wertebereich von '0-255' in '0%-100%' umzuwandeln |
+| max. number of decimal places | set max. number of decimal places for linked object | numbers | Value of the object '100.561' results in the value '101' for the linked object |
+| change min '0' to | minimum value allowed for the linked object | numbers | - |
+| change max '100' to | maximum value that the linked object is allowed to accept | numbers | - |
+| calculation for 'read' object | mathematical conversion of the object value  | _/ *,._ & *numbers* | Object value  '180' with conversion '* 100/255' indicates the value '71' for the linked object. Conversely, the reciprocal is formed in the calculation, that is, when the linked object has the value '71', the object has the value '180'.. This can e.g. used for Hue lamps to convert the range of values from '0-255' to '0% -100%' |
 
 #### number: convert to type boolean
 ![Strukture](media/expert_settings_number_convert_to_boolean.PNG)
 
 |  input box | describtion  | allowed input | example (see picture) |
 |---|---|---|---|
-| condition 'true' for linked object | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *numbers* | Für Werte '>30' des Objekt ist das verlinkte Objekt 'true' |
-| value if linked object is 'true' | Wert des Objektes wenn das verlinkte Objekt 'true' ist | numbers | Wird das verlinkte Objekt auf 'true' gesetzt, wird der Wert des Objektes '30' |
-| value if linked object is 'false' | Wert des Objektes wenn das verlinkte Objekt 'false' ist | numbers | Wird das verlinkte Objekt auf 'false' gesetzt, wird der Wert des Objektes '10' |
+| condition 'true' for linked object | Value of the object for which the linked object should be set to 'true' | *= != > < >= <=* + *numbers* | For values '> 30' of the object, the linked object is 'true' |
+| value if linked object is 'true' | Value of the object if the linked object is true | numbers | If the linked object is set to 'true', the value of the object is '30' |
+| value if linked object is 'false' | Value of the object if the linked object is false | numbers | If the linked object is set to 'false', the value of the object is '10' |
 
