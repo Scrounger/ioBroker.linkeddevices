@@ -9,7 +9,7 @@ An object can be created via the `Settings` button in the `Object` menu.
 ![Strukture](media/object_tree_custom_button.png)
 
 ## Object (data point) settings
-![Strukture](media/custom_dialog.PNG)
+![Strukture](media/custom_dialog.png)
 
 The following basic settings must be made for the linked object:
 
