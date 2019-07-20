@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.2.2",
+		"version": "0.3.0",
 		"news": {
+			"0.3.0": {
+				"en": "linked devices overview added to adapter configuration",
+				"de": "Übersicht über verlinkte Objekte zur Adapterkonfiguration hinzugefügt",
+				"ru": "обзор связанных устройств добавлен в конфигурацию адаптера",
+				"pt": "Visão geral de dispositivos vinculados adicionada à configuração do adaptador",
+				"nl": "Overzicht gekoppelde apparaten toegevoegd aan adapterconfiguratie",
+				"fr": "aperçu des périphériques liés ajouté à la configuration de l'adaptateur",
+				"it": "Panoramica dei dispositivi collegati aggiunta alla configurazione dell'adattatore",
+				"es": "Vista general de dispositivos vinculados agregada a la configuración del adaptador",
+				"pl": "przegląd połączonych urządzeń dodany do konfiguracji adaptera",
+				"zh-cn": "链接设备概述添加到适配器配置"
+			},
 			"0.2.1": {
 				"en": "boolean to string converter added, bug fixes",
 				"de": "number to boolean converter hinzugefügt",

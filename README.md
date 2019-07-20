@@ -36,6 +36,10 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
+### 0.3.0
+* (Scrounger) linked devices overview added to adapter configuration
+* (Scrounger) bug fixes
+
 ### 0.2.1
 * (Scrounger) boolean to string converter added
 * (Scrounger) bug fixes
