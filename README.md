@@ -30,11 +30,9 @@ other types (not yet fully implemented).
 
 This adapter is inspired from [virtual devices script by Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
-**English description can be found [here](doc/en/README.md).**
-
-**Die deutsche Beschreibung ist [hier](doc/de/README.md) zu finden.**
-
-
+## Configuration
+* [English description](doc/en/README.md)
+* [deutsche Beschreibung](doc/de/README.md)
 
 ## Changelog
 
