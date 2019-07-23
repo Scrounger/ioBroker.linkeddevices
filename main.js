@@ -382,6 +382,12 @@ class Linkeddevices extends utils.Adapter {
 		if (this.dicLinkedObjectsStatus) {
 			this.log.debug("[createAllLinkedObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
 			this.log.silly("[createAllLinkedObjects] linkedObjects status " + JSON.stringify(this.dicLinkedObjectsStatus));
+
+			for (var key in this.dicLinkedObjectsStatus) {
+				if (this.dicLinkedObjectsStatus.hasOwnProperty(key) && this.dicLinkedObjectsStatus[key] === false) {
+					this.log.warn(`linkedObject '${key}' is not linked any more!`);
+				}
+			}
 		}
 
 		if (this.dicLinkedParentObjects) {
