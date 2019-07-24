@@ -61,6 +61,9 @@ if (typeof customPostInits !== 'undefined') {
         var selectedBooleanConverter = "";
         if (values["boolean_convertTo"]) selectedBooleanConverter = values["boolean_convertTo"];
 
+        var selectedStringConverter = "";
+        if (values["string_convertTo"]) selectedStringConverter = values["string_convertTo"];
+
         // $div.find('input[id="test"]').val(JSON.stringify(currentObj));
         //$div.find('input[id="test"]').val(Object.keys(gMain));
 
@@ -117,6 +120,9 @@ if (typeof customPostInits !== 'undefined') {
             Group.Boolean = $div.find('.view_Boolean');
             Group.Boolean_Converter_String = $div.find('.view_Boolean_Converter_String');
 
+            // Group: type 'string'
+            Group.String = $div.find('.view_String');
+            Group.String_Converter_None = $div.find('.view_String_Converter_None');
 
 
             // alle input in vars packen
@@ -141,10 +147,15 @@ if (typeof customPostInits !== 'undefined') {
             Input.boolean_to_string_value_true = $div.find('input[data-field="boolean_to_string_value_true"]');
             Input.boolean_to_string_value_false = $div.find('input[data-field="boolean_to_string_value_false"]');
 
+            // Input: type 'string'
+            Input.string_prefix = $div.find('input[data-field="string_prefix"]');
+            Input.string_suffix = $div.find('input[data-field="string_suffix"]');
+
 
             // alle select in var packen
             Select.number_convertTo = $div.find('select[data-field="number_convertTo"]');
             Select.boolean_convertTo = $div.find('select[data-field="boolean_convertTo"]');
+            Select.string_convertTo = $div.find('select[data-field="string_convertTo"]');
 
             // alle label / span in var packen
             Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
@@ -195,22 +206,41 @@ if (typeof customPostInits !== 'undefined') {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
 
-                if(type === 'number' && currentObj.common.write === false){
+                if (type === 'number' && currentObj.common.write === false) {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type) + " (read only)"));
-                }else{
+                } else {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
                 }
-                
+
 
                 // Views initalisieren
                 initialize_ExpertSettings_Number();
                 initialize_ExpertSettings_Boolean();
+                initialize_ExpertSettings_String();
 
                 // EventHandler für alle ExpertSettings
                 events_ExpertSettings();
 
             } else {
                 Group.expertSettings.hide();
+            }
+        }
+
+        function initialize_ExpertSettings_String() {
+            // ExpertSettings für type 'string' initialisieren	
+            // wenn expertSettings aktiviert sind und typ = string -> Eingabefelder anzeigen
+
+            if (type === 'string' && expertSettingsActivated) {
+                Group.String.show();
+
+
+                // Event Handler für ExpertSettings mit type 'string'
+                events_ExpertSettings_String();
+
+            } else {
+                // Ausblenden und alle Eingaben löschen
+                Group.String.hide();
+                Group.String.find("input, select").val("");
             }
         }
 
@@ -379,6 +409,7 @@ if (typeof customPostInits !== 'undefined') {
 
                 initialize_ExpertSettings_Number();
                 initialize_ExpertSettings_Boolean();
+                initialize_ExpertSettings_String();
             });
         }
 
@@ -484,7 +515,14 @@ if (typeof customPostInits !== 'undefined') {
                 selectedBooleanConverter = this.value;
                 initialize_ExpertSettings_Boolean();
             });
+        }
 
+        function events_ExpertSettings_String() {
+
+            Select.string_convertTo.on('change', function () {
+                selectedStringConverter = this.value;
+                initialize_ExpertSettings_String();
+            });
         }
         //#endregion
     }
