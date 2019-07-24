@@ -237,7 +237,7 @@ class Linkeddevices extends utils.Adapter {
 				// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
 				changedValue = await this.getConvertedValue(linkedObjId, changedValue);
 
-				await this.logStateChange(id, state, linkedObjId, "parentObject");
+				await this.logStateChange(id, state, linkedObjId, "parentObject", changedValue);
 
 				await this.setForeignStateAsync(linkedObjId, changedValue, state.ack);
 			}
@@ -253,7 +253,7 @@ class Linkeddevices extends utils.Adapter {
 					// ggf. kann für das linkedObject eine Umrechnung festgelegt sein -> parentObject zurück rechnen
 					changedValue = await this.getConvertedValue(parentObjId, changedValue, true);
 
-					await this.logStateChange(id, state, parentObjId, "linkedObject");
+					await this.logStateChange(id, state, parentObjId, "linkedObject", changedValue);
 
 					await this.setForeignStateAsync(parentObjId, changedValue, state.ack);
 				}
@@ -275,7 +275,7 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} objId
 	 * @param {string} logPrefix
 	 */
-	async logStateChange(id, state, objId, logPrefix) {
+	async logStateChange(id, state, objId, logPrefix, changedValue) {
 		let objState = await this.getForeignStateAsync(objId);
 
 		let logChangeStateFor = "parentObject";
@@ -285,14 +285,14 @@ class Linkeddevices extends utils.Adapter {
 
 		if (objState) {
 			if (state.val != objState.val || state.ack != objState.ack) {
-				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}'`)
+				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' changed to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}' to '${changedValue}'`)
 			} else if (state.ts != objState.ts) {
-				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' timestamp changed --> set ${logChangeStateFor} state '${objId}'`)
+				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' timestamp changed --> set ${logChangeStateFor} state '${objId}' to '${changedValue}'`)
 			} else {
-				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' other changes  --> set ${logChangeStateFor} state '${objId}'`)
+				this.log.debug(`[onStateChange] ${logPrefix} state '${id}' other changes  --> set ${logChangeStateFor} state '${objId}' to '${changedValue}'`)
 			}
 		} else {
-			this.log.debug(`[onStateChange] ${logPrefix} empty state '${id}' set to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}'`)
+			this.log.debug(`[onStateChange] ${logPrefix} empty state '${id}' set to '${state.val}' (ack = ${state.ack}) --> set ${logChangeStateFor} state '${objId}' to '${changedValue}'`)
 		}
 	}
 
