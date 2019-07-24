@@ -600,7 +600,31 @@ class Linkeddevices extends utils.Adapter {
 		var linkedObjectCustom = { "enabled": true, "parentId": parentObj._id, "parentType": parentObj.common.type, "isLinked": true }
 
 		var expertSettings = {};
+
+		
+		Object.assign(expertSettings, this.getCustomDataTypeNumber(parentObj));
+		Object.assign(expertSettings, this.getCustomDataTypeBoolean(parentObj));
+		Object.assign(expertSettings, this.getCustomDataTypeString(parentObj));
+
+
+		if (Object.keys(expertSettings).length > 0) {
+			this.log.debug(`[getCustomData] custom expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
+		} else {
+			this.log.debug(`[getCustomData] no custom expert settings for '${linkedId}'`)
+		}
+
+		return Object.assign({}, linkedObjectCustom, expertSettings);
+	}
+
+	/**
+	 * Custom data für linkedObject erzeugen, wenn parentObject vom type 'number' ist
+	 * @param {ioBroker.Object} parentObj
+	 */
+	getCustomDataTypeNumber(parentObj) {
+		var expertSettings = {};
+
 		if (parentObj && parentObj.common && parentObj.common.custom) {
+
 			if (parseInt(parentObj.common.custom[this.namespace].number_maxDecimal) != NaN && (parentObj.common.custom[this.namespace].number_maxDecimal != "" || parentObj.common.custom[this.namespace].number_maxDecimal === 0)) {
 				// calculation vorhanden, nur bei type = number
 				expertSettings.number_maxDecimal = parentObj.common.custom[this.namespace].number_maxDecimal;
@@ -616,6 +640,7 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.number_calculation_readOnly = parentObj.common.custom[this.namespace].number_calculation_readOnly;
 			}
 
+			// custom settings für type 'number' mit konvertierung nach 'boolean' übergeben
 			if (parentObj.common.custom[this.namespace].number_to_boolean_condition) {
 				// number -> boolean: linkedObject Bedingung für True
 				expertSettings.number_to_boolean_condition = parentObj.common.custom[this.namespace].number_to_boolean_condition;
@@ -630,6 +655,18 @@ class Linkeddevices extends utils.Adapter {
 				// number -> boolean: parentObject Wert für False
 				expertSettings.number_to_boolean_value_false = parentObj.common.custom[this.namespace].number_to_boolean_value_false;
 			}
+		}
+		return expertSettings;
+	}
+
+	/**
+	 * Custom data für linkedObject erzeugen, wenn parentObject vom type 'boolean' ist
+	 * @param {ioBroker.Object} parentObj
+	 */
+	getCustomDataTypeBoolean(parentObj) {
+		var expertSettings = {};
+
+		if (parentObj && parentObj.common && parentObj.common.custom) {
 
 			if (parentObj.common.custom[this.namespace].boolean_to_string_value_false) {
 				// boolean -> string: linkedObject Wert für False
@@ -640,15 +677,28 @@ class Linkeddevices extends utils.Adapter {
 				// boolean -> string: linkedObject Wert für True
 				expertSettings.boolean_to_string_value_true = parentObj.common.custom[this.namespace].boolean_to_string_value_true;
 			}
+		}
+		return expertSettings;
+	}
 
-			if (Object.keys(expertSettings).length > 0) {
-				this.log.debug(`[getCustomData] custom expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
-			} else {
-				this.log.debug(`[getCustomData] no custom expert settings for '${linkedId}'`)
+	/**
+	 * Custom data für linkedObject erzeugen, wenn parentObject vom type 'string' ist
+	 * @param {ioBroker.Object} parentObj
+	 */
+	getCustomDataTypeString(parentObj) {
+		var expertSettings = {};
+
+		if (parentObj && parentObj.common && parentObj.common.custom) {
+
+			if (parentObj.common.custom[this.namespace].string_prefix) {
+				expertSettings.string_prefix = parentObj.common.custom[this.namespace].string_prefix;
+			}
+
+			if (parentObj.common.custom[this.namespace].string_suffix) {
+				expertSettings.string_suffix = parentObj.common.custom[this.namespace].string_suffix;
 			}
 		}
-
-		return Object.assign({}, linkedObjectCustom, expertSettings);
+		return expertSettings;
 	}
 
 	/**
