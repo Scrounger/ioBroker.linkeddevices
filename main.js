@@ -9,6 +9,9 @@
 const utils = require("@iobroker/adapter-core");
 const mathjs = require("mathjs");
 
+const moment = require("moment");
+const momentDurationFormatSetup = require("moment-duration-format");
+
 // Load your modules here, e.g.:
 // const fs = require("fs");
 
@@ -942,6 +945,7 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 
+			// Type Converison: number -> boolean
 			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_boolean" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
 
 				// parentObject state hat sich geändert
@@ -981,9 +985,35 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "boolean_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
-				// parentObject state hat sich geändert
+			// Type Converison: number -> string (duration)
+			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_duration") {
+
 				if (!targetIsParentObj) {
+					// parentObject state hat sich geändert
+
+					if (targetObj.common.custom[this.namespace].number_to_duration_format) {
+						// number -> duration
+
+						if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+							// ggf. ist eine Umrechnung in Sekunden hinterlegt
+							convertedValue = mathjs.eval(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
+						}
+						convertedValue = moment.duration(convertedValue, 'seconds').format(targetObj.common.custom[this.namespace].number_to_duration_format, 0);
+
+						if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}' and format '${targetObj.common.custom[this.namespace].number_to_duration_format}' -> linkedObject value is '${convertedValue}'`);
+						} else {
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_duration_format}' -> linkedObject value is '${convertedValue}'`);
+						}
+					}
+				}
+			}
+
+			// Type Converison: boolean -> string (duration)
+			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "boolean_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
+
+				if (!targetIsParentObj) {
+					// parentObject state hat sich geändert
 					if (value && targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
 						convertedValue = targetObj.common.custom[this.namespace].boolean_to_string_value_true;
 						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].boolean_to_string_value_true}' -> linkedObject value is '${convertedValue}'`);
@@ -999,8 +1029,8 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 
-				// linkedObject state hat sich geändert
 				if (targetIsParentObj) {
+					// linkedObject state hat sich geändert
 					if (targetObj.common.custom[this.namespace].boolean_to_string_value_true && value === targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
 						convertedValue = true;
 						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${true}' -> parentObject value is '${convertedValue}'`);
