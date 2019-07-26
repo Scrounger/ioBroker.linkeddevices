@@ -114,6 +114,7 @@ if (typeof customPostInits !== 'undefined') {
             Group.Number_Conversion = $div.find('.view_Number_conversion');
             Group.Number_Conversion_ReadOnly = $div.find('.view_Number_conversion_readOnly');
             Group.Number_Converter_String = $div.find('.view_Number_Converter_String');
+            Group.Number_Converter_String_Duration = $div.find('.view_Number_Converter_String_Duration');
             Group.Number_Converter_Multi = $div.find('.view_Number_Converter_Multi');
 
             // Group: type 'boolean'
@@ -142,6 +143,7 @@ if (typeof customPostInits !== 'undefined') {
             Input.number_to_boolean_value_true = $div.find('input[data-field="number_to_boolean_value_true"]');
             Input.number_to_boolean_value_false = $div.find('input[data-field="number_to_boolean_value_false"]');
             Input.number_to_string_condition = $div.find('input[data-field="number_to_string_condition"]');
+            Input.number_to_duration_convert_seconds = $div.find('input[data-field="number_to_duration_convert_seconds"]');
 
             // Input: type 'boolean'
             Input.boolean_to_string_value_true = $div.find('input[data-field="boolean_to_string_value_true"]');
@@ -210,6 +212,9 @@ if (typeof customPostInits !== 'undefined') {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type) + " (read only)"));
                 } else {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
+
+                    // selector: Konvertierung entfernen, die nur bei read only möglich sind 
+                    Select.number_convertTo.find('option[value="duration"]').remove();
                 }
 
 
@@ -272,6 +277,8 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_Boolean.find("input").val("");
                     Group.Number_Converter_String.hide()
                     Group.Number_Converter_String.find("input").val("");
+                    Group.Number_Converter_String_Duration.hide()
+                    Group.Number_Converter_String_Duration.find("input").val("");
                     Group.Number_Converter_Multi.hide()
                     Group.Number_Converter_Multi.find("input").val("");
                 } else if (selectedNumberConverter === "boolean") {
@@ -288,6 +295,8 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_None.find("input").val("");
                     Group.Number_Converter_String.hide()
                     Group.Number_Converter_String.find("input").val("");
+                    Group.Number_Converter_String_Duration.hide()
+                    Group.Number_Converter_String_Duration.find("input").val("");
                     Group.Number_Converter_Multi.hide()
                     Group.Number_Converter_Multi.find("input").val("");
 
@@ -300,6 +309,9 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_Boolean.find("input").val("");
                     Group.Number_Converter_Multi.hide()
                     Group.Number_Converter_Multi.find("input").val("");
+                    Group.Number_Converter_String_Duration.hide()
+                    Group.Number_Converter_String_Duration.find("input").val("");
+
                 } else if (selectedNumberConverter === "multi") {
                     Group.Number_Converter_Multi.show()
 
@@ -309,6 +321,20 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_Boolean.find("input").val("");
                     Group.Number_Converter_String.hide()
                     Group.Number_Converter_String.find("input").val("");
+                    Group.Number_Converter_String_Duration.hide()
+                    Group.Number_Converter_String_Duration.find("input").val("");
+
+                } else if (selectedNumberConverter === "duration" && currentObj.common.read === true && currentObj.common.write === false) {
+                    Group.Number_Converter_String_Duration.show()
+
+                    Group.Number_Converter_None.hide();
+                    Group.Number_Converter_None.find("input").val("");
+                    Group.Number_Converter_Boolean.hide();
+                    Group.Number_Converter_Boolean.find("input").val("");
+                    Group.Number_Converter_String.hide()
+                    Group.Number_Converter_String.find("input").val("");
+                    Group.Number_Converter_Multi.hide()
+                    Group.Number_Converter_Multi.find("input").val("");
                 }
 
                 // Event Handler für ExpertSettings mit type 'number'
@@ -335,7 +361,6 @@ if (typeof customPostInits !== 'undefined') {
 
                 } else if (selectedBooleanConverter === "string") {
                     Group.Boolean_Converter_String.show();
-
                 }
 
                 // Event Handler für ExpertSettings mit type 'boolean'
@@ -479,6 +504,23 @@ if (typeof customPostInits !== 'undefined') {
                     }
                 }
                 this.value = this.value.replace(allowedSigns, '');
+            });
+
+            Input.number_to_duration_convert_seconds.keyup(function () {
+                // Nur Nummern und math operators * | / zulassen
+                let allowedSigns = /[^0-9\*\/]/;
+
+                if (this.value.length > 0) {
+                    if (allowedSigns.test(this.value)) {
+                        // prüfen auf zulässige Zeichen
+                        gMain.showError(_("only numbers and math operators allowed2"));
+                    } else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
+                        // muss mit math operator beginnen
+                        this.value = "";
+                        gMain.showError(_("only numbers and math operators allowed2"));
+                    }
+                }
+                this.value = this.value.replace(allowedSigns, '');                
             });
 
             Select.number_convertTo.on('change', function () {

@@ -47,12 +47,13 @@
 						<select data-field="number_convertTo" data-default="">
 							<option value="" class="translate">do not convert</option>
 							<option value="boolean" class="translate">boolean</option>
+							<option value="duration" class="translate">duration</option>
 							<option value="string" class="translate" disabled="true">string</option>
 							<option value="multi" class="translate" disabled="true">multi</option>
 						</select>
 					</div>
 					<div class="col s10">
-						<div class="view_Number_Converter_None">	
+						<div class="view_Number_Converter_None">
 							<div class="row">
 								<div class="col s3">
 									<label id="LB_number_unit" />
@@ -102,6 +103,16 @@
 							<div class="col s3">
 								<label class="translate">conditions string</label>
 								<input type="text" data-field="number_to_string_condition">
+							</div>
+						</div>
+						<div class="view_Number_Converter_String_Duration">
+							<div class="col s3">
+								<label class="translate">conversion in seconds</label>
+								<input type="text" data-field="number_to_duration_convert_seconds">
+							</div>
+							<div class="col s3">
+								<label class="translate">display format of the duration</label>
+								<input type="text" data-field="number_to_duration_format">
 							</div>
 						</div>
 						<div class="view_Number_Converter_Multi">

@@ -158,6 +158,18 @@ systemDictionary = {
 		"pl": "niedozwolone znaki! <br> Tylko liczby i operatory matematyczne są dozwolone! Wejście musi zaczynać się od operatora matematycznego. <br> <br> Dozwolone operatory: / *,.",
 		"zh-cn": "不允许的标志！<br>只允许数字和数学运算符！输入必须以数学运算符开头。<br> <br>允许的运算符：/ * ,."
 	},
+	"only numbers and math operators allowed2": {
+		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: / *",
+		"de": "Zeichen nicht erlaubt! <br> Nur Zahlen und mathematische Operatoren sind erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen. <br> <br> Zulässige Operatoren: / *",
+		"ru": "запрещенные знаки! <br> Разрешены только цифры и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: / *",
+		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos são permitidos! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: / *",
+		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators zijn toegestaan! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: / *",
+		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés! La saisie doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: / *",
+		"it": "segni non consentiti! <br> Sono consentiti solo numeri e operatori matematici! L'input deve iniziare con l'operatore matematico. <br> <br> Operatori consentiti: / *",
+		"es": "¡Signos no permitidos! <br> ¡Sólo se permiten operadores de números y matemáticas! La entrada debe comenzar con el operador matemático. <br> <br> Operadores permitidos: / *",
+		"pl": "niedozwolone znaki! <br> Tylko liczby i operatory matematyczne są dozwolone! Wejście musi zaczynać się od operatora matematycznego. <br> <br> Dozwolone operatory: / *",
+		"zh-cn": "不允许的标志！<br>只允许数字和数学运算符！输入必须以数学运算符开头。<br> <br>允许的运算符：/ *"
+	},
 	"max. number of decimal places": {
 		"en": "max. number of decimal places",
 		"de": "max. Anzahl der Nachkommastellen",
@@ -684,5 +696,41 @@ systemDictionary = {
 		"es": "no hay objetos vinculados disponibles",
 		"pl": "brak dostępnych połączonych obiektów",
 		"zh-cn": "没有可用的链接对象"
+	},
+	"duration": {
+		"en": "duration",
+		"de": "Dauer",
+		"ru": "продолжительность",
+		"pt": "duração",
+		"nl": "looptijd",
+		"fr": "durée",
+		"it": "durata",
+		"es": "duración",
+		"pl": "Trwanie",
+		"zh-cn": "持续时间"
+	},
+	"conversion in seconds": {
+		"en": "conversion in seconds",
+		"de": "Umrechnung in Sekunden",
+		"ru": "преобразование в секундах",
+		"pt": "conversão em segundos",
+		"nl": "conversie in seconden",
+		"fr": "conversion en quelques secondes",
+		"it": "conversione in secondi",
+		"es": "conversión en segundos",
+		"pl": "konwersja w sekundach",
+		"zh-cn": "转换为秒"
+	},
+	"display format of the duration": {
+		"en": "display format of the duration",
+		"de": "Anzeigeformat der Dauer",
+		"ru": "формат отображения длительности",
+		"pt": "formato de exibição da duração",
+		"nl": "weergaveformaat van de duur",
+		"fr": "format d'affichage de la durée",
+		"it": "visualizza il formato della durata",
+		"es": "Formato de visualización de la duración.",
+		"pl": "format wyświetlania czasu trwania",
+		"zh-cn": "显示格式的持续时间"
 	}
 };
