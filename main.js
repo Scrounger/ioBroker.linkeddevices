@@ -601,7 +601,7 @@ class Linkeddevices extends utils.Adapter {
 
 		var expertSettings = {};
 
-		
+
 		Object.assign(expertSettings, this.getCustomDataTypeNumber(parentObj));
 		Object.assign(expertSettings, this.getCustomDataTypeBoolean(parentObj));
 		Object.assign(expertSettings, this.getCustomDataTypeString(parentObj));
@@ -801,6 +801,72 @@ class Linkeddevices extends utils.Adapter {
 				sourceId = targetObj.common.custom[this.namespace].parentId;
 			}
 
+			if (targetObj.common.type === "string") {
+				//TODO: implementieren
+
+				if (!targetIsParentObj) {
+					// Umrechnung für linkedObject -> parentObject state ändert sich
+					let log = false;
+					let logMessage = ""
+
+					if (targetObj.common.custom[this.namespace].string_prefix) {
+						// suffix zu String hinzufügen
+						convertedValue = (`${targetObj.common.custom[this.namespace].string_prefix}${convertedValue}`);
+
+						logMessage = (`prefix: '${targetObj.common.custom[this.namespace].string_prefix}'`);
+						log = true;
+					}
+
+					if (targetObj.common.custom[this.namespace].string_suffix) {
+						// prefix zu String hinzufügen
+						convertedValue = (`${convertedValue}${targetObj.common.custom[this.namespace].string_suffix}`);
+
+						if (log) {
+							logMessage = (`${logMessage}, suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+						} else {
+							logMessage = (`suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+						}
+						log = true;
+					}
+
+					if (log) {
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using ${logMessage} -> new linkedObject value is '${convertedValue}'`)
+					}
+				} else {
+					// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
+					let log = false;
+					let logMessage = ""
+
+					if (targetObj.common.custom[this.namespace].string_prefix) {
+						if (value.startsWith(targetObj.common.custom[this.namespace].string_prefix)) {
+							var regex = new RegExp("^\(" + targetObj.common.custom[this.namespace].string_prefix + ")", "g");
+							convertedValue = convertedValue.replace(regex, '')
+
+							logMessage = (`prefix: '${targetObj.common.custom[this.namespace].string_prefix}'`);
+							log = true;
+						}
+					}
+
+					if (targetObj.common.custom[this.namespace].string_suffix) {
+						if (value.endsWith(targetObj.common.custom[this.namespace].string_suffix)) {
+							var regex = new RegExp("\(" + targetObj.common.custom[this.namespace].string_suffix + ")$", "g");
+							convertedValue = convertedValue.replace(regex, '')
+						}
+
+						if (log) {
+							logMessage = (`${logMessage}, suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+						} else {
+							logMessage = (`suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+						}
+						log = true;
+					}
+
+					if (log) {
+						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', remove ${logMessage} -> new linkedObject value is '${convertedValue}'`)
+					}
+				}
+			}
+
 			if (targetObj.common.type === "number") {
 				// number_calculation nur für type 'number'
 				try {
@@ -924,7 +990,6 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 			}
-
 		}
 
 		return convertedValue;
