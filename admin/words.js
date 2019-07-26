@@ -768,5 +768,29 @@ systemDictionary = {
 		"es": "cadena de sufijo",
 		"pl": "łańcuch sufiksów",
 		"zh-cn": "后缀字符串"
+	},
+	"display format of the datetime": {
+		"en": "display format of the datetime",
+		"de": "Anzeigeformat der Datum / Uhrzeit",
+		"ru": "формат отображения даты и времени",
+		"pt": "formato de exibição da data e hora",
+		"nl": "weergaveformaat van de datetime",
+		"fr": "format d'affichage du datetime",
+		"it": "visualizza il formato del datetime",
+		"es": "Formato de visualización de la fecha y hora.",
+		"pl": "format wyświetlania daty / godziny",
+		"zh-cn": "显示日期时间的格式"
+	},
+	"datetime": {
+		"en": "datetime",
+		"de": "Datum / Uhrzeit",
+		"ru": "Дата и время",
+		"pt": "data hora",
+		"nl": "datum Tijd",
+		"fr": "date / heure",
+		"it": "appuntamento",
+		"es": "fecha y hora",
+		"pl": "datetime",
+		"zh-cn": "约会时间"
 	}
 };

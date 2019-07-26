@@ -115,6 +115,7 @@ if (typeof customPostInits !== 'undefined') {
             Group.Number_Conversion_ReadOnly = $div.find('.view_Number_conversion_readOnly');
             Group.Number_Converter_String = $div.find('.view_Number_Converter_String');
             Group.Number_Converter_String_Duration = $div.find('.view_Number_Converter_String_Duration');
+            Group.Number_Converter_String_DateTime = $div.find('.view_Number_Converter_String_DateTime');
             Group.Number_Converter_Multi = $div.find('.view_Number_Converter_Multi');
 
             // Group: type 'boolean'
@@ -145,6 +146,8 @@ if (typeof customPostInits !== 'undefined') {
             Input.number_to_string_condition = $div.find('input[data-field="number_to_string_condition"]');
             Input.number_to_duration_convert_seconds = $div.find('input[data-field="number_to_duration_convert_seconds"]');
             Input.number_to_duration_format = $div.find('input[data-field="number_to_duration_format"]');
+            Input.number_to_datetime_convert_seconds = $div.find('input[data-field="number_to_datetime_convert_seconds"]');
+            Input.number_to_datetime_format = $div.find('input[data-field="number_to_datetime_format"]');
 
             // Input: type 'boolean'
             Input.boolean_to_string_value_true = $div.find('input[data-field="boolean_to_string_value_true"]');
@@ -216,8 +219,8 @@ if (typeof customPostInits !== 'undefined') {
 
                     // selector: Konvertierung entfernen, die nur bei read only möglich sind 
                     Select.number_convertTo.find('option[value="duration"]').remove();
+                    Select.number_convertTo.find('option[value="datetime"]').remove();
                 }
-
 
                 // Views initalisieren
                 initialize_ExpertSettings_Number();
@@ -280,6 +283,8 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_String.find("input").val("");
                     Group.Number_Converter_String_Duration.hide()
                     Group.Number_Converter_String_Duration.find("input").val("");
+                    Group.Number_Converter_String_DateTime.hide();
+                    Group.Number_Converter_String_DateTime.find("input").val("");
                     Group.Number_Converter_Multi.hide()
                     Group.Number_Converter_Multi.find("input").val("");
                 } else if (selectedNumberConverter === "boolean") {
@@ -298,6 +303,8 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_String.find("input").val("");
                     Group.Number_Converter_String_Duration.hide()
                     Group.Number_Converter_String_Duration.find("input").val("");
+                    Group.Number_Converter_String_DateTime.hide();
+                    Group.Number_Converter_String_DateTime.find("input").val("");
                     Group.Number_Converter_Multi.hide()
                     Group.Number_Converter_Multi.find("input").val("");
 
@@ -312,6 +319,8 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_Multi.find("input").val("");
                     Group.Number_Converter_String_Duration.hide()
                     Group.Number_Converter_String_Duration.find("input").val("");
+                    Group.Number_Converter_String_DateTime.hide();
+                    Group.Number_Converter_String_DateTime.find("input").val("");
 
                 } else if (selectedNumberConverter === "multi") {
                     Group.Number_Converter_Multi.show()
@@ -324,6 +333,8 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_String.find("input").val("");
                     Group.Number_Converter_String_Duration.hide()
                     Group.Number_Converter_String_Duration.find("input").val("");
+                    Group.Number_Converter_String_DateTime.hide();
+                    Group.Number_Converter_String_DateTime.find("input").val("");
 
                 } else if (selectedNumberConverter === "duration" && currentObj.common.read === true && currentObj.common.write === false) {
                     Group.Number_Converter_String_Duration.show()
@@ -338,6 +349,25 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_Boolean.find("input").val("");
                     Group.Number_Converter_String.hide()
                     Group.Number_Converter_String.find("input").val("");
+                    Group.Number_Converter_String_DateTime.hide();
+                    Group.Number_Converter_String_DateTime.find("input").val("");
+                    Group.Number_Converter_Multi.hide()
+                    Group.Number_Converter_Multi.find("input").val("");
+                } else if (selectedNumberConverter === "datetime" && currentObj.common.read === true && currentObj.common.write === false) {
+                    Group.Number_Converter_String_DateTime.show()
+
+                    if (Input.number_to_datetime_format.val() == "") {
+                        Input.number_to_datetime_format.val("DD.MM.YYYY HH:mm");
+                    }
+
+                    Group.Number_Converter_None.hide();
+                    Group.Number_Converter_None.find("input").val("");
+                    Group.Number_Converter_Boolean.hide();
+                    Group.Number_Converter_Boolean.find("input").val("");
+                    Group.Number_Converter_String.hide()
+                    Group.Number_Converter_String.find("input").val("");
+                    Group.Number_Converter_String_Duration.hide()
+                    Group.Number_Converter_String_Duration.find("input").val("");
                     Group.Number_Converter_Multi.hide()
                     Group.Number_Converter_Multi.find("input").val("");
                 }
@@ -512,6 +542,23 @@ if (typeof customPostInits !== 'undefined') {
             });
 
             Input.number_to_duration_convert_seconds.keyup(function () {
+                // Nur Nummern und math operators * | / zulassen
+                let allowedSigns = /[^0-9\*\/]/;
+
+                if (this.value.length > 0) {
+                    if (allowedSigns.test(this.value)) {
+                        // prüfen auf zulässige Zeichen
+                        gMain.showError(_("only numbers and math operators allowed2"));
+                    } else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
+                        // muss mit math operator beginnen
+                        this.value = "";
+                        gMain.showError(_("only numbers and math operators allowed2"));
+                    }
+                }
+                this.value = this.value.replace(allowedSigns, '');
+            });
+
+            Input.number_to_datetime_convert_seconds.keyup(function () {
                 // Nur Nummern und math operators * | / zulassen
                 let allowedSigns = /[^0-9\*\/]/;
 

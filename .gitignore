@@ -13,3 +13,4 @@ admin/i18n/flat.txt
 admin/i18n/*/flat.txt
 /linkeddevices.code-workspace
 /wordsFromAdmin.js
+system.config.json
