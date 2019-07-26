@@ -61,7 +61,7 @@ werden.
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl (readonly)'
 ![Strukture](media/expert_settings_number_readonly.png)
 
-#### Zahl (readonly): Konvertiere in Typ nicht umwandeln
+#### Zahl (readonly): Konvertiere in Typ 'nicht umwandeln'
 ![Strukture](media/expert_settings_number_readonly_no_conversion.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -72,16 +72,25 @@ werden.
 | Ändere max 'X' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
 | Umrechnung für verlinktes 'read' Objekt | mathematische Umrechnung des Wertes des Objektes | _+ - / *,. ()_ & *Zahlen* | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
 
-#### Zahl (readonly): Konvertiere in Typ Logikwert
+#### Zahl (readonly): Konvertiere in Typ 'Logikwert'
 ![Strukture](media/expert_settings_number_readonly_convert_to_boolean.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
 | Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
 
+#### Zahl (readonly): Konvertiere in Typ 'Dauer'
+Zur Info der Typ 'Dauer' ist eine 'Zeichenkette'
+![Strukture](media/expert_settings_number_convert_to_duration.png)
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+| Umrechnung in Sekunden | Zur Berechnung der Dauer muss der Wert in Sekunden vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
+| Anzeigeformat der Dauer | Hier könnt ihr die Formatierung für die Dauer festlegen | [siehe Moment Duration Format library Doku](https://github.com/jsmreese/moment-duration-format#template-string) | 'y[J] d[T] hh[h] mm[m]' zeigt beim verlinkten Objekt den Wert '1J 11T 00h 24m' an |
+
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl'
 
-#### Zahl: Konvertiere in Typ nicht umwandeln
+#### Zahl: Konvertiere in Typ 'nicht umwandeln'
 ![Strukture](media/expert_settings_number_no_conversion.png)
 
 
@@ -93,7 +102,7 @@ werden.
 | Ändere max 'X' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
 | Umrechnung für verlinktes Objekt | mathematische Umrechnung des Wertes des Objektes | _/ *,._ & *Zahlen* | Wert des Objektes '180' mit Umrechnung '*100/255' zeigt beim verlinkten Objekt den Wert '71' an. Umgekehrt wird der Kehrwert bei der Berechnung gebildet, d.h. wenn das verlinkte Objekt den Wert '71' hat, hat das Objekt den Wert '180'. Das kann z.B. für Hue Lampen verwendet werden, um den Wertebereich von '0-255' in '0%-100%' umzuwandeln |
 
-#### Zahl: Konvertiere in Typ Logikwert
+#### Zahl: Konvertiere in Typ 'Logikwert'
 ![Strukture](media/expert_settings_number_convert_to_boolean.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -102,3 +111,20 @@ werden.
 | Wert wenn verlinktes Objekt 'true' ist | Wert des Objektes wenn das verlinkte Objekt 'true' ist | Zahlen | Wird das verlinkte Objekt auf 'true' gesetzt, wird der Wert des Objektes '30' |
 | Wert wenn verlinktes Objekt 'false' ist | Wert des Objektes wenn das verlinkte Objekt 'false' ist | Zahlen | Wird das verlinkte Objekt auf 'false' gesetzt, wird der Wert des Objektes '10' |
 
+### Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
+![Strukture](media/expert_settings_string.png)
+
+#### Zeichenkette: Konvertiere in Typ 'nicht umwandeln'
+![Strukture](media/expert_settings_string_no_conversion.png)
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+
+### Experteneinstellungen für verlinktes Objekt vom Typ 'Logikwert'
+![Strukture](media/expert_settings_boolean.png)
+
+#### Logikwert: Konvertiere in Typ 'Zeichenkette'
+![Strukture](media/expert_settings_boolean_convert_to_string.png)
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
