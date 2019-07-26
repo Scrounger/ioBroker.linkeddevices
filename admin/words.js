@@ -744,5 +744,29 @@ systemDictionary = {
 		"es": "Más información sobre el formato de visualización.",
 		"pl": "więcej informacji o formacie wyświetlania",
 		"zh-cn": "有关显示格式的更多信息"
+	},
+	"prefix string": {
+		"en": "prefix string",
+		"de": "vorangestellte Zeichenfolge",
+		"ru": "префиксная строка",
+		"pt": "prefixo de string",
+		"nl": "voorvoegsel tekenreeks",
+		"fr": "chaîne de préfixe",
+		"it": "stringa prefisso",
+		"es": "cadena de prefijo",
+		"pl": "przedrostek ciąg",
+		"zh-cn": "前缀字符串"
+	},
+	"suffix string": {
+		"en": "suffix string",
+		"de": "nachgestellte Zeichenfolge",
+		"ru": "строка суффикса",
+		"pt": "string de sufixo",
+		"nl": "achtervoegsel string",
+		"fr": "chaîne de suffixe",
+		"it": "stringa del suffisso",
+		"es": "cadena de sufijo",
+		"pl": "łańcuch sufiksów",
+		"zh-cn": "后缀字符串"
 	}
 };
