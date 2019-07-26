@@ -732,5 +732,17 @@ systemDictionary = {
 		"es": "Formato de visualización de la duración.",
 		"pl": "format wyświetlania czasu trwania",
 		"zh-cn": "显示格式的持续时间"
+	},
+	"more information about the display format": {
+		"en": "more information about the display format",
+		"de": "Weitere Informationen zum Anzeigeformat",
+		"ru": "больше информации о формате отображения",
+		"pt": "mais informações sobre o formato de exibição",
+		"nl": "meer informatie over het weergaveformaat",
+		"fr": "plus d'informations sur le format d'affichage",
+		"it": "ulteriori informazioni sul formato di visualizzazione",
+		"es": "Más información sobre el formato de visualización.",
+		"pl": "więcej informacji o formacie wyświetlania",
+		"zh-cn": "有关显示格式的更多信息"
 	}
 };
