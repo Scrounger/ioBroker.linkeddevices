@@ -144,6 +144,7 @@ if (typeof customPostInits !== 'undefined') {
             Input.number_to_boolean_value_false = $div.find('input[data-field="number_to_boolean_value_false"]');
             Input.number_to_string_condition = $div.find('input[data-field="number_to_string_condition"]');
             Input.number_to_duration_convert_seconds = $div.find('input[data-field="number_to_duration_convert_seconds"]');
+            Input.number_to_duration_format = $div.find('input[data-field="number_to_duration_format"]');
 
             // Input: type 'boolean'
             Input.boolean_to_string_value_true = $div.find('input[data-field="boolean_to_string_value_true"]');
@@ -326,6 +327,10 @@ if (typeof customPostInits !== 'undefined') {
 
                 } else if (selectedNumberConverter === "duration" && currentObj.common.read === true && currentObj.common.write === false) {
                     Group.Number_Converter_String_Duration.show()
+
+                    if (Input.number_to_duration_format.val() == "") {
+                        Input.number_to_duration_format.val("dd[T] hh[h] mm[m]");
+                    }
 
                     Group.Number_Converter_None.hide();
                     Group.Number_Converter_None.find("input").val("");
@@ -520,7 +525,7 @@ if (typeof customPostInits !== 'undefined') {
                         gMain.showError(_("only numbers and math operators allowed2"));
                     }
                 }
-                this.value = this.value.replace(allowedSigns, '');                
+                this.value = this.value.replace(allowedSigns, '');
             });
 
             Select.number_convertTo.on('change', function () {
