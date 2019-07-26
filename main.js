@@ -542,7 +542,14 @@ class Linkeddevices extends utils.Adapter {
 
 			// Zunächst prüfen ob typ konvertierung in expert settings eingestellt ist
 			if (parentObj.common.custom[this.namespace].number_convertTo) {
-				expertSettings.type = parentObj.common.custom[this.namespace].number_convertTo;
+
+				if (parentObj.common.custom[this.namespace].number_convertTo == "duration") {
+					// number -> duration: type ist 'string'
+					expertSettings.type = "string";
+				} else {
+					// keine spezieller type, kann direkt vom parentObject übernommen werden
+					expertSettings.type = parentObj.common.custom[this.namespace].number_convertTo;
+				}
 
 			} else if (parentObj.common.custom[this.namespace].boolean_convertTo) {
 				expertSettings.type = parentObj.common.custom[this.namespace].boolean_convertTo;
@@ -575,7 +582,14 @@ class Linkeddevices extends utils.Adapter {
 					delete commonData.max;
 					delete commonData.min;
 					commonData.def = false;
+				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "number_to_string") {
+					// number -> string: typ spezifische properties entfernen, ändern oder hinzufügen
+					delete commonData.unit;
+					delete commonData.max;
+					delete commonData.min;
+					commonData.def = "";
 				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "boolean_to_string") {
+					// boolean -> string: typ spezifische properties entfernen, ändern oder hinzufügen
 					commonData.def = "";
 				}
 			}
@@ -655,6 +669,17 @@ class Linkeddevices extends utils.Adapter {
 				// number -> boolean: parentObject Wert für False
 				expertSettings.number_to_boolean_value_false = parentObj.common.custom[this.namespace].number_to_boolean_value_false;
 			}
+
+			if (parentObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+				// number -> duration (string): parentObject Umrechnung in sekunden
+				expertSettings.number_to_duration_convert_seconds = parentObj.common.custom[this.namespace].number_to_duration_convert_seconds;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_to_duration_format) {
+				// number -> duration (string): parentObject Anzeigeformat der Dauer
+				expertSettings.number_to_duration_format = parentObj.common.custom[this.namespace].number_to_duration_format;
+			}
+
 		}
 		return expertSettings;
 	}
