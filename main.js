@@ -12,6 +12,9 @@ const mathjs = require("mathjs");
 const moment = require("moment");
 const momentDurationFormatSetup = require("moment-duration-format");
 
+// Default values, falls system config nicht geladen werden kann
+var mySystemConfig = { language: "en", dateFormat: "DD.MM.YYYY" };
+
 // Load your modules here, e.g.:
 // const fs = require("fs");
 
@@ -302,6 +305,9 @@ class Linkeddevices extends utils.Adapter {
 	async initialObjects() {
 		this.log.info('[initialObjects] started...')
 
+		// benötigte Daten aus System Config holen
+		this.getSystemConfig();
+
 		// all unsubscripe to begin completly new
 		this.unsubscribeForeignStates("*");
 
@@ -318,6 +324,27 @@ class Linkeddevices extends utils.Adapter {
 		await this.subscribeStatesAsync('*');
 
 		this.log.info('[initialObjects] finished')
+	}
+
+	async getSystemConfig() {
+		// benötigte Daten aus System Config holen
+		var sysConfig = Object(await this.getForeignObjectAsync('system.config'));
+
+		if (sysConfig && sysConfig.common) {
+
+			if (sysConfig.common.language) {
+				// language übergeben
+				mySystemConfig.language = sysConfig.common.language;
+			}
+
+			if (sysConfig.common.dateFormat) {
+				mySystemConfig.dateFormat = sysConfig.common.dateFormat;
+			}
+
+			this.log.debug(`[getSystemConfig] system configs successful loaded: '${JSON.stringify(mySystemConfig)}'`);
+		} else {
+			this.log.warn(`[getSystemConfig] could not load system configs! Using adapter default values '${JSON.stringify(mySystemConfig)}'`);
+		}
 	}
 
 	/*
@@ -549,6 +576,9 @@ class Linkeddevices extends utils.Adapter {
 				if (parentObj.common.custom[this.namespace].number_convertTo == "duration") {
 					// number -> duration: type ist 'string'
 					expertSettings.type = "string";
+				} else if (parentObj.common.custom[this.namespace].number_convertTo == "datetime") {
+					// number -> datetime: type ist 'string'
+					expertSettings.type = "string";
 				} else {
 					// keine spezieller type, kann direkt vom parentObject übernommen werden
 					expertSettings.type = parentObj.common.custom[this.namespace].number_convertTo;
@@ -683,6 +713,16 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.number_to_duration_format = parentObj.common.custom[this.namespace].number_to_duration_format;
 			}
 
+			if (parentObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
+				// number -> datetime (string): parentObject Umrechnung in sekunden
+				expertSettings.number_to_datetime_convert_seconds = parentObj.common.custom[this.namespace].number_to_datetime_convert_seconds;
+			}
+
+			if (parentObj.common.custom[this.namespace].number_to_datetime_format) {
+				// number -> datetime (string): parentObject Anzeigeformat der DateTime
+				expertSettings.number_to_datetime_format = parentObj.common.custom[this.namespace].number_to_datetime_format;
+			}
+
 		}
 		return expertSettings;
 	}
@@ -725,6 +765,8 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].string_suffix) {
 				expertSettings.string_suffix = parentObj.common.custom[this.namespace].string_suffix;
 			}
+
+
 		}
 		return expertSettings;
 	}
@@ -985,31 +1027,59 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 
-			// Type Converison: number -> string (duration)
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_duration") {
+			// Type Converison: number -> string (duration, datetime)
+			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_duration" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_datetime") {
 
 				if (!targetIsParentObj) {
 					// parentObject state hat sich geändert
 
 					if (targetObj.common.custom[this.namespace].number_to_duration_format) {
 						// number -> duration
+						try {
+							if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+								// ggf. ist eine Umrechnung in Sekunden hinterlegt
+								convertedValue = mathjs.eval(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
+							}
 
-						if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
-							// ggf. ist eine Umrechnung in Sekunden hinterlegt
-							convertedValue = mathjs.eval(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
+							moment.locale(mySystemConfig.language);
+							convertedValue = moment.duration(convertedValue, 'seconds').format(targetObj.common.custom[this.namespace].number_to_duration_format, 0);
+
+							if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}', format '${targetObj.common.custom[this.namespace].number_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+							} else {
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+							}
+						} catch (err) {
+							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
+							convertedValue = "Error";
 						}
-						convertedValue = moment.duration(convertedValue, 'seconds').format(targetObj.common.custom[this.namespace].number_to_duration_format, 0);
+					}
 
-						if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}' and format '${targetObj.common.custom[this.namespace].number_to_duration_format}' -> linkedObject value is '${convertedValue}'`);
-						} else {
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_duration_format}' -> linkedObject value is '${convertedValue}'`);
+					if (targetObj.common.custom[this.namespace].number_to_datetime_format) {
+						// number -> datetime
+						try {
+							if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
+								// ggf. ist eine Umrechnung in Sekunden hinterlegt
+								convertedValue = mathjs.eval(`${value} ${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}`);
+							}
+
+							moment.locale(mySystemConfig.language);
+							convertedValue = moment.unix(convertedValue).format(targetObj.common.custom[this.namespace].number_to_datetime_format);
+
+							if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}', format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+							} else {
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+							}
+						} catch (err) {
+							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
+							convertedValue = "Error";
 						}
 					}
 				}
 			}
 
-			// Type Converison: boolean -> string (duration)
+			// Type Converison: boolean -> string
 			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "boolean_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
 
 				if (!targetIsParentObj) {
