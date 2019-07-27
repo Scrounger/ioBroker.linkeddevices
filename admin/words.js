@@ -733,17 +733,17 @@ systemDictionary = {
 		"pl": "format wyświetlania czasu trwania",
 		"zh-cn": "显示格式的持续时间"
 	},
-	"more information about the display format": {
-		"en": "more information about the display format",
-		"de": "Weitere Informationen zum Anzeigeformat",
-		"ru": "больше информации о формате отображения",
-		"pt": "mais informações sobre o formato de exibição",
-		"nl": "meer informatie over het weergaveformaat",
-		"fr": "plus d'informations sur le format d'affichage",
-		"it": "ulteriori informazioni sul formato di visualizzazione",
-		"es": "Más información sobre el formato de visualización.",
-		"pl": "więcej informacji o formacie wyświetlania",
-		"zh-cn": "有关显示格式的更多信息"
+	"more information about the display format (moment library)": {
+		"en": "more information about the display format (moment library)",
+		"de": "Weitere Informationen zum Anzeigeformat (moment Library)",
+		"ru": "больше информации о формате отображения (библиотека моментов)",
+		"pt": "mais informações sobre o formato de exibição (biblioteca de moment)",
+		"nl": "meer informatie over het weergaveformaat (moment bibliotheek)",
+		"fr": "plus d'informations sur le format d'affichage (bibliothèque de moment)",
+		"it": "ulteriori informazioni sul formato di visualizzazione (libreria dei moment)",
+		"es": "más información sobre el formato de visualización (moment de la biblioteca)",
+		"pl": "więcej informacji o formacie wyświetlania (biblioteka moment)",
+		"zh-cn": "有关显示格式的更多信息（时刻库）"
 	},
 	"prefix string": {
 		"en": "prefix string",
