@@ -13,7 +13,7 @@ const moment = require("moment");
 const momentDurationFormatSetup = require("moment-duration-format");
 
 // Default values, falls system config nicht geladen werden kann
-var mySystemConfig = { language: "en", dateFormat: "DD.MM.YYYY" };
+var mySystemConfig = { language: "en", dateFormat: "DD.MM.YYYY", durationFormat: "dd[T] hh[h] mm[m]" };
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -713,6 +713,12 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].number_to_duration_format) {
 				// number -> duration (string): parentObject Anzeigeformat der Dauer
 				expertSettings.number_to_duration_format = parentObj.common.custom[this.namespace].number_to_duration_format;
+			} else {
+				if (parentObj.common.custom[this.namespace].number_convertTo && parentObj.common.custom[this.namespace].number_convertTo == "duration") {
+					// Duration Format ist zwinged erforderlich, um Spezial Format zu erkennen.
+					expertSettings.number_to_duration_format = mySystemConfig.durationFormat;
+					this.log.warn(`[getCustomDataTypeNumber] no duration format set for parentObject '${parentObj._id}' -> using default format '${mySystemConfig.durationFormat}'`)
+				}
 			}
 
 			if (parentObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
@@ -723,6 +729,12 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].number_to_datetime_format) {
 				// number -> datetime (string): parentObject Anzeigeformat der DateTime
 				expertSettings.number_to_datetime_format = parentObj.common.custom[this.namespace].number_to_datetime_format;
+			} else {
+				if (parentObj.common.custom[this.namespace].number_convertTo && parentObj.common.custom[this.namespace].number_convertTo == "datetime") {
+					// DateTime Format ist zwinged erforderlich, um Spezial Format zu erkennen.
+					expertSettings.number_to_datetime_format = mySystemConfig.dateFormat;
+					this.log.warn(`[getCustomDataTypeNumber] no datetime format set for parentObject '${parentObj._id}' -> using default format '${mySystemConfig.dateFormat}'`)
+				}
 			}
 
 		}
