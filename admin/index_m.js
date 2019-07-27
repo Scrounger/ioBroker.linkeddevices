@@ -197,6 +197,10 @@ async function saveAssignedParentObjects(tableItem) {
                 }
 
                 // bereinigt custom Data und common Data vom linkedObject zusammenführen
+                if(Object.keys(customFromLinkedObject).length > 0){
+                    // Wenn custom Daten in linkedObject vorhanden -> dann expertSettings setzen
+                    expertSettings = true;
+                }
                 Object.assign(customForParentObj, customFromLinkedObject);
 
                 // weitere benötigte Daten hinzufügen
