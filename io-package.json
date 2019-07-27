@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.3.1",
+		"version": "0.3.2",
 		"news": {
+			"0.3.2": {
+				"en": "more expertsettings added. Configure prefix / suffix for string. Convert number readonly to duration, date, time or datetime. some bug fixes.",
+				"de": "Weitere Experteneinstellungen hinzugefügt. Vorangestellte / nachgestellte Zeichen für eine Zeichenfolge. Wandeln Sie die Zahl (readonly) in Dauer, Datum, Uhrzeit oder Datum / Uhrzeit um. Einige Fehler behoben",
+				"ru": "добавлено больше экспертных настроек. Настройте префикс / суффикс для строки. Преобразование числа только для чтения в продолжительность, дату, время или дату и время. некоторые исправления ошибок.",
+				"pt": "mais expertsettings adicionados. Configurar prefixo / sufixo para string. Converta o número readonly para duração, data, hora ou data e hora. algumas correções de bugs.",
+				"nl": "meer expertinstellingen toegevoegd. Configureer het voorvoegsel / achtervoegsel voor tekenreeks. Converteer nummer alleen-lezen naar duur, datum, tijd of datetime. enkele bugfixes.",
+				"fr": "plus d'expertsettings ajoutés. Configure le préfixe / suffixe pour la chaîne. Convertir un nombre en lecture seule en durée, date, heure ou date / heure. quelques corrections de bugs.",
+				"it": "più esperti aggiunti. Configura prefisso / suffisso per stringa. Converti il numero in sola lettura in durata, data, ora o datetime. alcune correzioni di bug.",
+				"es": "más configuración de expertos añadidos. Configurar prefijo / sufijo para cadena. Convierta el número de solo lectura en duración, fecha, hora o fecha y hora. Algunas correcciones de errores.",
+				"pl": "dodano więcej ustawień ekspertów. Skonfiguruj prefiks / sufiks dla łańcucha. Konwertuj liczbę tylko do czasu trwania, daty, godziny lub daty / godziny. niektóre poprawki błędów.",
+				"zh-cn": "更多专家设置。配置字符串的前缀/后缀。将数字只读转换为持续时间，日期，时间或日期时间。一些错误修复。"
+			},
 			"0.3.0": {
 				"en": "linked devices overview added to adapter configuration",
 				"de": "Übersicht über verlinkte Objekte zur Adapterkonfiguration hinzugefügt",
