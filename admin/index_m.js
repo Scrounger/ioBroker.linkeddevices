@@ -160,8 +160,20 @@ async function saveAssignedParentObjects(tableItem) {
                     if (parentObject.common.type && parentObject.common.type != linkedObject.common.type) {
                         // nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
                         let convertToKey = parentObject.common.type + "_convertTo";
-                        customForParentObj[convertToKey] = linkedObject.common.type;
-                        expertSettings = true;
+
+                        if (linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].number_to_duration_format) {
+                            // Spezial Format: Duration
+                            customForParentObj[convertToKey] = "duration"
+                            expertSettings = true;
+                        } else if (linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].number_to_datetime_format) {
+                            // Spezial Format: DateTime
+                            customForParentObj[convertToKey] = "datetime"
+                            expertSettings = true;
+                        } else {
+                            // kein Spezial Format
+                            customForParentObj[convertToKey] = linkedObject.common.type;
+                            expertSettings = true;
+                        }
                     }
                 }
 
@@ -198,7 +210,7 @@ async function saveAssignedParentObjects(tableItem) {
                     parentObject.common.custom[myNamespace] = customForParentObj;
                 } else {
                     // kein custom vorhanden
-                    parentObject.common.custom = {[myNamespace] : customForParentObj};
+                    parentObject.common.custom = { [myNamespace]: customForParentObj };
                 }
 
                 // parentObject aktualisieren -> linkedObject Daten werden automatisch wegen neustart des Adapters nach dem speichern aktualisiert
@@ -445,7 +457,7 @@ async function getObject(id) {
     });
 }
 
-async function setForeignObject(obj){
+async function setForeignObject(obj) {
     new Promise((resolve, reject) => {
         socket.emit('setObject', obj._id, obj, function (err, res) {
             if (!err && res) {
