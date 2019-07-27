@@ -792,5 +792,17 @@ systemDictionary = {
 		"es": "fecha y hora",
 		"pl": "datetime",
 		"zh-cn": "约会时间"
+	},
+	"conversion in unix timestamp (seconds)": {
+		"en": "conversion in unix timestamp (seconds)",
+		"de": "Konvertierung in Unixzeit (Sekunden)",
+		"ru": "преобразование в метку времени Unix (секунды)",
+		"pt": "conversão em timestamp unix (segundos)",
+		"nl": "conversie in unix-tijdstempel (seconden)",
+		"fr": "conversion en timestamp unix (secondes)",
+		"it": "conversione in unix timestamp (secondi)",
+		"es": "Conversión en sello de tiempo Unix (segundos)",
+		"pl": "konwersja w uniksowym znaczniku czasu (sekundy)",
+		"zh-cn": "unix时间戳（秒）转换"
 	}
 };
