@@ -79,6 +79,25 @@ werden.
 |---|---|---|---|
 | Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
 
+#### Zahl (readonly): Konvertiere in Typ 'Dauer'
+Zur Info beim Typ 'Dauer' ist das verlinkte Objekt vom Typ 'Zeichenkette'
+![Strukture](media/expert_settings_number_convert_to_duration.png)
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+| Umrechnung in Sekunden | Zur Berechnung der Dauer muss der Wert in Sekunden vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
+| Anzeigeformat der Dauer | Hier könnt ihr die Formatierung für die Dauer festlegen | [siehe moment duration format library Doku](https://github.com/jsmreese/moment-duration-format#template-string) | 'y[J] d[T] hh[h] mm[m]' zeigt beim verlinkten Objekt den Wert '1J 11T 00h 24m' an, sofern ioBroker Sprache auf Deutsch eingestellt ist |
+
+#### Zahl (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
+Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenkette'
+![Strukture](media/expert_settings_number_convert_to_datetime.png)
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+| Umrechung in Unixzeit (Sekunden) | Zur Berechnung von Datum und oder Uhrzeit muss der Wert in der [Unixzeit](https://de.wikipedia.org/wiki/Unixzeit) vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
+| Anzeigeformat der Datum / Uhrzeit | Hier könnt ihr die Formatierung für das Datum und oder Uhrzeit festlegen | [siehe moment library Doku](https://momentjs.com/docs/#/parsing/string-format/) | 'LLL' zeigt beim verlinkten Objekt den Wert '26. Juli 2019 22:01' an, sofern ioBroker Sprache auf Deutsch eingestellt ist |
+
+
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl'
 
 #### Zahl: Konvertiere in Typ nicht umwandeln
