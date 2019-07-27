@@ -795,7 +795,7 @@ systemDictionary = {
 	},
 	"conversion in unix timestamp (seconds)": {
 		"en": "conversion in unix timestamp (seconds)",
-		"de": "Konvertierung in Unixzeit (Sekunden)",
+		"de": "Umrechung in Unixzeit (Sekunden)",
 		"ru": "преобразование в метку времени Unix (секунды)",
 		"pt": "conversão em timestamp unix (segundos)",
 		"nl": "conversie in unix-tijdstempel (seconden)",
