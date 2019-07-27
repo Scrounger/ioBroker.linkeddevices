@@ -433,6 +433,8 @@ class Linkeddevices extends utils.Adapter {
 	 */
 	async createLinkedObject(parentObj, oldLinkedObj = Object()) {
 		try {
+			var linkedId = null;
+
 			// Datenpunkte sind von 'linkeddevices' und aktiviert
 			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
 				&& parentObj.common.custom[this.namespace].enabled) {
@@ -442,7 +444,7 @@ class Linkeddevices extends utils.Adapter {
 					this.log.error("[createLinkedObject] No 'linkedId' defined for object: '" + parentObj._id + "'");
 				} else {
 					// 'custom.linkedId' vorhanden 
-					var linkedId = this.getLinkedObjectId(parentObj);
+					linkedId = this.getLinkedObjectId(parentObj);
 
 					if ((/[*?"'\[\]]/).test(linkedId)) {
 						// 'custom.linkedId' enthält illegale zeichen
@@ -495,7 +497,7 @@ class Linkeddevices extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-			this.log.error("[createLinkedObject] error: " + err.message);
+			this.log.error(`[createLinkedObject] parentObject '${parentObj._id}', linkedObject '${linkedId}' error: ${err.message}`);
 			this.log.error("[createLinkedObject] stack: " + err.stack);
 		}
 	}
@@ -564,7 +566,7 @@ class Linkeddevices extends utils.Adapter {
 		let expertSettings = {};
 		if (parentObj && parentObj.common && parentObj.common.custom) {
 
-			if (parentObj.common.custom[this.namespace].name || parentObj.common.custom[this.namespace].name.length > 0 || parentObj.common.custom[this.namespace].name != "") {
+			if (parentObj.common.custom[this.namespace].name && (parentObj.common.custom[this.namespace].name.length > 0 || parentObj.common.custom[this.namespace].name != "")) {
 				// 'name' von expert settings übernehmen
 				commonData.name = parentObj.common.custom[this.namespace].name;
 				this.log.silly(`[getCommonData] using custom name '${commonData.name}' for '${linkedId}'`)
