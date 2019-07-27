@@ -357,7 +357,7 @@ if (typeof customPostInits !== 'undefined') {
                     Group.Number_Converter_String_DateTime.show()
 
                     if (Input.number_to_datetime_format.val() == "") {
-                        Input.number_to_datetime_format.val("DD.MM.YYYY HH:mm");
+                        Input.number_to_datetime_format.val("LLL");
                     }
 
                     Group.Number_Converter_None.hide();
