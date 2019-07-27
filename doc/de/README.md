@@ -140,3 +140,5 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
+| Wert wenn Objekt 'true' ist | Ein Zeichefolge für den Wert des verlinkten Objektes, wenn das Objekt 'true' ist  | alles | Hat das Objekt den Wert 'true', dann hat das verlinkte Objekt den Wert 'an'. Achtung wenn das verlinkte Objekt einen Wert annimmt, der nicht in den Experteneinstellungen definiert ist, so wird der Wert des Objekts 'false' |
+| Wert wenn Objekt 'false' ist | Ein Zeichefolge für den Wert des verlinkten Objektes, wenn das Objekt 'false' ist  | alles | Hat das Objekt den Wert 'false', dann hat das verlinkte Objekt den Wert 'aus'. |
