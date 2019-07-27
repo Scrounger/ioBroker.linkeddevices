@@ -80,7 +80,7 @@ werden.
 | Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
 
 #### Zahl (readonly): Konvertiere in Typ 'Dauer'
-Zur Info der Typ 'Dauer' ist eine 'Zeichenkette'
+Zur Info beim Typ 'Dauer' ist das verlinkte Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_number_convert_to_duration.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -89,11 +89,12 @@ Zur Info der Typ 'Dauer' ist eine 'Zeichenkette'
 | Anzeigeformat der Dauer | Hier könnt ihr die Formatierung für die Dauer festlegen | [siehe moment duration format library Doku](https://github.com/jsmreese/moment-duration-format#template-string) | 'y[J] d[T] hh[h] mm[m]' zeigt beim verlinkten Objekt den Wert '1J 11T 00h 24m' an, sofern ioBroker Sprache auf Deutsch eingestellt ist |
 
 #### Zahl (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
+Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_number_convert_to_datetime.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
-| Umrechung in Unixzeit (Sekunden) | Zur Berechnung von Datum und oder Uhrzeit muss der Wert in der (Unixzeit)[https://de.wikipedia.org/wiki/Unixzeit] vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
+| Umrechung in Unixzeit (Sekunden) | Zur Berechnung von Datum und oder Uhrzeit muss der Wert in der [Unixzeit](https://de.wikipedia.org/wiki/Unixzeit) vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
 | Anzeigeformat der Datum / Uhrzeit | Hier könnt ihr die Formatierung für das Datum und oder Uhrzeit festlegen | [siehe moment library Doku](https://momentjs.com/docs/#/parsing/string-format/) | 'LLL' zeigt beim verlinkten Objekt den Wert '26. Juli 2019 22:01' an, sofern ioBroker Sprache auf Deutsch eingestellt ist |
 
 
@@ -128,6 +129,8 @@ Zur Info der Typ 'Dauer' ist eine 'Zeichenkette'
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
+| vorangestellte Zeichenfolge | Ein Zeichefolge die beim verlinkten Objekt vor die Zeichfolge des Objektes gesetzt wird | alles | Hat das Objekt den Wert 'ich bin ein Zeichenkette', dann hat das verlinkte Objekt den Wert 'prefix_ich bin ein Zeichenkette' |
+| nachgestellte Zeichenfolge | Ein Zeichefolge die beim verlinkten Objekt hinter die Zeichfolge des Objektes gesetzt wird | alles | Hat das Objekt den Wert 'ich bin ein Zeichenkette', dann hat das verlinkte Objekt den Wert 'ich bin ein Zeichenkette_suffix' |
 
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Logikwert'
 ![Strukture](media/expert_settings_boolean.png)
