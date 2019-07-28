@@ -125,8 +125,7 @@
 		]
 	},
 	"native": {
-		"notDeleteDeadLinkedObjects": true,
-		"option2": "42"
+		"notDeleteDeadLinkedObjects": true
 	},
 	"objects": [],
 	"instanceObjects": []
