@@ -804,5 +804,29 @@ systemDictionary = {
 		"es": "Conversión en sello de tiempo Unix (segundos)",
 		"pl": "konwersja w uniksowym znaczniku czasu (sekundy)",
 		"zh-cn": "unix时间戳（秒）转换"
+	},
+	"string for 'true' of the linked object": {
+		"en": "string for 'true' of the linked object",
+		"de": "Zeichenkette für 'true' des verlinkten Objekts",
+		"ru": "строка для 'true' связанного объекта",
+		"pt": "string para 'true' do objeto vinculado",
+		"nl": "tekenreeks voor 'true' van het gekoppelde object",
+		"fr": "chaîne pour 'true' de l'objet lié",
+		"it": "stringa per \"true\" dell'oggetto collegato",
+		"es": "cadena para 'verdadero' del objeto vinculado",
+		"pl": "ciąg „true” połączonego obiektu",
+		"zh-cn": "链接对象的“true”字符串"
+	},
+	"string for 'false' of the linked object": {
+		"en": "string for 'false' of the linked object",
+		"de": "Zeichenkette für 'false' des verlinkten Objekts",
+		"ru": "строка для 'false' связанного объекта",
+		"pt": "string para 'false' do objeto vinculado",
+		"nl": "tekenreeks voor 'false' van het gekoppelde object",
+		"fr": "chaîne pour 'false' de l'objet lié",
+		"it": "stringa per \"false\" dell'oggetto collegato",
+		"es": "cadena para 'falso' del objeto vinculado",
+		"pl": "ciąg dla „false” powiązanego obiektu",
+		"zh-cn": "链接对象的“false”字符串"
 	}
 };

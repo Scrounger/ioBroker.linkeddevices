@@ -125,6 +125,7 @@ if (typeof customPostInits !== 'undefined') {
             // Group: type 'string'
             Group.String = $div.find('.view_String');
             Group.String_Converter_None = $div.find('.view_String_Converter_None');
+            Group.String_Converter_Boolean = $div.find('.view_String_Converter_Boolean');
 
 
             // alle input in vars packen
@@ -156,6 +157,8 @@ if (typeof customPostInits !== 'undefined') {
             // Input: type 'string'
             Input.string_prefix = $div.find('input[data-field="string_prefix"]');
             Input.string_suffix = $div.find('input[data-field="string_suffix"]');
+            Input.string_to_boolean_value_true = $div.find('input[data-field="string_to_boolean_value_true"]');
+            Input.string_to_boolean_value_false = $div.find('input[data-field="string_to_boolean_value_false"]');
 
 
             // alle select in var packen
@@ -242,6 +245,18 @@ if (typeof customPostInits !== 'undefined') {
             if (type === 'string' && expertSettingsActivated) {
                 Group.String.show();
 
+                if (selectedStringConverter === "") {
+                    Group.String_Converter_None.show();
+
+                    Group.String_Converter_Boolean.hide();
+                    Group.String_Converter_Boolean.find("input").val("");
+
+                } else if (selectedStringConverter === "boolean") {
+                    Group.String_Converter_Boolean.show();
+
+                    Group.String_Converter_None.hide();
+                    Group.String_Converter_None.find("input").val("");
+                }
 
                 // Event Handler für ExpertSettings mit type 'string'
                 events_ExpertSettings_String();
