@@ -47,6 +47,7 @@ if (typeof customPostInits !== 'undefined') {
         var Input = {};
         var Select = {};
         var Label = {};
+        var Button = {};
 
         // vars die sich verändern können und für conditions benötigt werden
         var isCustomEnabled = false;
@@ -79,10 +80,24 @@ if (typeof customPostInits !== 'undefined') {
         // Divs in vars packen
         initialize_Divs();
 
+
         if (values["isLinked"] != undefined) {
             // Custom Dialog für LinkedObject
             initialize_LinkedObject();
 
+            // Button um Custom Dialog des verlinkten Objektes zu öffnen
+            if (values["isLinked"] == true) {
+                Button.parentObjectSettings.attr('disabled', false);
+
+                Button.parentObjectSettings.click(function () {
+                    let parentId = Input.parentId.val();
+                    let url = `${window.location.origin}/#tab-objects/customs/${parentId}`;
+                    window.open(url);
+                });
+            } else {
+                // nicht verlinkt -> Button disable
+                Button.parentObjectSettings.attr('disabled', true);
+            }
         } else {
             // Custom Dialog für ParentObject
             initialize_ParentObject();
@@ -171,6 +186,10 @@ if (typeof customPostInits !== 'undefined') {
             Label.number_unit = $div.find('label[id="LB_number_unit"]');
             Label.number_max = $div.find('label[id="LB_number_max"]');
             Label.number_min = $div.find('label[id="LB_number_min"]');
+
+            // Buttons
+            Button.parentObjectSettings = $div.find('.values-buttons');
+
         }
 
         function initialize_LinkedObject() {
