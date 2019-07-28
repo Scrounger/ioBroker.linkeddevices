@@ -8,6 +8,7 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 const mathjs = require("mathjs");
+const fs = require('fs');
 
 const moment = require("moment");
 const momentDurationFormatSetup = require("moment-duration-format");
@@ -323,7 +324,77 @@ class Linkeddevices extends utils.Adapter {
 		// subscribe für alle 'states' des Adapters, um Änderungen mitzubekommen
 		await this.subscribeStatesAsync('*');
 
+		await this.createJavaScriptFile();
+
 		this.log.info('[initialObjects] finished')
+	}
+
+	async createJavaScriptFile() {
+		try {
+			var rootName = "myDevices"
+
+			let str = `var ${rootName} = {};\n\n`
+			let path = "node_modules//ioBroker.linkeddevices//scripts//"
+
+			if (!fs.existsSync(path)) {
+				// @ts-ignore
+				fs.mkdirSync(path);
+			}
+
+
+
+			let linkedDevicesList = await this.getForeignObjectsAsync(this.namespace + '.*');
+			let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
+
+			if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
+				for (var id in sortedIdList) {
+					let linkedId = sortedIdList[id];
+					let linkedObject = linkedDevicesList[sortedIdList[id]];
+
+					if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].isLinked) {
+						this.log.debug(linkedId);
+
+						let linkedIdSplitted = linkedId.replace(this.namespace + ".", "").split(".");
+						let varName = ""
+						if (linkedIdSplitted.length > 0) {
+							for (var i = 0; i < linkedIdSplitted.length; i++) {
+
+								if (i === 0) {
+									varName = `${rootName}.${linkedIdSplitted[i]}`;
+								} else {
+									varName = varName.concat(`.${linkedIdSplitted[i]}`)
+								}
+
+								str = str.concat(`${varName} = {};\n`);
+							}
+
+							// Funktionen hinzufügen
+							str = str.concat(`${varName}.getId = function(){return "${linkedId}"};\n`);
+							str = str.concat(`${varName}.getState = function(){return getState("${linkedId}")};\n`);
+							str = str.concat(`${varName}.setState = function(val, ack){return setState("${linkedId}", val, ack)};\n`);
+							str = str.concat(`${varName}.setStateDelayed = function(val, ack, delay){return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+							str = str.concat(`${varName}.getObject = function(){return getObject("${linkedId}")};\n`);
+
+						}
+						str = str.concat("\n");
+					}
+				}
+			}
+
+			fs.writeFileSync("node_modules/ioBroker.linkeddevices/scripts/myscripts.js", str);
+
+		} catch (err) {
+			this.log.error("[createJavaScriptFile] error: " + err.message);
+			this.log.error("[createJavaScriptFile] stack: " + err.stack);
+		}
+
+	}
+
+	sort_by_key(array, key) {
+		return array.sort(function (a, b) {
+			var x = a[key]; var y = b[key];
+			return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+		});
 	}
 
 	async getSystemConfig() {
