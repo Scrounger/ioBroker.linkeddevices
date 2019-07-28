@@ -780,6 +780,15 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.string_suffix = parentObj.common.custom[this.namespace].string_suffix;
 			}
 
+			if (parentObj.common.custom[this.namespace].string_to_boolean_value_true) {
+				// string -> boolean: linkedObject Wert für True
+				expertSettings.string_to_boolean_value_true = parentObj.common.custom[this.namespace].string_to_boolean_value_true;
+			}
+
+			if (parentObj.common.custom[this.namespace].string_to_boolean_value_false) {
+				// string -> boolean: linkedObject Wert für False
+				expertSettings.string_to_boolean_value_false = parentObj.common.custom[this.namespace].string_to_boolean_value_false;
+			}
 
 		}
 		return expertSettings;
