@@ -575,10 +575,10 @@ class Linkeddevices extends utils.Adapter {
 			// Zunächst prüfen ob typ konvertierung in expert settings eingestellt ist
 			if (parentObj.common.custom[this.namespace].number_convertTo) {
 
-				if (parentObj.common.custom[this.namespace].number_convertTo == "duration") {
+				if (parentObj.common.custom[this.namespace].number_convertTo === "duration") {
 					// number -> duration: type ist 'string'
 					expertSettings.type = "string";
-				} else if (parentObj.common.custom[this.namespace].number_convertTo == "datetime") {
+				} else if (parentObj.common.custom[this.namespace].number_convertTo === "datetime") {
 					// number -> datetime: type ist 'string'
 					expertSettings.type = "string";
 				} else {
@@ -588,6 +588,10 @@ class Linkeddevices extends utils.Adapter {
 
 			} else if (parentObj.common.custom[this.namespace].boolean_convertTo) {
 				expertSettings.type = parentObj.common.custom[this.namespace].boolean_convertTo;
+
+			} else if (parentObj.common.custom[this.namespace].string_convertTo) {
+				expertSettings.type = parentObj.common.custom[this.namespace].string_convertTo;
+
 			}
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
@@ -626,6 +630,8 @@ class Linkeddevices extends utils.Adapter {
 				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "boolean_to_string") {
 					// boolean -> string: typ spezifische properties entfernen, ändern oder hinzufügen
 					commonData.def = "";
+				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "string_to_boolean") {
+					commonData.def = false;
 				}
 			}
 
@@ -714,7 +720,7 @@ class Linkeddevices extends utils.Adapter {
 				// number -> duration (string): parentObject Anzeigeformat der Dauer
 				expertSettings.number_to_duration_format = parentObj.common.custom[this.namespace].number_to_duration_format;
 			} else {
-				if (parentObj.common.custom[this.namespace].number_convertTo && parentObj.common.custom[this.namespace].number_convertTo == "duration") {
+				if (parentObj.common.custom[this.namespace].number_convertTo && parentObj.common.custom[this.namespace].number_convertTo === "duration") {
 					// Duration Format ist zwinged erforderlich, um Spezial Format zu erkennen.
 					expertSettings.number_to_duration_format = mySystemConfig.durationFormat;
 					this.log.warn(`[getCustomDataTypeNumber] no duration format set for parentObject '${parentObj._id}' -> using default format '${mySystemConfig.durationFormat}'`)
@@ -730,7 +736,7 @@ class Linkeddevices extends utils.Adapter {
 				// number -> datetime (string): parentObject Anzeigeformat der DateTime
 				expertSettings.number_to_datetime_format = parentObj.common.custom[this.namespace].number_to_datetime_format;
 			} else {
-				if (parentObj.common.custom[this.namespace].number_convertTo && parentObj.common.custom[this.namespace].number_convertTo == "datetime") {
+				if (parentObj.common.custom[this.namespace].number_convertTo && parentObj.common.custom[this.namespace].number_convertTo === "datetime") {
 					// DateTime Format ist zwinged erforderlich, um Spezial Format zu erkennen.
 					expertSettings.number_to_datetime_format = mySystemConfig.dateFormat;
 					this.log.warn(`[getCustomDataTypeNumber] no datetime format set for parentObject '${parentObj._id}' -> using default format '${mySystemConfig.dateFormat}'`)
@@ -780,12 +786,12 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.string_suffix = parentObj.common.custom[this.namespace].string_suffix;
 			}
 
-			if (parentObj.common.custom[this.namespace].string_to_boolean_value_true) {
+			if (parentObj.common.custom[this.namespace].string_to_boolean_value_true || parentObj.common.custom[this.namespace].string_to_boolean_value_true === 0) {
 				// string -> boolean: linkedObject Wert für True
 				expertSettings.string_to_boolean_value_true = parentObj.common.custom[this.namespace].string_to_boolean_value_true;
 			}
 
-			if (parentObj.common.custom[this.namespace].string_to_boolean_value_false) {
+			if (parentObj.common.custom[this.namespace].string_to_boolean_value_false || parentObj.common.custom[this.namespace].string_to_boolean_value_false === 0) {
 				// string -> boolean: linkedObject Wert für False
 				expertSettings.string_to_boolean_value_false = parentObj.common.custom[this.namespace].string_to_boolean_value_false;
 			}
@@ -1140,6 +1146,46 @@ class Linkeddevices extends utils.Adapter {
 						} else {
 							this.log.warn(`[getConvertedValue] value not set as 'true' / 'false' in expert settings of parentObject '${targetId}' -> fallback to parentObject default '${convertedValue}'`);
 						}
+					}
+				}
+			}
+
+			// Type Converison: string -> boolean
+			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_boolean" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_boolean") {
+
+				if (!targetIsParentObj) {
+					// parentObject state hat sich geändert
+					if ((targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0) && value.toString() === targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString()) {
+						convertedValue = true;
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', '${targetObj.common.custom[this.namespace].string_to_boolean_value_true}' is condition for 'true' -> linkedObject value is '${convertedValue}'`);
+
+					} else if ((targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0) && value.toString() === targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString()) {
+						convertedValue = false;
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', ${targetObj.common.custom[this.namespace].string_to_boolean_value_false}' is condition for 'false' -> linkedObject value is '${convertedValue}'`);
+
+					} else {
+						convertedValue = false;
+
+						if ((targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0) && targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString() && (targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0) && targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString()) {
+							this.log.debug(`[getConvertedValue] string not match with condition in expert settings of parentObject '${sourceId}' -> linkedObject value is '${convertedValue}'`);
+						} else {
+							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to '${convertedValue}'`);
+						}
+					}
+				}
+
+				if (targetIsParentObj) {
+					// linkedObject state hat sich geändert
+					if (value && (targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0)) {
+						convertedValue = targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString();
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].string_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`);
+
+					} else if (!value && (targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0)) {
+						convertedValue = targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString();
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].string_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`);
+					} else {
+						convertedValue = value.toString();
+						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to linkedObject value '${convertedValue}'`);
 					}
 				}
 			}
