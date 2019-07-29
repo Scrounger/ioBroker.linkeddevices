@@ -330,19 +330,20 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	async createJavaScriptFile() {
+		//TODO: log ausgaben
+
 		try {
-			var rootName = "myDevices"
-
+			var rootName = this.namespace.replace(".", "");
 			let str = `var ${rootName} = {};\n\n`
-			let path = "node_modules//ioBroker.linkeddevices//scripts//"
 
+			// ggf. muss der pfad erstellt werden
+			let path = "node_modules//ioBroker.linkeddevices//scripts//"
 			if (!fs.existsSync(path)) {
 				// @ts-ignore
 				fs.mkdirSync(path);
 			}
 
-
-
+			// alle linkedObjects laden und aufsteigend sortieren
 			let linkedDevicesList = await this.getForeignObjectsAsync(this.namespace + '.*');
 			let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
 
@@ -351,9 +352,10 @@ class Linkeddevices extends utils.Adapter {
 					let linkedId = sortedIdList[id];
 					let linkedObject = linkedDevicesList[sortedIdList[id]];
 
+					// sofern isLinked = true -> mit in die skript Erstellung einbeziehen
 					if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].isLinked) {
-						this.log.debug(linkedId);
 
+						// struktur der variablen bauen
 						let linkedIdSplitted = linkedId.replace(this.namespace + ".", "").split(".");
 						let varName = ""
 						if (linkedIdSplitted.length > 0) {
@@ -368,20 +370,22 @@ class Linkeddevices extends utils.Adapter {
 								str = str.concat(`${varName} = {};\n`);
 							}
 
-							// Funktionen hinzufügen
-							str = str.concat(`${varName}.getId = function(){return "${linkedId}"};\n`);
-							str = str.concat(`${varName}.getState = function(){return getState("${linkedId}")};\n`);
-							str = str.concat(`${varName}.setState = function(val, ack){return setState("${linkedId}", val, ack)};\n`);
-							str = str.concat(`${varName}.setStateDelayed = function(val, ack, delay){return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
-							str = str.concat(`${varName}.getObject = function(){return getObject("${linkedId}")};\n`);
+							// Funktionen den linkedObjects hinzufügen
+							str = str.concat(`${varName}.getId = function() {return "${linkedId}"};\n`);
+							str = str.concat(`${varName}.getState = function() {return getState("${linkedId}")};\n`);
+							str = str.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
+							str = str.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+							str = str.concat(`${varName}.getObject = function() {return getObject("${linkedId}")};\n`);
 
 						}
 						str = str.concat("\n");
 					}
 				}
+				str = str.concat(`\nmodule.exports = ${rootName};`);
 			}
 
-			fs.writeFileSync("node_modules/ioBroker.linkeddevices/scripts/myscripts.js", str);
+			// Datei speichern
+			fs.writeFileSync(`node_modules/ioBroker.linkeddevices/scripts/${rootName}.js`, str);
 
 		} catch (err) {
 			this.log.error("[createJavaScriptFile] error: " + err.message);

@@ -2,6 +2,7 @@
 .idea
 node_modules
 nbproject
+scripts
 
 # npm package files
 iobroker.*.tgz
@@ -14,4 +15,3 @@ admin/i18n/*/flat.txt
 /linkeddevices.code-workspace
 /wordsFromAdmin.js
 system.config.json
-scripts/myscripts.js
