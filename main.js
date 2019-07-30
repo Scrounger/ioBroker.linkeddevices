@@ -333,59 +333,123 @@ class Linkeddevices extends utils.Adapter {
 		//TODO: log ausgaben
 
 		try {
-			var rootName = this.namespace.replace(".", "");
-			let str = `var ${rootName} = {};\n\n`
+			// zunächst prüfen ob Javascript Adapter installiert ist
+			var JavascriptAdapter = await this.getForeignObjectAsync("system.adapter.javascript.0");
+			if (JavascriptAdapter) {
+				this.log.debug(`[createJavaScriptFile] javascript adapter found!`);
 
-			// ggf. muss der pfad erstellt werden
-			let path = "node_modules//ioBroker.linkeddevices//scripts//"
-			if (!fs.existsSync(path)) {
-				// @ts-ignore
-				fs.mkdirSync(path);
-			}
+				var rootName = this.namespace.replace(".", "");
+				let str = `var ${rootName} = {};\n\n`
 
-			// alle linkedObjects laden und aufsteigend sortieren
-			let linkedDevicesList = await this.getForeignObjectsAsync(this.namespace + '.*');
-			let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
+				// ggf. muss der pfad erstellt werden
+				let path = "node_modules//ioBroker.linkeddevices//scripts//"
+				if (!fs.existsSync(path)) {
+					// @ts-ignore
+					fs.mkdirSync(path);
+				}
 
-			if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
-				for (var id in sortedIdList) {
-					let linkedId = sortedIdList[id];
-					let linkedObject = linkedDevicesList[sortedIdList[id]];
+				// alle linkedObjects laden und aufsteigend sortieren
+				let linkedDevicesList = await this.getForeignObjectsAsync(this.namespace + '.*');
+				let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
 
-					// sofern isLinked = true -> mit in die skript Erstellung einbeziehen
-					if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].isLinked) {
+				if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
+					for (var id in sortedIdList) {
+						let linkedId = sortedIdList[id];
+						let linkedObject = linkedDevicesList[sortedIdList[id]];
 
-						// struktur der variablen bauen
-						let linkedIdSplitted = linkedId.replace(this.namespace + ".", "").split(".");
-						let varName = ""
-						if (linkedIdSplitted.length > 0) {
-							for (var i = 0; i < linkedIdSplitted.length; i++) {
+						// sofern isLinked = true -> mit in die skript Erstellung einbeziehen
+						if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].isLinked) {
 
-								if (i === 0) {
-									varName = `${rootName}.${linkedIdSplitted[i]}`;
-								} else {
-									varName = varName.concat(`.${linkedIdSplitted[i]}`)
+							// struktur der variablen bauen
+							let linkedIdSplitted = linkedId.replace(this.namespace + ".", "").split(".");
+							let varName = ""
+							if (linkedIdSplitted.length > 0) {
+								for (var i = 0; i < linkedIdSplitted.length; i++) {
+
+									if (i === 0) {
+										varName = `${rootName}.${linkedIdSplitted[i]}`;
+									} else {
+										varName = varName.concat(`.${linkedIdSplitted[i]}`)
+									}
+
+									str = str.concat(`${varName} = {};\n`);
 								}
 
-								str = str.concat(`${varName} = {};\n`);
+								// Funktionen den linkedObjects hinzufügen
+								str = str.concat(`${varName}.getId = function() {return "${linkedId}"};\n`);
+								str = str.concat(`${varName}.getState = function() {return getState("${linkedId}")};\n`);
+								str = str.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
+								str = str.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+								str = str.concat(`${varName}.getObject = function() {return getObject("${linkedId}")};\n`);
+
 							}
-
-							// Funktionen den linkedObjects hinzufügen
-							str = str.concat(`${varName}.getId = function() {return "${linkedId}"};\n`);
-							str = str.concat(`${varName}.getState = function() {return getState("${linkedId}")};\n`);
-							str = str.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
-							str = str.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
-							str = str.concat(`${varName}.getObject = function() {return getObject("${linkedId}")};\n`);
-
+							str = str.concat("\n");
 						}
-						str = str.concat("\n");
+					}
+					// str = str.concat(`\nmodule.exports = ${rootName};`);
+				}
+
+				// Datei speichern
+				fs.writeFileSync(`node_modules/ioBroker.linkeddevices/scripts/${rootName}.js`, str);
+
+
+				// Skript Object anlegen bzw. überschreiben
+				let scriptObjectId = `javascript.0.scriptEnabled.global.linkeddevices.${rootName}`;
+				let scriptId = `script.js.global.linkeddevices.${rootName}`
+
+				// let scriptObject = {
+				// 	type: "state",
+				// 	_id: scriptObjectId,
+				// 	common: {
+				// 		name: `${rootName} - auto generated by linkeddevices `,
+				// 		desc: "controls script activity",
+				// 		type: "boolean",
+				// 		write: true,
+				// 		read: true,
+				// 		role: "switch.active"
+				// 	},
+				// 	native:  {
+				// 		script: scriptId
+				// 	}
+				// }
+
+				//await this.setForeignObject(scriptObjectId, scriptObject);
+
+
+				// erste Ordner (Mappe) anlegen
+				let folder = {
+					type: "channel",
+					_id: "script.js.global.linkeddevices",
+					common: {
+						name: "linkeddevices",
+						expert: true
 					}
 				}
-				str = str.concat(`\nmodule.exports = ${rootName};`);
-			}
+				await this.setForeignObject("script.js.global.linkeddevices", folder);
 
-			// Datei speichern
-			fs.writeFileSync(`node_modules/ioBroker.linkeddevices/scripts/${rootName}.js`, str);
+
+				let script = {
+					type: "script",
+					_id: scriptId,
+					common: {
+						name: rootName,
+						expert: true,
+						engineType: "Javascript/js",
+						engine: "system.adapter.javascript.0",
+						source: str,
+						debug: false,
+						verbose: false,
+						enabled: true
+					}
+				}
+
+				await this.setForeignObject(scriptId, script);
+
+
+			} else {
+				// Javascript Adapter ist nicht installiert
+				this.log.info(`[createJavaScriptFile] javascript adapter not found!`);
+			}
 
 		} catch (err) {
 			this.log.error("[createJavaScriptFile] error: " + err.message);
