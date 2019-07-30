@@ -340,13 +340,21 @@ async function events(onChange) {
             labelBtnCreateJavascript.text(_('javascript adapter is not installed'));
         } else {
             await $('.values-buttons[data-command="btnCreateJavascript"]').on('click', function () {
-                createJavascript();
+                createJavascriptConfirm();
             });
         }
 
     } catch (err) {
         showError(err);
     }
+}
+
+function createJavascriptConfirm() {
+    confirmMessage(_('After the script has been generated, the javascript adapter will be restarted!<br><br><br>Do you want to continue?'), _('attention'), null, [_('Cancel'), _('OK')], function (result) {
+        if (result === 1) {
+            createJavascript();
+        }
+    });
 }
 
 async function createJavascript() {
@@ -422,12 +430,9 @@ async function createJavascript() {
                     }
                 }
                 await setObject(scriptId, script);
-
-                showMessage(autoScript);
             }
         }
 
-        //showMessage("jaaa");
     } catch (err) {
         showError("generate javascript:" + err)
     }

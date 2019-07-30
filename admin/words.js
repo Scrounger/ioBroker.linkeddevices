@@ -840,5 +840,29 @@ systemDictionary = {
 		"es": "el adaptador de JavaScript no está instalado",
 		"pl": "adapter javascript nie jest zainstalowany",
 		"zh-cn": "未安装javascript适配器"
-	}
+	},
+	"attention": {
+		"en": "attention",
+		"de": "Achtung",
+		"ru": "внимание",
+		"pt": "atenção",
+		"nl": "aandacht",
+		"fr": "attention",
+		"it": "Attenzione",
+		"es": "atención",
+		"pl": "Uwaga",
+		"zh-cn": "注意"
+	},
+	"After the script has been generated, the javascript adapter will be restarted!<br><br><br>Do you want to continue?": {
+		"en": "After the script has been generated, the javascript adapter will be restarted!<br><br><br>Do you want to continue?",
+		"de": "Nachdem das Skript generiert wurde, wird der Javascript Adapter neu gestartet! <br><br><br> Möchtest Du fortfahren?",
+		"ru": "После того, как сценарий был сгенерирован, адаптер javascript будет перезапущен! <br><br><br> Вы хотите продолжить?",
+		"pt": "Depois que o script for gerado, o adaptador de javascript será reiniciado! <br><br><br> Você quer continuar?",
+		"nl": "Nadat het script is gegenereerd, wordt de JavaScript-adapter opnieuw gestart! <br><br><br> Wil je doorgaan?",
+		"fr": "Une fois le script généré, l'adaptateur javascript sera redémarré! <br><br><br> Voulez-vous continuer?",
+		"it": "Dopo che lo script è stato generato, l'adattatore javascript verrà riavviato! <br><br><br> Vuoi continuare?",
+		"es": "Después de que se haya generado el script, se reiniciará el adaptador de JavaScript. <br><br><br> ¿Quieres continuar?",
+		"pl": "Po wygenerowaniu skryptu adapter javascript zostanie ponownie uruchomiony! <br><br><br> Czy chcesz kontynuować?",
+		"zh-cn": "生成脚本后，将重新启动javascript适配器！ <br><br><br>你想继续吗？"
+	  }
 };
