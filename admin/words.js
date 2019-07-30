@@ -864,5 +864,17 @@ systemDictionary = {
 		"es": "Después de que se haya generado el script, se reiniciará el adaptador de JavaScript. <br><br><br> ¿Quieres continuar?",
 		"pl": "Po wygenerowaniu skryptu adapter javascript zostanie ponownie uruchomiony! <br><br><br> Czy chcesz kontynuować?",
 		"zh-cn": "生成脚本后，将重新启动javascript适配器！ <br><br><br>你想继续吗？"
+	},
+	"You like the adapter? Then support us with a small donation.": {
+		"en": "You like the adapter? Then support us with a small donation.",
+		"de": "Dir gefällt der Adapter? Dann unterstützen uns doch mit einer kleinen Spende.",
+		"ru": "Вам нравится адаптер? Тогда поддержите нас небольшим пожертвованием.",
+		"pt": "Você gosta do adaptador? Então nos apóie com uma pequena doação.",
+		"nl": "Vind je de adapter leuk? Steun ons dan met een kleine gift.",
+		"fr": "Vous aimez l'adaptateur? Alors soutenez-nous avec un petit don.",
+		"it": "Ti piace l'adattatore? Quindi supportaci con una piccola donazione.",
+		"es": "¿Te gusta el adaptador? Entonces apóyanos con una pequeña donación.",
+		"pl": "Lubisz adapter? Następnie wesprzyj nas niewielką darowizną.",
+		"zh-cn": "你喜欢适配器吗？然后通过小额捐款支持我们。"
 	  }
 };
