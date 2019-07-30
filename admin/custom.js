@@ -85,6 +85,8 @@ if (typeof customPostInits !== 'undefined') {
             // Custom Dialog für LinkedObject
             initialize_LinkedObject();
 
+            Button.parentObjectSettings.attr('title', _('settings of linked object'));
+
             // Button um Custom Dialog des verlinkten Objektes zu öffnen
             if (values["isLinked"] == true) {
                 Button.parentObjectSettings.attr('disabled', false);

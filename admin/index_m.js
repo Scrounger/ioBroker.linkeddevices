@@ -108,6 +108,7 @@ async function initialize_Divs() {
 
     // Buttons
     Button.createJavaScript = $('.values-buttons[data-command="btnCreateJavascript"]');
+    Button.createJavaScript.attr('title', _('generate script'));
 
     
     var javascriptAdapter = await getObject("system.adapter.javascript.0");

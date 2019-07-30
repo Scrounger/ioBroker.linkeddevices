@@ -888,5 +888,29 @@ systemDictionary = {
 		"es": "nombre del guion",
 		"pl": "nazwa skryptu",
 		"zh-cn": "脚本名称"
-	}
+	},
+	"generate script": {
+		"en": "generate script",
+		"de": "Skript generieren",
+		"ru": "создать скрипт",
+		"pt": "gerar script",
+		"nl": "script genereren",
+		"fr": "générer un script",
+		"it": "genera script",
+		"es": "generar script",
+		"pl": "wygeneruj skrypt",
+		"zh-cn": "生成脚本"
+	  },
+	  "settings of linked object": {
+		"en": "settings of linked object",
+		"de": "Einstellungen des verlinkten Objekts",
+		"ru": "настройки связанного объекта",
+		"pt": "configurações do objeto vinculado",
+		"nl": "instellingen van gekoppeld object",
+		"fr": "paramètres de l'objet lié",
+		"it": "impostazioni dell'oggetto collegato",
+		"es": "configuración del objeto vinculado",
+		"pl": "ustawienia połączonego obiektu",
+		"zh-cn": "链接对象的设置"
+	  }
 };
