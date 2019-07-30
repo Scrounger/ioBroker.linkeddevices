@@ -102,6 +102,7 @@ async function initialize_Divs() {
 
     // Inputs
     Input.scriptName = $('input[id="scriptName"]');
+    Input.variableName = $('input[id="variableName"]');
 
     // Labels    
     Label.ButtonCreateJavaScript = $('label[id="labelBtnJavascript"');
@@ -110,17 +111,23 @@ async function initialize_Divs() {
     Button.createJavaScript = $('.values-buttons[data-command="btnCreateJavascript"]');
     Button.createJavaScript.attr('title', _('generate script'));
 
-    
+
     var javascriptAdapter = await getObject("system.adapter.javascript.0");
     if (!javascriptAdapter) {
         // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
         Button.createJavaScript.attr('disabled', true);
         Input.scriptName.attr('disabled', true);
+        Input.variableName.attr('disabled', true);
         //TODO: translation
         Label.ButtonCreateJavaScript.text(_('javascript adapter is not installed'));
     } else {
         if (!Input.scriptName.val()) {
             Input.scriptName.val(myNamespace.replace(".", ""));
+            $("label[for='scriptName']").addClass("active");        //overlapping bug fix
+        }
+        if (!Input.variableName.val()) {
+            Input.variableName.val(myNamespace.replace(".", ""));
+            $("label[for='variableName']").addClass("active");      //overlapping bug fix
         }
     }
 }
@@ -385,7 +392,7 @@ async function createJavascript() {
         if (javascriptAdapter) {
             // sofern javascript instanz vorhanden ist
 
-            var rootName = myNamespace.replace(".", "");
+            var rootName = Input.variableName.val();
             let autoScript = `var ${rootName} = {};\n\n`
 
             // alle linkedObjects laden und aufsteigend sortieren
@@ -438,7 +445,7 @@ async function createJavascript() {
                 await setObject("script.js.global.linkeddevices", folder);
 
                 // Skript erstellen
-                let scriptId = `script.js.global.linkeddevices.${rootName}`
+                let scriptId = `script.js.global.linkeddevices.${myNamespace.replace(".", "")}`
                 let script = {
                     type: "script",
                     _id: scriptId,

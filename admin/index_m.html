@@ -59,24 +59,35 @@
 
 			<!-- Put your content here -->
 			<div class="row">
-					<div style="text-align: center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YHPPW474N5CKQ&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
+					<div><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YHPPW474N5CKQ&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
 				</div>			
 			<div class="row">
 					<h5 class="translate">Via 'Settings' button in the menu 'Object' you can create a new linked object.</h5>
 					<hr size="1" noshade style="margin-top: 20px">
 			</div>
 			<!-- For example columns with settings: -->
-			<div class="row">
-				<div class="col s6">
-					<a id="btnJavascript" data-command="btnCreateJavascript" class="values-buttons btn-floating btn-large waves-effect waves-light" title="create javascript"><i class="material-icons">note_add</i></a>
-					<label id="labelBtnJavascript" for="btnJavascript" class="translate">create a script with variables of all linked objects</label>
+			<div class="row" noshade style="margin-top: -30px">
+				<div class="col s6 input-field">
+					<h6 class="translate">create a script with variables of all linked objects</h6>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col s6 input-field">
+			<div class="row" style="margin-top: -20px">
+				<div class="col s2 input-field">
 					<input type="text" class="value" id="scriptName" />
 					<label for="scriptName" class="translate">script name</label>
 				</div>
+				<div class="col s2 input-field">
+					<input type="text" class="value" id="variableName" />
+					<label for="variableName" class="translate">name of the variable</label>
+				</div>								
+				<div class="col s8">
+					<a id="btnJavascript" data-command="btnCreateJavascript" class="values-buttons btn-floating btn-large waves-effect waves-light" title="create javascript"><i class="material-icons">note_add</i></a>
+					<label id="labelBtnJavascript" for="btnJavascript" class="translate">generate script</label>
+				</div>				
+
+			</div>
+			<div class="row">
+				<hr size="1" noshade style="margin-top: 20px">
 			</div>
 			<div class="row">
 				<div class="col s12" id="events">

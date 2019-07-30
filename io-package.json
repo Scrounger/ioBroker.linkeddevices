@@ -126,7 +126,8 @@
 	},
 	"native": {
 		"deleteDeadLinkedObjects": false,
-		"scriptName": ""
+		"scriptName": "",
+		"variableName": ""
 	},
 	"objects": [],
 	"instanceObjects": []
