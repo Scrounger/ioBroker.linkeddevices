@@ -867,7 +867,7 @@ systemDictionary = {
 	},
 	"You like the adapter? Then support us with a small donation.": {
 		"en": "You like the adapter? Then support us with a small donation.",
-		"de": "Dir gefällt der Adapter? Dann unterstützen uns doch mit einer kleinen Spende.",
+		"de": "Dir gefällt der Adapter? Dann unterstütze uns doch mit einer kleinen Spende.",
 		"ru": "Вам нравится адаптер? Тогда поддержите нас небольшим пожертвованием.",
 		"pt": "Você gosta do adaptador? Então nos apóie com uma pequena doação.",
 		"nl": "Vind je de adapter leuk? Steun ons dan met een kleine gift.",
