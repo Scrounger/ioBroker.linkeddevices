@@ -14,18 +14,18 @@ systemDictionary = {
 		"pl": "Ustawienia adaptera dla linkeddevices",
 		"zh-cn": "linkeddevices的适配器设置"
 	},
-	"do not delete objects that are no longer linked": {
-		"en": "do not delete objects that are no longer linked",
-		"de": "Nicht mehr verlinkte Objekte nicht löschen",
-		"ru": "не удаляйте объекты, которые больше не связаны",
-		"pt": "não excluir objetos que não estão mais vinculados",
-		"nl": "verwijder geen objecten die niet langer gekoppeld zijn",
-		"fr": "ne pas supprimer les objets qui ne sont plus liés",
-		"it": "non eliminare oggetti che non sono più collegati",
-		"es": "No borre objetos que ya no están vinculados",
-		"pl": "nie usuwaj obiektów, które nie są już połączone",
-		"zh-cn": "不要删除不再链接的对象"
-	},
+	"delete objects that are no longer linked": {
+		"en": "delete objects that are no longer linked",
+		"de": "Objekte löschen, die nicht mehr verlinkt sind",
+		"ru": "удалить объекты, которые больше не связаны",
+		"pt": "excluir objetos que não estão mais vinculados",
+		"nl": "objecten verwijderen die niet langer zijn gekoppeld",
+		"fr": "supprimer des objets qui ne sont plus liés",
+		"it": "elimina oggetti che non sono più collegati",
+		"es": "eliminar objetos que ya no están vinculados",
+		"pl": "usuń obiekty, które nie są już połączone",
+		"zh-cn": "删除不再链接的对象"
+	  },
 	"composite id of linked object": {
 		"en": "composite id of linked object",
 		"de": "Zusammengesetze Id des verlinkten Objektes",

@@ -41,7 +41,7 @@ class Linkeddevices extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	async onReady() {
-		this.log.debug("[onReady] notDeleteDeadLinkedObjects: '" + this.config.notDeleteDeadLinkedObjects + "'");
+		this.log.debug("[onReady] deleteDeadLinkedObjects: '" + this.config.deleteDeadLinkedObjects + "'");
 
 
 		// Initialize your adapter here
@@ -514,7 +514,7 @@ class Linkeddevices extends utils.Adapter {
 	* alle LinkedObjects löschen, die keine existierende Verlinkung mehr haben ('custom.isLinked' == false), sofern nicht in Config deaktiviert
 	*/
 	async removeAllNotLinkedObjects() {
-		if (!this.config.notDeleteDeadLinkedObjects) {
+		if (this.config.deleteDeadLinkedObjects) {
 			// dic verwenden		
 			if (this.dicLinkedObjectsStatus) {
 				for (var linkedId in this.dicLinkedObjectsStatus) {
@@ -530,7 +530,7 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} linkedId
 	 */
 	async removeNotLinkedObject(linkedId) {
-		if (!this.config.notDeleteDeadLinkedObjects) {
+		if (this.config.deleteDeadLinkedObjects) {
 			if (this.dicLinkedObjectsStatus && this.dicLinkedObjectsStatus[linkedId] === false) {
 				// alle linkedObject ohne existierende Verlinkung löschen
 				await this.delForeignObjectAsync(linkedId);

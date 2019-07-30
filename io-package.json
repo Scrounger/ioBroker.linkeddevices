@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.3.2",
+		"version": "0.3.3",
 		"news": {
 			"0.3.2": {
 				"en": "more expertsettings added. Configure prefix / suffix for string. Convert number readonly to duration, date, time or datetime. some bug fixes.",
@@ -125,7 +125,7 @@
 		]
 	},
 	"native": {
-		"notDeleteDeadLinkedObjects": true
+		"deleteDeadLinkedObjects": false
 	},
 	"objects": [],
 	"instanceObjects": []
