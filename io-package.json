@@ -125,7 +125,8 @@
 		]
 	},
 	"native": {
-		"deleteDeadLinkedObjects": false
+		"deleteDeadLinkedObjects": false,
+		"scriptName": ""
 	},
 	"objects": [],
 	"instanceObjects": []

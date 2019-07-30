@@ -20,6 +20,10 @@ var currentOrder = ORDER.DESC;
 
 var myNamespace;
 
+var Input = {};
+var Label = {};
+var Button = {};
+
 async function load(settings, onChange) {
     // Namespace bauen
     myNamespace = adapter + '.' + instance;
@@ -51,6 +55,8 @@ async function load(settings, onChange) {
         // });
     });
 
+    // Divs in vars packen
+    initialize_Divs();
 
     // Table erzeugen
     $(`th[data-name=${currentSort}]`).text(`${$(`th[data-name=${currentSort}]`).text()} ▴`);
@@ -90,6 +96,32 @@ async function save(callback) {
         });
     }
     callback(obj);
+}
+
+async function initialize_Divs() {
+
+    // Inputs
+    Input.scriptName = $('input[id="scriptName"]');
+
+    // Labels    
+    Label.ButtonCreateJavaScript = $('label[id="labelBtnJavascript"');
+
+    // Buttons
+    Button.createJavaScript = $('.values-buttons[data-command="btnCreateJavascript"]');
+
+    
+    var javascriptAdapter = await getObject("system.adapter.javascript.0");
+    if (!javascriptAdapter) {
+        // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
+        Button.createJavaScript.attr('disabled', true);
+        Input.scriptName.attr('disabled', true);
+        //TODO: translation
+        Label.ButtonCreateJavaScript.text(_('javascript adapter is not installed'));
+    } else {
+        if (!Input.scriptName.val()) {
+            Input.scriptName.val(myNamespace.replace(".", ""));
+        }
+    }
 }
 
 async function saveAssignedParentObjects(tableItem) {
@@ -329,20 +361,9 @@ async function events(onChange) {
         });
 
 
-        btnCreateJavascript = $('.values-buttons[data-command="btnCreateJavascript"]');
-        labelBtnCreateJavascript = $('label[id="labelBtnJavascript"');
-
-        var javascriptAdapter = await getObject("system.adapter.javascript.0");
-        if (!javascriptAdapter) {
-            // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
-            btnCreateJavascript.attr('disabled', true);
-            //TODO: translation
-            labelBtnCreateJavascript.text(_('javascript adapter is not installed'));
-        } else {
-            await $('.values-buttons[data-command="btnCreateJavascript"]').on('click', function () {
-                createJavascriptConfirm();
-            });
-        }
+        await Button.createJavaScript.on('click', function () {
+            createJavascriptConfirm();
+        });
 
     } catch (err) {
         showError(err);
@@ -361,6 +382,8 @@ async function createJavascript() {
     try {
         var javascriptAdapter = await getObject("system.adapter.javascript.0");
         if (javascriptAdapter) {
+            // sofern javascript instanz vorhanden ist
+
             var rootName = myNamespace.replace(".", "");
             let autoScript = `var ${rootName} = {};\n\n`
 
@@ -419,7 +442,7 @@ async function createJavascript() {
                     type: "script",
                     _id: scriptId,
                     common: {
-                        name: rootName,
+                        name: Input.scriptName.val(),
                         expert: true,
                         engineType: "Javascript/js",
                         engine: "system.adapter.javascript.0",

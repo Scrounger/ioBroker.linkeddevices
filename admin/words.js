@@ -25,7 +25,7 @@ systemDictionary = {
 		"es": "eliminar objetos que ya no están vinculados",
 		"pl": "usuń obiekty, które nie są już połączone",
 		"zh-cn": "删除不再链接的对象"
-	  },
+	},
 	"composite id of linked object": {
 		"en": "composite id of linked object",
 		"de": "Zusammengesetze Id des verlinkten Objektes",
@@ -876,5 +876,17 @@ systemDictionary = {
 		"es": "¿Te gusta el adaptador? Entonces apóyanos con una pequeña donación.",
 		"pl": "Lubisz adapter? Następnie wesprzyj nas niewielką darowizną.",
 		"zh-cn": "你喜欢适配器吗？然后通过小额捐款支持我们。"
-	  }
+	},
+	"script name": {
+		"en": "script name",
+		"de": "Skriptname",
+		"ru": "имя сценария",
+		"pt": "nome do script",
+		"nl": "scriptnaam",
+		"fr": "nom du script",
+		"it": "nome dello script",
+		"es": "nombre del guion",
+		"pl": "nazwa skryptu",
+		"zh-cn": "脚本名称"
+	}
 };
