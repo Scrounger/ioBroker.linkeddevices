@@ -663,7 +663,7 @@ systemDictionary = {
 	},
 	"Via 'Settings' button in the menu 'Object' you can create a new linked object.": {
 		"en": "Via 'Settings' button in the menu 'Object' you can create a new linked object.",
-		"de": "Über die Schaltfläche 'Einstellungen' im Menü 'Objekt' können Sie ein neues verlinktes Objekt erstellen.",
+		"de": "Über die Schaltfläche 'Einstellungen' im Menü 'Objekt' kann ein neues verlinktes Objekt erstellt werden.",
 		"ru": "С помощью кнопки «Настройки» в меню «Объект» вы можете создать новый связанный объект.",
 		"pt": "Através do botão 'Configurações' no menu 'Objeto' você pode criar um novo objeto vinculado.",
 		"nl": "Via de knop 'Instellingen' in het menu 'Object' kunt u een nieuw gekoppeld object maken.",
@@ -816,5 +816,29 @@ systemDictionary = {
 		"es": "cadena para 'falso' del objeto vinculado",
 		"pl": "ciąg dla „false” powiązanego obiektu",
 		"zh-cn": "链接对象的“false”字符串"
+	},
+	"create a script with variables of all linked objects": {
+		"en": "create a script with variables of all linked objects",
+		"de": "Skript mit Variablen aller verlinkten Objekte erzeugen",
+		"ru": "создать скрипт с переменными всех связанных объектов",
+		"pt": "criar um script com variáveis de todos os objetos vinculados",
+		"nl": "maak een script met variabelen van alle gekoppelde objecten",
+		"fr": "créer un script avec des variables de tous les objets liés",
+		"it": "creare uno script con variabili di tutti gli oggetti collegati",
+		"es": "crear un script con variables de todos los objetos vinculados",
+		"pl": "utwórz skrypt ze zmiennymi wszystkich połączonych obiektów",
+		"zh-cn": "使用所有链接对象的变量创建脚本"
+	},
+	"javascript adapter is not installed": {
+		"en": "javascript adapter is not installed",
+		"de": "Javascript Adapter ist nicht installiert",
+		"ru": "Javascript адаптер не установлен",
+		"pt": "adaptador de javascript não está instalado",
+		"nl": "javascript-adapter is niet geïnstalleerd",
+		"fr": "adaptateur javascript n'est pas installé",
+		"it": "l'adattatore javascript non è installato",
+		"es": "el adaptador de JavaScript no está instalado",
+		"pl": "adapter javascript nie jest zainstalowany",
+		"zh-cn": "未安装javascript适配器"
 	}
 };

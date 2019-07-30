@@ -337,7 +337,7 @@ async function events(onChange) {
             // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
             btnCreateJavascript.attr('disabled', true);
             //TODO: translation
-            labelBtnCreateJavascript.text('Javascript Adapter ist nicht installiert')
+            labelBtnCreateJavascript.text(_('javascript adapter is not installed'));
         } else {
             await $('.values-buttons[data-command="btnCreateJavascript"]').on('click', function () {
                 createJavascript();
