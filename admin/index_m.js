@@ -197,7 +197,7 @@ async function saveAssignedParentObjects(tableItem) {
                 }
 
                 // bereinigt custom Data und common Data vom linkedObject zusammenführen
-                if(Object.keys(customFromLinkedObject).length > 0){
+                if (Object.keys(customFromLinkedObject).length > 0) {
                     // Wenn custom Daten in linkedObject vorhanden -> dann expertSettings setzen
                     expertSettings = true;
                 }
@@ -328,8 +328,108 @@ async function events(onChange) {
             createTable(onChange, text);
         });
 
+
+        btnCreateJavascript = $('.values-buttons[data-command="btnCreateJavascript"]');
+        labelBtnCreateJavascript = $('label[id="labelBtnJavascript"');
+
+        var javascriptAdapter = await getObject("system.adapter.javascript.0");
+        if (!javascriptAdapter) {
+            // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
+            btnCreateJavascript.attr('disabled', true);
+            //TODO: translation
+            labelBtnCreateJavascript.text('Javascript Adapter ist nicht installiert')
+        } else {
+            await $('.values-buttons[data-command="btnCreateJavascript"]').on('click', function () {
+                createJavascript();
+            });
+        }
+
     } catch (err) {
         showError(err);
+    }
+}
+
+async function createJavascript() {
+    try {
+        var javascriptAdapter = await getObject("system.adapter.javascript.0");
+        if (javascriptAdapter) {
+            var rootName = myNamespace.replace(".", "");
+            let autoScript = `var ${rootName} = {};\n\n`
+
+            // alle linkedObjects laden und aufsteigend sortieren
+            let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
+            let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
+
+            if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
+                for (var id in sortedIdList) {
+                    let linkedId = sortedIdList[id];
+                    let linkedObject = linkedDevicesList[sortedIdList[id]];
+
+                    // sofern isLinked = true -> mit in die skript Erstellung einbeziehen
+                    if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].isLinked) {
+
+                        // struktur der variablen bauen
+                        let linkedIdSplitted = linkedId.replace(myNamespace + ".", "").split(".");
+                        let varName = ""
+                        if (linkedIdSplitted.length > 0) {
+                            for (var i = 0; i < linkedIdSplitted.length; i++) {
+
+                                if (i === 0) {
+                                    varName = `${rootName}.${linkedIdSplitted[i]}`;
+                                } else {
+                                    varName = varName.concat(`.${linkedIdSplitted[i]}`)
+                                }
+
+                                autoScript = autoScript.concat(`${varName} = {};\n`);
+                            }
+
+                            // Funktionen den linkedObjects hinzufügen
+                            autoScript = autoScript.concat(`${varName}.getId = function() {return "${linkedId}"};\n`);
+                            autoScript = autoScript.concat(`${varName}.getState = function() {return getState("${linkedId}")};\n`);
+                            autoScript = autoScript.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
+                            autoScript = autoScript.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+                            autoScript = autoScript.concat(`${varName}.getObject = function() {return getObject("${linkedId}")};\n`);
+                        }
+                        autoScript = autoScript.concat("\n");
+                    }
+                }
+
+                // erste Ordner (Mappe) anlegen
+                let folder = {
+                    type: "channel",
+                    _id: "script.js.global.linkeddevices",
+                    common: {
+                        name: "linkeddevices",
+                        expert: true
+                    }
+                }
+                await setObject("script.js.global.linkeddevices", folder);
+
+                // Skript erstellen
+                let scriptId = `script.js.global.linkeddevices.${rootName}`
+                let script = {
+                    type: "script",
+                    _id: scriptId,
+                    common: {
+                        name: rootName,
+                        expert: true,
+                        engineType: "Javascript/js",
+                        engine: "system.adapter.javascript.0",
+                        source: autoScript,
+                        debug: false,
+                        verbose: false,
+                        enabled: true
+                    }
+                }
+                await setObject(scriptId, script);
+
+                showMessage(autoScript);
+            }
+        }
+
+        //showMessage("jaaa");
+    } catch (err) {
+        showError("generate javascript:" + err)
     }
 }
 
@@ -460,6 +560,19 @@ async function getObject(id) {
         });
     });
 }
+
+async function setObject(id, obj) {
+    return new Promise((resolve, reject) => {
+        socket.emit('setObject', id, obj, function (err, res) {
+            if (!err && res) {
+                resolve(res);
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
 
 async function setForeignObject(obj) {
     new Promise((resolve, reject) => {
