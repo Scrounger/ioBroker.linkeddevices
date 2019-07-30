@@ -122,7 +122,7 @@ async function initialize_Divs() {
         Label.ButtonCreateJavaScript.text(_('javascript adapter is not installed'));
     } else {
         if (!Input.scriptName.val()) {
-            Input.scriptName.val(myNamespace.replace(".", ""));
+            Input.scriptName.val(myNamespace);
             $("label[for='scriptName']").addClass("active");        //overlapping bug fix
         }
         if (!Input.variableName.val()) {
