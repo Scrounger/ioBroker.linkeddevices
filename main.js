@@ -463,6 +463,7 @@ class Linkeddevices extends utils.Adapter {
 						let linkedObj = Object();
 						linkedObj.type = parentObj.type;
 
+
 						// common data mit expert settings an linkedObject übergeben
 						linkedObj.common = this.getCommonData(parentObj, linkedId);
 
@@ -472,6 +473,12 @@ class Linkeddevices extends utils.Adapter {
 						// custom data (expert settings) an linkedObject übergeben
 						linkedObj.common.custom[this.namespace] = this.getCustomData(parentObj, linkedId);
 						this.log.silly(`[createLinkedObject] custom data set for '${linkedId}' ("${this.namespace}":${JSON.stringify(linkedObj.common.custom[this.namespace])})`)
+
+						// falls native data vorhanden sind -> übergeben
+						if (parentObj.native) {
+							linkedObj.native = parentObj.native;
+							this.log.debug(`[createLinkedObject] native data set for '${linkedId}' ("native":${JSON.stringify(parentObj.native)})`)
+						}
 
 						// LinkedObjekt erzeugen oder Änderungen schreiben
 						await this.setForeignObjectAsync(linkedId, linkedObj);
