@@ -900,8 +900,8 @@ systemDictionary = {
 		"es": "generar script",
 		"pl": "wygeneruj skrypt",
 		"zh-cn": "生成脚本"
-	  },
-	  "settings of linked object": {
+	},
+	"settings of linked object": {
 		"en": "settings of linked object",
 		"de": "Einstellungen des verlinkten Objekts",
 		"ru": "настройки связанного объекта",
@@ -912,5 +912,29 @@ systemDictionary = {
 		"es": "configuración del objeto vinculado",
 		"pl": "ustawienia połączonego obiektu",
 		"zh-cn": "链接对象的设置"
+	},
+	"name of the variable": {
+		"en": "name of the variable",
+		"de": "Name der Variable",
+		"ru": "имя переменной",
+		"pt": "nome da variável",
+		"nl": "naam van de variabele",
+		"fr": "nom de la variable",
+		"it": "nome della variabile",
+		"es": "nombre de la variable",
+		"pl": "nazwa zmiennej",
+		"zh-cn": "变量的名称"
+	},
+	"Characters not allowed<br>Only letters and numbers are allowed": {
+		"en": "Characters not allowed<br>Only letters and numbers are allowed",
+		"de": "Zeichen nicht erlaubt<br>Es sind nur Buchstaben und Zahlen erlaubt",
+		"ru": "Символы не допускаются<br>Разрешены только буквы и цифры",
+		"pt": "Caracteres não permitidos<br>Apenas letras e números são permitidos",
+		"nl": "Tekens niet toegestaan<br>Alleen letters en cijfers zijn toegestaan",
+		"fr": "Caractères non autorisés<br>Seules les lettres et les chiffres sont autorisés",
+		"it": "Personaggi non ammessi<br>Sono ammessi solo lettere e numeri",
+		"es": "Caracteres no permitidos<br>Solo se permiten letras y números",
+		"pl": "Znaki niedozwolone<br>Dozwolone są tylko litery i cyfry",
+		"zh-cn": "字符不被允许<br>只允许使用字母和数字"
 	  }
 };

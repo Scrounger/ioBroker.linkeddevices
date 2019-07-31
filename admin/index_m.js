@@ -368,10 +368,23 @@ async function events(onChange) {
             createTable(onChange, text);
         });
 
-
         await Button.createJavaScript.on('click', function () {
             createJavascriptConfirm();
         });
+
+        Input.variableName.keyup(function () {
+            // Nur Nummern und math operators * | / zulassen
+            let allowedSigns = /[^a-z0-9]/;
+
+            if (this.value.length > 0) {
+                if (allowedSigns.test(this.value)) {
+                    // prüfen auf zulässige Zeichen
+                    showError(_("Characters not allowed<br>Only letters and numbers are allowed"));
+                }
+            }
+            this.value = this.value.replace(allowedSigns, '');
+        });
+
 
     } catch (err) {
         showError(err);

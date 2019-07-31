@@ -447,6 +447,10 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
 				&& parentObj.common.custom[this.namespace].enabled) {
 
+					// Todo: check structure if channel, device, etc.
+					// let tmp = parentObj._id.lastIndexOf(".");
+					// this.log.info(parentObj._id.substring(0, tmp));
+
 				if (!parentObj.common.custom[this.namespace].linkedId || !parentObj.common.custom[this.namespace].linkedId.length || parentObj.common.custom[this.namespace].linkedId === "") {
 					// 'custom.linkedId' fehlt oder hat keinen Wert
 					this.log.error("[createLinkedObject] No 'linkedId' defined for object: '" + parentObj._id + "'");
