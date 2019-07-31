@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.3.3",
+		"version": "0.4.0",
 		"news": {
+			"0.4.0": {
+				"en": "Added string to boolean added. Native data will be used, if available. Automatically generate a global script for the adapter Javascript Script Engine with variable added for all linked objects",
+				"de": "Zeichenkette in Logikwert konvertieren hinzugefügt. Native Daten werden übernommen, sofern verfügbar. Automatisches generieren eines globalen Skriptes für den Adapter Javascript Script Engine mit variablen für alle verlinkten Objekte hinzugefügt.",
+				"ru": "Добавлена строка в логическое значение. Будут использованы собственные данные, если таковые имеются. Автоматически генерировать глобальный скрипт для адаптера Javascript Script Engine с добавленной переменной для всех связанных объектов",
+				"pt": "Adicionado string para boolean adicionado. Dados nativos serão usados, se disponíveis. Gerar automaticamente um script global para o adaptador JavaScript Script Engine com a variável adicionada para todos os objetos vinculados",
+				"nl": "String toegevoegd aan Boolean toegevoegd. Native gegevens zullen worden gebruikt, indien beschikbaar. Genereer automatisch een globaal script voor de adapter Javascript Script Engine met variabele toegevoegd voor alle gekoppelde objecten",
+				"fr": "Chaîne ajoutée à booléen ajouté. Les données natives seront utilisées, si disponibles. Génère automatiquement un script global pour le moteur de script Javascript de l'adaptateur avec une variable ajoutée pour tous les objets liés",
+				"it": "Aggiunta stringa a booleano aggiunta. Verranno utilizzati dati nativi, se disponibili. Generare automaticamente uno script globale per il motore di script JavaScript dell'adattatore con la variabile aggiunta per tutti gli oggetti collegati",
+				"es": "Cadena agregada al booleano agregado. Se utilizarán datos nativos, si están disponibles. Genere automáticamente una secuencia de comandos global para el adaptador Javascript Script Engine con variable agregada para todos los objetos vinculados",
+				"pl": "Dodano ciąg znaków dodany do boolean. Wykorzystane zostaną dane natywne, jeśli są dostępne. Automatycznie generuj globalny skrypt dla adaptera JavaScript Script Engine z dodaną zmienną dla wszystkich połączonych obiektów",
+				"zh-cn": "添加了添加到布尔值的字符串。如果可用，将使用本机数据。自动为适配器Javascript脚本引擎生成全局脚本，并为所有链接对象添加变量"
+			},
 			"0.3.2": {
 				"en": "more expertsettings added. Configure prefix / suffix for string. Convert number readonly to duration, date, time or datetime. some bug fixes.",
 				"de": "Weitere Experteneinstellungen hinzugefügt. Vorangestellte / nachgestellte Zeichen für eine Zeichenfolge. Wandeln Sie die Zahl (readonly) in Dauer, Datum, Uhrzeit oder Datum / Uhrzeit um. Einige Fehler behoben",
