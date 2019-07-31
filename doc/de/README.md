@@ -132,6 +132,12 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 | vorangestellte Zeichenfolge | Ein Zeichefolge die beim verlinkten Objekt vor die Zeichfolge des Objektes gesetzt wird | alles | Hat das Objekt den Wert 'ich bin ein Zeichenkette', dann hat das verlinkte Objekt den Wert 'prefix_ich bin ein Zeichenkette' |
 | nachgestellte Zeichenfolge | Ein Zeichefolge die beim verlinkten Objekt hinter die Zeichfolge des Objektes gesetzt wird | alles | Hat das Objekt den Wert 'ich bin ein Zeichenkette', dann hat das verlinkte Objekt den Wert 'ich bin ein Zeichenkette_suffix' |
 
+#### Zeichenkette: Konvertiere in Typ 'Logikwert'
+![Strukture](media/expert_settings_string_convert_to_boolean.png)
+
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Logikwert'
 ![Strukture](media/expert_settings_boolean.png)
 
