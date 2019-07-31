@@ -9,7 +9,7 @@ z.B. bei einem Hardwareaustausch nur die verknüpften Objekte neu erstellt
 werden, alle VIS Views und Skripte funktionieren sofort wieder.
 
 Außerdem können mit dem Adapter Objekte in andere Typen konvertiert
-werden (noch nicht vollständig implementiert).
+werden.
 
 ![Strukture](media/structure.png)
 
@@ -51,20 +51,26 @@ das folgende verlinkte Objekt:
 
 ![Strukture](media/example_create_linkedObject.png)
 
-&nbsp;
+<br>
+
 ## Experteneinstellungen für verlinktes Objekt vom Typ X
 
 Abhängig vom Typ (Zahl, Logikwert, Zeichenkette, etc.) des zu verlinkenden
 Objektes, können weitere Einstellungen, wie z.B. Umrechnungen oder
 Umwandlungen in einen anderen Typ für das verlinkte Objekt eingestellt
-werden.
+werden. Für folgende Typen gibt es derzeit Umwandlungen:
 
-<br><br>
+* [Zahl (readonly)](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl-readonly)  
+* [Zahl](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl)
+* [Zeichenkette](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zeichenkette)
+* [Logikwert](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-logikwert)
+
+<br>
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl (readonly)'
 ![Strukture](media/expert_settings_number_readonly.png)
 
-#### Zahl (readonly): Konvertiere in Typ 'nicht umwandeln'
+### Zahl (readonly): Konvertiere in Typ 'nicht umwandeln'
 ![Strukture](media/expert_settings_number_readonly_no_conversion.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -75,14 +81,14 @@ werden.
 | Ändere max 'X' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
 | Umrechnung für verlinktes 'read' Objekt | mathematische Umrechnung des Wertes des Objektes | _+ - / *,. ()_ & *Zahlen* | Wert des Objektes '279688.9' mit Umrechnung '/1000' zeigt beim verlinkten Objekt den Wert '280.6889' an |
 
-#### Zahl (readonly): Konvertiere in Typ 'Logikwert'
+### Zahl (readonly): Konvertiere in Typ 'Logikwert'
 ![Strukture](media/expert_settings_number_readonly_convert_to_boolean.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
 | Bedingung 'true' für verlinktes Objekt | Wert des Objektes, für den das verlinkte Objekt auf 'true' gesetzt werden soll | *= != > < >= <=* + *Zahlen* | Für Werte '>100' des Objekt ist das verlinkte Objekt 'true' |
 
-#### Zahl (readonly): Konvertiere in Typ 'Dauer'
+### Zahl (readonly): Konvertiere in Typ 'Dauer'
 Zur Info beim Typ 'Dauer' ist das verlinkte Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_number_convert_to_duration.png)
 
@@ -91,7 +97,7 @@ Zur Info beim Typ 'Dauer' ist das verlinkte Objekt vom Typ 'Zeichenkette'
 | Umrechnung in Sekunden | Zur Berechnung der Dauer muss der Wert in Sekunden vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
 | Anzeigeformat der Dauer | Hier könnt ihr die Formatierung für die Dauer festlegen | [siehe moment duration format library Doku](https://github.com/jsmreese/moment-duration-format#template-string) | 'y[J] d[T] hh[h] mm[m]' zeigt beim verlinkten Objekt den Wert '1J 11T 00h 24m' an, sofern ioBroker Sprache auf Deutsch eingestellt ist |
 
-#### Zahl (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
+### Zahl (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
 Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_number_convert_to_datetime.png)
 
@@ -104,7 +110,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl'
 
-#### Zahl: Konvertiere in Typ 'nicht umwandeln'
+### Zahl: Konvertiere in Typ 'nicht umwandeln'
 ![Strukture](media/expert_settings_number_no_conversion.png)
 
 
@@ -116,7 +122,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 | Ändere max 'X' auf | maximaler Wert der das verlinkte Objekt annehmen darf | Zahlen | - |
 | Umrechnung für verlinktes Objekt | mathematische Umrechnung des Wertes des Objektes | _/ *,._ & *Zahlen* | Wert des Objektes '180' mit Umrechnung '*100/255' zeigt beim verlinkten Objekt den Wert '71' an. Umgekehrt wird der Kehrwert bei der Berechnung gebildet, d.h. wenn das verlinkte Objekt den Wert '71' hat, hat das Objekt den Wert '180'. Das kann z.B. für Hue Lampen verwendet werden, um den Wertebereich von '0-255' in '0%-100%' umzuwandeln |
 
-#### Zahl: Konvertiere in Typ 'Logikwert'
+### Zahl: Konvertiere in Typ 'Logikwert'
 ![Strukture](media/expert_settings_number_convert_to_boolean.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -130,7 +136,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_string.png)
 
-#### Zeichenkette: Konvertiere in Typ 'nicht umwandeln'
+### Zeichenkette: Konvertiere in Typ 'nicht umwandeln'
 ![Strukture](media/expert_settings_string_no_conversion.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -138,7 +144,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 | vorangestellte Zeichenfolge | Ein Zeichefolge die beim verlinkten Objekt vor die Zeichfolge des Objektes gesetzt wird | alles | Hat das Objekt den Wert 'ich bin ein Zeichenkette', dann hat das verlinkte Objekt den Wert 'prefix_ich bin ein Zeichenkette' |
 | nachgestellte Zeichenfolge | Ein Zeichefolge die beim verlinkten Objekt hinter die Zeichfolge des Objektes gesetzt wird | alles | Hat das Objekt den Wert 'ich bin ein Zeichenkette', dann hat das verlinkte Objekt den Wert 'ich bin ein Zeichenkette_suffix' |
 
-#### Zeichenkette: Konvertiere in Typ 'Logikwert'
+### Zeichenkette: Konvertiere in Typ 'Logikwert'
 ![Strukture](media/expert_settings_string_convert_to_boolean.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
@@ -151,7 +157,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Logikwert'
 ![Strukture](media/expert_settings_boolean.png)
 
-#### Logikwert: Konvertiere in Typ 'Zeichenkette'
+### Logikwert: Konvertiere in Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_boolean_convert_to_string.png)
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
