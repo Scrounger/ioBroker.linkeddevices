@@ -15,11 +15,40 @@ werden.
 
 Dieser Adapter ist inspiriert durch das [Virtual Devices Skript von Pman](https://forum.iobroker.net/topic/7751/virtual-devices).
 
+<br><br>
+
+## Adapterkonfiguration
+![Adapterkonfiguration](media/adapter_settings.png)
+
+### Skript mit Variablen aller verlinkten Objekte erzeugen
+In der Adapterkonfiguration könnt ihr Euch ein globales Skript erzeugen, dass für alle verlinkten Objekte variablen anlegt.
+
+> Für diese Funktion wird der Adapter [Javascript Script Engine](https://github.com/iobroker/ioBroker.javascript/blob/master/README.md) benötigt
+
+![Adapterkonfiguration](media/adapter_settings_generate_skript.png)
+
+|  Eingabefeld | Beschreibung  |
+|---|---|
+|Skriptname| Name unter dem das erzeugte Skript abgespeichert wird |
+|Name der Variable| Name der Variable über die alle verlinkten Objekte in einem Skript angesteuert werden kann |
+
+Das ganze sieht im Skript Editor dann so aus:
+
+![Adapterkonfiguration](media/adapter_settings_generate_skript_example.png)
+
+### Übersicht aller verlinkten Objekte
+
+![Übersicht](media/adapter_settings_overview.png)
+
+In der Adapterkonfiguration gibt es eine Übersicht über alle verlinkten Objekte bzw. auch Objekte die nicht mehr verlinkt sind.
+Die Tabelle könnt ihr sortieren und auch nach Begriffen filtern. 
+Weiter könnt ihr hier nicht mehr verlinkte Objekte wieder mit einem Objekt verlinken und direkt die Einstellung der Objekte öffnen, die verlinkt sind
+
+<br>
+
 ## Objekt (Datenpunkt) verlinken
 Ein Objekt (Datenpunkt) kann über den Button `Einstellungen` im Menü
 `Objekt` erstellt werden.
-
-> Dieser Button ist nur sichtbar mit installiertem History Adapter!
 
 ![Strukture](media/object_tree_custom_button.png)
 

@@ -374,7 +374,7 @@ async function events(onChange) {
 
         Input.variableName.keyup(function () {
             // Nur Nummern und math operators * | / zulassen
-            let allowedSigns = /[^a-z0-9]/;
+            let allowedSigns = /[^a-zA-Z0-9]/;
 
             if (this.value.length > 0) {
                 if (allowedSigns.test(this.value)) {
