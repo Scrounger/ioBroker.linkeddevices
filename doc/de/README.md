@@ -51,6 +51,7 @@ das folgende verlinkte Objekt:
 
 ![Strukture](media/example_create_linkedObject.png)
 
+&nbsp;
 ## Experteneinstellungen für verlinktes Objekt vom Typ X
 
 Abhängig vom Typ (Zahl, Logikwert, Zeichenkette, etc.) des zu verlinkenden
@@ -58,6 +59,7 @@ Objektes, können weitere Einstellungen, wie z.B. Umrechnungen oder
 Umwandlungen in einen anderen Typ für das verlinkte Objekt eingestellt
 werden.
 
+&nbsp;
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl (readonly)'
 ![Strukture](media/expert_settings_number_readonly.png)
 
@@ -97,7 +99,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 | Umrechung in Unixzeit (Sekunden) | Zur Berechnung von Datum und oder Uhrzeit muss der Wert in der [Unixzeit](https://de.wikipedia.org/wiki/Unixzeit) vorliegen. Liegt der Wert z.B. in Millisekunden vor, so müsst ihr '/1000' eintragen. Wenn er z.B. in Stunden vorliegt, dann müsst ihr '/3600' eintragen | _/ *_ & *Zahlen* | - |
 | Anzeigeformat der Datum / Uhrzeit | Hier könnt ihr die Formatierung für das Datum und oder Uhrzeit festlegen | [siehe moment library Doku](https://momentjs.com/docs/#/parsing/string-format/) | 'LLL' zeigt beim verlinkten Objekt den Wert '26. Juli 2019 22:01' an, sofern ioBroker Sprache auf Deutsch eingestellt ist |
 
-
+&nbsp;
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zahl'
 
 #### Zahl: Konvertiere in Typ 'nicht umwandeln'
@@ -121,6 +123,7 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 | Wert wenn verlinktes Objekt 'true' ist | Wert des Objektes wenn das verlinkte Objekt 'true' ist | Zahlen | Wird das verlinkte Objekt auf 'true' gesetzt, wird der Wert des Objektes '30' |
 | Wert wenn verlinktes Objekt 'false' ist | Wert des Objektes wenn das verlinkte Objekt 'false' ist | Zahlen | Wird das verlinkte Objekt auf 'false' gesetzt, wird der Wert des Objektes '10' |
 
+&nbsp;
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_string.png)
 
@@ -137,7 +140,10 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 
 |  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
 |---|---|---|---|
+|Zeichenkette für 'true' des verlinkten Objekts| Zeichenkette für das das verlinkte Objekt 'true' wird. Diese wird auch umgekehrt verwendet - wenn das verlinkte Objekt 'true' wird, wird der Wert des Objektes die angebene Zeichenkette| Zeichenkette | Wenn das Objekt den Wert 'on' annimmt, dann ist das verlinkte Objekt 'true'. Umgekehrt - wenn das verlinkte Objekt den Wert 'true' annimmt, dann wird der Wert des Objektes 'on'|
+|Zeichenkette für 'false' des verlinkten Objekts| Zeichenkette für das das verlinkte Objekt 'false' wird. Für nicht angebene Zeichenketten ist das verlinkte Objekt immer 'false'. Umgekehrt wird das verlinkte Objekt 'false', wird der Wert des Objektes 'off'| Zeichenkette | Wenn das Objekt den Wert 'off' annimmt, dann ist das verlinkte Objekt 'true'. Umgekehrt - wenn das verlinkte Objekt den Wert 'false' annimmt, dann wird der Wert des Objektes 'off'|
 
+&nbsp;
 ### Experteneinstellungen für verlinktes Objekt vom Typ 'Logikwert'
 ![Strukture](media/expert_settings_boolean.png)
 
