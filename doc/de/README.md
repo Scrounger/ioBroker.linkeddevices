@@ -5,7 +5,7 @@ Mit diesem Adapter ist es möglich eigene Objekte (Datenpunkte) von
 Geräten in einer selbst definierten Struktur zu erstellen.
 Durch die zentralisierte Darstellung an einem Ort können die Objekte
 einfach z.B. in Vis oder Skripten verwendet werden. Weiterhin müssen
-z.B. bei einem Hardwareaustausch nur die verknüpften Objekte neu erstellt
+z.B. bei einem Hardwareaustausch nur die Verknüpfungen neu erstellt
 werden, alle VIS Views und Skripte funktionieren sofort wieder.
 
 Außerdem können mit dem Adapter Objekte in andere Typen konvertiert
@@ -21,7 +21,7 @@ Dieser Adapter ist inspiriert durch das [Virtual Devices Skript von Pman](https:
 ![Adapterkonfiguration](media/adapter_settings.png)
 
 ### Skript mit Variablen aller verlinkten Objekte erzeugen
-In der Adapterkonfiguration könnt ihr Euch ein globales Skript erzeugen, dass für alle verlinkten Objekte variablen anlegt.
+In der Adapterkonfiguration kann ein globales Skript erzeugt werden, dass für alle verlinkten Objekte Variablen anlegt.
 
 > Für diese Funktion wird der Adapter [Javascript Script Engine](https://github.com/iobroker/ioBroker.javascript/blob/master/README.md) benötigt
 
@@ -41,8 +41,8 @@ Das ganze sieht im Skript Editor dann so aus:
 ![Übersicht](media/adapter_settings_overview.png)
 
 In der Adapterkonfiguration gibt es eine Übersicht über alle verlinkten Objekte bzw. auch Objekte die nicht mehr verlinkt sind.
-Die Tabelle könnt ihr sortieren und auch nach Begriffen filtern. 
-Weiter könnt ihr hier nicht mehr verlinkte Objekte wieder mit einem Objekt verlinken und direkt die Einstellung der Objekte öffnen, die verlinkt sind
+In der Tabelle kann sortiert und auch nach Begriffen gefiltert werden. 
+Weiter können hier nicht mehr verlinkte Objekte wieder mit einem Objekt verlinkt werden und direkt die Einstellung der Objekte, die verlinkt sind, geöffnet werden.
 
 <br>
 
