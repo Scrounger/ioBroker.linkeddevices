@@ -413,6 +413,7 @@ async function createJavascript() {
             let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
 
             if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
+                let existingVarName = [];
                 for (var id in sortedIdList) {
                     let linkedId = sortedIdList[id];
                     let linkedObject = linkedDevicesList[sortedIdList[id]];
@@ -432,7 +433,10 @@ async function createJavascript() {
                                     varName = varName.concat(`.${linkedIdSplitted[i]}`)
                                 }
 
-                                autoScript = autoScript.concat(`${varName} = {};\n`);
+                                if (!existingVarName.includes(`${varName} = {};\n`)) {
+                                    autoScript = autoScript.concat(`${varName} = {};\n`);
+                                    existingVarName.push(`${varName} = {};\n`);
+                                }
                             }
 
                             // Funktionen den linkedObjects hinzufügen
