@@ -3,6 +3,18 @@
 		"name": "linkeddevices",
 		"version": "0.4.1",
 		"news": {
+			"0.4.1": {
+				"en": "Bug fix for automatically generate a global script for the adapter Javascript Script Engine",
+				"de": "Fehlerbehebung für das automatische Generieren eines globalen Skripts für den Adapter Javascript Script Engine",
+				"ru": "Исправлена ошибка для автоматической генерации глобального скрипта для адаптера Javascript Script Engine",
+				"pt": "Correção de bug para gerar automaticamente um script global para o adaptador Javascript Script Engine",
+				"nl": "Bugfix voor het automatisch genereren van een globaal script voor de adapter Javascript Script Engine",
+				"fr": "Correction de bogue pour générer automatiquement un script global pour l'adaptateur Javascript Script Engine",
+				"it": "Bug fix per generare automaticamente uno script globale per l'adattatore JavaScript Script Engine",
+				"es": "Corrección de errores para generar automáticamente un script global para el adaptador Javascript Script Engine",
+				"pl": "Poprawka do automatycznego generowania globalnego skryptu dla aparatu Javascript Script Engine",
+				"zh-cn": "修复错误，自动生成适配器Javascript脚本引擎的全局脚本"
+			},
 			"0.4.0": {
 				"en": "Added string to boolean added. Native data will be used, if available. Automatically generate a global script for the adapter Javascript Script Engine with variable added for all linked objects",
 				"de": "Zeichenkette in Logikwert konvertieren hinzugefügt. Native Daten werden übernommen, sofern verfügbar. Automatisches generieren eines globalen Skriptes für den Adapter Javascript Script Engine mit variablen für alle verlinkten Objekte hinzugefügt.",
