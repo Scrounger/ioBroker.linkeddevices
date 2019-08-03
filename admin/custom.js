@@ -523,7 +523,7 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.number_max.keyup(function () {
                 // Nur Nummern zulassen
-                let allowedSigns = /[^0-9]/;
+                let allowedSigns = /[^0-9\-]/;
 
                 if (allowedSigns.test(this.value)) {
                     gMain.showError(_("only numbers allowed"));
@@ -533,7 +533,7 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.number_min.keyup(function () {
                 // Nur Nummern zulassen
-                let allowedSigns = /[^0-9]/;
+                let allowedSigns = /[^0-9\-]/;
 
                 if (allowedSigns.test(this.value)) {
                     gMain.showError(_("only numbers allowed"));
