@@ -172,7 +172,7 @@ systemDictionary = {
 	},
 	"only numbers allowed": {
 		"en": "only numbers allowed",
-		"de": "Nur Nummern sind als Eingabe erlaubt!",
+		"de": "Nur Zahlen sind als Eingabe erlaubt!",
 		"ru": "разрешены только цифры",
 		"pt": "somente números permitidos",
 		"nl": "alleen cijfers toegestaan",
