@@ -438,8 +438,8 @@ async function createJavascript() {
                                     existingVarName.push(`${varName} = {};\n`);
 
                                     if (i != linkedIdSplitted.length - 1) {
-                                        autoScript = autoScript.concat(`${varName}.getId = function() {return ("${varName}")};\n`);
-                                        existingVarName.push(`${varName}.getId = function() {return ("${varName}")};\n`);
+                                        autoScript = autoScript.concat(`${varName}.getId = function() {return ("${varName.replace(rootName, myNamespace)}")};\n`);
+                                        existingVarName.push(`${varName}.getId = function() {return ("${varName.replace(rootName, myNamespace)}")};\n`);
                                     }
                                 }
                             }
