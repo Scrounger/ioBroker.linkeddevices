@@ -436,6 +436,11 @@ async function createJavascript() {
                                 if (!existingVarName.includes(`${varName} = {};\n`)) {
                                     autoScript = autoScript.concat(`${varName} = {};\n`);
                                     existingVarName.push(`${varName} = {};\n`);
+
+                                    if (i != linkedIdSplitted.length - 1) {
+                                        autoScript = autoScript.concat(`${varName}.getId = function() {return ("${varName}")};\n`);
+                                        existingVarName.push(`${varName}.getId = function() {return ("${varName}")};\n`);
+                                    }
                                 }
                             }
 
