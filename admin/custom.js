@@ -522,23 +522,23 @@ if (typeof customPostInits !== 'undefined') {
             });
 
             Input.number_max.keyup(function () {
-                // Nur Nummern zulassen
-                let allowedSigns = /[^0-9]/;
+                // Nur pos / neg integer erlauben
+                let regEx = /^[-]?[0-9]*$/
 
-                if (allowedSigns.test(this.value)) {
+                if (!regEx.test(this.value)) {
                     gMain.showError(_("only numbers allowed"));
+                    this.value = this.value.substring(0, this.value.length - 1)
                 }
-                this.value = this.value.replace(allowedSigns, '');
             });
 
             Input.number_min.keyup(function () {
-                // Nur Nummern zulassen
-                let allowedSigns = /[^0-9]/;
+                // Nur pos / neg integer erlauben
+                let regEx = /^[-]?[0-9]*$/
 
-                if (allowedSigns.test(this.value)) {
+                if (!regEx.test(this.value)) {
                     gMain.showError(_("only numbers allowed"));
+                    this.value = this.value.substring(0, this.value.length - 1)
                 }
-                this.value = this.value.replace(allowedSigns, '');
             });
 
             // Umrechnung für read & write - Eingabe prüfen
