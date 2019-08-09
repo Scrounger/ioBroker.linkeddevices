@@ -429,7 +429,7 @@ async function createJavascript() {
 
                     // sofern isLinked = true -> mit in die skript Erstellung einbeziehen
                     if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].isLinked
-                        || Checkbox.generateVarsForAllObjectsOfInstance.is(":checked")) {
+                        || linkedObject && Checkbox.generateVarsForAllObjectsOfInstance.is(":checked")) {
 
                         // struktur der variablen bauen
                         let linkedIdSplitted = linkedId.replace(myNamespace + ".", "").split(".");
@@ -457,8 +457,12 @@ async function createJavascript() {
                             // Funktionen den linkedObjects hinzufügen
                             autoScript = autoScript.concat(`${varName}.getId = function() {return "${linkedId}"};\n`);
                             autoScript = autoScript.concat(`${varName}.getState = function() {return getState("${linkedId}")};\n`);
-                            autoScript = autoScript.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
-                            autoScript = autoScript.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+
+                            if (linkedObject.common.write && linkedObject.common.write === true || Checkbox.generateSetStateForReadOnly.is(":checked")) {
+                                autoScript = autoScript.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
+                                autoScript = autoScript.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+                            }
+
                             autoScript = autoScript.concat(`${varName}.getObject = function() {return getObject("${linkedId}")};\n`);
                         }
                         autoScript = autoScript.concat("\n");
