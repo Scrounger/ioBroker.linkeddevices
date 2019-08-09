@@ -23,6 +23,7 @@ var myNamespace;
 var Input = {};
 var Label = {};
 var Button = {};
+var Checkbox = {};
 
 async function load(settings, onChange) {
     // Namespace bauen
@@ -111,6 +112,10 @@ async function initialize_Divs() {
     Button.createJavaScript = $('.values-buttons[data-command="btnCreateJavascript"]');
     Button.createJavaScript.attr('title', _('generate script'));
 
+    //CheckBoxes
+    Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
+    Checkbox.generateSetStateForReadOnly = $('input[id="generateSetStateForReadOnly"]');
+
 
     var javascriptAdapter = await getObject("system.adapter.javascript.0");
     if (!javascriptAdapter) {
@@ -118,6 +123,9 @@ async function initialize_Divs() {
         Button.createJavaScript.attr('disabled', true);
         Input.scriptName.attr('disabled', true);
         Input.variableName.attr('disabled', true);
+        Checkbox.generateVarsForAllObjectsOfInstance.attr('disabled', true);
+        Checkbox.generateSetStateForReadOnly.attr('disabled', true);
+
         //TODO: translation
         Label.ButtonCreateJavaScript.text(_('javascript adapter is not installed'));
     } else {
@@ -412,6 +420,7 @@ async function createJavascript() {
             let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
             let sortedIdList = Object.keys(linkedDevicesList).sort(function (x, y) { return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0)) });
 
+
             if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
                 let existingVarName = [];
                 for (var id in sortedIdList) {
@@ -419,7 +428,8 @@ async function createJavascript() {
                     let linkedObject = linkedDevicesList[sortedIdList[id]];
 
                     // sofern isLinked = true -> mit in die skript Erstellung einbeziehen
-                    if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].isLinked) {
+                    if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].isLinked
+                        || Checkbox.generateVarsForAllObjectsOfInstance.is(":checked")) {
 
                         // struktur der variablen bauen
                         let linkedIdSplitted = linkedId.replace(myNamespace + ".", "").split(".");
