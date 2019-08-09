@@ -151,7 +151,9 @@
 	"native": {
 		"deleteDeadLinkedObjects": false,
 		"scriptName": "",
-		"variableName": ""
+		"variableName": "",
+		"generateVarsForAllObjectsOfInstance": false,
+		"generateSetStateForReadOnly": false
 	},
 	"objects": [],
 	"instanceObjects": []

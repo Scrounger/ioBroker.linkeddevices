@@ -79,12 +79,21 @@
 				<div class="col s2 input-field">
 					<input type="text" class="value" id="variableName" />
 					<label for="variableName" class="translate">name of the variable</label>
-				</div>								
-				<div class="col s8">
+				</div>		
+				<div class="col s3">
+					<div class="row">
+						<input type="checkbox" class="value" id="generateVarsForAllObjectsOfInstance" />
+						<label for="generateVarsForAllObjectsOfInstance" class="translate">include all objects of the instance</label>
+					</div>
+					<div class="row">
+						<input type="checkbox" class="value" id="generateSetStateForReadOnly" />
+						<label for="generateSetStateForReadOnly" class="translate">generate setState for 'readonly' objects</label>
+					</div>
+				</div>						
+				<div class="col s5">
 					<a id="btnJavascript" data-command="btnCreateJavascript" class="values-buttons btn-floating btn-large waves-effect waves-light" title="create javascript"><i class="material-icons">note_add</i></a>
 					<label id="labelBtnJavascript" for="btnJavascript" class="translate">generate script</label>
 				</div>				
-
 			</div>
 			<div class="row">
 				<hr size="1" noshade style="margin-top: 20px">

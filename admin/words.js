@@ -172,7 +172,7 @@ systemDictionary = {
 	},
 	"only numbers allowed": {
 		"en": "only numbers allowed",
-		"de": "Nur Zahlen sind als Eingabe erlaubt!",
+		"de": "Nur Nummern sind als Eingabe erlaubt!",
 		"ru": "разрешены только цифры",
 		"pt": "somente números permitidos",
 		"nl": "alleen cijfers toegestaan",
@@ -936,5 +936,29 @@ systemDictionary = {
 		"es": "Caracteres no permitidos<br>Solo se permiten letras y números",
 		"pl": "Znaki niedozwolone<br>Dozwolone są tylko litery i cyfry",
 		"zh-cn": "字符不被允许<br>只允许使用字母和数字"
-	  }
+	},
+	"include all objects of the instance": {
+		"en": "include all objects of the instance",
+		"de": "alle Objekte der Instanz mit einbeziehen",
+		"ru": "включить все объекты экземпляра",
+		"pt": "incluir todos os objetos da instância",
+		"nl": "alle objecten van het exemplaar bevatten",
+		"fr": "inclure tous les objets de l'instance",
+		"it": "include tutti gli oggetti dell'istanza",
+		"es": "incluir todos los objetos de la instancia",
+		"pl": "obejmują wszystkie obiekty instancji",
+		"zh-cn": "包括实例的所有对象"
+	},
+	"generate setState for 'readonly' objects": {
+		"en": "generate setState for 'readonly' objects",
+		"de": "setState für 'readonly' Objekte generieren",
+		"ru": "создать setState для «только для чтения» объектов",
+		"pt": "gerar setState para objetos 'readonly'",
+		"nl": "setState genereren voor 'alleen-lezen' objecten",
+		"fr": "générer setState pour les objets 'readonly'",
+		"it": "genera setState per oggetti \"sola lettura\"",
+		"es": "generar setState para objetos 'readonly'",
+		"pl": "generuj setState dla obiektów „tylko do odczytu”",
+		"zh-cn": "为'readonly'对象生成setState"
+	}
 };
