@@ -20,6 +20,8 @@ var currentOrder = ORDER.DESC;
 
 var myNamespace;
 
+var tableSizeAtStart = 0;
+
 var Input = {};
 var Label = {};
 var Button = {};
@@ -107,6 +109,7 @@ async function initialize_Divs() {
 
     // Labels    
     Label.ButtonCreateJavaScript = $('label[id="labelBtnJavascript"');
+    Label.labelTableEntries = $('label[id="labelTableEntries"');
 
     // Buttons
     Button.createJavaScript = $('.values-buttons[data-command="btnCreateJavascript"]');
@@ -278,6 +281,10 @@ async function createTable(onChange, filterText = null) {
     try {
         let tableData = await getTableData();	// Array für tableFkt
 
+        if (tableSizeAtStart === 0) {
+            tableSizeAtStart = tableData.length;
+        }
+
         if (tableData) {
             $('h6[id=noTableData]').hide();
 
@@ -289,6 +296,8 @@ async function createTable(onChange, filterText = null) {
                         res.parentName.toUpperCase().includes(filterText.toUpperCase());
                 });
             }
+
+            Label.labelTableEntries.text(`Einträge: ${tableData.length} / ${tableSizeAtStart}`);
 
             sortData(tableData, currentSort, onChange);
 
