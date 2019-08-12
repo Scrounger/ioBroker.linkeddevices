@@ -435,6 +435,27 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
+	 * Create linked object channel if it not exist
+	 * @param {string} linkedId
+	 */
+	async createLinkedObjectChannel(linkedId) {
+		const match = linkedId.split(".");
+		if (match.length !== 2) {
+			this.log.debug(`${linkedId} no needs create channel.`)
+			return;
+		}
+		const channelName = match[0];
+		await this.setObjectNotExistsAsync(channelName, {
+			_id: `${this.namespace}.${channelName}`,
+			common: {
+				name: channelName,
+			},
+			type: "channel",
+			native: {}
+		});
+	}
+
+	/**
 	 * linkedObject mit parentObject erstellen bzw. aktualisieren und 'isLinked' Status setzen (= hat eine existierende Verlinkung)
 	 * @param {ioBroker.Object} parentObj
 	 * @param {ioBroker.Object} oldLinkedObj
@@ -463,6 +484,9 @@ class Linkeddevices extends utils.Adapter {
 						this.log.error("[createLinkedObject] linkedId: '" + linkedId + "' contains illegal characters (parentId: '" + parentObj._id + "')");
 
 					} else {
+						// Create channel object if need.
+						this.createLinkedObjectChannel(linkedId);
+
 						// LinkedObjekt daten übergeben
 						let linkedObj = Object();
 						linkedObj.type = parentObj.type;
