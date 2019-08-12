@@ -960,5 +960,17 @@ systemDictionary = {
 		"es": "más información (biblioteca de momentos)",
 		"pl": "więcej informacji (biblioteka momentów)",
 		"zh-cn": "更多信息（时刻库）"
-	}
+	},
+	"parser format": {
+		"en": "parser format",
+		"de": "Parser Format",
+		"ru": "формат парсера",
+		"pt": "formato de analisador",
+		"nl": "parser-indeling",
+		"fr": "format de l'analyseur",
+		"it": "formato parser",
+		"es": "formato de analizador",
+		"pl": "format parsera",
+		"zh-cn": "解析器格式"
+	  }
 };
