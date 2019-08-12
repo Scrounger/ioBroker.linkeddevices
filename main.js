@@ -440,11 +440,11 @@ class Linkeddevices extends utils.Adapter {
 	 */
 	async createLinkedObjectChannel(linkedId) {
 		const match = linkedId.split(".");
-		if (match.length !== 2) {
+		if (match.length !== 4) {
 			this.log.debug(`${linkedId} no needs create channel.`)
 			return;
 		}
-		const channelName = match[0];
+		const channelName = match[2];
 		await this.setObjectNotExistsAsync(channelName, {
 			_id: `${this.namespace}.${channelName}`,
 			common: {
