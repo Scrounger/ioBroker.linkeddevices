@@ -143,7 +143,8 @@ if (typeof customPostInits !== 'undefined') {
             Group.String = $div.find('.view_String');
             Group.String_Converter_None = $div.find('.view_String_Converter_None');
             Group.String_Converter_Boolean = $div.find('.view_String_Converter_Boolean');
-
+            Group.String_Converter_String_Duration = $div.find('.view_String_Converter_String_Duration');
+            Group.String_Converter_String_DateTime = $div.find('.view_String_Converter_String_DateTime');
 
             // alle input in vars packen
             Input.parentId = $div.find('input[id="IN_parentId"]');
@@ -176,6 +177,9 @@ if (typeof customPostInits !== 'undefined') {
             Input.string_suffix = $div.find('input[data-field="string_suffix"]');
             Input.string_to_boolean_value_true = $div.find('input[data-field="string_to_boolean_value_true"]');
             Input.string_to_boolean_value_false = $div.find('input[data-field="string_to_boolean_value_false"]');
+            Input.string_to_duration_format = $div.find('input[data-field="string_to_duration_format"]');
+            Input.string_to_datetime_parser = $div.find('input[data-field="string_to_datetime_parser"]');
+            Input.string_to_datetime_format = $div.find('input[data-field="string_to_datetime_format"]');
 
 
             // alle select in var packen
@@ -236,7 +240,7 @@ if (typeof customPostInits !== 'undefined') {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
 
-                if (type === 'number' && currentObj.common.write === false) {
+                if (currentObj.common.write === false && (type === 'number' || type === 'string')) {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type) + " (read only)"));
                 } else {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type)));
@@ -244,6 +248,8 @@ if (typeof customPostInits !== 'undefined') {
                     // selector: Konvertierung entfernen, die nur bei read only möglich sind 
                     Select.number_convertTo.find('option[value="duration"]').remove();
                     Select.number_convertTo.find('option[value="datetime"]').remove();
+                    Select.string_convertTo.find('option[value="duration"]').remove();
+                    Select.string_convertTo.find('option[value="datetime"]').remove();
                 }
 
                 // Views initalisieren
@@ -272,11 +278,55 @@ if (typeof customPostInits !== 'undefined') {
                     Group.String_Converter_Boolean.hide();
                     Group.String_Converter_Boolean.find("input").val("");
 
+                    Group.String_Converter_String_Duration.hide();
+                    Group.String_Converter_String_Duration.find("input").val("");
+
+                    Group.String_Converter_String_DateTime.hide();
+                    Group.String_Converter_String_DateTime.find("input").val("");
+
                 } else if (selectedStringConverter === "boolean") {
                     Group.String_Converter_Boolean.show();
 
                     Group.String_Converter_None.hide();
                     Group.String_Converter_None.find("input").val("");
+
+                    Group.String_Converter_String_Duration.hide();
+                    Group.String_Converter_String_Duration.find("input").val("");
+
+                    Group.String_Converter_String_DateTime.hide();
+                    Group.String_Converter_String_DateTime.find("input").val("");
+
+                } else if (selectedStringConverter === "duration" && currentObj.common.read === true && currentObj.common.write === false) {
+                    Group.String_Converter_String_Duration.show();
+
+                    if (Input.string_to_duration_format.val() == "") {
+                        Input.string_to_duration_format.val("dd[T] hh[h] mm[m]");
+                    }
+
+                    Group.String_Converter_None.hide();
+                    Group.String_Converter_None.find("input").val("");
+
+                    Group.String_Converter_Boolean.hide();
+                    Group.String_Converter_Boolean.find("input").val("");
+
+                    Group.String_Converter_String_DateTime.hide();
+                    Group.String_Converter_String_DateTime.find("input").val("");
+
+                } else if (selectedStringConverter === "datetime" && currentObj.common.read === true && currentObj.common.write === false) {
+                    Group.String_Converter_String_DateTime.show();
+
+                    if (Input.string_to_datetime_format.val() == "") {
+                        Input.string_to_datetime_format.val("LLL");
+                    }
+
+                    Group.String_Converter_None.hide();
+                    Group.String_Converter_None.find("input").val("");
+
+                    Group.String_Converter_Boolean.hide();
+                    Group.String_Converter_Boolean.find("input").val("");
+
+                    Group.String_Converter_String_Duration.hide();
+                    Group.String_Converter_String_Duration.find("input").val("");
                 }
 
                 // Event Handler für ExpertSettings mit type 'string'

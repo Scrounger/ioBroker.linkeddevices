@@ -721,18 +721,6 @@ systemDictionary = {
 		"pl": "format wyświetlania czasu trwania",
 		"zh-cn": "显示格式的持续时间"
 	},
-	"more information about the display format (moment library)": {
-		"en": "more information about the display format (moment library)",
-		"de": "Weitere Informationen zum Anzeigeformat (moment Library)",
-		"ru": "больше информации о формате отображения (библиотека моментов)",
-		"pt": "mais informações sobre o formato de exibição (biblioteca de moment)",
-		"nl": "meer informatie over het weergaveformaat (moment bibliotheek)",
-		"fr": "plus d'informations sur le format d'affichage (bibliothèque de moment)",
-		"it": "ulteriori informazioni sul formato di visualizzazione (libreria dei moment)",
-		"es": "más información sobre el formato de visualización (moment de la biblioteca)",
-		"pl": "więcej informacji o formacie wyświetlania (biblioteka moment)",
-		"zh-cn": "有关显示格式的更多信息（时刻库）"
-	},
 	"prefix string": {
 		"en": "prefix string",
 		"de": "vorangestellte Zeichenfolge",
@@ -960,5 +948,17 @@ systemDictionary = {
 		"es": "generar setState para objetos 'readonly'",
 		"pl": "generuj setState dla obiektów „tylko do odczytu”",
 		"zh-cn": "为'readonly'对象生成setState"
+	},
+	"more information (moment library)": {
+		"en": "more information (moment library)",
+		"de": "Weitere Informationen (moment library)",
+		"ru": "больше информации (библиотека моментов)",
+		"pt": "mais informações (biblioteca de momentos)",
+		"nl": "meer informatie (moment bibliotheek)",
+		"fr": "plus d'informations (bibliothèque de moments)",
+		"it": "ulteriori informazioni (libreria dei momenti)",
+		"es": "más información (biblioteca de momentos)",
+		"pl": "więcej informacji (biblioteka momentów)",
+		"zh-cn": "更多信息（时刻库）"
 	}
 };

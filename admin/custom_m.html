@@ -117,9 +117,7 @@
 							<div class="col s3">
 								<label class="translate">display format of the duration</label>
 								<input type="text" data-field="number_to_duration_format">
-							</div>
-							<div class="col s3">
-								<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information about the display format (moment library)</a></div>
+								<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information (moment library)</a></div>
 							</div>
 						</div>
 						<div class="view_Number_Converter_String_DateTime">
@@ -130,9 +128,7 @@
 							<div class="col s3">
 								<label class="translate">display format of the datetime</label>
 								<input type="text" data-field="number_to_datetime_format">
-							</div>
-							<div class="col s3">
-								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information about the display format (moment library)</a></div>
+								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
 							</div>							
 						</div>
 						<div class="view_Number_Converter_Multi">
@@ -178,6 +174,8 @@
 						<select data-field="string_convertTo" data-default="">
 							<option value="" class="translate">do not convert</option>
 							<option value="boolean" class="translate">boolean</option>
+							<option value="duration" class="translate">duration</option>
+							<option value="datetime" class="translate">datetime</option>							
 						</select>
 					</div>
 					<div class="col s10">
@@ -205,6 +203,25 @@
 								</div>
 							</div>							
 						</div>
+						<div class="view_String_Converter_String_Duration">
+							<div class="col s3">
+								<label class="translate">display format of the duration</label>
+								<input type="text" data-field="string_to_duration_format">
+								<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information (moment library)</a></div>
+							</div>
+						</div>
+						<div class="view_String_Converter_String_DateTime">
+							<div class="col s3">
+								<label class="translate">parser format</label>
+								<input type="text" data-field="string_to_datetime_parser">
+								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
+							</div>							
+							<div class="col s3">
+								<label class="translate">display format of the datetime</label>
+								<input type="text" data-field="string_to_datetime_format">
+								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
+							</div>						
+						</div>											
 					</div>					
 				</div>
 			</div>
