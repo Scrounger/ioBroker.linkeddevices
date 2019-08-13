@@ -162,6 +162,8 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 
 <br><br>
 
+## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette (readonly)'
+
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_string.png)
 
