@@ -1247,6 +1247,44 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 			}
+
+			// Type Converison: string -> string (duration, datetime)
+			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_duration" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_datetime") {
+
+				if (!targetIsParentObj) {
+					// parentObject state hat sich geändert
+
+					if (targetObj.common.custom[this.namespace].string_to_duration_format) {
+						// string -> duration
+						try {
+							moment.locale(mySystemConfig.language);
+							convertedValue = moment.duration(convertedValue).format(targetObj.common.custom[this.namespace].string_to_duration_format, 0);
+
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].string_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+						} catch (err) {
+							this.log.error(`[getConvertedValue] there is something wrong with your duration format, check your expert settings input for '${targetId}'!`);
+							convertedValue = "Error";
+						}
+					}
+
+					if (targetObj.common.custom[this.namespace].string_to_datetime_parser && targetObj.common.custom[this.namespace].string_to_datetime_format) {
+						// string -> datetime
+						try {
+							moment.locale(mySystemConfig.language);
+							convertedValue = moment(convertedValue, targetObj.common.custom[this.namespace].string_to_datetime_parser).format(targetObj.common.custom[this.namespace].string_to_datetime_format);
+
+							if (convertedValue != "Invalid date") {
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using parser '${targetObj.common.custom[this.namespace].string_to_datetime_parser}', format '${targetObj.common.custom[this.namespace].string_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+							} else {
+								this.log.error(`[getConvertedValue] there is something wrong with your datetime parser, check your expert settings input for '${targetId}'!`);
+							}
+						} catch (err) {
+							this.log.error(`[getConvertedValue] there is something wrong with your datetime parser or format, check your expert settings input for '${targetId}'!`);
+							convertedValue = "Error";
+						}
+					}
+				}
+			}
 		}
 
 		return convertedValue;
