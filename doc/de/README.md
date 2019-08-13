@@ -91,6 +91,7 @@ werden. Für folgende Typen gibt es derzeit Umwandlungen:
 
 * [Zahl (readonly)](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl-readonly)  
 * [Zahl](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zahl)
+* [Zeichenkette (readonly)](#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zeichenkette-readonly)
 * [Zeichenkette](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-zeichenkette)
 * [Logikwert](https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/doc/de/README.md#experteneinstellungen-f%C3%BCr-verlinktes-objekt-vom-typ-logikwert)
 
