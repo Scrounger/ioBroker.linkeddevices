@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.4.1",
+		"version": "0.4.5",
 		"news": {
 			"0.4.1": {
 				"en": "Bug fix for automatically generate a global script for the adapter Javascript Script Engine",

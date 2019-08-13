@@ -87,17 +87,6 @@ async function save(callback) {
         }
     });
 
-    // Daten aus Tabelle holen, denen ein neues ParentIbjekt zugewisen wurde
-    var tableData = table2values('events').filter(function (res) {
-        return res.isLinked === false && res.parentId
-    });
-
-    if (Object.keys(tableData).length > 0) {
-        tableData.forEach(function (tableItem) {
-
-            saveAssignedParentObjects(tableItem);
-        });
-    }
     callback(obj);
 }
 
@@ -143,12 +132,9 @@ async function initialize_Divs() {
     }
 }
 
-async function saveAssignedParentObjects(tableItem) {
+async function saveAssignedParentObjects(parentObject, linkedObject) {
     // notwendige custom daten an neu zugeordnete parentObjekte übergeben
     try {
-        linkedObject = await getObject(tableItem.linkedId);
-        parentObject = await getObject(tableItem.parentId);
-
         if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
             if (parentObject && parentObject.common) {
 
@@ -567,14 +553,21 @@ async function assignParentObject(rowNum, parentId) {
             }
         }
 
-        //showMessage(JSON.stringify(linkedObject));
-
 
         // Daten in table schreiben
         $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val(parentObj._id).trigger('change');
         if (parentObj && parentObj.common && parentObj.common.name) {
             $('#events .values-input[data-name="parentName"][data-index="' + rowNum + '"]').val(parentObj.common.name).trigger('change');
         }
+
+        // neue Zuweisung speichern
+        await saveAssignedParentObjects(parentObj, linkedObject);
+
+        // CheckBox & Button aktivieren / deaktivieren
+        $('#events .values-input[data-name="isLinked"][data-index="' + rowNum + '"]').prop('checked', true).trigger('change');
+        $('#events .values-buttons[data-command="assignLink"][data-index="' + rowNum + '"]').attr('disabled', true).trigger('change');
+        $('#events .values-buttons[data-command="openCustom"][data-index="' + rowNum + '"]').attr('disabled', false).trigger('change');
+
     } catch (err) {
         showError("assignParentObject: " + err);
     }
