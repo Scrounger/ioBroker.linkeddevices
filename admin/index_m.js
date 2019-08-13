@@ -206,6 +206,14 @@ async function saveAssignedParentObjects(parentObject, linkedObject) {
                             // Spezial Format: DateTime
                             customForParentObj[convertToKey] = "datetime"
                             expertSettings = true;
+                        } else if (linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].string_to_duration_format) {
+                            // Spezial Format: Duration
+                            customForParentObj[convertToKey] = "duration"
+                            expertSettings = true;
+                        } else if (linkedObject.common.custom && linkedObject.common.custom[myNamespace] && linkedObject.common.custom[myNamespace].string_to_datetime_format) {
+                            // Spezial Format: DateTime
+                            customForParentObj[convertToKey] = "datetime"
+                            expertSettings = true;
                         } else {
                             // kein Spezial Format
                             customForParentObj[convertToKey] = linkedObject.common.type;
