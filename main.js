@@ -447,9 +447,9 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
 				&& parentObj.common.custom[this.namespace].enabled) {
 
-					// Todo: check structure if channel, device, etc.
-					// let tmp = parentObj._id.lastIndexOf(".");
-					// this.log.info(parentObj._id.substring(0, tmp));
+				// Todo: check structure if channel, device, etc.
+				// let tmp = parentObj._id.lastIndexOf(".");
+				// this.log.info(parentObj._id.substring(0, tmp));
 
 				if (!parentObj.common.custom[this.namespace].linkedId || !parentObj.common.custom[this.namespace].linkedId.length || parentObj.common.custom[this.namespace].linkedId === "") {
 					// 'custom.linkedId' fehlt oder hat keinen Wert
@@ -609,8 +609,17 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.type = parentObj.common.custom[this.namespace].boolean_convertTo;
 
 			} else if (parentObj.common.custom[this.namespace].string_convertTo) {
-				expertSettings.type = parentObj.common.custom[this.namespace].string_convertTo;
 
+				if (parentObj.common.custom[this.namespace].string_convertTo === "duration") {
+					// string -> duration: type ist 'string'
+					expertSettings.type = "string";
+				} else if (parentObj.common.custom[this.namespace].string_convertTo === "datetime") {
+					// string -> datetime: type ist 'string'
+					expertSettings.type = "string";
+				} else {
+					// keine spezieller type, kann direkt vom parentObject übernommen werden
+					expertSettings.type = parentObj.common.custom[this.namespace].string_convertTo;
+				}
 			}
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
@@ -815,6 +824,36 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.string_to_boolean_value_false = parentObj.common.custom[this.namespace].string_to_boolean_value_false;
 			}
 
+			if (parentObj.common.custom[this.namespace].string_to_duration_format) {
+				// string -> duration (string): parentObject Anzeigeformat der Dauer
+				expertSettings.string_to_duration_format = parentObj.common.custom[this.namespace].string_to_duration_format;
+			} else {
+				if (parentObj.common.custom[this.namespace].string_convertTo && parentObj.common.custom[this.namespace].string_convertTo === "duration") {
+					// Duration Format ist zwinged erforderlich, um Spezial Format zu erkennen.
+					expertSettings.string_to_duration_format = mySystemConfig.durationFormat;
+					this.log.warn(`[getCustomDataTypeString] no duration format set for parentObject '${parentObj._id}' -> using default format '${mySystemConfig.durationFormat}'`)
+				}
+			}
+
+			if (parentObj.common.custom[this.namespace].string_to_datetime_parser) {
+				// string -> datetime (string): parentObject parser für input format
+				expertSettings.string_to_datetime_parser = parentObj.common.custom[this.namespace].string_to_datetime_parser;
+			} else {
+				if (parentObj.common.custom[this.namespace].string_convertTo && parentObj.common.custom[this.namespace].string_convertTo === "datetime") {
+					this.log.error(`[getCustomDataTypeString] no datetime parser set for parentObject '${parentObj._id}' -> check your expertsettings!`)
+				}
+			}
+
+			if (parentObj.common.custom[this.namespace].string_to_datetime_format) {
+				// string -> datetime (string): parentObject Anzeigeformat der DateTime
+				expertSettings.string_to_datetime_format = parentObj.common.custom[this.namespace].string_to_datetime_format;
+			} else {
+				if (parentObj.common.custom[this.namespace].string_convertTo && parentObj.common.custom[this.namespace].string_convertTo === "datetime") {
+					// DateTime Format ist zwinged erforderlich, um Spezial Format zu erkennen.
+					expertSettings.string_to_datetime_format = mySystemConfig.dateFormat;
+					this.log.warn(`[getCustomDataTypeString] no datetime format set for parentObject '${parentObj._id}' -> using default format '${mySystemConfig.dateFormat}'`)
+				}
+			}
 		}
 		return expertSettings;
 	}

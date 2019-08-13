@@ -24,6 +24,9 @@ $.get({
 // Objekt holen für das der custom Dialog geöffnet wurde 
 var currentObj = gMain.objects[gMain.navigateGetParams()];
 
+// State des Objektes holen
+var currentState = gMain.states[gMain.navigateGetParams()];
+
 if (typeof defaults !== 'undefined') {
     defaults.linkeddevices = function (obj, instanceObj) {
         return {
