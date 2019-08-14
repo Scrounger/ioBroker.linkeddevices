@@ -909,6 +909,21 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                                     line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
                                 }
                             }
+                        } else if (buttons[i][b] === 'removeLink') {
+                            // Mod: abhängig ob verlinkt ist Button disabled
+                            if (isMaterialize) {
+                                if (JSON.stringify(values[v].isLinked) === "true") {
+                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light"><i class="material-icons">link_off</i></a>';
+                                } else {
+                                    line += '<a data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons btn-floating btn-small waves-effect waves-light" disabled="true"><i class="material-icons">link_off</i></a>';
+                                }
+                            } else {
+                                if (JSON.stringify(values[v].isLinked) === "true") {
+                                    line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons" disabled="true"></button>';
+                                } else {
+                                    line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
+                                }
+                            }                            
                         } else if (buttons[i][b] === 'openCustom') {
                             if (isMaterialize) {
                                 if (JSON.stringify(values[v].isLinked) === "true") {
@@ -1125,7 +1140,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                         }
                     });
                 } else if (command === 'assignLink') {
-                    // Mod: eigener button für link
+                    // Mod: eigener button für link zuweisen
                     if (!isMaterialize) {
                         $(this).button({
                             icons: { primary: 'ui-icon-pencil' },
@@ -1138,8 +1153,22 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                     $(this).on('click', function () {
                         var id = $(this).data('index');
                     }).attr('title', _('assign link'));
+                } else if (command === 'removeLink') {
+                    // Mod: eigener button für link entfernen
+                    if (!isMaterialize) {
+                        $(this).button({
+                            icons: { primary: 'ui-icon-pencil' },
+                            text: false
+                        })
+                            .css({ width: '1em', height: '1em' });
+                    } else {
+                        $(this).addClass('red').find('i').html('link_off');     //Icon festlegen
+                    }
+                    $(this).on('click', function () {
+                        var id = $(this).data('index');
+                    }).attr('title', _('remove link'));
                 } else if (command === 'openCustom') {
-                    // Mod: eigener button für custom dlg
+                    // Mod: eigener button für custom dialog öffnen
                     if (!isMaterialize) {
                         $(this).button({
                             icons: { primary: 'ui-icon-gear' },

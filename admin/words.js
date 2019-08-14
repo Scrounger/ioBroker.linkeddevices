@@ -577,6 +577,18 @@ systemDictionary = {
 		"pl": "przypisz link",
 		"zh-cn": "分配链接"
 	},
+	"remove link": {
+		"en": "remove link",
+		"de": "Link entfernen",
+		"ru": "удалить ссылку",
+		"pt": "remover link",
+		"nl": "link verwijderen",
+		"fr": "supprimer le lien",
+		"it": "rimuovi link",
+		"es": "remover enlace",
+		"pl": "usuń link",
+		"zh-cn": "删除链接"
+	},
 	"Overview of all linked objects": {
 		"en": "Overview of all linked objects",
 		"de": "Übersicht aller verlinkten Objekte",
@@ -972,5 +984,5 @@ systemDictionary = {
 		"es": "formato de analizador",
 		"pl": "format parsera",
 		"zh-cn": "解析器格式"
-	  }
+	}
 };
