@@ -351,24 +351,24 @@ async function events(onChange) {
     try {
         // linkedId column header click event
         $('th[data-name="linkedId"]').on('click', function () {
-            var tableData = table2values('events');
+            var tableData = myTable2values('events');
             sortData(tableData, SORT.linkedId, onChange);
         });
 
         // parentId column header click event
         $('th[data-name="parentId"]').on('click', function () {
-            var tableData = table2values('events');
+            var tableData = myTable2values('events');
             sortData(tableData, SORT.parentId, onChange);
         });
 
         // parentName column header click event
         $('th[data-name="parentName"]').on('click', function () {
-            var tableData = table2values('events');
+            var tableData = myTable2values('events');
             sortData(tableData, SORT.parentName, onChange);
         });
 
         $('th[data-name="isLinked"]').on('click', function () {
-            var tableData = table2values('events');
+            var tableData = myTable2values('events');
             sortData(tableData, SORT.isLinked, onChange);
         });
 
@@ -527,6 +527,12 @@ async function tableOnReady() {
         });
     });
 
+    $('#events .table-values-div .table-values .values-buttons[data-command="removeLink"]').on('click', function () {
+        let rowNum = $(this).data('index');
+        let parentId = $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val();
+        showMessage("todo <br> parentId:" + parentId);
+    });
+
     $('#events .table-values-div .table-values .values-buttons[data-command="openCustom"]').on('click', function () {
         let rowNum = $(this).data('index');
         let parentId = $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val();
@@ -571,7 +577,7 @@ async function assignParentObject(rowNum, parentId) {
         // Daten in table schreiben
         $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val(parentObj._id).trigger('change');
         if (parentObj && parentObj.common && parentObj.common.name) {
-            $('#events .values-input[data-name="parentName"][data-index="' + rowNum + '"]').val(parentObj.common.name).trigger('change');
+            $('#events .values-label[data-name="parentName"][data-index="' + rowNum + '"]').text(parentObj.common.name).trigger('change');
         }
 
         // neue Zuweisung speichern
@@ -580,6 +586,7 @@ async function assignParentObject(rowNum, parentId) {
         // CheckBox & Button aktivieren / deaktivieren
         $('#events .values-input[data-name="isLinked"][data-index="' + rowNum + '"]').prop('checked', true).trigger('change');
         $('#events .values-buttons[data-command="assignLink"][data-index="' + rowNum + '"]').attr('disabled', true).trigger('change');
+        $('#events .values-buttons[data-command="removeLink"][data-index="' + rowNum + '"]').attr('disabled', false).trigger('change');
         $('#events .values-buttons[data-command="openCustom"][data-index="' + rowNum + '"]').attr('disabled', false).trigger('change');
 
     } catch (err) {
@@ -1217,7 +1224,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
 
         $lines.find('.values-label').on('change.adaptersettings', function () {
             if ($(this).text() !== $(this).data('old-value')) onChange();
-            values[$(this).data('index')][$(this).data('desc')] = $(this).text();
+            values[$(this).data('index')][$(this).data('name')] = $(this).text();
         }).on('keyup', function () {
             $(this).trigger('change.adaptersettings');
         });
@@ -1240,4 +1247,67 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
         });
     }
     if (typeof onReady === 'function') onReady();
+}
+
+/**
+ * Extract the values from table.
+ *
+ * This function extracts the values from edit table, that was generated with values2table function.
+ *
+ * @param {string} divId name of the html element (or nothing).
+ * @return {object} array with values
+ */
+function myTable2values(divId) {
+    var $div;
+    if (!divId) {
+        $div = $('body');
+    } else {
+        $div = $('#' + divId);
+    }
+    var names = [];
+    $div.find('.table-values th').each(function () {
+        var name = $(this).data('name');
+        if (name) {
+            names.push(name);
+        } else {
+            names.push('___ignore___');
+        }
+    });
+
+    var values = [];
+    var j = 0;
+    $div.find('.table-lines tr').each(function () {
+        values[j] = {};
+
+        $(this).find('td').each(function () {
+            var $input = $(this).find('input');
+            if ($input.length) {
+                var name = $input.data('name');
+                if (name) {
+                    if ($input.attr('type') === 'checkbox') {
+                        values[j][name] = $input.prop('checked');
+                    } else {
+                        values[j][name] = $input.val();
+                    }
+                }
+            }
+
+            var $input = $(this).find('label');
+            if ($input.length) {
+                var name = $input.data('name');
+                if (name) {
+                    values[j][name] = $input.text();
+                }
+            }
+
+            var $select = $(this).find('select');
+            if ($select.length) {
+                var name = $select.data('name');
+                values[j][name] = $select.val() || '';
+            }
+        });
+        j++;
+    });
+
+    return values;
 }
