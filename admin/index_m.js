@@ -286,6 +286,7 @@ async function createTable(onChange, filterText = null) {
                 // Tabelle filtern
                 tableData = tableData.filter(function (res) {
                     return res.linkedId.toUpperCase().includes(filterText.toUpperCase()) ||
+                        res.linkedName.toUpperCase().includes(filterText.toUpperCase()) ||
                         res.parentId.toUpperCase().includes(filterText.toUpperCase()) ||
                         res.parentName.toUpperCase().includes(filterText.toUpperCase());
                 });
@@ -311,12 +312,17 @@ async function getTableData() {
 
         if (linkedDevicesList != null && Object.keys(linkedDevicesList).length > 0) {
             for (var id in linkedDevicesList) {
-                // benötigte Daten in Array für tableFkt packen
+                // benötigte Daten in Array für tableFkt packen               
                 let linkedObj = linkedDevicesList[id];
+                let linkedName = '';
 
                 if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[myNamespace]) {
                     let parentId = '';
                     var parentName = '';
+
+                    if (linkedObj.common.name) {
+                        linkedName = linkedObj.common.name;
+                    }
 
                     if (linkedObj.common.custom[myNamespace].isLinked) {
                         // Verlinkung exitsiert -> parentId übergeben
@@ -329,7 +335,7 @@ async function getTableData() {
                         }
                     }
 
-                    tableData.push({ "linkedId": id, "parentId": parentId, "isLinked": linkedObj.common.custom[myNamespace].isLinked, "parentName": parentName });
+                    tableData.push({ "linkedId": id, "linkedName": linkedName, "parentId": parentId, "parentName": parentName, "isLinked": linkedObj.common.custom[myNamespace].isLinked });
                 }
             }
             return tableData;
@@ -793,6 +799,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
             if (name) {
                 var obj = {
                     name: name,
+                    desc: $(this).data('desc'),                 // Mod: Name für Label
                     type: $(this).data('type') || 'text',
                     def: $(this).data('default'),
                     style: $(this).data('style'),
@@ -880,8 +887,9 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                         }
                         line += '</select>';
                     } else {
-                        // Mod: readonly input (text)
+                        // Mod: readonly input (text) & label mit Name
                         line += '<input class="values-input" style="' + (names[i].style ? names[i].style : 'width: 100%') + '" type="' + names[i].type + '" data-index="' + v + '" data-name="' + names[i].name + '" readonly/>';
+                        line += '<label class="values-label" style="font-style: italic; font-weight: bold; color: #2196f3;" type="' + names[i].type + '" data-index="' + v + '" data-name="' + names[i].desc + '"/>';
                     }
                 }
 
@@ -923,7 +931,7 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                                 } else {
                                     line += '<button data-index="' + v + '" data-command="' + buttons[i][b] + '" class="values-buttons"></button>';
                                 }
-                            }                            
+                            }
                         } else if (buttons[i][b] === 'openCustom') {
                             if (isMaterialize) {
                                 if (JSON.stringify(values[v].isLinked) === "true") {
@@ -976,6 +984,17 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                 $this.val(values[id][name]);
             }
         });
+
+        // Mod: label mit Name
+        $lines.find('.values-label').each(function () {
+            var $this = $(this);
+            var name = $this.data('name');
+            var id = $this.data('index');
+            $this.data('old-value', values[id][name]);
+
+            $this.text(values[id][name]);
+        });
+
         $lines.find('.values-buttons').each(function () {
             var command = $(this).data('command');
             if (command === 'copy') {
@@ -1192,6 +1211,13 @@ function myValues2table(divId, values, onChange, onReady, maxRaw) {
                 if ($(this).val() !== $(this).data('old-value')) onChange();
                 values[$(this).data('index')][$(this).data('name')] = $(this).val();
             }
+        }).on('keyup', function () {
+            $(this).trigger('change.adaptersettings');
+        });
+
+        $lines.find('.values-label').on('change.adaptersettings', function () {
+            if ($(this).text() !== $(this).data('old-value')) onChange();
+            values[$(this).data('index')][$(this).data('desc')] = $(this).text();
         }).on('keyup', function () {
             $(this).trigger('change.adaptersettings');
         });
