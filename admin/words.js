@@ -984,5 +984,17 @@ systemDictionary = {
 		"es": "formato de analizador",
 		"pl": "format parsera",
 		"zh-cn": "解析器格式"
+	},
+	"do you really want to delete this link?": {
+		"en": "do you really want to delete this link?",
+		"de": "Möchtest du die Verlinkung wirklich löschen?",
+		"ru": "Вы действительно хотите удалить эту ссылку?",
+		"pt": "você realmente quer deletar esse link?",
+		"nl": "wil je deze link echt verwijderen?",
+		"fr": "voulez-vous vraiment supprimer ce lien?",
+		"it": "vuoi veramente cancellare questo link?",
+		"es": "¿De verdad quieres eliminar este enlace?",
+		"pl": "czy naprawdę chcesz usunąć ten link?",
+		"zh-cn": "你真的想删除这个链接吗？"
 	}
 };

@@ -530,7 +530,8 @@ async function tableOnReady() {
     $('#events .table-values-div .table-values .values-buttons[data-command="removeLink"]').on('click', function () {
         let rowNum = $(this).data('index');
         let parentId = $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val();
-        showMessage("todo <br> parentId:" + parentId);
+
+        removeAssignedParentObjectConfirm(rowNum, parentId);
     });
 
     $('#events .table-values-div .table-values .values-buttons[data-command="openCustom"]').on('click', function () {
@@ -541,6 +542,37 @@ async function tableOnReady() {
         window.open(url);
         //window.open(url, "_top");
     });
+}
+
+function removeAssignedParentObjectConfirm(rowNum, parentId) {
+    confirmMessage(_('do you really want to delete this link?'), _('attention'), null, [_('Cancel'), _('OK')], function (result) {
+        if (result === 1) {
+            removeAssignedParentObject(rowNum, parentId);
+        }
+    });
+}
+
+async function removeAssignedParentObject(rowNum, parentId) {
+    try {
+        let parentObj = await getObject(parentId);
+
+        // custom entfernen
+        delete parentObj.common.custom[myNamespace];
+
+        // CheckBox & Button aktivieren / deaktivieren
+        $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val('').trigger('change');
+        $('#events .values-label[data-name="parentName"][data-index="' + rowNum + '"]').text('').trigger('change');
+        $('#events .values-input[data-name="isLinked"][data-index="' + rowNum + '"]').prop('checked', false).trigger('change');
+        $('#events .values-buttons[data-command="assignLink"][data-index="' + rowNum + '"]').attr('disabled', false).trigger('change');
+        $('#events .values-buttons[data-command="removeLink"][data-index="' + rowNum + '"]').attr('disabled', true).trigger('change');
+        $('#events .values-buttons[data-command="openCustom"][data-index="' + rowNum + '"]').attr('disabled', true).trigger('change');
+
+
+        // neue Zuweisung speichern
+        await setForeignObject(parentObj);
+    } catch (err) {
+        showError("assignParentObject: " + err);
+    }
 }
 
 async function assignParentObject(rowNum, parentId) {
