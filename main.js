@@ -152,7 +152,6 @@ class Linkeddevices extends utils.Adapter {
 							// @ts-ignore
 							await this.createLinkedObject(obj, oldLinkedObj);
 						}
-
 					} else {
 						// wird bereits verwendet -> 'custom.linkedId' vom parentObject auf alte linkedId zurücksetzen
 						let oldLinkedId = this.dicLinkedParentObjects[id];
@@ -167,6 +166,7 @@ class Linkeddevices extends utils.Adapter {
 						await this.setForeignObjectAsync(id, obj);
 					}
 
+					this.storeInfoStates();
 				} else {
 					// neues parentObject hinzugefügt bzw. aktiviert ('enabled==true') -> nicht im dicLinkedParentObjects enthalten
 					let linkedId = this.getLinkedObjectId(obj);
@@ -183,15 +183,16 @@ class Linkeddevices extends utils.Adapter {
 							await this.setForeignObjectAsync(obj._id, obj);
 
 							this.logDicLinkedObjectsStatus();
-							this.logDicLinkedParentObjects();
+							this.logDicLinkedParentObjects();							
 						}
 					}
+
+					this.storeInfoStates();
 				}
 
 				if (this.dicLinkedParentObjects) {
 					this.log.info("[onObjectChange] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
 				}
-
 			} else {
 				// bereits verlinktes parentObject wurde deaktiviert
 				if (obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
@@ -204,6 +205,7 @@ class Linkeddevices extends utils.Adapter {
 					// parentObject aus dicLinkedParentObjects löschen
 					delete this.dicLinkedParentObjects[id];
 					this.logDicLinkedParentObjects();
+					
 
 					// linkedObject "custom.isLinked = false" Status setzen
 					await this.resetLinkedObjectStatusById(oldLinkedId);
@@ -214,6 +216,8 @@ class Linkeddevices extends utils.Adapter {
 					if (this.dicLinkedParentObjects) {
 						this.log.info("[onObjectChange] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
 					}
+
+					this.storeInfoStates();
 				}
 				//INFO: bereits verlinktes parentObject wurde gelöscht -> wird nicht über objectChange erkannt
 			}
@@ -231,7 +235,9 @@ class Linkeddevices extends utils.Adapter {
 					this.log.info(`parentObject '${id}' deleted, linkedObject '${linkedId}' status 'isLinked' set to '${linkedObject.common.custom[this.namespace].isLinked}'`);
 
 					delete this.dicLinkedParentObjects[id];
-					this.log.info("[onObjectChange] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
+					this.logDicLinkedParentObjects();
+
+					this.storeInfoStates();
 				}
 			}
 		}
@@ -340,6 +346,8 @@ class Linkeddevices extends utils.Adapter {
 		await this.removeAllNotLinkedObjects();
 
 		if (this.dicLinkedObjectsStatus) this.log.debug("[initialObjects] 'dicLinkedObjectsStatus' items count: " + Object.keys(this.dicLinkedObjectsStatus).length);
+
+		this.storeInfoStates();
 
 		// subscribe für alle 'states' des Adapters, um Änderungen mitzubekommen
 		await this.subscribeStatesAsync('*');
@@ -568,6 +576,7 @@ class Linkeddevices extends utils.Adapter {
 
 				// linkedId im dicLinkedObjectsStatus löschen
 				delete this.dicLinkedObjectsStatus[linkedId];
+				
 				this.logDicLinkedParentObjects();
 				this.logDicLinkedObjectsStatus();
 
@@ -1349,6 +1358,20 @@ class Linkeddevices extends utils.Adapter {
 		if (this.dicLinkedParentObjects) {
 			this.log.silly("[logDicLinkedParentObjects] count of active linkedObjects: " + Object.keys(this.dicLinkedParentObjects).length)
 			this.log.silly("[logDicLinkedParentObjects] active linkedObjects " + JSON.stringify(this.dicLinkedParentObjects));
+		}
+	}
+
+	storeInfoStates() {
+		if (this.dicLinkedParentObjects) {
+			this.setForeignStateAsync(`${this.namespace}.info.linkedObjects`, Object.keys(this.dicLinkedParentObjects).length, true);
+
+			let countNotLinkedObjects = 0
+			for (var key in this.dicLinkedObjectsStatus) {
+				if (this.dicLinkedObjectsStatus.hasOwnProperty(key) && this.dicLinkedObjectsStatus[key] === false) {
+					countNotLinkedObjects++;
+				}
+			}
+			this.setForeignStateAsync(`${this.namespace}.info.notlinkedObjects`, countNotLinkedObjects, true);
 		}
 	}
 

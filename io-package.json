@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.4.6",
+		"version": "0.4.7",
 		"news": {
 			"0.4.1": {
 				"en": "Bug fix for automatically generate a global script for the adapter Javascript Script Engine",
@@ -156,5 +156,40 @@
 		"generateSetStateForReadOnly": false
 	},
 	"objects": [],
-	"instanceObjects": []
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.linkedObjects",
+			"type": "state",
+			"common": {
+				"role": "",
+				"name": "count of linked objects",
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.notlinkedObjects",
+			"type": "state",
+			"common": {
+				"role": "",
+				"name": "count of not linked objects",
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		}
+	]
 }
