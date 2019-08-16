@@ -233,11 +233,18 @@ if (typeof customPostInits !== 'undefined') {
                     // nur Objekte betrachten die custom vom Namespace haben -> es kann sein das andere Objekte existieren
                     let cleanId = id.replace(`${myNamespace}.`, '');
 
-                    // prefixId suggestion option erzeugen
-                    let prefixId = `<option value="${cleanId.substring(0, cleanId.lastIndexOf('.'))}">`;
-                    if (!prefixIdSuggestionList.includes(prefixId)) {
-                        // nur zu prefixId array hinzufügen wenn noch nicht vorhanden
-                        prefixIdSuggestionList.push(prefixId);
+                    // alle prefixIds von rechts immer bis zum '.' durchlaufen und übergeben
+                    let prefixId = cleanId;
+                    for (var i = 0; i <= cleanId.split(".").length - 1; i++) {
+                        prefixId = prefixId.substring(0, prefixId.lastIndexOf('.'))
+
+                        if (prefixId) {
+                            prefixIdSuggestion = `<option value="${prefixId}">`;
+                            if (!prefixIdSuggestionList.includes(prefixIdSuggestion)) {
+                                // nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+                                prefixIdSuggestionList.push(prefixIdSuggestion);
+                            }
+                        }
                     }
 
                     let stateId = `<option value="${cleanId.substring(cleanId.lastIndexOf('.'), cleanId.length).replace('.', '')}">`;
