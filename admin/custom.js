@@ -27,6 +27,9 @@ var currentObj = gMain.objects[gMain.navigateGetParams()];
 // State des Objektes holen
 var currentState = gMain.states[gMain.navigateGetParams()];
 
+// Namespace 
+var myNamespace = '';
+
 if (typeof defaults !== 'undefined') {
     defaults.linkeddevices = function (obj, instanceObj) {
         return {
@@ -45,12 +48,18 @@ if (typeof customPostInits !== 'undefined') {
             $.extend(systemDictionary, JSON.parse(translation));
         });
 
+        //$div.find('input[id="test"]').val(JSON.stringify(list))
+
+        // Namespace holen
+        myNamespace = instanceObj._id.replace("system.adapter.", "");
+
         var ComboBox = {};
         var Group = {};
         var Input = {};
         var Select = {};
         var Label = {};
         var Button = {};
+        var DataList = {};
 
         // vars die sich verändern können und für conditions benötigt werden
         var isCustomEnabled = false;
@@ -71,7 +80,7 @@ if (typeof customPostInits !== 'undefined') {
         // $div.find('input[id="test"]').val(JSON.stringify(currentObj));
         //$div.find('input[id="test"]').val(Object.keys(gMain));
 
-        $div.find('input[id="test"]').val(gMain.systemConfig.common.language);
+
 
         $div.ready(function () {
             //$div.find('.view_Number').hide();
@@ -112,6 +121,9 @@ if (typeof customPostInits !== 'undefined') {
 
             // ExpertSettings initialisieren
             initialize_ExpertSettings();
+
+            // Vorschläge für Inputs initialisieren
+            intialize_Input_Suggestions();
         }
 
         //#region Initialize
@@ -199,6 +211,55 @@ if (typeof customPostInits !== 'undefined') {
             // Buttons
             Button.parentObjectSettings = $div.find('.values-buttons');
 
+            // DataList
+            DataList.suggestionListPrefixId = $div.find('datalist[id="suggestionListPrefixId"]');
+            DataList.suggestionListStateId = $div.find('datalist[id="suggestionListStateId"]');
+            DataList.suggestionListName = $div.find('datalist[id="suggestionListName"]');
+
+        }
+
+        async function intialize_Input_Suggestions() {
+            // alle Objekte der Instanz holen
+            let objOfInstance = await getForeignObjects(`${myNamespace}.*`);
+
+            let prefixIdSuggestionList = [];
+            let stateIdSuggestionList = [];
+            let nameSugestionList = [];
+
+            for (var id in objOfInstance) {
+                let linkedObject = objOfInstance[id];
+
+                if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[myNamespace]) {
+                    // nur Objekte betrachten die custom vom Namespace haben -> es kann sein das andere Objekte existieren
+                    let cleanId = id.replace(`${myNamespace}.`, '');
+
+                    // prefixId suggestion option erzeugen
+                    let prefixId = `<option value="${cleanId.substring(0, cleanId.lastIndexOf('.'))}">`;
+                    if (!prefixIdSuggestionList.includes(prefixId)) {
+                        // nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+                        prefixIdSuggestionList.push(prefixId);
+                    }
+
+                    let stateId = `<option value="${cleanId.substring(cleanId.lastIndexOf('.'), cleanId.length).replace('.', '')}">`;
+                    if (!stateIdSuggestionList.includes(stateId)) {
+                        // nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+                        stateIdSuggestionList.push(stateId);
+                    }
+
+                    if (linkedObject.common.name) {
+                        let name = `<option value="${linkedObject.common.name}">`;
+                        if (!nameSugestionList.includes(name)) {
+                            // nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+                            nameSugestionList.push(name);
+                        }
+                    }
+                }
+            }
+
+            // daten an suggestion an datalist übergeben
+            DataList.suggestionListPrefixId.html(prefixIdSuggestionList.sort().join("\n"));
+            DataList.suggestionListStateId.html(stateIdSuggestionList.sort().join("\n"))
+            DataList.suggestionListName.html(nameSugestionList.sort().join("\n"))
         }
 
         function initialize_LinkedObject() {
@@ -705,6 +766,20 @@ if (typeof customPostInits !== 'undefined') {
             Select.string_convertTo.on('change', function () {
                 selectedStringConverter = this.value;
                 initialize_ExpertSettings_String();
+            });
+        }
+        //#endregion
+
+        //#region Functions
+        async function getForeignObjects(pattern) {
+            return new Promise((resolve, reject) => {
+                gMain.socket.emit('getForeignObjects', pattern, function (err, res) {
+                    if (!err && res) {
+                        resolve(res);
+                    } else {
+                        resolve(null);
+                    }
+                });
             });
         }
         //#endregion
