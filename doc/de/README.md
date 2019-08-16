@@ -31,6 +31,8 @@ In der Adapterkonfiguration kann ein globales Skript erzeugt werden, dass für a
 |---|---|
 |Skriptname| Name unter dem das erzeugte Skript abgespeichert wird |
 |Name der Variable| Name der Variable über die alle verlinkten Objekte in einem Skript angesteuert werden kann |
+|alle Objekte der Instanz mit einbeziehen| Es werden auch Variablen für andere Objekte die sich in der Instanz befinden generiert |
+|setState für 'readonly' Objekte generieren| setState Funktionf für readonly Objekte erzeugen |
 
 Das ganze sieht im Skript Editor dann so aus:
 
@@ -164,6 +166,14 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 <br><br>
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette (readonly)'
+
+### Zeichenkette (readonly): Konvertiere in Typ 'Dauer'
+![Strukture](media/expert_settings_string_convert_to_duration.png)
+
+### Zeichenkette (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
+![Strukture](media/expert_settings_string_convert_to_datetime.png)
+
+
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_string.png)

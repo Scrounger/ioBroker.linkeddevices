@@ -36,6 +36,16 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
+### X.X.X
+* (Scrounger) custom dialog: suggestion dropdown list added to input fields
+* (Scrounger) adapter configuration: button to remove links added
+* (Scrounger) expert settings: Converter string (readonly) to duration, date and / or datetime added
+* (Scrounger) adapter configuration: layout revised
+* (Scrounger) expert settings number: allow negative values for min / max
+* (Scrounger) adapter configuration: auto generate globale script - optional create setState funtion for readonly objects
+* (Scrounger) adapter configuration: auto generate globale script - now optional recognize also manual created objects
+* (Scrounger) bug fixes
+
 ### 0.4.1
 * (Scrounger) Bug fix: auto generate globale script for [Javascript Script Engine](https://github.com/iobroker/ioBroker.javascript/blob/master/README.md) with variables for all linked Object
 
