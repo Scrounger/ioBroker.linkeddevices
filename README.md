@@ -36,7 +36,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
-### X.X.X
+### 0.5.0
 * (Scrounger) custom dialog: suggestion dropdown list added to input fields
 * (Scrounger) adapter configuration: button to remove links added
 * (Scrounger) expert settings: Converter string (readonly) to duration, date and / or datetime added
