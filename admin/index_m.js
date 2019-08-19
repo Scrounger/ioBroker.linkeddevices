@@ -108,6 +108,8 @@ async function initialize_Divs() {
     Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
     Checkbox.generateSetStateForReadOnly = $('input[id="generateSetStateForReadOnly"]');
 
+    // progressBar
+    pro
 
     var javascriptAdapter = await getObject("system.adapter.javascript.0");
     if (!javascriptAdapter) {
@@ -118,7 +120,6 @@ async function initialize_Divs() {
         Checkbox.generateVarsForAllObjectsOfInstance.attr('disabled', true);
         Checkbox.generateSetStateForReadOnly.attr('disabled', true);
 
-        //TODO: translation
         Label.ButtonCreateJavaScript.text(_('javascript adapter is not installed'));
     } else {
         if (!Input.scriptName.val()) {
@@ -137,6 +138,11 @@ async function initialize_Divs() {
 //#region Table Data
 async function createTable(onChange, filterText = null) {
     try {
+
+        var progressBar = $('div[id="progressBar"]');
+
+        progressBar.show();
+
         let tableData = await getTableData();	// Array für tableFkt
 
         if (tableSizeAtStart === 0) {
@@ -159,6 +165,8 @@ async function createTable(onChange, filterText = null) {
             Label.labelTableEntries.text(`Einträge: ${tableData.length} / ${tableSizeAtStart}`);
 
             sortData(tableData, currentSort, onChange);
+
+            progressBar.hide();
 
         } else {
             $('h6[id=noTableData]').show();
