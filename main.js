@@ -229,6 +229,7 @@ class Linkeddevices extends utils.Adapter {
 
 				if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].isLinked) {
 					linkedObject.common.custom[this.namespace].isLinked = false;
+					linkedObject.common.icon = 'linkeddevices_missing.png';
 
 					this.setForeignObject(linkedId, linkedObject);
 
@@ -412,6 +413,7 @@ class Linkeddevices extends utils.Adapter {
 
 			// Wenn Datenpunkt Property 'isLinked' hat, dann auf 'False' setzen
 			linkedObj.common.custom[this.namespace].isLinked = false;
+			linkedObj.common.icon = 'linkeddevices_missing.png';
 
 			// existierende linkedObjects in dict packen
 			if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedObj._id] = false;

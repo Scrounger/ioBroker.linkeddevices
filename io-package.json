@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.5.0",
+		"version": "0.5.1",
 		"news": {
 			"0.5.0": {
 				"en": "Added a list of suggestions for PrefixId, Id, and Name\nbutton to remove links added\nConversion: added string (readonly) in duration, date and / or time\nadapter configuration: layout revised\nexpert settings number: allow negative values for min / max\nadapter configuration: auto generate globale script - optional create setState funtion for readonly objects\nadapter configuration: auto generate globale script - now optional recognize also manual created objects\nbug fixes",
@@ -173,7 +173,8 @@
 			"_id": "info",
 			"type": "channel",
 			"common": {
-				"name": "Information"
+				"name": "Information",
+				"icon": "linkeddevices_small.png"
 			},
 			"native": {}
 		},
@@ -186,6 +187,7 @@
 				"type": "number",
 				"read": true,
 				"write": false,
+				"icon": "linkeddevices_small.png",
 				"def": 0
 			},
 			"native": {}
@@ -199,6 +201,7 @@
 				"type": "number",
 				"read": true,
 				"write": false,
+				"icon": "linkeddevices_small.png",
 				"def": 0
 			},
 			"native": {}
