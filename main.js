@@ -665,6 +665,12 @@ class Linkeddevices extends utils.Adapter {
 				this.log.silly(`[getCommonData] using custom name '${commonData.name}' for '${linkedId}'`)
 			}
 
+			if (parentObj.common.custom[this.namespace].role && (parentObj.common.custom[this.namespace].role.length > 0 || parentObj.common.custom[this.namespace].role != "")) {
+				// 'role' von expert settings übernehmen
+				commonData.role = parentObj.common.custom[this.namespace].role;
+				this.log.silly(`[getCommonData] using custom role '${commonData.role}' for '${linkedId}'`)
+			}
+
 			// Zunächst prüfen ob typ konvertierung in expert settings eingestellt ist
 			if (parentObj.common.custom[this.namespace].number_convertTo) {
 
