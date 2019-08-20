@@ -996,5 +996,17 @@ systemDictionary = {
 		"es": "¿De verdad quieres eliminar este enlace?",
 		"pl": "czy naprawdę chcesz usunąć ten link?",
 		"zh-cn": "你真的想删除这个链接吗？"
-	}
+	},
+	"change role '%s' in": {
+		"en": "change role '%s' in",
+		"de": "Ändere Rolle '%s' in",
+		"ru": "изменить роль '%s' в",
+		"pt": "mudar o papel '%s' em",
+		"nl": "rol '%s' in wijzigen",
+		"fr": "changer le rôle '%s' dans",
+		"it": "cambia il ruolo '%s' in",
+		"es": "cambiar el rol '%s' en",
+		"pl": "zmień rolę '%s' w",
+		"zh-cn": "改变角色'％s'"
+	  }
 };

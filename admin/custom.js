@@ -116,6 +116,8 @@ if (typeof customPostInits !== 'undefined') {
             // Custom Dialog für ParentObject
             initialize_ParentObject();
 
+            Label.role.text(_("change role '%s' in", _(currentObj.common.role)));
+
             // EventHandler
             events_ParentObject();
 
@@ -207,6 +209,7 @@ if (typeof customPostInits !== 'undefined') {
             Label.number_unit = $div.find('label[id="LB_number_unit"]');
             Label.number_max = $div.find('label[id="LB_number_max"]');
             Label.number_min = $div.find('label[id="LB_number_min"]');
+            Label.role = $div.find('label[id="LB_role"]');
 
             // Buttons
             Button.parentObjectSettings = $div.find('.values-buttons');
@@ -215,6 +218,7 @@ if (typeof customPostInits !== 'undefined') {
             DataList.suggestionListPrefixId = $div.find('datalist[id="suggestionListPrefixId"]');
             DataList.suggestionListStateId = $div.find('datalist[id="suggestionListStateId"]');
             DataList.suggestionListName = $div.find('datalist[id="suggestionListName"]');
+            DataList.suggestionListRole = $div.find('datalist[id="suggestionListRole"]');
 
         }
 
@@ -225,6 +229,7 @@ if (typeof customPostInits !== 'undefined') {
             let prefixIdSuggestionList = [];
             let stateIdSuggestionList = [];
             let nameSugestionList = [];
+            let roleSugestionList = [];
 
             for (var id in objOfInstance) {
                 let linkedObject = objOfInstance[id];
@@ -260,6 +265,14 @@ if (typeof customPostInits !== 'undefined') {
                             nameSugestionList.push(name);
                         }
                     }
+
+                    if (linkedObject.common.role) {
+                        let name = `<option value="${linkedObject.common.role}">`;
+                        if (!roleSugestionList.includes(name)) {
+                            // nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+                            roleSugestionList.push(name);
+                        }
+                    }
                 }
             }
 
@@ -267,6 +280,7 @@ if (typeof customPostInits !== 'undefined') {
             DataList.suggestionListPrefixId.html(prefixIdSuggestionList.sort().join("\n"));
             DataList.suggestionListStateId.html(stateIdSuggestionList.sort().join("\n"))
             DataList.suggestionListName.html(nameSugestionList.sort().join("\n"))
+            DataList.suggestionListRole.html(roleSugestionList.sort().join("\n"))
         }
 
         function initialize_LinkedObject() {
