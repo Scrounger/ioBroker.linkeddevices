@@ -183,7 +183,7 @@ class Linkeddevices extends utils.Adapter {
 							await this.setForeignObjectAsync(obj._id, obj);
 
 							this.logDicLinkedObjectsStatus();
-							this.logDicLinkedParentObjects();							
+							this.logDicLinkedParentObjects();
 						}
 					}
 
@@ -205,7 +205,7 @@ class Linkeddevices extends utils.Adapter {
 					// parentObject aus dicLinkedParentObjects löschen
 					delete this.dicLinkedParentObjects[id];
 					this.logDicLinkedParentObjects();
-					
+
 
 					// linkedObject "custom.isLinked = false" Status setzen
 					await this.resetLinkedObjectStatusById(oldLinkedId);
@@ -467,20 +467,40 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {string} linkedId
 	 */
 	async createLinkedObjectChannel(linkedId) {
-		const match = linkedId.split(".");
-		if (match.length !== 4) {
-			this.log.debug(`${linkedId} no needs create channel.`)
-			return;
+		// id um namespace bereinigen
+		let cleanId = linkedId.replace(`${this.namespace}.`, '');
+
+		// wenn '.' vorhanden, dann channel erstellen
+		if (cleanId.includes('.')) {
+
+			let channelId = linkedId;
+			for (var i = 0; i <= cleanId.split(".").length - 1; i++) {
+				// bis zum namespace channels erstellen
+				channelId = channelId.substring(0, channelId.lastIndexOf('.'))
+
+				if (channelId && channelId != this.namespace) {
+					let channelExistObj = await this.getObjectAsync(channelId);
+
+					if (!channelExistObj) {
+						// channel Objekt existiert nicht -> anlegen
+						await this.setObjectNotExistsAsync(channelId, {
+							_id: channelId,
+							type: "channel",
+							common: {
+								name: `${channelId.replace(`${this.namespace}.`, '').replace(/\./g,' ')}`,
+								icon: 'linkeddevices_small.png',
+								desc: 'Created by linkeddevices'
+							},
+							native: {}
+						});
+
+						this.log.debug(`[createLinkedObjectChannel] channel '${channelId}' created.`);
+					} else {
+						this.log.debug(`[createLinkedObjectChannel] channel '${channelId}' already exist!`);
+					}
+				}
+			}
 		}
-		const channelName = match[2];
-		await this.setObjectNotExistsAsync(channelName, {
-			_id: `${this.namespace}.${channelName}`,
-			common: {
-				name: channelName,
-			},
-			type: "channel",
-			native: {}
-		});
 	}
 
 	/**
@@ -513,7 +533,7 @@ class Linkeddevices extends utils.Adapter {
 
 					} else {
 						// Create channel object if need.
-						this.createLinkedObjectChannel(linkedId);
+						await this.createLinkedObjectChannel(linkedId);
 
 						// LinkedObjekt daten übergeben
 						let linkedObj = Object();
@@ -600,7 +620,7 @@ class Linkeddevices extends utils.Adapter {
 
 				// linkedId im dicLinkedObjectsStatus löschen
 				delete this.dicLinkedObjectsStatus[linkedId];
-				
+
 				this.logDicLinkedParentObjects();
 				this.logDicLinkedObjectsStatus();
 
