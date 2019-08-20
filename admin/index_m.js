@@ -1281,15 +1281,14 @@ async function createJavascript() {
                             }
 
                             // Funktionen den linkedObjects hinzufügen
-                            autoScript = autoScript.concat(`${varName}.getId = function() {return "${linkedId}"};\n`);
-                            autoScript = autoScript.concat(`${varName}.getState = function() {return getState("${linkedId}")};\n`);
+                            autoScript = autoScript.concat(`${varName}.getId = ${createGetFunction(linkedId, `"${linkedId}"`)}\n`);
+                            autoScript = autoScript.concat(`${varName}.getState = ${createGetFunction(linkedId, `getState("${linkedId}")`)}\n`);
 
                             if (linkedObject.common.write && linkedObject.common.write === true || Checkbox.generateSetStateForReadOnly.is(":checked")) {
-                                autoScript = autoScript.concat(`${varName}.setState = function(val, ack) {return setState("${linkedId}", val, ack)};\n`);
-                                autoScript = autoScript.concat(`${varName}.setStateDelayed = function(val, ack, delay) {return setStateDelayed("${linkedId}", val, ack, delay)};\n`);
+                                autoScript = autoScript.concat(`${varName}.setState = ${createSetFunction(linkedId,'val, ack', `setState("${linkedId}", val, ack)`)}\n`);
+                                autoScript = autoScript.concat(`${varName}.setStateDelayed = ${createSetFunction(linkedId,'val, ack, delay', `setStateDelayed("${linkedId}", val, ack, delay)`)}\n`);
                             }
-
-                            autoScript = autoScript.concat(`${varName}.getObject = function() {return getObject("${linkedId}")};\n`);
+                            autoScript = autoScript.concat(`${varName}.getObject = ${createGetFunction(linkedId, `getObject("${linkedId}")`)}\n`);
                         }
                         autoScript = autoScript.concat("\n");
                     }
@@ -1329,6 +1328,14 @@ async function createJavascript() {
     } catch (err) {
         showError("generate javascript:" + err)
     }
+}
+
+function createGetFunction(linkedId, returnStatement) {
+    return `function () { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); return ${returnStatement}; }`;
+}
+
+function createSetFunction(linkedId, setVars, setStatement) {
+    return `function (${setVars}) { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); ${setStatement}; }`;
 }
 //#endregion
 
