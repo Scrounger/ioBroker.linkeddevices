@@ -174,7 +174,7 @@
 			"type": "channel",
 			"common": {
 				"name": "Information",
-				"icon": "linkeddevices_small.png"
+				"icon": "linkeddevices_info.png"
 			},
 			"native": {}
 		},
@@ -187,7 +187,7 @@
 				"type": "number",
 				"read": true,
 				"write": false,
-				"icon": "linkeddevices_small.png",
+				"icon": "linkeddevices_info.png",
 				"def": 0
 			},
 			"native": {}
@@ -201,7 +201,7 @@
 				"type": "number",
 				"read": true,
 				"write": false,
-				"icon": "linkeddevices_small.png",
+				"icon": "linkeddevices_info.png",
 				"def": 0
 			},
 			"native": {}

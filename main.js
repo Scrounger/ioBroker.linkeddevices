@@ -490,7 +490,6 @@ class Linkeddevices extends utils.Adapter {
 							type: "channel",
 							common: {
 								name: `${channelId.replace(`${this.namespace}.`, '').replace(/\./g,' ')}`,
-								icon: 'linkeddevices_small.png',
 								desc: 'Created by linkeddevices'
 							},
 							native: {}
