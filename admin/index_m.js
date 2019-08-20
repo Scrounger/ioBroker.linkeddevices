@@ -345,6 +345,17 @@ async function saveAssignedParentObjects(parentObject, linkedObject) {
                     }
                 }
 
+                if (linkedObject.common.role) {
+                    if (parentObject.common.role) {
+                        if (parentObject.common.role != linkedObject.common.role) {
+                            // nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+                            customForParentObj["role"] = linkedObject.common.role;
+                        }
+                    } else {
+                        customForParentObj["role"] = linkedObject.common.role;
+                    }
+                }
+
                 if (linkedObject.common.unit) {
                     if (parentObject.common.unit) {
                         if (parentObject.common.unit != linkedObject.common.unit) {
