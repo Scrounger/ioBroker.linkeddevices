@@ -1,4 +1,13 @@
 <script type="text/x-iobroker" data-template-name="linkeddevices">
+	<style>
+		.sub-title {
+			margin-top: 2rem !important;
+			padding: 0.5rem;
+			background: #64b5f6;
+			color: white;
+		}
+	</style>
+
 	<div class="parentObject_view">
 		<div class="row">
 			<div class="col s2">
@@ -32,19 +41,19 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="row">
+		<div class="row">
 			<div style="text-align: center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YHPPW474N5CKQ&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
-			<input type="text" id="test" readonly/>
-		</div> -->
+		</div>
 
 		<div class="view_expertSettings">
-			<div class="row">
-				<hr size="1" noshade style="margin-bottom: 10px">
+
+			<div class="row" >
+				<h6 class="translate sub-title" id="SP_expertSettings"/>
 			</div>
 			<div class="row" >
 				<div class="col">
 					<input type="checkbox" data-field="expertSettings"/>
-					<span id="SP_expertSettings" />				
+					<span class="translate">enabled</span>			
 				</div>
 			</div>
 			<div class="view_Number">

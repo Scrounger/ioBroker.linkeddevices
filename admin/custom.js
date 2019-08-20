@@ -203,7 +203,7 @@ if (typeof customPostInits !== 'undefined') {
             Select.string_convertTo = $div.find('select[data-field="string_convertTo"]');
 
             // alle label / span in var packen
-            Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
+            Label.expertSettings = $div.find('h6[id="SP_expertSettings"]');
             Label.number_unit = $div.find('label[id="LB_number_unit"]');
             Label.number_max = $div.find('label[id="LB_number_max"]');
             Label.number_min = $div.find('label[id="LB_number_min"]');
