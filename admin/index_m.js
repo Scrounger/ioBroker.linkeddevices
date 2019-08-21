@@ -1294,8 +1294,8 @@ async function createJavascript() {
                             autoScript = autoScript.concat(`${varName}.getState = ${createGetFunction(linkedId, `getState("${linkedId}")`)}\n`);
 
                             if (linkedObject.common.write && linkedObject.common.write === true || Checkbox.generateSetStateForReadOnly.is(":checked")) {
-                                autoScript = autoScript.concat(`${varName}.setState = ${createSetFunction(linkedId,'val, ack', `setState("${linkedId}", val, ack)`)}\n`);
-                                autoScript = autoScript.concat(`${varName}.setStateDelayed = ${createSetFunction(linkedId,'val, ack, delay', `setStateDelayed("${linkedId}", val, ack, delay)`)}\n`);
+                                autoScript = autoScript.concat(`${varName}.setState = ${createSetFunction(linkedId,'val, ack=false', `setState("${linkedId}", val, ack)`)}\n`);
+                                autoScript = autoScript.concat(`${varName}.setStateDelayed = ${createSetFunction(linkedId,'val, delay, ack=false', `setStateDelayed("${linkedId}", val, ack, delay)`)}\n`);
                             }
                             autoScript = autoScript.concat(`${varName}.getObject = ${createGetFunction(linkedId, `getObject("${linkedId}")`)}\n`);
                         }
