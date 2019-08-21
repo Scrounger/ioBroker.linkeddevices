@@ -1340,11 +1340,11 @@ async function createJavascript() {
 }
 
 function createGetFunction(linkedId, returnStatement) {
-    return `function () { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); return ${returnStatement}; }`;
+    return `function () { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); return ${returnStatement}; };`;
 }
 
 function createSetFunction(linkedId, setVars, setStatement) {
-    return `function (${setVars}) { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); ${setStatement}; }`;
+    return `function (${setVars}) { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); ${setStatement}; };`;
 }
 //#endregion
 
