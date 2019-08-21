@@ -1249,7 +1249,7 @@ async function createJavascript() {
 
             var rootName = Input.variableName.val();
             let autoScript = `var ${rootName} = {};\n`
-            autoScript = autoScript.concat(`${rootName}.getId = function() {return "${myNamespace}"}\n\n`)
+            autoScript = autoScript.concat(`${rootName}.getId = function() {return "${myNamespace}"};\n\n`)
 
             // alle linkedObjects laden und aufsteigend sortieren
             let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
