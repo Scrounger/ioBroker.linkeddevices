@@ -108,9 +108,6 @@ async function initialize_Divs() {
     Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
     Checkbox.generateSetStateForReadOnly = $('input[id="generateSetStateForReadOnly"]');
 
-    // progressBar
-    pro
-
     var javascriptAdapter = await getObject("system.adapter.javascript.0");
     if (!javascriptAdapter) {
         // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
@@ -1251,7 +1248,8 @@ async function createJavascript() {
             // sofern javascript instanz vorhanden ist
 
             var rootName = Input.variableName.val();
-            let autoScript = `var ${rootName} = {};\n\n`
+            let autoScript = `var ${rootName} = {};\n`
+            autoScript = autoScript.concat(`${rootName}.getId = function() {return "${myNamespace}"}\n\n`)
 
             // alle linkedObjects laden und aufsteigend sortieren
             let linkedDevicesList = await getForeignObjects(myNamespace + '.*');
@@ -1285,8 +1283,8 @@ async function createJavascript() {
                                     existingVarName.push(`${varName} = {};\n`);
 
                                     if (i != linkedIdSplitted.length - 1) {
-                                        autoScript = autoScript.concat(`${varName}.getId = function() {return ("${varName.replace(rootName, myNamespace)}")};\n`);
-                                        existingVarName.push(`${varName}.getId = function() {return ("${varName.replace(rootName, myNamespace)}")};\n`);
+                                        autoScript = autoScript.concat(`${varName}.getId = function() {return "${varName.replace(rootName, myNamespace)}"};\n`);
+                                        existingVarName.push(`${varName}.getId = function() {return "${varName.replace(rootName, myNamespace)}"};\n`);
                                     }
                                 }
                             }
