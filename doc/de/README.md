@@ -170,9 +170,12 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 ### Zeichenkette (readonly): Konvertiere in Typ 'Dauer'
 ![Strukture](media/expert_settings_string_convert_to_duration.png)
 
+tbd
+
 ### Zeichenkette (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
 ![Strukture](media/expert_settings_string_convert_to_datetime.png)
 
+tbd
 
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
