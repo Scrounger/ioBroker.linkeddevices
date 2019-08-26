@@ -142,11 +142,11 @@ async function createTable(onChange, filterText = null) {
 
         let tableData = await getTableData();	// Array für tableFkt
 
-        if (tableSizeAtStart === 0) {
+        if (tableData && tableSizeAtStart === 0) {
             tableSizeAtStart = tableData.length;
         }
 
-        if (tableData) {
+        if (tableData && tableData.length > 0) {
             $('h6[id=noTableData]').hide();
 
             if (filterText != null) {
@@ -167,9 +167,10 @@ async function createTable(onChange, filterText = null) {
 
         } else {
             $('h6[id=noTableData]').show();
+            progressBar.hide();
         }
     } catch (err) {
-        showError("createTable: " + err);
+        showError(`createTable: ${err}<br> stack: ${err.stack}`);
     }
 }
 
@@ -212,7 +213,7 @@ async function getTableData() {
             return null;
         }
     } catch (err) {
-        showError("getTableData: " + err);
+        showError(`getTableData: ${err}<br> stack: ${err.stack}`);
     }
 }
 
