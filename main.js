@@ -118,7 +118,7 @@ class Linkeddevices extends utils.Adapter {
 	 */
 	async onObjectChange(id, obj) {
 		if (obj) {
-			if (id.indexOf(this.namespace) === -1 && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
+			if (!id.startsWith(this.namespace) && obj.common && obj.common.custom && obj.common.custom[this.namespace]) {
 
 				if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 					//bereits verlinktes parentObject wurde geändert -> ist im dicLinkedParentObjects enthalten
@@ -195,7 +195,7 @@ class Linkeddevices extends utils.Adapter {
 				}
 			} else {
 				// bereits verlinktes parentObject wurde deaktiviert
-				if (obj._id.indexOf(this.namespace) === -1 && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
+				if (!id.startsWith(this.namespace) && this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
 					this.log.info("[onObjectChange] parentObject '" + id + "' deactivated");
 
 					// alte linkedId holen und aus dicLinkedObjectsStatus löschen
@@ -514,7 +514,7 @@ class Linkeddevices extends utils.Adapter {
 			var linkedId = null;
 
 			// Datenpunkte sind von 'linkeddevices' und aktiviert
-			if (parentObj && parentObj._id.indexOf(this.namespace) === -1 && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
+			if (parentObj && !parentObj._id.startsWith(this.namespace) && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace]
 				&& parentObj.common.custom[this.namespace].enabled) {
 
 				// Todo: check structure if channel, device, etc.
