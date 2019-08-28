@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.5.5",
+		"version": "0.5.6",
 		"news": {
+			"0.5.6": {
+				"en": "bug fixes",
+				"de": "Fehlerbehebung",
+				"ru": "исправление ошибок",
+				"pt": "correções de bugs",
+				"nl": "bugfixes",
+				"fr": "corrections de bugs",
+				"it": "correzioni di bug",
+				"es": "corrección de errores",
+				"pl": "poprawki błędów",
+				"zh-cn": "bug修复"
+			},
 			"0.5.5": {
 				"en": "custom dialog: change role for linked object added.\nadapter configuration: auto generate globale script - check if object always linked added.\ncreate channel objects for linked Objects.\nadapter configuration: layout revised, progressbar added.\ncustom dialog: layout revised",
 				"de": "Custom Dialog: Rolle für verlinkte Objekt ändern hinzugefügt. \nKonfiguration des Adapters: globales Skript automatisch generieren - prüfen, ob das Objekt immer verlinkt ist. \nKanalobjekte für verlinkte Objekte erstellen. \nKonfiguration des Adapters: Layout überarbeitet, Fortschrittsbalken hinzugefügt. \nCustom Dialog: Layout überarbeitet",

@@ -36,6 +36,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
+### 0.5.6
+* (Scrounger) bug fixes
+
 ### 0.5.5
 * (Scrounger) custom dialog: role change for linked object added
 * (Scrounger) adapter configuration: auto generate globale script - check if object always linked added
