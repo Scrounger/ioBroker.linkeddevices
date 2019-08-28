@@ -658,7 +658,7 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.number_max.keyup(function () {
                 // Nur pos / neg integer erlauben
-                let regEx = /^[-]?[0-9]*$/
+                let regEx = /^[-]?[0-9\.]*$/
 
                 if (!regEx.test(this.value)) {
                     gMain.showError(_("only numbers allowed"));
@@ -668,7 +668,7 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.number_min.keyup(function () {
                 // Nur pos / neg integer erlauben
-                let regEx = /^[-]?[0-9]*$/
+                let regEx = /^[-]?[0-9\.]*$/
 
                 if (!regEx.test(this.value)) {
                     gMain.showError(_("only numbers allowed"));
