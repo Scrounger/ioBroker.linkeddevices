@@ -489,7 +489,7 @@ class Linkeddevices extends utils.Adapter {
 							_id: channelId,
 							type: "channel",
 							common: {
-								name: `${channelId.replace(`${this.namespace}.`, '').replace(/\./g,' ')}`,
+								name: `${channelId.replace(`${this.namespace}.`, '').replace(/\./g, ' ')}`,
 								desc: 'Created by linkeddevices'
 							},
 							native: {}
@@ -554,7 +554,11 @@ class Linkeddevices extends utils.Adapter {
 						// falls native data vorhanden sind -> übergeben
 						if (parentObj.native) {
 							linkedObj.native = parentObj.native;
-							this.log.debug(`[createLinkedObject] native data set for '${linkedId}' ("native":${JSON.stringify(parentObj.native)})`)
+							if (Object.keys(linkedObj.native).length > 0) {
+								this.log.debug(`[createLinkedObject] native data set for '${linkedId}' ("native":${JSON.stringify(parentObj.native)})`)
+							} else {
+								this.log.silly(`[createLinkedObject] native data set for '${linkedId}' ("native":${JSON.stringify(parentObj.native)})`)
+							}
 						}
 
 						// LinkedObjekt erzeugen oder Änderungen schreiben
@@ -568,13 +572,29 @@ class Linkeddevices extends utils.Adapter {
 						if (this.dicLinkedParentObjects) this.dicLinkedParentObjects[parentObj._id] = linkedId;
 						this.logDicLinkedParentObjects();
 
-						// state für linkedObject  setzen, wird vom parent übernommen
-						let parentObjState = await this.getForeignStateAsync(parentObj._id);
-						if (parentObjState) {
-							// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
-							let changedValue = await this.getConvertedValue(linkedId, parentObjState.val)
+						// state value für linkedObject setzen, wird vom parent übernommen
+						let parentState = await this.getForeignStateAsync(parentObj._id);
+						let linkedState = await this.getForeignStateAsync(linkedId);
 
-							await this.setForeignState(linkedId, changedValue, true);
+						if (parentState) {
+							// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
+							let parentValue = await this.getConvertedValue(linkedId, parentState.val);
+
+							if (linkedState) {
+								if (linkedState.val != parentValue || linkedState.ack != parentState.ack) {
+									// Nur aktualisieren, sofern nicht gleich -> damit wird z.B. bei button kein press ausgelöst
+									await this.setForeignState(linkedId, parentValue, true);
+									this.log.debug(`[createLinkedObject] update value for '${linkedId}' to '${parentValue}'`);
+								} else {
+									this.log.debug(`[createLinkedObject] value for '${linkedId}' is up to date`);
+								}
+							} else {
+								// linkedObject hat noch keinen state value
+								await this.setForeignState(linkedId, parentValue, true);
+								this.log.debug(`[createLinkedObject] set value for '${linkedId}' to '${parentValue}'`);
+							}
+						} else {
+							this.log.debug(`[createLinkedObject] no value set for '${linkedId}' because parentObject has no value`);
 						}
 
 						// subscribe für parentObject 'state', um Änderungen mitzubekommen
