@@ -10,7 +10,7 @@ $.get({
         if (result.isOk) {
             let translation = script.substring(script.indexOf('{'), script.length);
             translation = translation.substring(0, translation.lastIndexOf(';'));
-            $.extend(systemDictionary, translation);
+            $.extend(systemDictionary, JSON.parse(translation));
         }
     },
     async: false
