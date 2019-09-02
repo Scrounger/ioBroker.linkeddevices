@@ -36,6 +36,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
+### 1.0.0
+* (Scrounger) bug fixes
+
 ### 0.5.6
 * (Scrounger) bug fixes
 

@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "0.5.6",
+		"version": "1.0.0",
 		"news": {
+			"1.0.0": {
+				"en": "bug fixes",
+				"de": "Fehlerbehebung",
+				"ru": "исправление ошибок",
+				"pt": "correções de bugs",
+				"nl": "bugfixes",
+				"fr": "corrections de bugs",
+				"it": "correzioni di bug",
+				"es": "corrección de errores",
+				"pl": "poprawki błędów",
+				"zh-cn": "bug修复"
+			},	
 			"0.5.6": {
 				"en": "bug fixes",
 				"de": "Fehlerbehebung",

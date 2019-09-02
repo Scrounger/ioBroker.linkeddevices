@@ -44,7 +44,7 @@ Das ganze sieht im Skript Editor dann so aus:
 
 In der Adapterkonfiguration gibt es eine Übersicht über alle verlinkten Objekte bzw. auch Objekte die nicht mehr verlinkt sind.
 In der Tabelle kann sortiert und auch nach Begriffen gefiltert werden. 
-Weiter können hier nicht mehr verlinkte Objekte wieder mit einem Objekt verlinkt werden und direkt die Einstellung der Objekte, die verlinkt sind, geöffnet werden.
+Weiter können hier nicht mehr verlinkte Objekte wieder mit einem Objekt verlinkt werden, die Verlinkung zu einem Objekt gelöscht werden und direkt die Einstellung der Objekte, die verlinkt sind, geöffnet werden.
 
 <br>
 
@@ -170,13 +170,19 @@ Zur Info beim Typ 'Datum / Uhrzeit' ist das verlinkte Objekt vom Typ 'Zeichenket
 ### Zeichenkette (readonly): Konvertiere in Typ 'Dauer'
 ![Strukture](media/expert_settings_string_convert_to_duration.png)
 
-tbd
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+| Anzeigeformat der Dauer | Umwandlung einer Dauer Zeichenkette nach [ISO 8601](https://de.wikipedia.org/wiki/ISO_8601) in eine benutzerdefinierte Dauer Zeichenkette  | [siehe moment duration format library Doku](https://github.com/jsmreese/moment-duration-format#template-string) | Hat das Objekt den Wert 'P1W1DT12H14M', als Format ist 'dd[T] hh[h] mm[m]' eingestellt, dann hat das verlinkte Objekt den Wert '08T 12h 14m' |
 
 ### Zeichenkette (readonly): Konvertiere in Typ 'Datum / Uhrzeit'
 ![Strukture](media/expert_settings_string_convert_to_datetime.png)
 
-tbd
+|  Eingabefeld | Beschreibung  | erlaubte Eingabe | Beispiel (siehe Bild) |
+|---|---|---|---|
+| Parser Format | Hier musss das Format für das Objekt festgelegt werden, damit es geparst werden kann | [siehe moment duration format library Doku](https://momentjs.com/docs/#/parsing/string-format/) | Hat das Objekt den Wert '3-12-2018 08-15', muss hier 'dd-mm-yyyy hh-mm' als parser format eingeben werden |
+| Anzeigeformat der Datum / Uhrzeit | Hier könnt ihr die Formatierung für das Datum und oder Uhrzeit festlegen | [siehe moment duration format library Doku](https://momentjs.com/docs/#/parsing/string-format/) | Hat das Objekt den Wert '3-12-2018 08-15', als Format ist 'LLL' eingestellt, dann hat das verlinkte Objekt den Wert '2. September 2019 08:15' |
 
+<br><br>
 
 ## Experteneinstellungen für verlinktes Objekt vom Typ 'Zeichenkette'
 ![Strukture](media/expert_settings_string.png)
