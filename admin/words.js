@@ -1008,5 +1008,17 @@ systemDictionary = {
 		"es": "cambiar el rol '%s' en",
 		"pl": "zmień rolę '%s' w",
 		"zh-cn": "改变角色'％s'"
-	  }
+	},
+	"repair": {
+		"en": "repair",
+		"de": "Reparatur",
+		"ru": "ремонт",
+		"pt": "reparar",
+		"nl": "reparatie",
+		"fr": "réparation",
+		"it": "riparazione",
+		"es": "reparar",
+		"pl": "naprawic",
+		"zh-cn": "修理"
+	}
 };
