@@ -309,16 +309,191 @@ class Linkeddevices extends utils.Adapter {
 	 * Using this method requires "common.message" property to be set to true in io-package.json
 	 * @param {ioBroker.Message} obj
 	 */
-	onMessage(obj) {
-		this.log.info("Message!");
-		if (typeof obj === 'object' && obj.message) {
-			if (obj.command === 'send') {
-				// e.g. send email or pushover or whatever
-				this.log.info('send command');
+	async onMessage(obj) {
+		this.log.debug(`message received: ${JSON.stringify(obj)}`);
 
-				// Send response in callback if required
-				if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+		if (typeof obj === 'object' && obj.message) {
+			if (obj.command === 'assignTo') {
+				// @ts-ignore
+				if (obj.message.linkedId && obj.message.parentId) {
+					
+					// @ts-ignore
+					let result = await this.assignToParentObject(obj.message.linkedId, obj.message.parentId);
+
+					// Send response in callback if required
+					if (obj.callback && result) {
+						this.sendTo(obj.from, obj.command, result, obj.callback);
+					} 
+				} else {
+					this.log.error("missing linkedId and parentId in message of sendTo command!")
+				}
 			}
+		}
+	}
+
+	/**
+	 * @param {string} linkedId
+	 * @param {string} parentId
+	 */
+	async assignToParentObject(linkedId, parentId) {
+		this.log.debug(`[assignToParentObject] start linkedObject '${linkedId}' assigning to parentObject '${parentId}'`);
+
+		// notwendige custom daten an neu zugeordnete parentObjekte übergeben
+		try {
+			let linkedObject = await this.getForeignObjectAsync(linkedId);
+			let parentObject = await this.getForeignObjectAsync(parentId);
+
+			if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace]) {
+				if (parentObject && parentObject.common) {
+	
+					// common Daten des linkedObjects holen, die beim parentObject in den Settings konfiguriert werden können
+					let customForParentObj = {};
+	
+					let expertSettings = false;
+	
+					if (linkedObject.common.name) {
+						if (parentObject.common.name) {
+							if (parentObject.common.name != linkedObject.common.name) {
+								// nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+								customForParentObj["name"] = linkedObject.common.name;
+							}
+						} else {
+							customForParentObj["name"] = linkedObject.common.name;
+						}
+					}
+	
+					if (linkedObject.common.role) {
+						if (parentObject.common.role) {
+							if (parentObject.common.role != linkedObject.common.role) {
+								// nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+								customForParentObj["role"] = linkedObject.common.role;
+							}
+						} else {
+							customForParentObj["role"] = linkedObject.common.role;
+						}
+					}
+	
+					if (linkedObject.common.unit) {
+						if (parentObject.common.unit) {
+							if (parentObject.common.unit != linkedObject.common.unit) {
+								// nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+								customForParentObj["number_unit"] = linkedObject.common.unit;
+								expertSettings = true;
+							}
+						} else {
+							customForParentObj["number_unit"] = linkedObject.common.unit;
+							expertSettings = true;
+						}
+					}
+	
+					if (linkedObject.common.max) {
+						if (parentObject.common.max) {
+							if (parentObject.common.max != linkedObject.common.max) {
+								// nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+								customForParentObj["number_max"] = linkedObject.common.max;
+								expertSettings = true;
+							}
+						} else {
+							customForParentObj["number_max"] = linkedObject.common.max;
+							expertSettings = true;
+						}
+					}
+	
+					if (linkedObject.common.min) {
+						if (parentObject.common.min) {
+							if (parentObject.common.min != linkedObject.common.min) {
+								// nur übergeben wenn unterschiedlich zwischen linkedObject & parentObject ist
+								customForParentObj["number_min"] = linkedObject.common.min;
+								expertSettings = true;
+							}
+						} else {
+							customForParentObj["number_min"] = linkedObject.common.min;
+							expertSettings = true;
+						}
+					}
+	
+					if (linkedObject.common.type) {
+						if (parentObject.common.type && parentObject.common.type != linkedObject.common.type) {
+							// nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
+							let convertToKey = parentObject.common.type + "_convertTo";
+	
+							if (linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].number_to_duration_format) {
+								// Spezial Format: Duration
+								customForParentObj[convertToKey] = "duration"
+								expertSettings = true;
+							} else if (linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].number_to_datetime_format) {
+								// Spezial Format: DateTime
+								customForParentObj[convertToKey] = "datetime"
+								expertSettings = true;
+							} else if (linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].string_to_duration_format) {
+								// Spezial Format: Duration
+								customForParentObj[convertToKey] = "duration"
+								expertSettings = true;
+							} else if (linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].string_to_datetime_format) {
+								// Spezial Format: DateTime
+								customForParentObj[convertToKey] = "datetime"
+								expertSettings = true;
+							} else {
+								// kein Spezial Format
+								customForParentObj[convertToKey] = linkedObject.common.type;
+								expertSettings = true;
+							}
+						}
+					}
+	
+					// custom Data vom linked Object holen und um nicht benötigte keys für das parentObject bereinigen
+					let customFromLinkedObject = linkedObject.common.custom[this.namespace];
+	
+					if (customFromLinkedObject.enabled) {
+						delete customFromLinkedObject.enabled;
+					}
+	
+					if (customFromLinkedObject.parentId) {
+						delete customFromLinkedObject.parentId;
+					}
+	
+					if (customFromLinkedObject.parentType) {
+						delete customFromLinkedObject.parentType;
+					}
+	
+					if (customFromLinkedObject.isLinked || !customFromLinkedObject.isLinked) {
+						delete customFromLinkedObject.isLinked;
+					}
+	
+					// bereinigt custom Data und common Data vom linkedObject zusammenführen
+					if (Object.keys(customFromLinkedObject).length > 0) {
+						// Wenn custom Daten in linkedObject vorhanden -> dann expertSettings setzen
+						expertSettings = true;
+					}
+					Object.assign(customForParentObj, customFromLinkedObject);
+	
+					// weitere benötigte Daten hinzufügen
+					customForParentObj.enabled = true;
+					customForParentObj.linkedId = linkedObject._id.replace(this.namespace + ".", "");
+					customForParentObj.expertSettings = expertSettings;
+	
+					// custom Data an parentObject übergeben
+					if (parentObject.common.custom) {
+						// custom von anderen Adaptern vorhanden
+						parentObject.common.custom[this.namespace] = customForParentObj;
+					} else {
+						// kein custom vorhanden
+						parentObject.common.custom = { [this.namespace]: customForParentObj };
+					}
+	
+					// parentObject aktualisieren -> linkedObject Daten werden automatisch wegen neustart des Adapters nach dem speichern aktualisiert
+					await this.setForeignObjectAsync(parentId, parentObject);
+
+					this.log.info(`[assignToParentObject] linkedObject '${linkedId}' assigned to parentObject '${parentId}' successful`);
+
+					return {success: true, error: null};
+				}
+			}
+		} catch (err) {
+			this.log.error(`[assignToParentObject] linkedObject '${linkedId}', parentObject '${parentId}' error: ${err.message}`);
+			this.log.error("[assignToParentObject] stack: " + err.stack);
+
+			return {success: true, error: err.message};
 		}
 	}
 
