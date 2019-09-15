@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"news": {
+			"1.0.1": {
+				"en": "• adapter configuration: repair function added\n• receive system messages added",
+				"de": "• Adapterkonfiguration: Reparaturfunktion hinzugefügt\n• Systemmeldungen empfangen hinzugefügt",
+				"ru": "• конфигурация адаптера: добавлена функция восстановления\n• добавлены системные сообщения",
+				"pt": "• configuração do adaptador: função de reparo adicionada\n• recebe mensagens do sistema adicionadas",
+				"nl": "• adapterconfiguratie: reparatiefunctie toegevoegd\n• systeemberichten ontvangen toegevoegd",
+				"fr": "• configuration de l'adaptateur: fonction de réparation ajoutée\n• réception des messages système ajoutés",
+				"it": "• configurazione dell'adattatore: funzione di riparazione aggiunta\n• ricezione di messaggi di sistema aggiunti",
+				"es": "• configuración del adaptador: función de reparación agregada\n• recibir mensajes del sistema agregados",
+				"pl": "• konfiguracja adaptera: dodano funkcję naprawy\n• dodano komunikaty systemowe",
+				"zh-cn": "•适配器配置：添加了修复功能\n•接收添加的系统消息"
+			},
 			"1.0.0": {
 				"en": "bug fixes",
 				"de": "Fehlerbehebung",
@@ -14,7 +26,7 @@
 				"es": "corrección de errores",
 				"pl": "poprawki błędów",
 				"zh-cn": "bug修复"
-			},	
+			},
 			"0.5.6": {
 				"en": "bug fixes",
 				"de": "Fehlerbehebung",
