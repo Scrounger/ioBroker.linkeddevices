@@ -34,6 +34,7 @@ class Linkeddevices extends utils.Adapter {
 		this.on("stateChange", this.onStateChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
+		this.on("message", this.onMessage.bind(this))
 
 	}
 
@@ -301,6 +302,24 @@ class Linkeddevices extends utils.Adapter {
 		// 	// The state was deleted
 		// 	this.log.info(`state ${id} deleted`);
 		// }
+	}
+
+	/**
+	 * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
+	 * Using this method requires "common.message" property to be set to true in io-package.json
+	 * @param {ioBroker.Message} obj
+	 */
+	onMessage(obj) {
+		this.log.info("Message!");
+		if (typeof obj === 'object' && obj.message) {
+			if (obj.command === 'send') {
+				// e.g. send email or pushover or whatever
+				this.log.info('send command');
+
+				// Send response in callback if required
+				if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+			}
+		}
 	}
 
 	/**
