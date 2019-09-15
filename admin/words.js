@@ -1020,5 +1020,29 @@ systemDictionary = {
 		"es": "reparar",
 		"pl": "naprawic",
 		"zh-cn": "修理"
+	},
+	"Errors have occurred, please check log file": {
+		"en": "Errors have occurred, please check log file",
+		"de": "Es sind Fehler aufgetreten. Überprüfen Sie die Protokolldatei",
+		"ru": "Произошли ошибки, пожалуйста, проверьте файл журнала",
+		"pt": "Ocorreram erros, verifique o arquivo de log",
+		"nl": "Er zijn fouten opgetreden, controleer het logbestand",
+		"fr": "Des erreurs se sont produites, veuillez vérifier le fichier journal",
+		"it": "Si sono verificati errori, controlla il file di registro",
+		"es": "Se han producido errores, verifique el archivo de registro",
+		"pl": "Wystąpiły błędy, sprawdź plik dziennika",
+		"zh-cn": "发生错误，请检查日志文件"
+	},
+	"Repair process completed successfully": {
+		"en": "Repair process completed successfully",
+		"de": "Reparaturvorgang erfolgreich abgeschlossen",
+		"ru": "Процесс ремонта успешно завершен",
+		"pt": "Processo de reparo concluído com sucesso",
+		"nl": "Reparatieproces succesvol afgerond",
+		"fr": "Processus de réparation terminé avec succès",
+		"it": "Processo di riparazione completato con successo",
+		"es": "Proceso de reparación completado con éxito",
+		"pl": "Proces naprawy zakończony powodzeniem",
+		"zh-cn": "修复过程成功完成"
 	}
 };

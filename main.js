@@ -312,25 +312,86 @@ class Linkeddevices extends utils.Adapter {
 	async onMessage(obj) {
 		this.log.debug(`message received: ${JSON.stringify(obj)}`);
 
-		if (typeof obj === 'object' && obj.message) {
-			if (obj.command === 'assignTo') {
+		if (typeof obj === 'object') {
+			if (obj.command === 'assignTo' && obj.message) {
 				// @ts-ignore
 				if (obj.message.linkedId && obj.message.parentId) {
-					
+
 					// @ts-ignore
 					let result = await this.assignToParentObject(obj.message.linkedId, obj.message.parentId);
 
 					// Send response in callback if required
 					if (obj.callback && result) {
 						this.sendTo(obj.from, obj.command, result, obj.callback);
-					} 
+					}
 				} else {
 					this.log.error("missing linkedId and parentId in message of sendTo command!")
+				}
+			} else if (obj.command === 'autoRepair') {
+				let result = await this.autoRepair();
+
+				// Send response in callback if required
+				if (obj.callback && result) {
+					this.sendTo(obj.from, obj.command, result, obj.callback);
 				}
 			}
 		}
 	}
 
+	async autoRepair() {
+		this.log.info(`[autoRepair] start auto repair...`);
+
+		let error = false;
+
+		try {
+			let linkedObjList = await this.getAdapterObjectsAsync();
+			for (let linkedId in linkedObjList) {
+				let linkedObj = linkedObjList[linkedId];
+
+				// alle nicht mehr verlinkten objekte suchen
+				if (linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].isLinked === false) {
+
+					if (linkedObj.common.custom[this.namespace].parentId) {
+						let parentId = linkedObj.common.custom[this.namespace].parentId;
+
+						// prüfen ob parentObjekt noch existiert
+						let parentObject = await this.getForeignObjectAsync(parentId);
+
+						if (parentObject) {
+							// parentObjekt existiert noch -> reparieren
+							this.log.debug(`[autoRepair] parentObject '${parentId}' of linkedObject '${linkedId} still exist -> try to repair the link'`);
+
+							let result = await this.assignToParentObject(linkedId, parentId);
+
+							if (result) {
+								if (result.success === true) {
+									this.log.info(`[autoRepair] link repaired for linkedObject '${linkedId} (parentObject '${parentId}')`);
+								} else {
+									this.log.error(`[autoRepair] link not repaired for linkedObject '${linkedId} (parentObject '${parentId}') -> error: ${result.error}`);
+									error = true;
+								}
+							}
+						} else {
+							// parentObjekt existiert nicht mehr
+							this.log.debug(`[autoRepair] parentObject '${parentId}' of linkedObject '${linkedId} not exist anymore'`);
+						}
+					} else {
+						// linkedObjekt hat keine parentId
+						this.log.warn(`[autoRepair] linkedObject '${linkedId} has no parentId!'`)
+					}
+				}
+			}
+
+			this.log.info(`[autoRepair] auto repair finished`);
+
+			return { success: true, error: error };
+		} catch (err) {
+			this.log.error(`[autoRepair] error: ${err.message}`);
+			this.log.error("[autoRepair] stack: " + err.stack);
+
+			return { success: true, error: err.message };
+		}
+	}
 	/**
 	 * @param {string} linkedId
 	 * @param {string} parentId
@@ -345,12 +406,12 @@ class Linkeddevices extends utils.Adapter {
 
 			if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace]) {
 				if (parentObject && parentObject.common) {
-	
+
 					// common Daten des linkedObjects holen, die beim parentObject in den Settings konfiguriert werden können
 					let customForParentObj = {};
-	
+
 					let expertSettings = false;
-	
+
 					if (linkedObject.common.name) {
 						if (parentObject.common.name) {
 							if (parentObject.common.name != linkedObject.common.name) {
@@ -361,7 +422,7 @@ class Linkeddevices extends utils.Adapter {
 							customForParentObj["name"] = linkedObject.common.name;
 						}
 					}
-	
+
 					if (linkedObject.common.role) {
 						if (parentObject.common.role) {
 							if (parentObject.common.role != linkedObject.common.role) {
@@ -372,7 +433,7 @@ class Linkeddevices extends utils.Adapter {
 							customForParentObj["role"] = linkedObject.common.role;
 						}
 					}
-	
+
 					if (linkedObject.common.unit) {
 						if (parentObject.common.unit) {
 							if (parentObject.common.unit != linkedObject.common.unit) {
@@ -385,7 +446,7 @@ class Linkeddevices extends utils.Adapter {
 							expertSettings = true;
 						}
 					}
-	
+
 					if (linkedObject.common.max) {
 						if (parentObject.common.max) {
 							if (parentObject.common.max != linkedObject.common.max) {
@@ -398,7 +459,7 @@ class Linkeddevices extends utils.Adapter {
 							expertSettings = true;
 						}
 					}
-	
+
 					if (linkedObject.common.min) {
 						if (parentObject.common.min) {
 							if (parentObject.common.min != linkedObject.common.min) {
@@ -411,12 +472,12 @@ class Linkeddevices extends utils.Adapter {
 							expertSettings = true;
 						}
 					}
-	
+
 					if (linkedObject.common.type) {
 						if (parentObject.common.type && parentObject.common.type != linkedObject.common.type) {
 							// nur übergeben wenn Einheit unterschiedlich zwischen linkedObject & parentObject ist
 							let convertToKey = parentObject.common.type + "_convertTo";
-	
+
 							if (linkedObject.common.custom && linkedObject.common.custom[this.namespace] && linkedObject.common.custom[this.namespace].number_to_duration_format) {
 								// Spezial Format: Duration
 								customForParentObj[convertToKey] = "duration"
@@ -440,38 +501,38 @@ class Linkeddevices extends utils.Adapter {
 							}
 						}
 					}
-	
+
 					// custom Data vom linked Object holen und um nicht benötigte keys für das parentObject bereinigen
 					let customFromLinkedObject = linkedObject.common.custom[this.namespace];
-	
+
 					if (customFromLinkedObject.enabled) {
 						delete customFromLinkedObject.enabled;
 					}
-	
+
 					if (customFromLinkedObject.parentId) {
 						delete customFromLinkedObject.parentId;
 					}
-	
+
 					if (customFromLinkedObject.parentType) {
 						delete customFromLinkedObject.parentType;
 					}
-	
+
 					if (customFromLinkedObject.isLinked || !customFromLinkedObject.isLinked) {
 						delete customFromLinkedObject.isLinked;
 					}
-	
+
 					// bereinigt custom Data und common Data vom linkedObject zusammenführen
 					if (Object.keys(customFromLinkedObject).length > 0) {
 						// Wenn custom Daten in linkedObject vorhanden -> dann expertSettings setzen
 						expertSettings = true;
 					}
 					Object.assign(customForParentObj, customFromLinkedObject);
-	
+
 					// weitere benötigte Daten hinzufügen
 					customForParentObj.enabled = true;
 					customForParentObj.linkedId = linkedObject._id.replace(this.namespace + ".", "");
 					customForParentObj.expertSettings = expertSettings;
-	
+
 					// custom Data an parentObject übergeben
 					if (parentObject.common.custom) {
 						// custom von anderen Adaptern vorhanden
@@ -480,20 +541,20 @@ class Linkeddevices extends utils.Adapter {
 						// kein custom vorhanden
 						parentObject.common.custom = { [this.namespace]: customForParentObj };
 					}
-	
+
 					// parentObject aktualisieren -> linkedObject Daten werden automatisch wegen neustart des Adapters nach dem speichern aktualisiert
 					await this.setForeignObjectAsync(parentId, parentObject);
 
 					this.log.info(`[assignToParentObject] linkedObject '${linkedId}' assigned to parentObject '${parentId}' successful`);
 
-					return {success: true, error: null};
+					return { success: true, error: null };
 				}
 			}
 		} catch (err) {
 			this.log.error(`[assignToParentObject] linkedObject '${linkedId}', parentObject '${parentId}' error: ${err.message}`);
 			this.log.error("[assignToParentObject] stack: " + err.stack);
 
-			return {success: true, error: err.message};
+			return { success: true, error: err.message };
 		}
 	}
 

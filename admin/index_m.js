@@ -103,6 +103,7 @@ async function initialize_Divs() {
     // Buttons
     Button.createJavaScript = $('.values-buttons[data-command="btnCreateJavascript"]');
     Button.createJavaScript.attr('title', _('generate script'));
+    Button.repair = $('a[id="repair"');
 
     //CheckBoxes
     Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
@@ -1038,6 +1039,17 @@ async function events(onChange) {
 
         await Button.createJavaScript.on('click', function () {
             createJavascriptConfirm();
+        });
+
+        await Button.repair.on('click', function () {
+            sendTo(myNamespace, "autoRepair", null, function (result) {
+                if (!result.error || result.error.length === 0) {
+                    createTable(onChange);
+                    showMessage(_("Repair process completed successfully"));
+                } else {
+                    showError(_("Errors have occurred, please check log file"));
+                }
+            });
         });
 
         Input.variableName.keyup(function () {
