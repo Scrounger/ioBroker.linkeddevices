@@ -5,7 +5,7 @@ systemDictionary = {
 	"linkeddevices adapter settings": {
 		"en": "Adapter settings for linkeddevices",
 		"de": "Adaptereinstellungen für linkeddevices",
-		"ru": "Настройки адаптера для linkeddevices",
+		"ru": "Настройки адаптера linkeddevices",
 		"pt": "Configurações do adaptador para linkeddevices",
 		"nl": "Adapterinstellingen voor linkeddevices",
 		"fr": "Paramètres d'adaptateur pour linkeddevices",
@@ -29,7 +29,7 @@ systemDictionary = {
 	"composite id of linked object": {
 		"en": "composite id of linked object",
 		"de": "Zusammengesetze Id des verlinkten Objektes",
-		"ru": "составной идентификатор связанного объекта",
+		"ru": "Составной идентификатор связанного объекта",
 		"pt": "ID composta do objeto vinculado",
 		"nl": "samengestelde ID van gekoppeld object",
 		"fr": "ID composite d'objet lié",
@@ -41,7 +41,7 @@ systemDictionary = {
 	"name of linked object": {
 		"en": "name of linked object",
 		"de": "Name des verlinkten Objekts",
-		"ru": "название связанного объекта",
+		"ru": "Название связанного объекта",
 		"pt": "nome do objeto vinculado",
 		"nl": "naam van gekoppeld object",
 		"fr": "nom de l'objet lié",
@@ -53,7 +53,7 @@ systemDictionary = {
 	"is linked": {
 		"en": "is linked",
 		"de": "verlinkt",
-		"ru": "связан",
+		"ru": "Связан",
 		"pt": "está associado",
 		"nl": "is gelinkt",
 		"fr": "est lié",
@@ -65,7 +65,7 @@ systemDictionary = {
 	"linked with": {
 		"en": "linked with",
 		"de": "verlinkt mit",
-		"ru": "связан с",
+		"ru": "Связан с",
 		"pt": "ligado com",
 		"nl": "gelinkt met",
 		"fr": "lié à",
@@ -77,7 +77,7 @@ systemDictionary = {
 	"expert settings for linked object with type '%s'": {
 		"en": "expert settings for linked object with type '%s'",
 		"de": "Experteneinstellungen für verlinktes Objekt vom Typ '%s'",
-		"ru": "экспертные настройки для связанного объекта с типом '%s'",
+		"ru": "Экспертные настройки для связанного объекта с типом '%s'",
 		"pt": "configurações de especialista para objeto vinculado com o tipo '%s'",
 		"nl": "expertinstellingen voor gekoppeld object met type '%s'",
 		"fr": "paramètres experts pour un objet lié de type '%s'",
@@ -89,7 +89,7 @@ systemDictionary = {
 	"change unit '%s' to": {
 		"en": "change unit '%s' to",
 		"de": "Ändere Einheit '%s' in",
-		"ru": "измените единицу измерения %s на",
+		"ru": "Изменить единицу измерения %s на",
 		"pt": "mudar a unidade '%s' para",
 		"nl": "verander eenheid '%s' in",
 		"fr": "remplacez l'unité '%s' par",
@@ -101,7 +101,7 @@ systemDictionary = {
 	"prefix for id of linked object": {
 		"en": "prefix for id of linked object",
 		"de": "Präfix für ID des verlinkten Objektes",
-		"ru": "префикс для идентификатора связанного объекта",
+		"ru": "Префикс для идентификатора связанного объекта",
 		"pt": "prefixo para id do objeto vinculado",
 		"nl": "voorvoegsel voor id van gekoppeld object",
 		"fr": "préfixe pour l'identifiant de l'objet lié",
@@ -113,7 +113,7 @@ systemDictionary = {
 	"id of linked object": {
 		"en": "id of linked object",
 		"de": "ID des verlinkten Objekts",
-		"ru": "идентификатор связанного объекта",
+		"ru": "Идентификатор связанного объекта",
 		"pt": "ID do objeto vinculado",
 		"nl": "id van gekoppeld object",
 		"fr": "id de l'objet lié",
@@ -125,7 +125,7 @@ systemDictionary = {
 	"only numbers and math operators allowed for read only object": {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: + - / * , . ( )",
 		"de": "Zeichen nicht erlaubt! <br> Nur Zahlen und mathematische Operatoren sind erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen. <br> <br> Zulässige Operatoren: + - / *,. ()",
-		"ru": "запрещенные знаки! <br> Разрешены только цифры и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Допустимые операторы: + - / *,. ()",
+		"ru": "Запрещенные символы! <br> Разрешены только цифры и математические операторы! Поле должно начинаться с математического оператора. <br> <br> Допустимые операторы: + - / *,. ()",
 		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos são permitidos! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: + - / *,. ()",
 		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators zijn toegestaan! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: + - / *,. ()",
 		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés! La saisie doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: + - / *,. ()",
@@ -137,7 +137,7 @@ systemDictionary = {
 	"only numbers and math operators allowed": {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: / * , .",
 		"de": "Zeichen nicht erlaubt! <br> Nur Zahlen und mathematische Operatoren sind erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen. <br> <br> Zulässige Operatoren: / *,.",
-		"ru": "запрещенные знаки! <br> Разрешены только цифры и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: / *,.",
+		"ru": "Запрещенные символы! <br> Разрешены только цифры и математические операторы! Поле должно начинаться с математического оператора. <br> <br> Разрешенные операторы: / *,.",
 		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos são permitidos! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: / *,.",
 		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators zijn toegestaan! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: / *,.",
 		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés! La saisie doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: / *,.",
@@ -149,7 +149,7 @@ systemDictionary = {
 	"only numbers and math operators allowed2": {
 		"en": "not allowed signs!<br>Only numbers an math operatorsare allowed! Input must start with math operator.<br><br>Allowed operators: / *",
 		"de": "Zeichen nicht erlaubt! <br> Nur Zahlen und mathematische Operatoren sind erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen. <br> <br> Zulässige Operatoren: / *",
-		"ru": "запрещенные знаки! <br> Разрешены только цифры и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: / *",
+		"ru": "Запрещенные символы! <br> Разрешены только цифры и математические операторы! Поле должно начинаться с математического оператора. <br> <br> Разрешенные операторы: / *",
 		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos são permitidos! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: / *",
 		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators zijn toegestaan! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: / *",
 		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés! La saisie doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: / *",
@@ -161,7 +161,7 @@ systemDictionary = {
 	"max. number of decimal places": {
 		"en": "max. number of decimal places",
 		"de": "max. Anzahl der Nachkommastellen",
-		"ru": "Максимум. количество знаков после запятой",
+		"ru": "Максимальное количество знаков после запятой",
 		"pt": "max. número de casas decimais",
 		"nl": "max. aantal decimalen",
 		"fr": "max. nombre de décimales",
@@ -173,7 +173,7 @@ systemDictionary = {
 	"only numbers allowed": {
 		"en": "only numbers allowed",
 		"de": "Nur Nummern sind als Eingabe erlaubt!",
-		"ru": "разрешены только цифры",
+		"ru": "Разрешены только цифры",
 		"pt": "somente números permitidos",
 		"nl": "alleen cijfers toegestaan",
 		"fr": "seuls les nombres autorisés",
@@ -185,7 +185,7 @@ systemDictionary = {
 	"calculation for 'read' object": {
 		"en": "calculation for 'read' object",
 		"de": "Umrechnung für verlinktes 'read' Objekt",
-		"ru": "расчет для «прочитанного» объекта",
+		"ru": "Выражение для «read-only» объекта",
 		"pt": "cálculo para objeto 'read'",
 		"nl": "berekening voor 'lees' object",
 		"fr": "calcul pour objet 'lu'",
@@ -197,7 +197,7 @@ systemDictionary = {
 	"calculation for linked object": {
 		"en": "calculation for linked object",
 		"de": "Umrechnung für verlinktes Objekt",
-		"ru": "расчет для связанного объекта",
+		"ru": "Выражение для связанного объекта",
 		"pt": "cálculo para objeto vinculado",
 		"nl": "berekening voor gekoppeld object",
 		"fr": "calcul pour objet lié",
@@ -221,7 +221,7 @@ systemDictionary = {
 	"not allowed chars for Id": {
 		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
 		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
-		"ru": "запрещенные символы для идентификатора! <br> <br> Недопустимые символы: *? \\ \"'[]",
+		"ru": "Запрещенные символы для идентификатора! <br> <br> Недопустимые символы: *? \\ \"'[]",
 		"pt": "não permitido chars para Id! <br> <br> Não é permitido chars: *? \\ \"'[]",
 		"nl": "niet toegestane tekens voor ID! <br> <br> Niet toegestaan ​​tekens: *? \\ \"'[]",
 		"fr": "caractères non autorisés pour Id! <br> <br> Caractères non autorisés: *? \\ \"'[]",
@@ -233,7 +233,7 @@ systemDictionary = {
 	"do not convert": {
 		"en": "do not convert",
 		"de": "nicht umwandeln",
-		"ru": "не конвертировать",
+		"ru": "Не конвертировать",
 		"pt": "não converter",
 		"nl": "niet converteren",
 		"fr": "ne pas convertir",
@@ -245,7 +245,7 @@ systemDictionary = {
 	"convert linked object to type": {
 		"en": "convert to type",
 		"de": "Konvertiere in Typ",
-		"ru": "преобразовать в тип",
+		"ru": "Преобразовать в тип",
 		"pt": "converter em tipo",
 		"nl": "converteren naar type",
 		"fr": "convertir en type",
@@ -257,7 +257,7 @@ systemDictionary = {
 	"condition 'true' for linked object": {
 		"en": "condition 'true' for linked object",
 		"de": "Bedingung 'true' für verlinktes Objekt",
-		"ru": "условие 'true' для связанного объекта",
+		"ru": "Условие 'true' для связанного объекта",
 		"pt": "condição 'true' para objeto vinculado",
 		"nl": "voorwaarde 'waar' voor gekoppeld object",
 		"fr": "condition 'true' pour objet lié",
@@ -269,7 +269,7 @@ systemDictionary = {
 	"value if linked object is 'true'": {
 		"en": "value if linked object is 'true'",
 		"de": "Wert wenn verlinktes Objekt 'true' ist",
-		"ru": "значение, если связанный объект равен 'true'",
+		"ru": "Значение, если связанный объект равен 'true'",
 		"pt": "valor se o objeto vinculado for 'verdadeiro'",
 		"nl": "waarde als gekoppeld object 'waar' is",
 		"fr": "valeur si l'objet lié est 'true'",
@@ -281,7 +281,7 @@ systemDictionary = {
 	"value if linked object is 'false'": {
 		"en": "value if linked object is 'false'",
 		"de": "Wert wenn verlinktes Objekt 'false' ist",
-		"ru": "значение, если связанный объект имеет значение «ложь»",
+		"ru": "Значение, если связанный объект имеет значение 'false'",
 		"pt": "valor se o objeto vinculado for 'falso'",
 		"nl": "waarde als gekoppeld object 'false' is",
 		"fr": "valeur si l'objet lié est 'false'",
@@ -293,7 +293,7 @@ systemDictionary = {
 	"change min '%s' to": {
 		"en": "change min '%s' to",
 		"de": "Ändere min '%s' in",
-		"ru": "измените min '%s' на",
+		"ru": "Изменить min '%s' на",
 		"pt": "altere min '%s' para",
 		"nl": "verander min '%s' in",
 		"fr": "remplacez min '%s' par",
@@ -305,7 +305,7 @@ systemDictionary = {
 	"change max '%s' to": {
 		"en": "change max '%s' to",
 		"de": "Ändere max '%s' auf",
-		"ru": "изменить максимум \"% s\" на",
+		"ru": "Изменить max '%s' на",
 		"pt": "altere max '%s' para",
 		"nl": "verander max '%s' in",
 		"fr": "remplacez max '%s' par",
@@ -317,7 +317,7 @@ systemDictionary = {
 	"only numbers and mathematical operators allowed as a condition": {
 		"en": "not allowed signs!<br>Only numbers and mathematical operators allowed as a condition! Input must start with math operator.<br><br>Allowed operators: = != > < >= <=",
 		"de": "Zeichen nicht erlaubt!<br>Nur Zahlen und mathematische Operatoren als Bedingung erlaubt! Die Eingabe muss mit einem mathematischen Operator beginnen.<br><br>Zulässige Operatoren: = != > < >= <=",
-		"ru": "запрещенные знаки! <br> В качестве условия допускаются только числа и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: =! => <> = <=",
+		"ru": "Запрещенные символы! <br> В качестве условия допускаются только числа и математические операторы! Ввод должен начинаться с математического оператора. <br> <br> Разрешенные операторы: =! => <> = <=",
 		"pt": "Sinais não permitidos! <br> Somente números e operadores matemáticos permitidos como condição! A entrada deve começar com o operador de matemática. <br> <br> Operadores permitidos: =! => <> = <=",
 		"nl": "geen toegestane tekens! <br> Alleen getallen en wiskundige operators toegestaan ​​als voorwaarde! Input moet beginnen met wiskundige operator. <br> <br> Toegestane operators: =! => <> = <=",
 		"fr": "signes non autorisés! <br> Seuls les nombres et les opérateurs mathématiques sont autorisés comme condition! L'entrée doit commencer par un opérateur mathématique. <br> <br> Opérateurs autorisés: =! => <> = <=",
@@ -329,7 +329,7 @@ systemDictionary = {
 	"conditions string": {
 		"en": "conditions string",
 		"de": "Zeichenkette mit Bedingungen",
-		"ru": "строка условий",
+		"ru": "Условия",
 		"pt": "condições de string",
 		"nl": "voorwaarden string",
 		"fr": "conditions chaîne",
@@ -341,7 +341,7 @@ systemDictionary = {
 	"conditions multi": {
 		"en": "conditions multi",
 		"de": "Werteliste mit Bedingungen",
-		"ru": "условия мульти",
+		"ru": "Условия (несколько)",
 		"pt": "condições multi",
 		"nl": "voorwaarden multi",
 		"fr": "conditions multi",
@@ -532,7 +532,7 @@ systemDictionary = {
 	"value if object is 'false'": {
 		"en": "value if object is 'false'",
 		"de": "Wert wenn Objekt 'false' ist",
-		"ru": "значение, если объект «ложь»",
+		"ru": "значение, если объект 'false'",
 		"pt": "valor se o objeto for 'falso'",
 		"nl": "waarde als object 'false' is",
 		"fr": "valeur si l'objet est 'false'",
@@ -544,7 +544,7 @@ systemDictionary = {
 	"settings can only be adjusted in the object to which it is linked!": {
 		"en": "settings can only be adjusted in the object to which it is linked!",
 		"de": "Einstellungen können nur in dem Objekt vorgenommen werden, mit dem es verlinkt ist!",
-		"ru": "Настройки можно настроить только в том объекте, с которым он связан!",
+		"ru": "Настройки можно изменить только в том объекте, с которым он связан!",
 		"pt": "configurações só podem ser ajustadas no objeto ao qual está vinculado!",
 		"nl": "instellingen kunnen alleen worden aangepast in het object waaraan het is gekoppeld!",
 		"fr": "les réglages ne peuvent être ajustés que dans l'objet auquel il est lié!",
@@ -568,7 +568,7 @@ systemDictionary = {
 	"assign link": {
 		"en": "assign link",
 		"de": "Link zuweisen",
-		"ru": "назначить ссылку",
+		"ru": "Назначить связь",
 		"pt": "atribuir link",
 		"nl": "link toewijzen",
 		"fr": "attribuer un lien",
@@ -580,7 +580,7 @@ systemDictionary = {
 	"remove link": {
 		"en": "remove link",
 		"de": "Link entfernen",
-		"ru": "удалить ссылку",
+		"ru": "Удалить связь",
 		"pt": "remover link",
 		"nl": "link verwijderen",
 		"fr": "supprimer le lien",
@@ -592,7 +592,7 @@ systemDictionary = {
 	"Overview of all linked objects": {
 		"en": "Overview of all linked objects",
 		"de": "Übersicht aller verlinkten Objekte",
-		"ru": "Обзор всех связанных объектов",
+		"ru": "Обзор связанных объектов",
 		"pt": "Visão geral de todos os objetos vinculados",
 		"nl": "Overzicht van alle gekoppelde objecten",
 		"fr": "Vue d'ensemble de tous les objets liés",
@@ -616,7 +616,7 @@ systemDictionary = {
 	"browse the table": {
 		"en": "browse the table",
 		"de": "Tabelle durchsuchen",
-		"ru": "просмотреть таблицу",
+		"ru": "Просмотреть таблицу",
 		"pt": "navegue pela mesa",
 		"nl": "blader door de tafel",
 		"fr": "parcourir la table",
@@ -628,7 +628,7 @@ systemDictionary = {
 	"link to an already linked object of the same instance is not possible!": {
 		"en": "link to an already linked object of the same instance is not possible!",
 		"de": "Eine Verlinkung zu einem bereits verlinkten Objekt derselben Instanz ist nicht möglich!",
-		"ru": "ссылка на уже связанный объект того же экземпляра невозможна!",
+		"ru": "Ссылка на уже связанный объект того же экземпляра невозможна!",
 		"pt": "link para um objeto já vinculado da mesma instância não é possível!",
 		"nl": "link naar een reeds gekoppeld object van dezelfde instantie is niet mogelijk!",
 		"fr": "un lien vers un objet déjà lié de la même instance n'est pas possible!",
@@ -640,7 +640,7 @@ systemDictionary = {
 	"the selected object is already linked with '%s'!": {
 		"en": "the selected object is already linked with '%s'!",
 		"de": "das ausgewählte Objekt ist bereits mit '%s' verlinkt!",
-		"ru": "выбранный объект уже связан с ''%s'!",
+		"ru": "Выбранный объект уже связан с ''%s'!",
 		"pt": "o objeto selecionado já está vinculado a '%s'!",
 		"nl": "het geselecteerde object is al gekoppeld aan '%s'!",
 		"fr": "l'objet sélectionné est déjà lié à '%s'!",
@@ -652,7 +652,7 @@ systemDictionary = {
 	"the selected object is of type '%s'.<br>The linked object needs an object of type '%s'!": {
 		"en": "the selected object is of type '%s'.<br>The linked object needs an object of type '%s'!",
 		"de": "Das ausgewählte Objekt ist vom Typ '%s'.<br>Das verlinkte Objekt benötigt aber ein Objekt vom Typ '%s'!",
-		"ru": "выбранный объект имеет тип '%s' \"'.<br>Связанному объекту нужен объект типа '%s'!",
+		"ru": "Выбранный объект имеет тип '%s' \"'.<br>Связанному объекту нужен объект типа '%s'!",
 		"pt": "o objeto selecionado é do tipo '%s'.<br>O objeto vinculado precisa de um objeto do tipo '%s'!",
 		"nl": "het geselecteerde object is van het type '%s'.<br>Het gekoppelde object heeft een object van het type '%s' nodig!",
 		"fr": "l'objet sélectionné est de type '%s'.<br>L'objet lié a besoin d'un objet de type '%s'!",
@@ -676,7 +676,7 @@ systemDictionary = {
 	"Via 'Settings' button in the menu 'Object' you can create a new linked object.": {
 		"en": "Via 'Settings' button in the menu 'Object' you can create a new linked object.",
 		"de": "Über die Schaltfläche 'Einstellungen' im Menü 'Objekt' kann ein neues verlinktes Objekt erstellt werden.",
-		"ru": "С помощью кнопки «Настройки» в меню «Объект» вы можете создать новый связанный объект.",
+		"ru": "С помощью кнопки «Настройки» в меню «Объекты» вы можете создать новый связанный объект.",
 		"pt": "Através do botão 'Configurações' no menu 'Objeto' você pode criar um novo objeto vinculado.",
 		"nl": "Via de knop 'Instellingen' in het menu 'Object' kunt u een nieuw gekoppeld object maken.",
 		"fr": "Via le bouton 'Paramètres' du menu 'Objet', vous pouvez créer un nouvel objet lié.",
@@ -688,7 +688,7 @@ systemDictionary = {
 	"no linked objects available": {
 		"en": "no linked objects available",
 		"de": "Keine verlinkten Objekte vorhanden",
-		"ru": "нет связанных объектов",
+		"ru": "Нет связанных объектов",
 		"pt": "não há objetos vinculados disponíveis",
 		"nl": "geen gekoppelde objecten beschikbaar",
 		"fr": "aucun objet lié disponible",
@@ -700,7 +700,7 @@ systemDictionary = {
 	"duration": {
 		"en": "duration",
 		"de": "Dauer",
-		"ru": "продолжительность",
+		"ru": "Продолжительность",
 		"pt": "duração",
 		"nl": "looptijd",
 		"fr": "durée",
@@ -712,7 +712,7 @@ systemDictionary = {
 	"conversion in seconds": {
 		"en": "conversion in seconds",
 		"de": "Umrechnung in Sekunden",
-		"ru": "преобразование в секундах",
+		"ru": "Преобразование в секундах",
 		"pt": "conversão em segundos",
 		"nl": "conversie in seconden",
 		"fr": "conversion en quelques secondes",
@@ -724,7 +724,7 @@ systemDictionary = {
 	"display format of the duration": {
 		"en": "display format of the duration",
 		"de": "Anzeigeformat der Dauer",
-		"ru": "формат отображения длительности",
+		"ru": "Формат отображения длительности",
 		"pt": "formato de exibição da duração",
 		"nl": "weergaveformaat van de duur",
 		"fr": "format d'affichage de la durée",
@@ -748,7 +748,7 @@ systemDictionary = {
 	"suffix string": {
 		"en": "suffix string",
 		"de": "nachgestellte Zeichenfolge",
-		"ru": "строка суффикса",
+		"ru": "Строка суффикса",
 		"pt": "string de sufixo",
 		"nl": "achtervoegsel string",
 		"fr": "chaîne de suffixe",
@@ -760,7 +760,7 @@ systemDictionary = {
 	"display format of the datetime": {
 		"en": "display format of the datetime",
 		"de": "Anzeigeformat der Datum / Uhrzeit",
-		"ru": "формат отображения даты и времени",
+		"ru": "Формат отображения даты и времени",
 		"pt": "formato de exibição da data e hora",
 		"nl": "weergaveformaat van de datetime",
 		"fr": "format d'affichage du datetime",
@@ -784,7 +784,7 @@ systemDictionary = {
 	"conversion in unix timestamp (seconds)": {
 		"en": "conversion in unix timestamp (seconds)",
 		"de": "Umrechung in Unixzeit (Sekunden)",
-		"ru": "преобразование в метку времени Unix (секунды)",
+		"ru": "Преобразование в метку времени Unix (секунды)",
 		"pt": "conversão em timestamp unix (segundos)",
 		"nl": "conversie in unix-tijdstempel (seconden)",
 		"fr": "conversion en timestamp unix (secondes)",
@@ -796,7 +796,7 @@ systemDictionary = {
 	"string for 'true' of the linked object": {
 		"en": "string for 'true' of the linked object",
 		"de": "Zeichenkette für 'true' des verlinkten Objekts",
-		"ru": "строка для 'true' связанного объекта",
+		"ru": "Строка для 'true' связанного объекта",
 		"pt": "string para 'true' do objeto vinculado",
 		"nl": "tekenreeks voor 'true' van het gekoppelde object",
 		"fr": "chaîne pour 'true' de l'objet lié",
@@ -808,7 +808,7 @@ systemDictionary = {
 	"string for 'false' of the linked object": {
 		"en": "string for 'false' of the linked object",
 		"de": "Zeichenkette für 'false' des verlinkten Objekts",
-		"ru": "строка для 'false' связанного объекта",
+		"ru": "Строка для 'false' связанного объекта",
 		"pt": "string para 'false' do objeto vinculado",
 		"nl": "tekenreeks voor 'false' van het gekoppelde object",
 		"fr": "chaîne pour 'false' de l'objet lié",
@@ -820,7 +820,7 @@ systemDictionary = {
 	"create a script with variables of all linked objects": {
 		"en": "create a script with variables of all linked objects",
 		"de": "Skript mit Variablen aller verlinkten Objekte erzeugen",
-		"ru": "создать скрипт с переменными всех связанных объектов",
+		"ru": "Создать скрипт с переменными всех связанных объектов",
 		"pt": "criar um script com variáveis de todos os objetos vinculados",
 		"nl": "maak een script met variabelen van alle gekoppelde objecten",
 		"fr": "créer un script avec des variables de tous les objets liés",
@@ -844,7 +844,7 @@ systemDictionary = {
 	"attention": {
 		"en": "attention",
 		"de": "Achtung",
-		"ru": "внимание",
+		"ru": "Внимание",
 		"pt": "atenção",
 		"nl": "aandacht",
 		"fr": "attention",
@@ -880,7 +880,7 @@ systemDictionary = {
 	"script name": {
 		"en": "script name",
 		"de": "Skriptname",
-		"ru": "имя сценария",
+		"ru": "Имя сценария",
 		"pt": "nome do script",
 		"nl": "scriptnaam",
 		"fr": "nom du script",
@@ -892,7 +892,7 @@ systemDictionary = {
 	"generate script": {
 		"en": "generate script",
 		"de": "Skript generieren",
-		"ru": "создать скрипт",
+		"ru": "Создать скрипт",
 		"pt": "gerar script",
 		"nl": "script genereren",
 		"fr": "générer un script",
@@ -904,7 +904,7 @@ systemDictionary = {
 	"settings of linked object": {
 		"en": "settings of linked object",
 		"de": "Einstellungen des verlinkten Objekts",
-		"ru": "настройки связанного объекта",
+		"ru": "Настройки связанного объекта",
 		"pt": "configurações do objeto vinculado",
 		"nl": "instellingen van gekoppeld object",
 		"fr": "paramètres de l'objet lié",
@@ -916,7 +916,7 @@ systemDictionary = {
 	"name of the variable": {
 		"en": "name of the variable",
 		"de": "Name der Variable",
-		"ru": "имя переменной",
+		"ru": "Имя переменной",
 		"pt": "nome da variável",
 		"nl": "naam van de variabele",
 		"fr": "nom de la variable",
@@ -928,7 +928,7 @@ systemDictionary = {
 	"Characters not allowed<br>Only letters and numbers are allowed": {
 		"en": "Characters not allowed<br>Only letters and numbers are allowed",
 		"de": "Zeichen nicht erlaubt<br>Es sind nur Buchstaben und Zahlen erlaubt",
-		"ru": "Символы не допускаются<br>Разрешены только буквы и цифры",
+		"ru": "Недопустимые символы<br>Разрешены только буквы и цифры",
 		"pt": "Caracteres não permitidos<br>Apenas letras e números são permitidos",
 		"nl": "Tekens niet toegestaan<br>Alleen letters en cijfers zijn toegestaan",
 		"fr": "Caractères non autorisés<br>Seules les lettres et les chiffres sont autorisés",
@@ -940,7 +940,7 @@ systemDictionary = {
 	"include all objects of the instance": {
 		"en": "include all objects of the instance",
 		"de": "alle Objekte der Instanz mit einbeziehen",
-		"ru": "включить все объекты экземпляра",
+		"ru": "Включить все объекты экземпляра",
 		"pt": "incluir todos os objetos da instância",
 		"nl": "alle objecten van het exemplaar bevatten",
 		"fr": "inclure tous les objets de l'instance",
@@ -952,7 +952,7 @@ systemDictionary = {
 	"generate setState for 'readonly' objects": {
 		"en": "generate setState for 'readonly' objects",
 		"de": "setState für 'readonly' Objekte generieren",
-		"ru": "создать setState для «только для чтения» объектов",
+		"ru": "Создать setState для «read-only» объектов",
 		"pt": "gerar setState para objetos 'readonly'",
 		"nl": "setState genereren voor 'alleen-lezen' objecten",
 		"fr": "générer setState pour les objets 'readonly'",
@@ -964,7 +964,7 @@ systemDictionary = {
 	"more information (moment library)": {
 		"en": "more information (moment library)",
 		"de": "Weitere Informationen (moment library)",
-		"ru": "больше информации (библиотека моментов)",
+		"ru": "Больше информации (moment library)",
 		"pt": "mais informações (biblioteca de momentos)",
 		"nl": "meer informatie (moment bibliotheek)",
 		"fr": "plus d'informations (bibliothèque de moments)",
@@ -976,7 +976,7 @@ systemDictionary = {
 	"parser format": {
 		"en": "parser format",
 		"de": "Parser Format",
-		"ru": "формат парсера",
+		"ru": "Формат парсера",
 		"pt": "formato de analisador",
 		"nl": "parser-indeling",
 		"fr": "format de l'analyseur",
@@ -1000,7 +1000,7 @@ systemDictionary = {
 	"change role '%s' in": {
 		"en": "change role '%s' in",
 		"de": "Ändere Rolle '%s' in",
-		"ru": "изменить роль '%s' в",
+		"ru": "Изменить роль '%s' на",
 		"pt": "mudar o papel '%s' em",
 		"nl": "rol '%s' in wijzigen",
 		"fr": "changer le rôle '%s' dans",
@@ -1012,7 +1012,7 @@ systemDictionary = {
 	"repair": {
 		"en": "repair",
 		"de": "Reparatur",
-		"ru": "ремонт",
+		"ru": "Исправить",
 		"pt": "reparar",
 		"nl": "reparatie",
 		"fr": "réparation",
@@ -1036,7 +1036,7 @@ systemDictionary = {
 	"Repair process completed successfully": {
 		"en": "Repair process completed successfully",
 		"de": "Reparaturvorgang erfolgreich abgeschlossen",
-		"ru": "Процесс ремонта успешно завершен",
+		"ru": "Процесс исправления успешно завершен",
 		"pt": "Processo de reparo concluído com sucesso",
 		"nl": "Reparatieproces succesvol afgerond",
 		"fr": "Processus de réparation terminé avec succès",
