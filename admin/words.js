@@ -1044,5 +1044,17 @@ systemDictionary = {
 		"es": "Proceso de reparación completado con éxito",
 		"pl": "Proces naprawy zakończony powodzeniem",
 		"zh-cn": "修复过程成功完成"
+	},
+	"unit": {
+		"en": "unit",
+		"de": "Einheit",
+		"ru": "Ед. изм",
+		"pt": "unidade",
+		"nl": "eenheid",
+		"fr": "unité",
+		"it": "unità",
+		"es": "unidad",
+		"pl": "jednostka",
+		"zh-cn": "单元"
 	}
 };

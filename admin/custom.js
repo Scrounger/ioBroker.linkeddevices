@@ -42,11 +42,11 @@ if (typeof defaults !== 'undefined') {
 if (typeof customPostInits !== 'undefined') {
     customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
-        $.get("adapter/linkeddevices/words.js", function (script) {
-            let translation = script.substring(script.indexOf('{'), script.length);
-            translation = translation.substring(0, translation.lastIndexOf(';'));
-            $.extend(systemDictionary, JSON.parse(translation));
-        });
+        // $.get("adapter/linkeddevices/words.js", function (script) {
+        //     let translation = script.substring(script.indexOf('{'), script.length);
+        //     translation = translation.substring(0, translation.lastIndexOf(';'));
+        //     $.extend(systemDictionary, JSON.parse(translation));
+        // });
 
         //$div.find('input[id="test"]').val(JSON.stringify(list))
 
@@ -160,6 +160,7 @@ if (typeof customPostInits !== 'undefined') {
             Group.String = $div.find('.view_String');
             Group.String_Converter_None = $div.find('.view_String_Converter_None');
             Group.String_Converter_Boolean = $div.find('.view_String_Converter_Boolean');
+            Group.String_Converter_Number = $div.find('.view_String_Converter_Number');
             Group.String_Converter_String_Duration = $div.find('.view_String_Converter_String_Duration');
             Group.String_Converter_String_DateTime = $div.find('.view_String_Converter_String_DateTime');
 
@@ -194,10 +195,14 @@ if (typeof customPostInits !== 'undefined') {
             Input.string_suffix = $div.find('input[data-field="string_suffix"]');
             Input.string_to_boolean_value_true = $div.find('input[data-field="string_to_boolean_value_true"]');
             Input.string_to_boolean_value_false = $div.find('input[data-field="string_to_boolean_value_false"]');
+
+            Input.string_to_number_unit = $div.find('input[data-field="string_to_number_unit"]');
+            Input.string_to_number_maxDecimal = $div.find('input[data-field="string_to_number_maxDecimal"]');
+            Input.string_to_number_max = $div.find('input[data-field="string_to_number_calculation"]');
+
             Input.string_to_duration_format = $div.find('input[data-field="string_to_duration_format"]');
             Input.string_to_datetime_parser = $div.find('input[data-field="string_to_datetime_parser"]');
             Input.string_to_datetime_format = $div.find('input[data-field="string_to_datetime_format"]');
-
 
             // alle select in var packen
             Select.number_convertTo = $div.find('select[data-field="number_convertTo"]');
@@ -210,6 +215,7 @@ if (typeof customPostInits !== 'undefined') {
             Label.number_max = $div.find('label[id="LB_number_max"]');
             Label.number_min = $div.find('label[id="LB_number_min"]');
             Label.role = $div.find('label[id="LB_role"]');
+            Label.string_to_number_unit = $div.find('label[id="LB_string_to_number_unit"]');
 
             // Buttons
             Button.parentObjectSettings = $div.find('.values-buttons');
@@ -357,11 +363,16 @@ if (typeof customPostInits !== 'undefined') {
             if (type === 'string' && expertSettingsActivated) {
                 Group.String.show();
 
+                Label.string_to_number_unit.text(_("unit"));
+
                 if (selectedStringConverter === "") {
                     Group.String_Converter_None.show();
 
                     Group.String_Converter_Boolean.hide();
                     Group.String_Converter_Boolean.find("input").val("");
+
+                    Group.String_Converter_Number.hide();
+                    Group.String_Converter_Number.find("input").val("");
 
                     Group.String_Converter_String_Duration.hide();
                     Group.String_Converter_String_Duration.find("input").val("");
@@ -374,6 +385,24 @@ if (typeof customPostInits !== 'undefined') {
 
                     Group.String_Converter_None.hide();
                     Group.String_Converter_None.find("input").val("");
+
+                    Group.String_Converter_Number.hide();
+                    Group.String_Converter_Number.find("input").val("");
+
+                    Group.String_Converter_String_Duration.hide();
+                    Group.String_Converter_String_Duration.find("input").val("");
+
+                    Group.String_Converter_String_DateTime.hide();
+                    Group.String_Converter_String_DateTime.find("input").val("");
+                
+                } else if (selectedStringConverter === "number") {
+                    Group.String_Converter_Number.show();
+
+                    Group.String_Converter_None.hide();
+                    Group.String_Converter_None.find("input").val("");
+
+                    Group.String_Converter_Boolean.hide();
+                    Group.String_Converter_Boolean.find("input").val("");
 
                     Group.String_Converter_String_Duration.hide();
                     Group.String_Converter_String_Duration.find("input").val("");
@@ -394,6 +423,9 @@ if (typeof customPostInits !== 'undefined') {
                     Group.String_Converter_Boolean.hide();
                     Group.String_Converter_Boolean.find("input").val("");
 
+                    Group.String_Converter_Number.hide();
+                    Group.String_Converter_Number.find("input").val("");
+
                     Group.String_Converter_String_DateTime.hide();
                     Group.String_Converter_String_DateTime.find("input").val("");
 
@@ -409,6 +441,9 @@ if (typeof customPostInits !== 'undefined') {
 
                     Group.String_Converter_Boolean.hide();
                     Group.String_Converter_Boolean.find("input").val("");
+
+                    Group.String_Converter_Number.hide();
+                    Group.String_Converter_Number.find("input").val("");
 
                     Group.String_Converter_String_Duration.hide();
                     Group.String_Converter_String_Duration.find("input").val("");
@@ -433,7 +468,7 @@ if (typeof customPostInits !== 'undefined') {
 
                 Label.number_unit.text(_("change unit '%s' to", currentObj.common.unit));
                 Label.number_max.text(_("change max '%s' to", currentObj.common.max));
-                Label.number_min.text(_("change min '%s' to", currentObj.common.min));
+                Label.number_min.text(_("change min '%s' to", currentObj.common.min));            
 
                 // Prüfen ob Typ Konverter ausgewählt ist
                 if (selectedNumberConverter === "") {

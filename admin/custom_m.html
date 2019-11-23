@@ -192,6 +192,7 @@
 						<select data-field="string_convertTo" data-default="">
 							<option value="" class="translate">do not convert</option>
 							<option value="boolean" class="translate">boolean</option>
+							<option value="number" class="translate">number</option>
 							<option value="duration" class="translate">duration</option>
 							<option value="datetime" class="translate">datetime</option>							
 						</select>
@@ -220,6 +221,22 @@
 									<input type="text" data-field="string_to_boolean_value_false">
 								</div>
 							</div>							
+						</div>
+						<div class="view_String_Converter_Number">
+							<div class="row">
+								<div class="col s3">
+									<label id="LB_string_to_number_unit" />
+									<input type="text" data-field="string_to_number_unit">
+								</div>
+								<div class="col s3">
+									<label class="translate">max. number of decimal places</label>
+									<input type="text" data-field="string_to_number_maxDecimal">
+								</div>
+								<div class="col s3">
+									<label class="translate">calculation for linked object</label>
+									<input type="text" data-field="string_to_number_calculation">
+								</div>
+							</div>
 						</div>
 						<div class="view_String_Converter_String_Duration">
 							<div class="col s3">
