@@ -1195,8 +1195,12 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.string_to_number_maxDecimal = parentObj.common.custom[this.namespace].string_to_number_maxDecimal;
 			}
 
-			if (parentObj.common.custom[this.namespace].string_to_number_maxDecimal) {
+			if (parentObj.common.custom[this.namespace].string_to_number_calculation) {
 				expertSettings.string_to_number_calculation = parentObj.common.custom[this.namespace].string_to_number_calculation;
+			}
+
+			if (parentObj.common.custom[this.namespace].string_to_number_calculation_readOnly) {
+				expertSettings.string_to_number_calculation_readOnly = parentObj.common.custom[this.namespace].string_to_number_calculation_readOnly;
 			}
 
 			if (parentObj.common.custom[this.namespace].string_to_duration_format) {
