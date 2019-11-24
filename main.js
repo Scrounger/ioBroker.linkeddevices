@@ -1447,7 +1447,7 @@ class Linkeddevices extends utils.Adapter {
 				if (!targetIsParentObj && (targetObj.common.custom[this.namespace].number_maxDecimal || targetObj.common.custom[this.namespace].number_maxDecimal === 0)) {
 					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
 					var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
-					if (maxDecimal != NaN) {
+					if (maxDecimal !== NaN) {
 						convertedValue = mathjs.round(convertedValue, maxDecimal);
 					}
 				}
@@ -1624,6 +1624,68 @@ class Linkeddevices extends utils.Adapter {
 						convertedValue = value.toString();
 						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to linkedObject value '${convertedValue}'`);
 					}
+				}
+			}
+
+			// Type Converison: string -> number
+			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_number" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_number") {
+				if (!targetIsParentObj) {
+					// parentObject state vom type string hat sich geändert -> string versuchen in number umwandeln
+					convertedValue = parseFloat(value);
+				}
+
+				if (!isNaN(convertedValue)) {
+					// string erfolgreich in number umgewandelt wenn parentObject geändert wurde, linkedObject ist immer vom type number
+					try {
+						if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly && !targetIsParentObj) {
+							// ReadOnly object mit calculation -> umrechnen
+							let string_to_number_calculation_readOnly = targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly.replace(/,/g, ".");
+							convertedValue = mathjs.eval(`${value} ${string_to_number_calculation_readOnly}`)
+
+							this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`);
+
+						} else if (targetObj.common.custom[this.namespace].string_to_number_calculation) {
+							// object mit string_to_number_calculation -> umrechnen
+							let string_to_number_calculation = targetObj.common.custom[this.namespace].string_to_number_calculation.replace(/,/g, ".");
+
+							if (!targetIsParentObj) {
+								// Umrechnung für linkedObject -> parentObject state ändert sich
+								convertedValue = mathjs.eval(`${value} ${string_to_number_calculation}`);
+
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation}' -> linkedObject value is '${convertedValue}'`)
+							} else {
+								// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
+								convertedValue = mathjs.eval(`${value} * 1/(1${string_to_number_calculation})`);
+								this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${string_to_number_calculation})' -> parentObject value is '${convertedValue}'`)
+							}
+						}
+					} catch (err) {
+						// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
+						if (targetIsParentObj) {
+							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your expert settings input for '${targetId}'!`);
+						} else {
+							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your expert settings input for '${sourceId}'!`);
+						}
+
+						convertedValue = value;
+					}
+
+					if (!targetIsParentObj && (targetObj.common.custom[this.namespace].string_to_number_maxDecimal || targetObj.common.custom[this.namespace].string_to_number_maxDecimal === 0)) {
+						// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
+						var maxDecimal = parseInt(targetObj.common.custom[this.namespace].string_to_number_maxDecimal);
+						if (maxDecimal !== NaN) {
+							convertedValue = mathjs.round(convertedValue, maxDecimal);
+						}
+					}
+
+					if (targetIsParentObj) {
+						// ziel ist parentObject vom type string, zahl noch in string umwandeln
+						convertedValue = convertedValue.toString();
+					}
+
+				} else {
+					// value vom type string kann nicht in number umgewandelt werden (nur bei parentObject)
+					this.log.error(`[getConvertedValue] string value '${value}' from '${sourceId}' can not be parsed to number! -> value for '${targetId}' is set to 'null'!`);
 				}
 			}
 
