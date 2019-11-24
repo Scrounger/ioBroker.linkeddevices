@@ -866,16 +866,16 @@ systemDictionary = {
 		"zh-cn": "生成脚本后，将重新启动javascript适配器！ <br><br><br>你想继续吗？"
 	},
 	"You like the adapter? Then support us with a small donation.": {
-		"en": "You like the adapter? Then support us with a small donation.",
-		"de": "Dir gefällt der Adapter? Dann unterstütze uns doch mit einer kleinen Spende.",
-		"ru": "Вам нравится адаптер? Тогда поддержите нас небольшим пожертвованием.",
-		"pt": "Você gosta do adaptador? Então nos apóie com uma pequena doação.",
-		"nl": "Vind je de adapter leuk? Steun ons dan met een kleine gift.",
-		"fr": "Vous aimez l'adaptateur? Alors soutenez-nous avec un petit don.",
-		"it": "Ti piace l'adattatore? Quindi supportaci con una piccola donazione.",
-		"es": "¿Te gusta el adaptador? Entonces apóyanos con una pequeña donación.",
-		"pl": "Lubisz adapter? Następnie wesprzyj nas niewielką darowizną.",
-		"zh-cn": "你喜欢适配器吗？然后通过小额捐款支持我们。"
+		"en": "You like the adapter? Then support the adapter developer (Scrounger) with a small donation.",
+		"de": "Dir gefällt der Adapter? Dann unterstütze den Adapterentwickler (Scrounger) mit einer kleinen Spende.",
+		"ru": "Вам нравится адаптер? Затем поддержите разработчика адаптера (Scrounger) с небольшим пожертвованием.",
+		"pt": "Você gosta do adaptador? Depois, ofereça suporte ao desenvolvedor do adaptador (Scrounger) com uma pequena doação.",
+		"nl": "Vind je de adapter leuk? Ondersteun vervolgens de adapterontwikkelaar (Scrounger) met een kleine donatie.",
+		"fr": "Vous aimez l'adaptateur? Soutenez ensuite le développeur de l'adaptateur (Scrounger) avec un petit don.",
+		"it": "Ti piace l'adattatore? Quindi supportare lo sviluppatore dell'adattatore (Scrounger) con una piccola donazione.",
+		"es": "¿Te gusta el adaptador? Luego, apoye al desarrollador del adaptador (Scrounger) con una pequeña donación.",
+		"pl": "Podoba ci się adapter? Następnie wesprzyj programistę adaptera (Scrounger) niewielką darowizną.",
+		"zh-cn": "您喜欢适配器吗？然后以少量捐款支持适配器开发人员（Scrounger）。"
 	},
 	"script name": {
 		"en": "script name",
