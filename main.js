@@ -442,8 +442,14 @@ class Linkeddevices extends utils.Adapter {
 								expertSettings = true;
 							}
 						} else {
-							customForParentObj["number_unit"] = linkedObject.common.unit;
-							expertSettings = true;
+							if (linkedObject.common.type === 'number' && parentObject.common.type === 'string') {
+								// string_to_number: unit muss in andere prop gespreichert werden
+								customForParentObj["string_to_number_unit"] = linkedObject.common.unit;
+								expertSettings = true;
+							} else {
+								customForParentObj["number_unit"] = linkedObject.common.unit;
+								expertSettings = true;
+							}
 						}
 					}
 
