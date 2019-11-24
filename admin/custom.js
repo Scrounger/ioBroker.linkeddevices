@@ -161,6 +161,8 @@ if (typeof customPostInits !== 'undefined') {
             Group.String_Converter_None = $div.find('.view_String_Converter_None');
             Group.String_Converter_Boolean = $div.find('.view_String_Converter_Boolean');
             Group.String_Converter_Number = $div.find('.view_String_Converter_Number');
+            Group.String_Converter_Number_Conversion = $div.find('.view_String_to_Number_conversion');
+            Group.String_Converter_Number_Conversion_ReadOnly = $div.find('.view_String_to_Number_conversion_readOnly');
             Group.String_Converter_String_Duration = $div.find('.view_String_Converter_String_Duration');
             Group.String_Converter_String_DateTime = $div.find('.view_String_Converter_String_DateTime');
 
@@ -198,7 +200,8 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.string_to_number_unit = $div.find('input[data-field="string_to_number_unit"]');
             Input.string_to_number_maxDecimal = $div.find('input[data-field="string_to_number_maxDecimal"]');
-            Input.string_to_number_max = $div.find('input[data-field="string_to_number_calculation"]');
+            Input.string_to_number_calculation = $div.find('input[data-field="string_to_number_calculation"]');
+            Input.string_to_number_calculation_readOnly = $div.find('input[data-field="string_to_number_calculation_readOnly"]');
 
             Input.string_to_duration_format = $div.find('input[data-field="string_to_duration_format"]');
             Input.string_to_datetime_parser = $div.find('input[data-field="string_to_datetime_parser"]');
@@ -394,9 +397,18 @@ if (typeof customPostInits !== 'undefined') {
 
                     Group.String_Converter_String_DateTime.hide();
                     Group.String_Converter_String_DateTime.find("input").val("");
-                
+
                 } else if (selectedStringConverter === "number") {
                     Group.String_Converter_Number.show();
+
+                    // Number ist read only
+                    if (currentObj.common.read === true && currentObj.common.write === false) {
+                        Group.String_Converter_Number_Conversion_ReadOnly.show();
+                        Group.String_Converter_Number_Conversion.hide();
+                    } else {
+                        Group.String_Converter_Number_Conversion.show();
+                        Group.String_Converter_Number_Conversion_ReadOnly.hide();
+                    }
 
                     Group.String_Converter_None.hide();
                     Group.String_Converter_None.find("input").val("");
@@ -468,7 +480,7 @@ if (typeof customPostInits !== 'undefined') {
 
                 Label.number_unit.text(_("change unit '%s' to", currentObj.common.unit));
                 Label.number_max.text(_("change max '%s' to", currentObj.common.max));
-                Label.number_min.text(_("change min '%s' to", currentObj.common.min));            
+                Label.number_min.text(_("change min '%s' to", currentObj.common.min));
 
                 // Prüfen ob Typ Konverter ausgewählt ist
                 if (selectedNumberConverter === "") {
@@ -818,6 +830,42 @@ if (typeof customPostInits !== 'undefined') {
         }
 
         function events_ExpertSettings_String() {
+
+            // Umrechnung für read & write - Eingabe prüfen
+            Input.string_to_number_calculation.keyup(function () {
+                // Nur Nummern und math operators * | / zulassen
+                let allowedSigns = /[^0-9\.\,\*\/]/;
+
+                if (this.value.length > 0) {
+                    if (allowedSigns.test(this.value)) {
+                        // prüfen auf zulässige Zeichen
+                        gMain.showError(_("only numbers and math operators allowed"));
+                    } else if (!this.value.startsWith("*") && !this.value.startsWith("/")) {
+                        // muss mit math operator beginnen
+                        this.value = "";
+                        gMain.showError(_("only numbers and math operators allowed"));
+                    }
+                }
+                this.value = this.value.replace(allowedSigns, '');
+            });
+
+            // Umrechnung für read only - Eingabe prüfen
+            Input.string_to_number_calculation_readOnly.keyup(function () {
+                // Nur Nummern und math operators zulassen
+                let allowedSigns = /[^0-9\.\,\*\+\-\/\(\)]/;
+
+                if (this.value.length > 0) {
+                    if (allowedSigns.test(this.value)) {
+                        // prüfen auf zulässige Zeichen
+                        gMain.showError(_("only numbers and math operators allowed for read only object"));
+                    } else if (!this.value.startsWith("+") && !this.value.startsWith("-") && !this.value.startsWith("*") && !this.value.startsWith("/")) {
+                        // muss mit math operator beginnen
+                        this.value = "";
+                        gMain.showError(_("only numbers and math operators allowed for read only object"));
+                    }
+                }
+                this.value = this.value.replace(allowedSigns, '');
+            });
 
             Select.string_convertTo.on('change', function () {
                 selectedStringConverter = this.value;
