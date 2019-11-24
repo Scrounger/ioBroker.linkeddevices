@@ -830,6 +830,17 @@ if (typeof customPostInits !== 'undefined') {
         }
 
         function events_ExpertSettings_String() {
+            // Anzahl Nachkommastellen - Eingabe prüfen
+            Input.string_to_number_maxDecimal.keyup(function () {
+                // Nur Nummern zulassen
+                let allowedSigns = /[^0-9]/;
+
+                if (allowedSigns.test(this.value)) {
+                    gMain.showError(_("only numbers allowed"));
+                }
+                this.value = this.value.replace(allowedSigns, '');
+            });
+
 
             // Umrechnung für read & write - Eingabe prüfen
             Input.string_to_number_calculation.keyup(function () {
