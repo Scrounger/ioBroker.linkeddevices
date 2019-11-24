@@ -965,7 +965,16 @@ class Linkeddevices extends utils.Adapter {
 
 			} else if (parentObj.common.custom[this.namespace].string_convertTo) {
 
-				if (parentObj.common.custom[this.namespace].string_convertTo === "duration") {
+				if (parentObj.common.custom[this.namespace].string_convertTo === "number") {
+					// string -> number
+					expertSettings.type = "number";
+
+					if (parentObj.common.custom[this.namespace].string_to_number_unit) {
+						// evtl. ist eine unit vorgeben
+						expertSettings.unit = parentObj.common.custom[this.namespace].string_to_number_unit
+					}
+
+				} else if (parentObj.common.custom[this.namespace].string_convertTo === "duration") {
 					// string -> duration: type ist 'string'
 					expertSettings.type = "string";
 				} else if (parentObj.common.custom[this.namespace].string_convertTo === "datetime") {
@@ -1014,7 +1023,10 @@ class Linkeddevices extends utils.Adapter {
 					// boolean -> string: typ spezifische properties entfernen, ändern oder hinzufügen
 					commonData.def = "";
 				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "string_to_boolean") {
+					// string -> boolean: typ spezifische properties entfernen, ändern oder hinzufügen
 					commonData.def = false;
+				} else if (`${parentObj.common.type}_to_${expertSettings.type}` === "string_to_number") {
+					delete commonData.def;
 				}
 			}
 
@@ -1177,6 +1189,14 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].string_to_boolean_value_false || parentObj.common.custom[this.namespace].string_to_boolean_value_false === 0) {
 				// string -> boolean: linkedObject Wert für False
 				expertSettings.string_to_boolean_value_false = parentObj.common.custom[this.namespace].string_to_boolean_value_false;
+			}
+
+			if (parentObj.common.custom[this.namespace].string_to_number_maxDecimal) {
+				expertSettings.string_to_number_maxDecimal = parentObj.common.custom[this.namespace].string_to_number_maxDecimal;
+			}
+
+			if (parentObj.common.custom[this.namespace].string_to_number_maxDecimal) {
+				expertSettings.string_to_number_calculation = parentObj.common.custom[this.namespace].string_to_number_calculation;
 			}
 
 			if (parentObj.common.custom[this.namespace].string_to_duration_format) {
