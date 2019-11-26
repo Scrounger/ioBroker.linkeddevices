@@ -1056,5 +1056,17 @@ systemDictionary = {
 		"es": "unidad",
 		"pl": "jednostka",
 		"zh-cn": "单元"
-	}
+	},
+	"mergeSettingsOnRestart": {
+		"en": "merge settings on adapter restart",
+		"de": "Einstellungen beim Neustart des Adapters zusammenführen",
+		"ru": "объединить настройки при перезагрузке адаптера",
+		"pt": "mesclar configurações na reinicialização do adaptador",
+		"nl": "instellingen samenvoegen bij opnieuw opstarten van de adapter",
+		"fr": "fusionner les paramètres au redémarrage de l'adaptateur",
+		"it": "unisci le impostazioni al riavvio dell'adattatore",
+		"es": "fusionar la configuración al reiniciar el adaptador",
+		"pl": "scal ustawienia po ponownym uruchomieniu adaptera",
+		"zh-cn": "适配器重新启动时合并设置"
+	},
 };

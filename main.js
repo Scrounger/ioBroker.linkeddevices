@@ -822,8 +822,17 @@ class Linkeddevices extends utils.Adapter {
 							}
 						}
 
-						// LinkedObjekt erzeugen oder Änderungen schreiben
-						await this.setForeignObjectAsync(linkedId, linkedObj);
+						let merged = false;
+
+						let existingLinkedObj = await this.getForeignObjectAsync(linkedId);
+						if (existingLinkedObj && linkedObj && linkedObj.common && linkedObj.common.custom && linkedObj.common.custom[this.namespace] && linkedObj.common.custom[this.namespace].mergeSettingsOnRestart) {
+							// wenn linkedObject bereits existiert und user 'merge' setting aktiviert hat -> linkedObject settings mergen
+							merged = true;
+							await this.extendForeignObjectAsync(linkedId, linkedObj);
+						} else {
+							// LinkedObjekt erzeugen oder Änderungen schreiben -> wird vollständig überschrieben
+							await this.setForeignObjectAsync(linkedId, linkedObj);
+						}
 
 						// ggf. können neue linkedObjects hinzugekommen sein -> in dic packen
 						if (this.dicLinkedObjectsStatus) this.dicLinkedObjectsStatus[linkedId] = true;
@@ -862,9 +871,9 @@ class Linkeddevices extends utils.Adapter {
 						await this.subscribeForeignStatesAsync(parentObj._id);
 
 						if (parentObj.common.type === linkedObj.common.type) {
-							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' to '${linkedId}'`);
+							this.log.info(`[createLinkedObject] linked object '${parentObj._id}'${(merged) ? ' merged':''} to '${linkedId}'`);
 						} else {
-							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' (${parentObj.common.type}) to '${linkedId}' (${linkedObj.common.type})`);
+							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' (${parentObj.common.type})${(merged) ? ' merged':''} to '${linkedId}' (${linkedObj.common.type})`);
 						}
 					}
 				}
@@ -1057,6 +1066,10 @@ class Linkeddevices extends utils.Adapter {
 
 		var expertSettings = {};
 
+		if (parentObj && parentObj.common && parentObj.common.custom && parentObj.common.custom[this.namespace] && parentObj.common.custom[this.namespace].mergeSettingsOnRestart) {
+			// 'merge' settings übergeben 
+			expertSettings.mergeSettingsOnRestart = parentObj.common.custom[this.namespace].mergeSettingsOnRestart;
+		}
 
 		Object.assign(expertSettings, this.getCustomDataTypeNumber(parentObj));
 		Object.assign(expertSettings, this.getCustomDataTypeBoolean(parentObj));
@@ -1637,7 +1650,7 @@ class Linkeddevices extends utils.Adapter {
 			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_number" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_number") {
 				if (!targetIsParentObj) {
 					// parentObject state vom type string hat sich geändert -> string versuchen in number umwandeln
-					convertedValue = parseFloat(value.replace(',','.'));
+					convertedValue = parseFloat(value.replace(',', '.'));
 				}
 
 				if (!isNaN(convertedValue)) {
