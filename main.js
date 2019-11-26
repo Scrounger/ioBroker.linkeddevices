@@ -1197,7 +1197,7 @@ class Linkeddevices extends utils.Adapter {
 				expertSettings.string_to_boolean_value_false = parentObj.common.custom[this.namespace].string_to_boolean_value_false;
 			}
 
-			if (parentObj.common.custom[this.namespace].string_to_number_maxDecimal) {
+			if (parseInt(parentObj.common.custom[this.namespace].string_to_number_maxDecimal) != NaN && (parentObj.common.custom[this.namespace].string_to_number_maxDecimal != "" || parentObj.common.custom[this.namespace].string_to_number_maxDecimal === 0)) {
 				expertSettings.string_to_number_maxDecimal = parentObj.common.custom[this.namespace].string_to_number_maxDecimal;
 			}
 
@@ -1453,7 +1453,7 @@ class Linkeddevices extends utils.Adapter {
 				if (!targetIsParentObj && (targetObj.common.custom[this.namespace].number_maxDecimal || targetObj.common.custom[this.namespace].number_maxDecimal === 0)) {
 					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
 					var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
-					if (maxDecimal !== NaN) {
+					if (!isNaN(maxDecimal)) {
 						convertedValue = mathjs.round(convertedValue, maxDecimal);
 					}
 				}
@@ -1637,7 +1637,7 @@ class Linkeddevices extends utils.Adapter {
 			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_number" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_number") {
 				if (!targetIsParentObj) {
 					// parentObject state vom type string hat sich geändert -> string versuchen in number umwandeln
-					convertedValue = parseFloat(value);
+					convertedValue = parseFloat(value.replace(',','.'));
 				}
 
 				if (!isNaN(convertedValue)) {
@@ -1679,7 +1679,7 @@ class Linkeddevices extends utils.Adapter {
 					if (!targetIsParentObj && (targetObj.common.custom[this.namespace].string_to_number_maxDecimal || targetObj.common.custom[this.namespace].string_to_number_maxDecimal === 0)) {
 						// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
 						var maxDecimal = parseInt(targetObj.common.custom[this.namespace].string_to_number_maxDecimal);
-						if (maxDecimal !== NaN) {
+						if (!isNaN(maxDecimal)) {
 							convertedValue = mathjs.round(convertedValue, maxDecimal);
 						}
 					}
