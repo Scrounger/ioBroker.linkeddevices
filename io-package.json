@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "1.0.1",
+		"version": "1.1.0",
 		"news": {
+			"1.1.0": {
+				"en": "string to number converter added. option to merge linkedObject on adapter restart added. russian translation corrected by algar42.",
+				"de": "Zeichenkette in Zahl konvertieren hinzugefügt. Option zum Zusammenführen von linkedObject beim Neustart des Adapters. Russische übersetzung korrigiert von algar42.",
+				"ru": "Добавлен конвертер строк в числа. добавлена возможность слияния связанного объекта при перезагрузке адаптера. русский перевод исправлен algar42.",
+				"pt": "conversor de string para número adicionado. opção para mesclar linkedObject na reinicialização do adaptador adicionada. tradução russa corrigida por algar42.",
+				"nl": "tekenreeks naar nummerconvertor toegevoegd. optie om gelinkteObject op adapter opnieuw samen te voegen toegevoegd. Russische vertaling gecorrigeerd door algar42.",
+				"fr": "convertisseur de chaîne en nombre ajouté. option de fusion de linkedObject au redémarrage de l'adaptateur ajoutée. traduction en russe corrigée par algar42.",
+				"it": "convertitore stringa a numero aggiunto. aggiunta opzione per unire linkedObject al riavvio dell'adattatore. traduzione russa corretta da algar42.",
+				"es": "convertidor de cadena a número agregado. Se agregó la opción para fusionar el objeto vinculado al reiniciar el adaptador. traducción rusa corregida por algar42.",
+				"pl": "dodano konwerter ciągów na liczby. dodano opcję scalania obiektu LinkedObject przy ponownym uruchomieniu adaptera. tłumaczenie rosyjskie poprawione przez algar42.",
+				"zh-cn": "字符串到数字转换器已添加。添加了在适配器重新启动时合并linkedObject的选项。俄语翻译已由algar42纠正。"
+			},
 			"1.0.1": {
 				"en": "• adapter configuration: repair function added\n• receive system messages added",
 				"de": "• Adapterkonfiguration: Reparaturfunktion hinzugefügt\n• Systemmeldungen empfangen hinzugefügt",
