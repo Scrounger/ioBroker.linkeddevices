@@ -1650,7 +1650,7 @@ class Linkeddevices extends utils.Adapter {
 			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_number" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_number") {
 				if (!targetIsParentObj) {
 					// parentObject state vom type string hat sich geändert -> string versuchen in number umwandeln
-					value = value.replace(',', '.');
+					value = value.toString().replace(',', '.');
 					convertedValue = parseFloat(value);
 				}
 

@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "1.1.0",
+		"version": "1.1.1",
 		"news": {
 			"1.1.0": {
 				"en": "string to number converter added. option to merge linkedObject on adapter restart added. russian translation corrected by algar42.",
