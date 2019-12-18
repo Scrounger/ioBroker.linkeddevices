@@ -3,6 +3,18 @@
 		"name": "linkeddevices",
 		"version": "1.1.1",
 		"news": {
+			"1.1.1": {
+				"en": "bug fix for string to number converter",
+				"de": "Fehlerbehebung für den Konverter von String zu Zahl",
+				"ru": "исправлена ошибка для преобразования строки в число",
+				"pt": "correção de bug do conversor de string para número",
+				"nl": "bugfix voor string naar nummer converter",
+				"fr": "correction de bogue pour le convertisseur de chaîne en nombre",
+				"it": "correzione di bug per il convertitore da stringa a numero",
+				"es": "corrección de errores para el convertidor de cadena a número",
+				"pl": "poprawka błędu konwertera ciągów na liczby",
+				"zh-cn": "字符串到数字转换器的错误修复"
+			},
 			"1.1.0": {
 				"en": "string to number converter added. option to merge linkedObject on adapter restart added. russian translation corrected by algar42.",
 				"de": "Zeichenkette in Zahl konvertieren hinzugefügt. Option zum Zusammenführen von linkedObject beim Neustart des Adapters. Russische übersetzung korrigiert von algar42.",
