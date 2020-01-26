@@ -197,9 +197,9 @@
 			"pl": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
 			"zh-cn": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again."
 		},
-        "docs": {
-            "en": ["doc/en/readme.md"],
-            "de": ["doc/de/readme.md"]
+        	"docs": {
+            		"en": ["doc/en/readme.md"],
+            		"de": ["doc/de/readme.md"]
 		},
 		"authors": [
 			"Scrounger <scrounger@gmx.net>"
