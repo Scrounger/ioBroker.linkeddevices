@@ -123,7 +123,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 ## License
 MIT License
 
-Copyright (c) 2019 Scrounger
+Copyright (c) 2020 Scrounger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
