@@ -274,7 +274,7 @@ class Linkeddevices extends utils.Adapter {
 
 				await this.logStateChange(id, state, linkedObjId, "parentObject", changedValue);
 
-				await this.setForeignStateAsync(linkedObjId, changedValue, state.ack);
+				await this.setForeignStateAsync(linkedObjId, { val: changedValue, ack: state.ack });
 			}
 
 			// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
@@ -290,7 +290,7 @@ class Linkeddevices extends utils.Adapter {
 
 					await this.logStateChange(id, state, parentObjId, "linkedObject", changedValue);
 
-					await this.setForeignStateAsync(parentObjId, changedValue, state.ack);
+					await this.setForeignStateAsync(parentObjId, { val: changedValue, ack: state.ack });
 				}
 			}
 		}
@@ -850,17 +850,20 @@ class Linkeddevices extends utils.Adapter {
 							// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
 							let parentValue = await this.getConvertedValue(linkedId, parentState.val);
 
+							this.log.warn('fuuuuu');
+							this.log.warn(JSON.stringify(parentState.val));
+
 							if (linkedState) {
 								if (linkedState.val != parentValue || linkedState.ack != parentState.ack) {
 									// Nur aktualisieren, sofern nicht gleich -> damit wird z.B. bei button kein press ausgelöst
-									await this.setForeignState(linkedId, parentValue, true);
+									await this.setForeignState(linkedId, { val: parentValue, ack: true });
 									this.log.debug(`[createLinkedObject] update value for '${linkedId}' to '${parentValue}'`);
 								} else {
 									this.log.debug(`[createLinkedObject] value for '${linkedId}' is up to date`);
 								}
 							} else {
 								// linkedObject hat noch keinen state value
-								await this.setForeignState(linkedId, parentValue, true);
+								await this.setForeignState(linkedId, { val: parentValue, ack: true });
 								this.log.debug(`[createLinkedObject] set value for '${linkedId}' to '${parentValue}'`);
 							}
 						} else {
@@ -871,9 +874,9 @@ class Linkeddevices extends utils.Adapter {
 						await this.subscribeForeignStatesAsync(parentObj._id);
 
 						if (parentObj.common.type === linkedObj.common.type) {
-							this.log.info(`[createLinkedObject] linked object '${parentObj._id}'${(merged) ? ' merged':''} to '${linkedId}'`);
+							this.log.info(`[createLinkedObject] linked object '${parentObj._id}'${(merged) ? ' merged' : ''} to '${linkedId}'`);
 						} else {
-							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' (${parentObj.common.type})${(merged) ? ' merged':''} to '${linkedId}' (${linkedObj.common.type})`);
+							this.log.info(`[createLinkedObject] linked object '${parentObj._id}' (${parentObj.common.type})${(merged) ? ' merged' : ''} to '${linkedId}' (${linkedObj.common.type})`);
 						}
 					}
 				}
