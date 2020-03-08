@@ -850,9 +850,6 @@ class Linkeddevices extends utils.Adapter {
 							// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
 							let parentValue = await this.getConvertedValue(linkedId, parentState.val);
 
-							this.log.warn('fuuuuu');
-							this.log.warn(JSON.stringify(parentState.val));
-
 							if (linkedState) {
 								if (linkedState.val != parentValue || linkedState.ack != parentState.ack) {
 									// Nur aktualisieren, sofern nicht gleich -> damit wird z.B. bei button kein press ausgelöst

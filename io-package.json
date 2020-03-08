@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "1.1.1",
+		"version": "1.1.2",
 		"news": {
+			"1.1.2": {
+				"en": "bug fix for values from type object",
+				"de": "Fehlerbehebung für Werte vom Typ Objekt",
+				"ru": "исправлена ошибка для значений из типа объекта",
+				"pt": "correção de bug para valores do objeto de tipo",
+				"nl": "bugfix voor waarden van type object",
+				"fr": "correction de bogue pour les valeurs de l'objet type",
+				"it": "correzione di bug per valori dall'oggetto tipo",
+				"es": "corrección de errores para valores del objeto tipo",
+				"pl": "poprawka błędu dla wartości z obiektu typu",
+				"zh-cn": "错误修复类型对象的值"
+			},
 			"1.1.1": {
 				"en": "bug fix for string to number converter",
 				"de": "Fehlerbehebung für den Konverter von String zu Zahl",
@@ -197,9 +209,13 @@
 			"pl": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
 			"zh-cn": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again."
 		},
-        "docs": {
-           		"en": ["docs/en/readme.md"],
-           		"de": ["docs/de/readme.md"]
+		"docs": {
+			"en": [
+				"docs/en/readme.md"
+			],
+			"de": [
+				"docs/de/readme.md"
+			]
 		},
 		"authors": [
 			"Scrounger <scrounger@gmx.net>"
