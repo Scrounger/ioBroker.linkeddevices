@@ -856,14 +856,14 @@ class Linkeddevices extends utils.Adapter {
 							if (linkedState) {
 								if (linkedState.val != parentValue || linkedState.ack != parentState.ack) {
 									// Nur aktualisieren, sofern nicht gleich -> damit wird z.B. bei button kein press ausgelöst
-									await this.setForeignState(linkedId, { val: parentValue, ack: true });
+									await this.setForeignStateAsync(linkedId, { val: parentValue, ack: true });
 									this.log.debug(`[createLinkedObject] update value for '${linkedId}' to '${parentValue}'`);
 								} else {
 									this.log.debug(`[createLinkedObject] value for '${linkedId}' is up to date`);
 								}
 							} else {
 								// linkedObject hat noch keinen state value
-								await this.setForeignState(linkedId, { val: parentValue, ack: true });
+								await this.setForeignStateAsync(linkedId, { val: parentValue, ack: true });
 								this.log.debug(`[createLinkedObject] set value for '${linkedId}' to '${parentValue}'`);
 							}
 						} else {
