@@ -327,20 +327,23 @@ async function assignParentObject(rowNum, parentId) {
     }
 }
 
-function removeAssignedParentObjectConfirm(rowNum, parentId) {
+function removeAssignedParentObjectConfirm(rowNum, parentId, linkedId) {
     confirmMessage(_('do you really want to delete this link?'), _('attention'), null, [_('Cancel'), _('OK')], function (result) {
         if (result === 1) {
-            removeAssignedParentObject(rowNum, parentId);
+            removeAssignedParentObject(rowNum, parentId, linkedId);
         }
     });
 }
 
-async function removeAssignedParentObject(rowNum, parentId) {
+async function removeAssignedParentObject(rowNum, parentId, linkedId) {
     try {
         let parentObj = await getObject(parentId);
+        let linkedObj = await getObject(linkedId);
 
         // custom entfernen
-        delete parentObj.common.custom[myNamespace];
+        parentObj.common.custom[myNamespace] = null;
+        linkedObj.common.custom[myNamespace].enabled = false;
+        linkedObj.common.icon = "linkeddevices_missing.png";
 
         // CheckBox & Button aktivieren / deaktivieren
         $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val('').trigger('change');
@@ -350,9 +353,9 @@ async function removeAssignedParentObject(rowNum, parentId) {
         $('#events .values-buttons[data-command="removeLink"][data-index="' + rowNum + '"]').attr('disabled', true).trigger('change');
         $('#events .values-buttons[data-command="openCustom"][data-index="' + rowNum + '"]').attr('disabled', true).trigger('change');
 
-
         // neue Zuweisung speichern
-        await setForeignObject(parentObj);
+        await setObject(parentId, parentObj);
+        await setObject(linkedId, linkedObj);
     } catch (err) {
         showError("assignParentObject: " + err);
     }
@@ -982,19 +985,6 @@ async function setObject(id, obj) {
         });
     });
 }
-
-
-async function setForeignObject(obj) {
-    new Promise((resolve, reject) => {
-        socket.emit('setObject', obj._id, obj, function (err, res) {
-            if (!err && res) {
-                resolve(res);
-            } else {
-                resolve(null);
-            }
-        });
-    });
-}
 //#endregion
 
 
@@ -1087,8 +1077,9 @@ async function tableOnReady() {
     $('#events .table-values-div .table-values .values-buttons[data-command="removeLink"]').on('click', function () {
         let rowNum = $(this).data('index');
         let parentId = $('#events .values-input[data-name="parentId"][data-index="' + rowNum + '"]').val();
+        let linkedId = $('#events .values-input[data-name="linkedId"][data-index="' + rowNum + '"]').val();
 
-        removeAssignedParentObjectConfirm(rowNum, parentId);
+        removeAssignedParentObjectConfirm(rowNum, parentId, linkedId);
     });
 
     $('#events .table-values-div .table-values .values-buttons[data-command="openCustom"]').on('click', function () {
