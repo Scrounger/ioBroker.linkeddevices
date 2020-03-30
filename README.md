@@ -37,6 +37,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
+### 1.1.3
+* (Scrounger) bug fix for deleting objects via the setting
+
 ### 1.1.2
 * (Scrounger) bug fix for values from type object
 
