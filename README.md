@@ -37,8 +37,8 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ## Changelog
 
-### __WORK IN PROGRESS__
-* continuous loop after assign to new object bug fixed
+### 1.1.4
+* (Scrounger) continuous loop after assign to new object bug fixed
 
 ### 1.1.3
 * (Scrounger) bug fix for deleting objects via the setting

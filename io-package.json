@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "linkeddevices",
-		"version": "1.1.3",
+		"version": "1.1.4",
 		"news": {
+			"1.1.4": {
+				"en": "continuous loop after assign to new object bug fixed",
+				"de": "Endlosschleife nach Zuweisung zu neuem Objekt Fehler behoben",
+				"ru": "исправлен непрерывный цикл после присвоения новому объекту",
+				"pt": "loop contínuo após atribuir ao novo objeto bug corrigido",
+				"nl": "continue lus na toewijzing aan nieuwe objectbug opgelost",
+				"fr": "boucle continue après affectation au nouvel objet bug corrigé",
+				"it": "corretto il ciclo continuo dopo l'assegnazione al nuovo oggetto bug",
+				"es": "bucle continuo después de asignar al nuevo objeto error corregido",
+				"pl": "ciągła pętla po przypisaniu do nowego błędu obiektu naprawiona",
+				"zh-cn": "修复分配给新对象后的连续循环错误"
+			},
 			"1.1.3": {
 				"en": "bug fix for deleting objects via the setting",
 				"de": "Fehlerbehebung zum Löschen von Objekten über die Einstellung",
