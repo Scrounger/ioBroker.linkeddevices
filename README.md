@@ -42,7 +42,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 1.2.0 (2020-08-23)
 * (Scrounger) adapter configuration: auto generate globale script - function to get parent id added
 * (Scrounger) dependencies updated
 

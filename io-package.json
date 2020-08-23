@@ -1,327 +1,339 @@
 {
-	"common": {
-		"name": "linkeddevices",
-		"version": "1.1.4",
-		"news": {
-			"1.1.4": {
-				"en": "continuous loop after assign to new object bug fixed",
-				"de": "Endlosschleife nach Zuweisung zu neuem Objekt Fehler behoben",
-				"ru": "исправлен непрерывный цикл после присвоения новому объекту",
-				"pt": "loop contínuo após atribuir ao novo objeto bug corrigido",
-				"nl": "continue lus na toewijzing aan nieuwe objectbug opgelost",
-				"fr": "boucle continue après affectation au nouvel objet bug corrigé",
-				"it": "corretto il ciclo continuo dopo l'assegnazione al nuovo oggetto bug",
-				"es": "bucle continuo después de asignar al nuevo objeto error corregido",
-				"pl": "ciągła pętla po przypisaniu do nowego błędu obiektu naprawiona",
-				"zh-cn": "修复分配给新对象后的连续循环错误"
-			},
-			"1.1.3": {
-				"en": "bug fix for deleting objects via the setting",
-				"de": "Fehlerbehebung zum Löschen von Objekten über die Einstellung",
-				"ru": "исправлена ошибка удаления объектов через настройку",
-				"pt": "correção de bug para excluir objetos através da configuração",
-				"nl": "bugfix voor het verwijderen van objecten via de instelling",
-				"fr": "correction de bogue pour la suppression d'objets via le paramètre",
-				"it": "correzione di bug per l'eliminazione di oggetti tramite l'impostazione",
-				"es": "corrección de errores para eliminar objetos a través de la configuración",
-				"pl": "naprawa błędu usuwania obiektów za pomocą ustawienia",
-				"zh-cn": "通过设置删除对象的错误修复"
-			},
-			"1.1.2": {
-				"en": "bug fix for values from type object",
-				"de": "Fehlerbehebung für Werte vom Typ Objekt",
-				"ru": "исправлена ошибка для значений из типа объекта",
-				"pt": "correção de bug para valores do objeto de tipo",
-				"nl": "bugfix voor waarden van type object",
-				"fr": "correction de bogue pour les valeurs de l'objet type",
-				"it": "correzione di bug per valori dall'oggetto tipo",
-				"es": "corrección de errores para valores del objeto tipo",
-				"pl": "poprawka błędu dla wartości z obiektu typu",
-				"zh-cn": "错误修复类型对象的值"
-			},
-			"1.1.1": {
-				"en": "bug fix for string to number converter",
-				"de": "Fehlerbehebung für den Konverter von String zu Zahl",
-				"ru": "исправлена ошибка для преобразования строки в число",
-				"pt": "correção de bug do conversor de string para número",
-				"nl": "bugfix voor string naar nummer converter",
-				"fr": "correction de bogue pour le convertisseur de chaîne en nombre",
-				"it": "correzione di bug per il convertitore da stringa a numero",
-				"es": "corrección de errores para el convertidor de cadena a número",
-				"pl": "poprawka błędu konwertera ciągów na liczby",
-				"zh-cn": "字符串到数字转换器的错误修复"
-			},
-			"1.1.0": {
-				"en": "string to number converter added. option to merge linkedObject on adapter restart added. russian translation corrected by algar42.",
-				"de": "Zeichenkette in Zahl konvertieren hinzugefügt. Option zum Zusammenführen von linkedObject beim Neustart des Adapters. Russische übersetzung korrigiert von algar42.",
-				"ru": "Добавлен конвертер строк в числа. добавлена возможность слияния связанного объекта при перезагрузке адаптера. русский перевод исправлен algar42.",
-				"pt": "conversor de string para número adicionado. opção para mesclar linkedObject na reinicialização do adaptador adicionada. tradução russa corrigida por algar42.",
-				"nl": "tekenreeks naar nummerconvertor toegevoegd. optie om gelinkteObject op adapter opnieuw samen te voegen toegevoegd. Russische vertaling gecorrigeerd door algar42.",
-				"fr": "convertisseur de chaîne en nombre ajouté. option de fusion de linkedObject au redémarrage de l'adaptateur ajoutée. traduction en russe corrigée par algar42.",
-				"it": "convertitore stringa a numero aggiunto. aggiunta opzione per unire linkedObject al riavvio dell'adattatore. traduzione russa corretta da algar42.",
-				"es": "convertidor de cadena a número agregado. Se agregó la opción para fusionar el objeto vinculado al reiniciar el adaptador. traducción rusa corregida por algar42.",
-				"pl": "dodano konwerter ciągów na liczby. dodano opcję scalania obiektu LinkedObject przy ponownym uruchomieniu adaptera. tłumaczenie rosyjskie poprawione przez algar42.",
-				"zh-cn": "字符串到数字转换器已添加。添加了在适配器重新启动时合并linkedObject的选项。俄语翻译已由algar42纠正。"
-			},
-			"1.0.1": {
-				"en": "• adapter configuration: repair function added\n• receive system messages added",
-				"de": "• Adapterkonfiguration: Reparaturfunktion hinzugefügt\n• Systemmeldungen empfangen hinzugefügt",
-				"ru": "• конфигурация адаптера: добавлена функция восстановления\n• добавлены системные сообщения",
-				"pt": "• configuração do adaptador: função de reparo adicionada\n• recebe mensagens do sistema adicionadas",
-				"nl": "• adapterconfiguratie: reparatiefunctie toegevoegd\n• systeemberichten ontvangen toegevoegd",
-				"fr": "• configuration de l'adaptateur: fonction de réparation ajoutée\n• réception des messages système ajoutés",
-				"it": "• configurazione dell'adattatore: funzione di riparazione aggiunta\n• ricezione di messaggi di sistema aggiunti",
-				"es": "• configuración del adaptador: función de reparación agregada\n• recibir mensajes del sistema agregados",
-				"pl": "• konfiguracja adaptera: dodano funkcję naprawy\n• dodano komunikaty systemowe",
-				"zh-cn": "•适配器配置：添加了修复功能\n•接收添加的系统消息"
-			},
-			"1.0.0": {
-				"en": "bug fixes",
-				"de": "Fehlerbehebung",
-				"ru": "исправление ошибок",
-				"pt": "correções de bugs",
-				"nl": "bugfixes",
-				"fr": "corrections de bugs",
-				"it": "correzioni di bug",
-				"es": "corrección de errores",
-				"pl": "poprawki błędów",
-				"zh-cn": "bug修复"
-			},
-			"0.5.6": {
-				"en": "bug fixes",
-				"de": "Fehlerbehebung",
-				"ru": "исправление ошибок",
-				"pt": "correções de bugs",
-				"nl": "bugfixes",
-				"fr": "corrections de bugs",
-				"it": "correzioni di bug",
-				"es": "corrección de errores",
-				"pl": "poprawki błędów",
-				"zh-cn": "bug修复"
-			},
-			"0.5.5": {
-				"en": "custom dialog: change role for linked object added.\nadapter configuration: auto generate globale script - check if object always linked added.\ncreate channel objects for linked Objects.\nadapter configuration: layout revised, progressbar added.\ncustom dialog: layout revised",
-				"de": "Custom Dialog: Rolle für verlinkte Objekt ändern hinzugefügt. \nKonfiguration des Adapters: globales Skript automatisch generieren - prüfen, ob das Objekt immer verlinkt ist. \nKanalobjekte für verlinkte Objekte erstellen. \nKonfiguration des Adapters: Layout überarbeitet, Fortschrittsbalken hinzugefügt. \nCustom Dialog: Layout überarbeitet",
-				"ru": "настраиваемое диалоговое окно: изменение роли для связанного объекта. \napapter configuration: автоматическое создание глобального сценария - проверьте, всегда ли добавлен связанный объект. \nсоздание канальных объектов для связанных объектов. \nадаптерная конфигурация: изменен макет, добавлен индикатор выполнения. \nсобственное диалоговое окно: изменен макет",
-				"pt": "diálogo customizado: função de mudança para objeto vinculado adicionado. configuração \nadapter: auto generate globale script - verifica se o objeto está sempre vinculado. \ncria os objetos de canal para objetos vinculados. \nadapter configuração: layout revisado, barra de progresso adicionada. \ncache: layout revised",
-				"nl": "aangepast dialoogvenster: rol wijzigen voor gekoppeld object toegevoegd. \nadapter configuratie: automatisch genereren globaal script - controleer of object altijd gekoppeld is toegevoegd. \ncreër kanaalobjecten voor gekoppelde objecten. \nadapter configuratie: lay-out herzien, voortgangsbalk toegevoegd. \n aangepast dialoogvenster: lay-out herzien",
-				"fr": "boîte de dialogue personnalisée: modification du rôle de l'objet lié ajouté. \nadapter configuration: génération automatique de script global - vérifier si l'objet est toujours lié ajouté. \ncréer des objets de canal pour les objets liés. \nadapter configuration: mise en page modifiée, barre de progression ajoutée. \n dialogue - personnalisé: mise en forme",
-				"it": "finestra di dialogo personalizzata: cambia ruolo per l'oggetto collegato aggiunto. \nadapter configurazione: genera automaticamente lo script globale - controlla se l'oggetto è sempre collegato aggiunto. \ncrea oggetti canale per oggetti collegati. \nadapter configurazione: layout rivisto, barra di avanzamento aggiunta. \ncustom dialog: layout revisionato",
-				"es": "cuadro de diálogo personalizado: cambie el rol para el objeto vinculado agregado. Configuración de \nadapter: generación automática de guión global: compruebe si el objeto siempre está vinculado agregado. \ncrear objetos de canal para los objetos vinculados. \nconfiguración de nadapter: diseño revisado, barra de progreso agregada. \n diálogo personalizado: diseño revisado",
-				"pl": "niestandardowe okno dialogowe: zmień rolę dodanego obiektu połączonego. \nkonfiguracja nadodu: automatyczne generowanie skryptu globale - sprawdź, czy obiekt zawsze został dodany połączony. \n stwórz obiekty kanału dla powiązanych obiektów. \nkonfiguracja nadrzędna: poprawiony układ, dodano pasek postępu. \n niestandardowe okno: zmieniony układ",
-				"zh-cn": "自定义对话框：更改已添加链接对象的角色。\nadapap配置：自动生成全局脚本 - 检查对象是否始终链接添加。\n为链接对象创建通道对象。\nadapter配置：修改布局，添加进度条。\ncustom对话框：布局修订"
-			},
-			"0.5.0": {
-				"en": "Added a list of suggestions for PrefixId, Id, and Name\nbutton to remove links added\nConversion: added string (readonly) in duration, date and / or time\nadapter configuration: layout revised\nexpert settings number: allow negative values for min / max\nadapter configuration: auto generate globale script - optional create setState funtion for readonly objects\nadapter configuration: auto generate globale script - now optional recognize also manual created objects\nbug fixes",
-				"de": "Liste mit Vorschlägen für PrefixId, Id und Name hinzugefügt\nSchaltfläche zum Entfernen von Links hinzugefügt\nKonvertierung: Zeichenkette (readonly) in Dauer, Datum und / oder Uhrzeit hinzugefügt\nAdapterkonfiguration: Layout überarbeitet\nExperteneinstellungsnummer: Negative Werte für min / max zulassen\nAdapterkonfiguration: globales Skript automatisch generieren - optional setState-Funktion für schreibgeschützte Objekte erstellen\nAdapterkonfiguration: globales Skript automatisch generieren - optional auch für manuell erzeugte Objekte generieren\nFehlerbehebungen",
-				"ru": "Добавлен список предложений для кнопок PrefixId, Id и Name \n, для удаления ссылок добавлено \nConversion: добавлена строка (только для чтения) по продолжительности, дате и / или времени \nконфигурация nadapter: изменен макет \nномер настроек nexpert: разрешены отрицательные значения для минимума / max \nadapter configuration: автоматическая генерация глобального сценария - необязательная функция create setState для объектов, доступных только для чтения \nadapter конфигурация: автоматическая генерация глобального сценария - теперь необязательно распознавать также созданные вручную объекты \nbug исправления",
-				"pt": "Adicionada uma lista de sugestões para os botões PrefixId, Id e Name \n para remover os links adicionados \nConversão: string adicionada (somente leitura) na configuração de duração, data e / ou hora \nadapter: layout revisado \no número de configurações doexpert: permitir valores negativos para min Configuração de / max \nadapter: script auto generate globale - opcional create setState funtion para readonly objects \nadapter configuration: script auto generate globale - agora opcional também reconhece objetos criados manualmente \nbug correções",
-				"nl": "Lijst met suggesties toegevoegd voor PrefixId, Id en Naam \nknop om links te verwijderen toegevoegd \nConversie: string toegevoegd (alleen-lezen) in duur, datum en / of tijd \nadapter configuratie: layout herzien \nexpert instellingennummer: negatieve waarden toestaan voor min / max \nadapter configuratie: automatisch genereren globaal script - optioneel maken setState functie voor alleen-lezen objecten \nadapter configuratie: automatisch genereren globaal script - nu optioneel herkennen ook handmatig gemaakte objecten \nbug fixes",
-				"fr": "Ajout d'une liste de suggestions pour PrefixId, Id et Nom \nBouton pour supprimer les liens ajoutés \nConversion: ajout de chaîne (en lecture seule) en durée, date et / ou heure \nadapter configuration: mise en page révisée \nexpert nombre de paramètres: autoriser les valeurs négatives pour min / max \nadapter configuration: script global de génération automatique - option facultative de création de setState pour les objets en lecture seule \nconfiguration de nadapter: script automatique de génération globale - maintenant facultatif, reconnaître également les objets créés manuellement \nbug correctifs",
-				"it": "Aggiunto un elenco di suggerimenti per PrefixId, Id e Nome \npulsante per rimuovere i collegamenti aggiunti \nConversione: aggiunta stringa (sola lettura) in durata, data e / o ora \nconfigurazione nadapter: layout rivisto \numero impostazioni nexpert: consenti valori negativi per min / max \nadapter configuration: auto generate global script - opzionale create setState funtion per oggetti di sola lettura \nadapter configuration: auto generate global script - ora opzionale riconosce anche gli oggetti creati manualmente \nbug fix",
-				"es": "Se agregó una lista de sugerencias para PrefixId, Id, y Name \nbutton para eliminar enlaces agregados \nConversion: cadena agregada (solo lectura) en duración, fecha y / o hora \nconfiguración del adaptador: número de configuración de diseño revisado \nexpert: permitir valores negativos por min. / max \nconfiguración de nadapter: autogenerar script globale - opcional crear función setState para objetos de solo lectura \nadapter configuración: auto generar script globale - ahora opcional reconocer también objetos creados manualmente \n correcciones de errores",
-				"pl": "Dodano listę sugestii dla PrefixId, Id i Name \n przycisk, aby usunąć dodane linki \n Konwersja: dodano ciąg (tylko do odczytu) w czasie trwania, dacie i / lub czasie \nkonfiguracja nadfiguracji: poprawiono układ / max \nkonfiguracja konfiguracji: automatyczne generowanie skryptu globale - opcjonalnie utwórz funkcję setState dla obiektów tylko do odczytu \nkonfiguracja konfiguracji: automatyczna generacja skryptu globale - teraz opcjonalnie rozpoznaje również ręcznie utworzone obiekty \npoprawki błędów",
-				"zh-cn": "添加了PrefixId，Id和Name \n按钮的建议列表，以删除添加的链接\n转换：在持续时间，日期和/或时间添加字符串（只读）\nadapap配置：布局修订\nexpert设置编号：允许负值为min / max \nadapter配置：自动生成globale脚本 - 为只读对象创建setState函数\nadapap配置：自动生成globale脚本 - 现在可选识别手动创建的对象\nbug修复"
-			},
-			"0.4.1": {
-				"en": "Bug fix for automatically generate a global script for the adapter Javascript Script Engine",
-				"de": "Fehlerbehebung für das automatische Generieren eines globalen Skripts für den Adapter Javascript Script Engine",
-				"ru": "Исправлена ошибка для автоматической генерации глобального скрипта для адаптера Javascript Script Engine",
-				"pt": "Correção de bug para gerar automaticamente um script global para o adaptador Javascript Script Engine",
-				"nl": "Bugfix voor het automatisch genereren van een globaal script voor de adapter Javascript Script Engine",
-				"fr": "Correction de bogue pour générer automatiquement un script global pour l'adaptateur Javascript Script Engine",
-				"it": "Bug fix per generare automaticamente uno script globale per l'adattatore JavaScript Script Engine",
-				"es": "Corrección de errores para generar automáticamente un script global para el adaptador Javascript Script Engine",
-				"pl": "Poprawka do automatycznego generowania globalnego skryptu dla aparatu Javascript Script Engine",
-				"zh-cn": "修复错误，自动生成适配器Javascript脚本引擎的全局脚本"
-			},
-			"0.4.0": {
-				"en": "Added string to boolean added. Native data will be used, if available. Automatically generate a global script for the adapter Javascript Script Engine with variable added for all linked objects",
-				"de": "Zeichenkette in Logikwert konvertieren hinzugefügt. Native Daten werden übernommen, sofern verfügbar. Automatisches generieren eines globalen Skriptes für den Adapter Javascript Script Engine mit variablen für alle verlinkten Objekte hinzugefügt.",
-				"ru": "Добавлена строка в логическое значение. Будут использованы собственные данные, если таковые имеются. Автоматически генерировать глобальный скрипт для адаптера Javascript Script Engine с добавленной переменной для всех связанных объектов",
-				"pt": "Adicionado string para boolean adicionado. Dados nativos serão usados, se disponíveis. Gerar automaticamente um script global para o adaptador JavaScript Script Engine com a variável adicionada para todos os objetos vinculados",
-				"nl": "String toegevoegd aan Boolean toegevoegd. Native gegevens zullen worden gebruikt, indien beschikbaar. Genereer automatisch een globaal script voor de adapter Javascript Script Engine met variabele toegevoegd voor alle gekoppelde objecten",
-				"fr": "Chaîne ajoutée à booléen ajouté. Les données natives seront utilisées, si disponibles. Génère automatiquement un script global pour le moteur de script Javascript de l'adaptateur avec une variable ajoutée pour tous les objets liés",
-				"it": "Aggiunta stringa a booleano aggiunta. Verranno utilizzati dati nativi, se disponibili. Generare automaticamente uno script globale per il motore di script JavaScript dell'adattatore con la variabile aggiunta per tutti gli oggetti collegati",
-				"es": "Cadena agregada al booleano agregado. Se utilizarán datos nativos, si están disponibles. Genere automáticamente una secuencia de comandos global para el adaptador Javascript Script Engine con variable agregada para todos los objetos vinculados",
-				"pl": "Dodano ciąg znaków dodany do boolean. Wykorzystane zostaną dane natywne, jeśli są dostępne. Automatycznie generuj globalny skrypt dla adaptera JavaScript Script Engine z dodaną zmienną dla wszystkich połączonych obiektów",
-				"zh-cn": "添加了添加到布尔值的字符串。如果可用，将使用本机数据。自动为适配器Javascript脚本引擎生成全局脚本，并为所有链接对象添加变量"
-			},
-			"0.3.2": {
-				"en": "more expertsettings added. Configure prefix / suffix for string. Convert number readonly to duration, date, time or datetime. some bug fixes.",
-				"de": "Weitere Experteneinstellungen hinzugefügt. Vorangestellte / nachgestellte Zeichen für eine Zeichenfolge. Wandeln Sie die Zahl (readonly) in Dauer, Datum, Uhrzeit oder Datum / Uhrzeit um. Einige Fehler behoben",
-				"ru": "добавлено больше экспертных настроек. Настройте префикс / суффикс для строки. Преобразование числа только для чтения в продолжительность, дату, время или дату и время. некоторые исправления ошибок.",
-				"pt": "mais expertsettings adicionados. Configurar prefixo / sufixo para string. Converta o número readonly para duração, data, hora ou data e hora. algumas correções de bugs.",
-				"nl": "meer expertinstellingen toegevoegd. Configureer het voorvoegsel / achtervoegsel voor tekenreeks. Converteer nummer alleen-lezen naar duur, datum, tijd of datetime. enkele bugfixes.",
-				"fr": "plus d'expertsettings ajoutés. Configure le préfixe / suffixe pour la chaîne. Convertir un nombre en lecture seule en durée, date, heure ou date / heure. quelques corrections de bugs.",
-				"it": "più esperti aggiunti. Configura prefisso / suffisso per stringa. Converti il numero in sola lettura in durata, data, ora o datetime. alcune correzioni di bug.",
-				"es": "más configuración de expertos añadidos. Configurar prefijo / sufijo para cadena. Convierta el número de solo lectura en duración, fecha, hora o fecha y hora. Algunas correcciones de errores.",
-				"pl": "dodano więcej ustawień ekspertów. Skonfiguruj prefiks / sufiks dla łańcucha. Konwertuj liczbę tylko do czasu trwania, daty, godziny lub daty / godziny. niektóre poprawki błędów.",
-				"zh-cn": "更多专家设置。配置字符串的前缀/后缀。将数字只读转换为持续时间，日期，时间或日期时间。一些错误修复。"
-			},
-			"0.3.0": {
-				"en": "linked devices overview added to adapter configuration",
-				"de": "Übersicht über verlinkte Objekte zur Adapterkonfiguration hinzugefügt",
-				"ru": "обзор связанных устройств добавлен в конфигурацию адаптера",
-				"pt": "Visão geral de dispositivos vinculados adicionada à configuração do adaptador",
-				"nl": "Overzicht gekoppelde apparaten toegevoegd aan adapterconfiguratie",
-				"fr": "aperçu des périphériques liés ajouté à la configuration de l'adaptateur",
-				"it": "Panoramica dei dispositivi collegati aggiunta alla configurazione dell'adattatore",
-				"es": "Vista general de dispositivos vinculados agregada a la configuración del adaptador",
-				"pl": "przegląd połączonych urządzeń dodany do konfiguracji adaptera",
-				"zh-cn": "链接设备概述添加到适配器配置"
-			},
-			"0.2.1": {
-				"en": "boolean to string converter added, bug fixes",
-				"de": "number to boolean converter hinzugefügt",
-				"ru": "добавлено преобразование числа в булево",
-				"pt": "número para conversor booleano adicionado",
-				"nl": "number to boolean converter toegevoegd",
-				"fr": "nombre en convertisseur booléen ajouté",
-				"it": "numero al convertitore booleano aggiunto",
-				"es": "número al convertidor booleano añadido",
-				"pl": "dodany konwerter liczby na logiczną",
-				"zh-cn": "添加了布尔转换器的数字"
-			},
-			"0.2.0": {
-				"en": "number to boolean converter added",
-				"de": "number to boolean converter hinzugefügt",
-				"ru": "добавлено преобразование числа в булево",
-				"pt": "número para conversor booleano adicionado",
-				"nl": "number to boolean converter toegevoegd",
-				"fr": "nombre en convertisseur booléen ajouté",
-				"it": "numero al convertitore booleano aggiunto",
-				"es": "número al convertidor booleano añadido",
-				"pl": "dodany konwerter liczby na logiczną",
-				"zh-cn": "添加了布尔转换器的数字"
-			},
-			"0.0.1": {
-				"en": "initial release",
-				"de": "Erstveröffentlichung",
-				"ru": "Начальная версия",
-				"pt": "lançamento inicial",
-				"nl": "Eerste uitgave",
-				"fr": "Première version",
-				"it": "Versione iniziale",
-				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie",
-				"zh-cn": "首次出版"
-			}
-		},
-		"title": "LinkedDevices",
-		"titleLang": {
-			"en": "LinkedDevices",
-			"de": "LinkedDevices",
-			"ru": "LinkedDevices",
-			"pt": "LinkedDevices",
-			"nl": "LinkedDevices",
-			"fr": "LinkedDevices",
-			"it": "LinkedDevices",
-			"es": "LinkedDevices",
-			"pl": "LinkedDevices",
-			"zh-cn": "LinkedDevices"
-		},
-		"desc": {
-			"en": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts.",
-			"de": "Erstelle verlinkte Objekte (Datenpunkte) deiner Geräte mit einer selbst definierten Struktur. Damit ist es  möglich eine Struktur in ioBroker zu schaffen, wo alle Objekte zentralisiert sind, die z.B. im vis oder Skripten verwendet werden.",
-			"ru": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"pt": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"nl": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"fr": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"it": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"es": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"pl": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
-			"zh-cn": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again."
-		},
-		"docs": {
-			"en": [
-				"docs/en/readme.md"
-			],
-			"de": [
-				"docs/de/readme.md"
-			]
-		},
-		"authors": [
-			"Scrounger <scrounger@gmx.net>"
-		],
-		"keywords": [
-			"device",
-			"link",
-			"virtual",
-			"datapoint",
-			"wrapper",
-			"reflect",
-			"logic"
-		],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "linkeddevices.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linkeddevices/master/admin/linkeddevices.png",
-		"readme": "https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md",
-		"loglevel": "info",
-		"messagebox": true,
-		"subscribe": "messagebox",
-		"mode": "daemon",
-		"type": "logic",
-		"compact": true,
-		"materialize": true,
-		"supportCustoms": true,
-		"dependencies": [
-			{
-				"admin": ">=3.6.2"
-			},
-			{
-				"js-controller": ">=1.5.8"
-			}
-		]
-	},
-	"native": {
-		"deleteDeadLinkedObjects": false,
-		"scriptName": "",
-		"variableName": "",
-		"generateVarsForAllObjectsOfInstance": false,
-		"generateSetStateForReadOnly": false
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": "Information",
-				"icon": "linkeddevices_info.png"
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.linkedObjects",
-			"type": "state",
-			"common": {
-				"role": "",
-				"name": "count of linked objects",
-				"type": "number",
-				"read": true,
-				"write": false,
-				"icon": "linkeddevices_info.png",
-				"def": 0
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.notlinkedObjects",
-			"type": "state",
-			"common": {
-				"role": "",
-				"name": "count of not linked objects",
-				"type": "number",
-				"read": true,
-				"write": false,
-				"icon": "linkeddevices_info.png",
-				"def": 0
-			},
-			"native": {}
-		}
-	]
+    "common": {
+        "name": "linkeddevices",
+        "version": "1.2.0",
+        "news": {
+            "1.2.0": {
+                "en": "adapter configuration: auto generate globale script - function to get parent id added\ndependencies updated",
+                "de": "Adapterkonfiguration: Automatisches Generieren eines globalen Skripts - Funktion zum Hinzufügen der übergeordneten ID\nAbhängigkeiten aktualisiert",
+                "ru": "конфигурация адаптера: автоматически генерировать глобальный скрипт - функция для добавления родительского идентификатора\nзависимости обновлены",
+                "pt": "configuração do adaptador: geração automática de script global - função para obter id pai adicionado\ndependências atualizadas",
+                "nl": "adapterconfiguratie: genereer automatisch globaal script - functie om de bovenliggende id toe te voegen\nafhankelijkheden bijgewerkt",
+                "fr": "configuration de l'adaptateur: script global de génération automatique - fonction pour obtenir l'ID parent ajouté\ndépendances mises à jour",
+                "it": "configurazione dell'adattatore: generazione automatica dello script globale - funzione per ottenere l'ID genitore aggiunto\ndipendenze aggiornate",
+                "es": "configuración del adaptador: autogenerar secuencia de comandos global - función para obtener la identificación principal agregada\ndependencias actualizadas",
+                "pl": "konfiguracja adaptera: automatyczne generowanie skryptu globalnego - funkcja umożliwiająca dodanie identyfikatora rodzica\nzaktualizowane zależności",
+                "zh-cn": "适配器配置：自动生成全局脚本-添加父ID的功能\n依赖关系已更新"
+            },
+            "1.1.4": {
+                "en": "continuous loop after assign to new object bug fixed",
+                "de": "Endlosschleife nach Zuweisung zu neuem Objekt Fehler behoben",
+                "ru": "исправлен непрерывный цикл после присвоения новому объекту",
+                "pt": "loop contínuo após atribuir ao novo objeto bug corrigido",
+                "nl": "continue lus na toewijzing aan nieuwe objectbug opgelost",
+                "fr": "boucle continue après affectation au nouvel objet bug corrigé",
+                "it": "corretto il ciclo continuo dopo l'assegnazione al nuovo oggetto bug",
+                "es": "bucle continuo después de asignar al nuevo objeto error corregido",
+                "pl": "ciągła pętla po przypisaniu do nowego błędu obiektu naprawiona",
+                "zh-cn": "修复分配给新对象后的连续循环错误"
+            },
+            "1.1.3": {
+                "en": "bug fix for deleting objects via the setting",
+                "de": "Fehlerbehebung zum Löschen von Objekten über die Einstellung",
+                "ru": "исправлена ошибка удаления объектов через настройку",
+                "pt": "correção de bug para excluir objetos através da configuração",
+                "nl": "bugfix voor het verwijderen van objecten via de instelling",
+                "fr": "correction de bogue pour la suppression d'objets via le paramètre",
+                "it": "correzione di bug per l'eliminazione di oggetti tramite l'impostazione",
+                "es": "corrección de errores para eliminar objetos a través de la configuración",
+                "pl": "naprawa błędu usuwania obiektów za pomocą ustawienia",
+                "zh-cn": "通过设置删除对象的错误修复"
+            },
+            "1.1.2": {
+                "en": "bug fix for values from type object",
+                "de": "Fehlerbehebung für Werte vom Typ Objekt",
+                "ru": "исправлена ошибка для значений из типа объекта",
+                "pt": "correção de bug para valores do objeto de tipo",
+                "nl": "bugfix voor waarden van type object",
+                "fr": "correction de bogue pour les valeurs de l'objet type",
+                "it": "correzione di bug per valori dall'oggetto tipo",
+                "es": "corrección de errores para valores del objeto tipo",
+                "pl": "poprawka błędu dla wartości z obiektu typu",
+                "zh-cn": "错误修复类型对象的值"
+            },
+            "1.1.1": {
+                "en": "bug fix for string to number converter",
+                "de": "Fehlerbehebung für den Konverter von String zu Zahl",
+                "ru": "исправлена ошибка для преобразования строки в число",
+                "pt": "correção de bug do conversor de string para número",
+                "nl": "bugfix voor string naar nummer converter",
+                "fr": "correction de bogue pour le convertisseur de chaîne en nombre",
+                "it": "correzione di bug per il convertitore da stringa a numero",
+                "es": "corrección de errores para el convertidor de cadena a número",
+                "pl": "poprawka błędu konwertera ciągów na liczby",
+                "zh-cn": "字符串到数字转换器的错误修复"
+            },
+            "1.1.0": {
+                "en": "string to number converter added. option to merge linkedObject on adapter restart added. russian translation corrected by algar42.",
+                "de": "Zeichenkette in Zahl konvertieren hinzugefügt. Option zum Zusammenführen von linkedObject beim Neustart des Adapters. Russische übersetzung korrigiert von algar42.",
+                "ru": "Добавлен конвертер строк в числа. добавлена возможность слияния связанного объекта при перезагрузке адаптера. русский перевод исправлен algar42.",
+                "pt": "conversor de string para número adicionado. opção para mesclar linkedObject na reinicialização do adaptador adicionada. tradução russa corrigida por algar42.",
+                "nl": "tekenreeks naar nummerconvertor toegevoegd. optie om gelinkteObject op adapter opnieuw samen te voegen toegevoegd. Russische vertaling gecorrigeerd door algar42.",
+                "fr": "convertisseur de chaîne en nombre ajouté. option de fusion de linkedObject au redémarrage de l'adaptateur ajoutée. traduction en russe corrigée par algar42.",
+                "it": "convertitore stringa a numero aggiunto. aggiunta opzione per unire linkedObject al riavvio dell'adattatore. traduzione russa corretta da algar42.",
+                "es": "convertidor de cadena a número agregado. Se agregó la opción para fusionar el objeto vinculado al reiniciar el adaptador. traducción rusa corregida por algar42.",
+                "pl": "dodano konwerter ciągów na liczby. dodano opcję scalania obiektu LinkedObject przy ponownym uruchomieniu adaptera. tłumaczenie rosyjskie poprawione przez algar42.",
+                "zh-cn": "字符串到数字转换器已添加。添加了在适配器重新启动时合并linkedObject的选项。俄语翻译已由algar42纠正。"
+            },
+            "1.0.1": {
+                "en": "• adapter configuration: repair function added\n• receive system messages added",
+                "de": "• Adapterkonfiguration: Reparaturfunktion hinzugefügt\n• Systemmeldungen empfangen hinzugefügt",
+                "ru": "• конфигурация адаптера: добавлена функция восстановления\n• добавлены системные сообщения",
+                "pt": "• configuração do adaptador: função de reparo adicionada\n• recebe mensagens do sistema adicionadas",
+                "nl": "• adapterconfiguratie: reparatiefunctie toegevoegd\n• systeemberichten ontvangen toegevoegd",
+                "fr": "• configuration de l'adaptateur: fonction de réparation ajoutée\n• réception des messages système ajoutés",
+                "it": "• configurazione dell'adattatore: funzione di riparazione aggiunta\n• ricezione di messaggi di sistema aggiunti",
+                "es": "• configuración del adaptador: función de reparación agregada\n• recibir mensajes del sistema agregados",
+                "pl": "• konfiguracja adaptera: dodano funkcję naprawy\n• dodano komunikaty systemowe",
+                "zh-cn": "•适配器配置：添加了修复功能\n•接收添加的系统消息"
+            },
+            "1.0.0": {
+                "en": "bug fixes",
+                "de": "Fehlerbehebung",
+                "ru": "исправление ошибок",
+                "pt": "correções de bugs",
+                "nl": "bugfixes",
+                "fr": "corrections de bugs",
+                "it": "correzioni di bug",
+                "es": "corrección de errores",
+                "pl": "poprawki błędów",
+                "zh-cn": "bug修复"
+            },
+            "0.5.6": {
+                "en": "bug fixes",
+                "de": "Fehlerbehebung",
+                "ru": "исправление ошибок",
+                "pt": "correções de bugs",
+                "nl": "bugfixes",
+                "fr": "corrections de bugs",
+                "it": "correzioni di bug",
+                "es": "corrección de errores",
+                "pl": "poprawki błędów",
+                "zh-cn": "bug修复"
+            },
+            "0.5.5": {
+                "en": "custom dialog: change role for linked object added.\nadapter configuration: auto generate globale script - check if object always linked added.\ncreate channel objects for linked Objects.\nadapter configuration: layout revised, progressbar added.\ncustom dialog: layout revised",
+                "de": "Custom Dialog: Rolle für verlinkte Objekt ändern hinzugefügt. \nKonfiguration des Adapters: globales Skript automatisch generieren - prüfen, ob das Objekt immer verlinkt ist. \nKanalobjekte für verlinkte Objekte erstellen. \nKonfiguration des Adapters: Layout überarbeitet, Fortschrittsbalken hinzugefügt. \nCustom Dialog: Layout überarbeitet",
+                "ru": "настраиваемое диалоговое окно: изменение роли для связанного объекта. \napapter configuration: автоматическое создание глобального сценария - проверьте, всегда ли добавлен связанный объект. \nсоздание канальных объектов для связанных объектов. \nадаптерная конфигурация: изменен макет, добавлен индикатор выполнения. \nсобственное диалоговое окно: изменен макет",
+                "pt": "diálogo customizado: função de mudança para objeto vinculado adicionado. configuração \nadapter: auto generate globale script - verifica se o objeto está sempre vinculado. \ncria os objetos de canal para objetos vinculados. \nadapter configuração: layout revisado, barra de progresso adicionada. \ncache: layout revised",
+                "nl": "aangepast dialoogvenster: rol wijzigen voor gekoppeld object toegevoegd. \nadapter configuratie: automatisch genereren globaal script - controleer of object altijd gekoppeld is toegevoegd. \ncreër kanaalobjecten voor gekoppelde objecten. \nadapter configuratie: lay-out herzien, voortgangsbalk toegevoegd. \n aangepast dialoogvenster: lay-out herzien",
+                "fr": "boîte de dialogue personnalisée: modification du rôle de l'objet lié ajouté. \nadapter configuration: génération automatique de script global - vérifier si l'objet est toujours lié ajouté. \ncréer des objets de canal pour les objets liés. \nadapter configuration: mise en page modifiée, barre de progression ajoutée. \n dialogue - personnalisé: mise en forme",
+                "it": "finestra di dialogo personalizzata: cambia ruolo per l'oggetto collegato aggiunto. \nadapter configurazione: genera automaticamente lo script globale - controlla se l'oggetto è sempre collegato aggiunto. \ncrea oggetti canale per oggetti collegati. \nadapter configurazione: layout rivisto, barra di avanzamento aggiunta. \ncustom dialog: layout revisionato",
+                "es": "cuadro de diálogo personalizado: cambie el rol para el objeto vinculado agregado. Configuración de \nadapter: generación automática de guión global: compruebe si el objeto siempre está vinculado agregado. \ncrear objetos de canal para los objetos vinculados. \nconfiguración de nadapter: diseño revisado, barra de progreso agregada. \n diálogo personalizado: diseño revisado",
+                "pl": "niestandardowe okno dialogowe: zmień rolę dodanego obiektu połączonego. \nkonfiguracja nadodu: automatyczne generowanie skryptu globale - sprawdź, czy obiekt zawsze został dodany połączony. \n stwórz obiekty kanału dla powiązanych obiektów. \nkonfiguracja nadrzędna: poprawiony układ, dodano pasek postępu. \n niestandardowe okno: zmieniony układ",
+                "zh-cn": "自定义对话框：更改已添加链接对象的角色。\nadapap配置：自动生成全局脚本 - 检查对象是否始终链接添加。\n为链接对象创建通道对象。\nadapter配置：修改布局，添加进度条。\ncustom对话框：布局修订"
+            },
+            "0.5.0": {
+                "en": "Added a list of suggestions for PrefixId, Id, and Name\nbutton to remove links added\nConversion: added string (readonly) in duration, date and / or time\nadapter configuration: layout revised\nexpert settings number: allow negative values for min / max\nadapter configuration: auto generate globale script - optional create setState funtion for readonly objects\nadapter configuration: auto generate globale script - now optional recognize also manual created objects\nbug fixes",
+                "de": "Liste mit Vorschlägen für PrefixId, Id und Name hinzugefügt\nSchaltfläche zum Entfernen von Links hinzugefügt\nKonvertierung: Zeichenkette (readonly) in Dauer, Datum und / oder Uhrzeit hinzugefügt\nAdapterkonfiguration: Layout überarbeitet\nExperteneinstellungsnummer: Negative Werte für min / max zulassen\nAdapterkonfiguration: globales Skript automatisch generieren - optional setState-Funktion für schreibgeschützte Objekte erstellen\nAdapterkonfiguration: globales Skript automatisch generieren - optional auch für manuell erzeugte Objekte generieren\nFehlerbehebungen",
+                "ru": "Добавлен список предложений для кнопок PrefixId, Id и Name \n, для удаления ссылок добавлено \nConversion: добавлена строка (только для чтения) по продолжительности, дате и / или времени \nконфигурация nadapter: изменен макет \nномер настроек nexpert: разрешены отрицательные значения для минимума / max \nadapter configuration: автоматическая генерация глобального сценария - необязательная функция create setState для объектов, доступных только для чтения \nadapter конфигурация: автоматическая генерация глобального сценария - теперь необязательно распознавать также созданные вручную объекты \nbug исправления",
+                "pt": "Adicionada uma lista de sugestões para os botões PrefixId, Id e Name \n para remover os links adicionados \nConversão: string adicionada (somente leitura) na configuração de duração, data e / ou hora \nadapter: layout revisado \no número de configurações doexpert: permitir valores negativos para min Configuração de / max \nadapter: script auto generate globale - opcional create setState funtion para readonly objects \nadapter configuration: script auto generate globale - agora opcional também reconhece objetos criados manualmente \nbug correções",
+                "nl": "Lijst met suggesties toegevoegd voor PrefixId, Id en Naam \nknop om links te verwijderen toegevoegd \nConversie: string toegevoegd (alleen-lezen) in duur, datum en / of tijd \nadapter configuratie: layout herzien \nexpert instellingennummer: negatieve waarden toestaan voor min / max \nadapter configuratie: automatisch genereren globaal script - optioneel maken setState functie voor alleen-lezen objecten \nadapter configuratie: automatisch genereren globaal script - nu optioneel herkennen ook handmatig gemaakte objecten \nbug fixes",
+                "fr": "Ajout d'une liste de suggestions pour PrefixId, Id et Nom \nBouton pour supprimer les liens ajoutés \nConversion: ajout de chaîne (en lecture seule) en durée, date et / ou heure \nadapter configuration: mise en page révisée \nexpert nombre de paramètres: autoriser les valeurs négatives pour min / max \nadapter configuration: script global de génération automatique - option facultative de création de setState pour les objets en lecture seule \nconfiguration de nadapter: script automatique de génération globale - maintenant facultatif, reconnaître également les objets créés manuellement \nbug correctifs",
+                "it": "Aggiunto un elenco di suggerimenti per PrefixId, Id e Nome \npulsante per rimuovere i collegamenti aggiunti \nConversione: aggiunta stringa (sola lettura) in durata, data e / o ora \nconfigurazione nadapter: layout rivisto \numero impostazioni nexpert: consenti valori negativi per min / max \nadapter configuration: auto generate global script - opzionale create setState funtion per oggetti di sola lettura \nadapter configuration: auto generate global script - ora opzionale riconosce anche gli oggetti creati manualmente \nbug fix",
+                "es": "Se agregó una lista de sugerencias para PrefixId, Id, y Name \nbutton para eliminar enlaces agregados \nConversion: cadena agregada (solo lectura) en duración, fecha y / o hora \nconfiguración del adaptador: número de configuración de diseño revisado \nexpert: permitir valores negativos por min. / max \nconfiguración de nadapter: autogenerar script globale - opcional crear función setState para objetos de solo lectura \nadapter configuración: auto generar script globale - ahora opcional reconocer también objetos creados manualmente \n correcciones de errores",
+                "pl": "Dodano listę sugestii dla PrefixId, Id i Name \n przycisk, aby usunąć dodane linki \n Konwersja: dodano ciąg (tylko do odczytu) w czasie trwania, dacie i / lub czasie \nkonfiguracja nadfiguracji: poprawiono układ / max \nkonfiguracja konfiguracji: automatyczne generowanie skryptu globale - opcjonalnie utwórz funkcję setState dla obiektów tylko do odczytu \nkonfiguracja konfiguracji: automatyczna generacja skryptu globale - teraz opcjonalnie rozpoznaje również ręcznie utworzone obiekty \npoprawki błędów",
+                "zh-cn": "添加了PrefixId，Id和Name \n按钮的建议列表，以删除添加的链接\n转换：在持续时间，日期和/或时间添加字符串（只读）\nadapap配置：布局修订\nexpert设置编号：允许负值为min / max \nadapter配置：自动生成globale脚本 - 为只读对象创建setState函数\nadapap配置：自动生成globale脚本 - 现在可选识别手动创建的对象\nbug修复"
+            },
+            "0.4.1": {
+                "en": "Bug fix for automatically generate a global script for the adapter Javascript Script Engine",
+                "de": "Fehlerbehebung für das automatische Generieren eines globalen Skripts für den Adapter Javascript Script Engine",
+                "ru": "Исправлена ошибка для автоматической генерации глобального скрипта для адаптера Javascript Script Engine",
+                "pt": "Correção de bug para gerar automaticamente um script global para o adaptador Javascript Script Engine",
+                "nl": "Bugfix voor het automatisch genereren van een globaal script voor de adapter Javascript Script Engine",
+                "fr": "Correction de bogue pour générer automatiquement un script global pour l'adaptateur Javascript Script Engine",
+                "it": "Bug fix per generare automaticamente uno script globale per l'adattatore JavaScript Script Engine",
+                "es": "Corrección de errores para generar automáticamente un script global para el adaptador Javascript Script Engine",
+                "pl": "Poprawka do automatycznego generowania globalnego skryptu dla aparatu Javascript Script Engine",
+                "zh-cn": "修复错误，自动生成适配器Javascript脚本引擎的全局脚本"
+            },
+            "0.4.0": {
+                "en": "Added string to boolean added. Native data will be used, if available. Automatically generate a global script for the adapter Javascript Script Engine with variable added for all linked objects",
+                "de": "Zeichenkette in Logikwert konvertieren hinzugefügt. Native Daten werden übernommen, sofern verfügbar. Automatisches generieren eines globalen Skriptes für den Adapter Javascript Script Engine mit variablen für alle verlinkten Objekte hinzugefügt.",
+                "ru": "Добавлена строка в логическое значение. Будут использованы собственные данные, если таковые имеются. Автоматически генерировать глобальный скрипт для адаптера Javascript Script Engine с добавленной переменной для всех связанных объектов",
+                "pt": "Adicionado string para boolean adicionado. Dados nativos serão usados, se disponíveis. Gerar automaticamente um script global para o adaptador JavaScript Script Engine com a variável adicionada para todos os objetos vinculados",
+                "nl": "String toegevoegd aan Boolean toegevoegd. Native gegevens zullen worden gebruikt, indien beschikbaar. Genereer automatisch een globaal script voor de adapter Javascript Script Engine met variabele toegevoegd voor alle gekoppelde objecten",
+                "fr": "Chaîne ajoutée à booléen ajouté. Les données natives seront utilisées, si disponibles. Génère automatiquement un script global pour le moteur de script Javascript de l'adaptateur avec une variable ajoutée pour tous les objets liés",
+                "it": "Aggiunta stringa a booleano aggiunta. Verranno utilizzati dati nativi, se disponibili. Generare automaticamente uno script globale per il motore di script JavaScript dell'adattatore con la variabile aggiunta per tutti gli oggetti collegati",
+                "es": "Cadena agregada al booleano agregado. Se utilizarán datos nativos, si están disponibles. Genere automáticamente una secuencia de comandos global para el adaptador Javascript Script Engine con variable agregada para todos los objetos vinculados",
+                "pl": "Dodano ciąg znaków dodany do boolean. Wykorzystane zostaną dane natywne, jeśli są dostępne. Automatycznie generuj globalny skrypt dla adaptera JavaScript Script Engine z dodaną zmienną dla wszystkich połączonych obiektów",
+                "zh-cn": "添加了添加到布尔值的字符串。如果可用，将使用本机数据。自动为适配器Javascript脚本引擎生成全局脚本，并为所有链接对象添加变量"
+            },
+            "0.3.2": {
+                "en": "more expertsettings added. Configure prefix / suffix for string. Convert number readonly to duration, date, time or datetime. some bug fixes.",
+                "de": "Weitere Experteneinstellungen hinzugefügt. Vorangestellte / nachgestellte Zeichen für eine Zeichenfolge. Wandeln Sie die Zahl (readonly) in Dauer, Datum, Uhrzeit oder Datum / Uhrzeit um. Einige Fehler behoben",
+                "ru": "добавлено больше экспертных настроек. Настройте префикс / суффикс для строки. Преобразование числа только для чтения в продолжительность, дату, время или дату и время. некоторые исправления ошибок.",
+                "pt": "mais expertsettings adicionados. Configurar prefixo / sufixo para string. Converta o número readonly para duração, data, hora ou data e hora. algumas correções de bugs.",
+                "nl": "meer expertinstellingen toegevoegd. Configureer het voorvoegsel / achtervoegsel voor tekenreeks. Converteer nummer alleen-lezen naar duur, datum, tijd of datetime. enkele bugfixes.",
+                "fr": "plus d'expertsettings ajoutés. Configure le préfixe / suffixe pour la chaîne. Convertir un nombre en lecture seule en durée, date, heure ou date / heure. quelques corrections de bugs.",
+                "it": "più esperti aggiunti. Configura prefisso / suffisso per stringa. Converti il numero in sola lettura in durata, data, ora o datetime. alcune correzioni di bug.",
+                "es": "más configuración de expertos añadidos. Configurar prefijo / sufijo para cadena. Convierta el número de solo lectura en duración, fecha, hora o fecha y hora. Algunas correcciones de errores.",
+                "pl": "dodano więcej ustawień ekspertów. Skonfiguruj prefiks / sufiks dla łańcucha. Konwertuj liczbę tylko do czasu trwania, daty, godziny lub daty / godziny. niektóre poprawki błędów.",
+                "zh-cn": "更多专家设置。配置字符串的前缀/后缀。将数字只读转换为持续时间，日期，时间或日期时间。一些错误修复。"
+            },
+            "0.3.0": {
+                "en": "linked devices overview added to adapter configuration",
+                "de": "Übersicht über verlinkte Objekte zur Adapterkonfiguration hinzugefügt",
+                "ru": "обзор связанных устройств добавлен в конфигурацию адаптера",
+                "pt": "Visão geral de dispositivos vinculados adicionada à configuração do adaptador",
+                "nl": "Overzicht gekoppelde apparaten toegevoegd aan adapterconfiguratie",
+                "fr": "aperçu des périphériques liés ajouté à la configuration de l'adaptateur",
+                "it": "Panoramica dei dispositivi collegati aggiunta alla configurazione dell'adattatore",
+                "es": "Vista general de dispositivos vinculados agregada a la configuración del adaptador",
+                "pl": "przegląd połączonych urządzeń dodany do konfiguracji adaptera",
+                "zh-cn": "链接设备概述添加到适配器配置"
+            },
+            "0.2.1": {
+                "en": "boolean to string converter added, bug fixes",
+                "de": "number to boolean converter hinzugefügt",
+                "ru": "добавлено преобразование числа в булево",
+                "pt": "número para conversor booleano adicionado",
+                "nl": "number to boolean converter toegevoegd",
+                "fr": "nombre en convertisseur booléen ajouté",
+                "it": "numero al convertitore booleano aggiunto",
+                "es": "número al convertidor booleano añadido",
+                "pl": "dodany konwerter liczby na logiczną",
+                "zh-cn": "添加了布尔转换器的数字"
+            },
+            "0.2.0": {
+                "en": "number to boolean converter added",
+                "de": "number to boolean converter hinzugefügt",
+                "ru": "добавлено преобразование числа в булево",
+                "pt": "número para conversor booleano adicionado",
+                "nl": "number to boolean converter toegevoegd",
+                "fr": "nombre en convertisseur booléen ajouté",
+                "it": "numero al convertitore booleano aggiunto",
+                "es": "número al convertidor booleano añadido",
+                "pl": "dodany konwerter liczby na logiczną",
+                "zh-cn": "添加了布尔转换器的数字"
+            },
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "LinkedDevices",
+        "titleLang": {
+            "en": "LinkedDevices",
+            "de": "LinkedDevices",
+            "ru": "LinkedDevices",
+            "pt": "LinkedDevices",
+            "nl": "LinkedDevices",
+            "fr": "LinkedDevices",
+            "it": "LinkedDevices",
+            "es": "LinkedDevices",
+            "pl": "LinkedDevices",
+            "zh-cn": "LinkedDevices"
+        },
+        "desc": {
+            "en": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts.",
+            "de": "Erstelle verlinkte Objekte (Datenpunkte) deiner Geräte mit einer selbst definierten Struktur. Damit ist es  möglich eine Struktur in ioBroker zu schaffen, wo alle Objekte zentralisiert sind, die z.B. im vis oder Skripten verwendet werden.",
+            "ru": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "pt": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "nl": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "fr": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "it": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "es": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "pl": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again.",
+            "zh-cn": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts. This offers the advantage, for example, that in a hardware exchange, only the linked objects must be recreated and all vis and Sktipte work again."
+        },
+        "docs": {
+            "en": [
+                "docs/en/readme.md"
+            ],
+            "de": [
+                "docs/de/readme.md"
+            ]
+        },
+        "authors": [
+            "Scrounger <scrounger@gmx.net>"
+        ],
+        "keywords": [
+            "device",
+            "link",
+            "virtual",
+            "datapoint",
+            "wrapper",
+            "reflect",
+            "logic"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "linkeddevices.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linkeddevices/master/admin/linkeddevices.png",
+        "readme": "https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md",
+        "loglevel": "info",
+        "messagebox": true,
+        "subscribe": "messagebox",
+        "mode": "daemon",
+        "type": "logic",
+        "compact": true,
+        "materialize": true,
+        "supportCustoms": true,
+        "dependencies": [
+            {
+                "admin": ">=3.6.2"
+            },
+            {
+                "js-controller": ">=1.5.8"
+            }
+        ]
+    },
+    "native": {
+        "deleteDeadLinkedObjects": false,
+        "scriptName": "",
+        "variableName": "",
+        "generateVarsForAllObjectsOfInstance": false,
+        "generateSetStateForReadOnly": false
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information",
+                "icon": "linkeddevices_info.png"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.linkedObjects",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "count of linked objects",
+                "type": "number",
+                "read": true,
+                "write": false,
+                "icon": "linkeddevices_info.png",
+                "def": 0
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.notlinkedObjects",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "count of not linked objects",
+                "type": "number",
+                "read": true,
+                "write": false,
+                "icon": "linkeddevices_info.png",
+                "def": 0
+            },
+            "native": {}
+        }
+    ]
 }

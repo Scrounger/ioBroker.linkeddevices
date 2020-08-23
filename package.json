@@ -1,6 +1,6 @@
 {
   "name": "iobroker.linkeddevices",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts.",
   "author": {
     "name": "Scrounger",
