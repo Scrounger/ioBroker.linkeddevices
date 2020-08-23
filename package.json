@@ -30,7 +30,7 @@
     "fraction.js": "^4.0.12",
     "javascript-natural-sort": "^0.7.1",
     "mathjs": "^7.1.0",
-    "moment": "^2.27.0",
+    "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "seed-random": "^2.2.0",
     "tiny-emitter": "^2.1.0",
