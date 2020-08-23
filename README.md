@@ -44,6 +44,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ### __WORK IN PROGRESS__
 * (Scrounger) adapter configuration: auto generate globale script - function to get parent id added
+* (Scrounger) dependencies updated
 
 ### 1.1.4
 * (Scrounger) continuous loop after assign to new object bug fixed
