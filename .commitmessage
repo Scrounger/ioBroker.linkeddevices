@@ -1,4 +1,3 @@
-chore: release v1.2.0
+chore: release v1.2.1
 
-adapter configuration: auto generate globale script - function to get parent id added
-dependencies updated
+mathjs bug fix

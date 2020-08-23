@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.2.0",
+        "version": "1.2.1",
         "news": {
+            "1.2.1": {
+                "en": "mathjs bug fix",
+                "de": "Mathjs Bugfix",
+                "ru": "исправление ошибки mathjs",
+                "pt": "correção de bug mathjs",
+                "nl": "mathjs bugfix",
+                "fr": "correction de bogue mathjs",
+                "it": "correzione di bug di mathjs",
+                "es": "corrección de errores de mathjs",
+                "pl": "poprawka błędów w mathjs",
+                "zh-cn": "mathjs错误修复"
+            },
             "1.2.0": {
                 "en": "adapter configuration: auto generate globale script - function to get parent id added\ndependencies updated",
                 "de": "Adapterkonfiguration: Automatisches Generieren eines globalen Skripts - Funktion zum Hinzufügen der übergeordneten ID\nAbhängigkeiten aktualisiert",
