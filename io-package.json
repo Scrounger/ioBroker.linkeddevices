@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.2.1",
+        "version": "1.2.2",
         "news": {
+            "1.2.2": {
+                "en": "moment bug fix",
+                "de": "Moment Bugfix",
+                "ru": "момент исправления ошибки",
+                "pt": "correção de bug momentâneo",
+                "nl": "moment bugfix",
+                "fr": "correction de bogue du moment",
+                "it": "momento bug fix",
+                "es": "momento corrección de errores",
+                "pl": "chwilowa naprawa błędów",
+                "zh-cn": "即时错误修复"
+            },
             "1.2.1": {
                 "en": "mathjs bug fix",
                 "de": "Mathjs Bugfix",
