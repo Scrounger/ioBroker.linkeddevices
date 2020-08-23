@@ -1157,6 +1157,8 @@ async function createJavascript() {
                                 autoScript = autoScript.concat(`${varName}.setStateDelayed = ${createSetFunction(linkedId, 'val, delay, ack=false', `setStateDelayed("${linkedId}", val, ack, delay)`)}\n`);
                             }
                             autoScript = autoScript.concat(`${varName}.getObject = ${createGetFunction(linkedId, `getObject("${linkedId}")`)}\n`);
+
+                            autoScript = autoScript.concat(`${varName}.getParentId = ${createGetFunction(linkedId, `getObject("${linkedId}").common.custom["${myNamespace}"].parentId`)}\n`);
                         }
                         autoScript = autoScript.concat("\n");
                     }
