@@ -1435,7 +1435,7 @@ class Linkeddevices extends utils.Adapter {
 					if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].number_calculation_readOnly && !targetIsParentObj) {
 						// ReadOnly object mit calculation -> umrechnen
 						let number_calculation_readOnly = targetObj.common.custom[this.namespace].number_calculation_readOnly.replace(/,/g, ".");
-						convertedValue = mathjs.eval(`${value} ${number_calculation_readOnly}`)
+						convertedValue = mathjs.evaluate(`${value} ${number_calculation_readOnly}`)
 
 						this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`)
 
@@ -1445,12 +1445,12 @@ class Linkeddevices extends utils.Adapter {
 
 						if (!targetIsParentObj) {
 							// Umrechnung für linkedObject -> parentObject state ändert sich
-							convertedValue = mathjs.eval(`${value} ${number_calculation}`);
+							convertedValue = mathjs.evaluate(`${value} ${number_calculation}`);
 
 							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${number_calculation}' -> linkedObject value is '${convertedValue}'`)
 						} else {
 							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-							convertedValue = mathjs.eval(`${value} * 1/(1${number_calculation})`);
+							convertedValue = mathjs.evaluate(`${value} * 1/(1${number_calculation})`);
 							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${number_calculation})' -> parentObject value is '${convertedValue}'`)
 						}
 					}
@@ -1525,7 +1525,7 @@ class Linkeddevices extends utils.Adapter {
 						try {
 							if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
 								// ggf. ist eine Umrechnung in Sekunden hinterlegt
-								convertedValue = mathjs.eval(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
+								convertedValue = mathjs.evaluate(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
 							}
 
 							moment.locale(mySystemConfig.language);
@@ -1547,7 +1547,7 @@ class Linkeddevices extends utils.Adapter {
 						try {
 							if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
 								// ggf. ist eine Umrechnung in Sekunden hinterlegt
-								convertedValue = mathjs.eval(`${value} ${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}`);
+								convertedValue = mathjs.evaluate(`${value} ${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}`);
 							}
 
 							moment.locale(mySystemConfig.language);
@@ -1559,6 +1559,7 @@ class Linkeddevices extends utils.Adapter {
 								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
 							}
 						} catch (err) {
+							this.log.error(err.message);
 							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
 							convertedValue = "Error";
 						}
@@ -1662,7 +1663,7 @@ class Linkeddevices extends utils.Adapter {
 						if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly && !targetIsParentObj) {
 							// ReadOnly object mit calculation -> umrechnen
 							let string_to_number_calculation_readOnly = targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly.replace(/,/g, ".");
-							convertedValue = mathjs.eval(`${value} ${string_to_number_calculation_readOnly}`)
+							convertedValue = mathjs.evaluate(`${value} ${string_to_number_calculation_readOnly}`)
 
 							this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`);
 
@@ -1672,12 +1673,12 @@ class Linkeddevices extends utils.Adapter {
 
 							if (!targetIsParentObj) {
 								// Umrechnung für linkedObject -> parentObject state ändert sich
-								convertedValue = mathjs.eval(`${value} ${string_to_number_calculation}`);
+								convertedValue = mathjs.evaluate(`${value} ${string_to_number_calculation}`);
 
 								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation}' -> linkedObject value is '${convertedValue}'`)
 							} else {
 								// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-								convertedValue = mathjs.eval(`${value} * 1/(1${string_to_number_calculation})`);
+								convertedValue = mathjs.evaluate(`${value} * 1/(1${string_to_number_calculation})`);
 								this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${string_to_number_calculation})' -> parentObject value is '${convertedValue}'`)
 							}
 						}
