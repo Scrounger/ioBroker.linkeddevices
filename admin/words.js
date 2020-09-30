@@ -2,6 +2,18 @@
 "use strict";
 
 systemDictionary = {
+	"Create linked objects of your devices with a self-defined structure": {
+		"en": "Create linked objects (datapoints) of your devices with a self-defined structure",
+		"de": "Erstelle verlinkte Objekte deiner Geräte mit einer selbst definierten Struktur",
+		"ru": "Создавайте связанные объекты ваших устройств с самоопределяемой структурой",
+		"pt": "Crie objetos vinculados de seus dispositivos com uma estrutura autodefinida",
+		"nl": "Maak gekoppelde objecten van uw apparaten met een zelf gedefinieerde structuur",
+		"fr": "Créez des objets liés de vos appareils avec une structure auto-définie",
+		"it": "Crea oggetti collegati dei tuoi dispositivi con una struttura auto-definita",
+		"es": "Cree objetos vinculados de sus dispositivos con una estructura autodefinida",
+		"pl": "Twórz połączone obiekty swoich urządzeń z samodzielnie zdefiniowaną strukturą",
+		"zh-cn": "使用自定义结构创建设备的链接对象"
+	},
 	"linkeddevices adapter settings": {
 		"en": "Adapter settings for linkeddevices",
 		"de": "Adaptereinstellungen für linkeddevices",
@@ -1069,4 +1081,16 @@ systemDictionary = {
 		"pl": "scal ustawienia po ponownym uruchomieniu adaptera",
 		"zh-cn": "适配器重新启动时合并设置"
 	},
+	"information to create linked objects": {
+		"en": "information to create linked objects",
+		"de": "Informationen zum Erstellen verknüpfter Objekte",
+		"ru": "информация для создания связанных объектов",
+		"pt": "informações para criar objetos vinculados",
+		"nl": "informatie om gekoppelde objecten te maken",
+		"fr": "informations pour créer des objets liés",
+		"it": "informazioni per creare oggetti collegati",
+		"es": "información para crear objetos vinculados",
+		"pl": "informacje do tworzenia połączonych obiektów",
+		"zh-cn": "创建链接对象的信息"
+	}
 };

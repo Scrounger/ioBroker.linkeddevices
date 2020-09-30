@@ -67,6 +67,35 @@
 			0% { transform: rotate(0deg); }
 			100% { transform: rotate(360deg); }
 		}
+
+		/* Header section */
+		#header-area {
+			margin-top: 4px;
+			margin-bottom: 1px;
+			background: white;
+		}
+
+		#header-area #header-logo-title .logo {
+			float: left;
+			margin-right: 10px;
+		}
+
+		#header-area #header-logo-title p {
+			line-height: normal !important;
+			margin: 0 !important;
+			padding: 8px 0 0 8px;
+		}
+
+		#header-area #header-logo-title p>span.h-title {
+			font-size: 2em !important;
+			font-weight: bold !important;
+		}
+
+		#header-area #header-logo-title p>span.h-sub-title {
+			font-size: 1.1em !important;
+			font-style: italic;
+			color: #2196f3;
+		}
 	</style>
 </head>
 
@@ -74,18 +103,25 @@
 
 	<div class="m adapter-container">
 		<div class="row">
-			<div class="row">
-				<div class="col s12 m4 l2">
-					<img src="linkeddevices.png" class="logo">
+			<div id="header-area" class="row" >
+				<div id="header-logo-title" class="col s6" >
+					<img class="logo" src="linkeddevices.png" >
+					<p>
+						<span class="h-title">LinkedDevices</span><br />
+						<span class="h-sub-title translate">Create linked objects of your devices with a self-defined structure</p>
+					</p>
 				</div>
-			</div>
+			</div>		
 
 			<!-- Put your content here -->
+			<div class="row" style="margin-top: 20px;">
+				<div><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
+			</div>
 			<div class="row">
-					<div><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
-				</div>			
+				<h6 class="translate sub-title">information to create linked objects</h6>
+			</div>			
 			<div class="row">
-					<h5 class="translate">Via 'Settings' button in the menu 'Object' you can create a new linked object.</h5>
+				<h6 class="translate">Via 'Settings' button in the menu 'Object' you can create a new linked object.</h6>
 			</div>
 			<!-- For example columns with settings: -->
 			<div class="row">
