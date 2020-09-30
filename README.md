@@ -42,6 +42,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) show name of parent object in custom view
+
 ### 1.2.2 (2020-08-23)
 * (Scrounger) moment bug fix
 

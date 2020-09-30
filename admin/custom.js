@@ -168,6 +168,7 @@ if (typeof customPostInits !== 'undefined') {
 
             // alle input in vars packen
             Input.parentId = $div.find('input[id="IN_parentId"]');
+            Input.parentName = $div.find('input[id="IN_parentName"]');
             Input.stateId = $div.find('input[id="IN_stateId"]');
             Input.prefixId = $div.find('input[id="IN_prefixId"]');
             Input.linkedId = $div.find('input[data-field="linkedId"]');
@@ -292,7 +293,7 @@ if (typeof customPostInits !== 'undefined') {
             DataList.suggestionListRole.html(roleSugestionList.sort().join("\n"))
         }
 
-        function initialize_LinkedObject() {
+        async function initialize_LinkedObject() {
             // Custom Dialog für LinkedObject: Views initialisieren
             Group.linkedObject.show();
             Group.parentObject.hide();
@@ -301,6 +302,14 @@ if (typeof customPostInits !== 'undefined') {
             ComboBox.isLinked.prop('checked', values["isLinked"]);
             // parentId anzeigen
             Input.parentId.val(values["parentId"]);
+
+            let obj = await getObject(values["parentId"]);
+            console.log(obj);
+            if (obj && obj.common && obj.common.name) {
+                Input.parentName.val(obj.common.name);
+            } else {
+                Input.parentName.val('');
+            }
         }
 
         function initialize_ParentObject() {
@@ -897,6 +906,17 @@ if (typeof customPostInits !== 'undefined') {
                 });
             });
         }
+        async function getObject(pattern) {
+            return new Promise((resolve, reject) => {
+                gMain.socket.emit('getObject', pattern, function (err, res) {
+                    if (!err && res) {
+                        resolve(res);
+                    } else {
+                        resolve(null);
+                    }
+                });
+            });
+        }        
         //#endregion
     }
 }
