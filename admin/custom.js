@@ -4,17 +4,17 @@
 // 	$.extend(systemDictionary, JSON.parse(translation));
 // });
 
-$.get({
-    url: 'adapter/linkeddevices/words.js',
-    success: function (result) {
-        if (result.isOk) {
-            let translation = script.substring(script.indexOf('{'), script.length);
-            translation = translation.substring(0, translation.lastIndexOf(';'));
-            $.extend(systemDictionary, JSON.parse(translation));
-        }
-    },
-    async: false
-})
+// $.get({
+//     url: 'adapter/linkeddevices/words.js',
+//     success: function (result) {
+//         if (result.isOk) {
+//             let translation = script.substring(script.indexOf('{'), script.length);
+//             translation = translation.substring(0, translation.lastIndexOf(';'));
+//             $.extend(systemDictionary, JSON.parse(translation));
+//         }
+//     },
+//     async: false
+// })
 
 // There are two ways how to predefine default settings:
 // - with attribute "data-default" (content independent)
@@ -47,6 +47,18 @@ if (typeof customPostInits !== 'undefined') {
         //     translation = translation.substring(0, translation.lastIndexOf(';'));
         //     $.extend(systemDictionary, JSON.parse(translation));
         // });
+
+        $.get({
+            url: 'adapter/linkeddevices/words.js',
+            success: function (result) {
+                if (result.isOk) {
+                    let translation = script.substring(script.indexOf('{'), script.length);
+                    translation = translation.substring(0, translation.lastIndexOf(';'));
+                    $.extend(systemDictionary, JSON.parse(translation));
+                }
+            },
+            async: false
+        })
 
         //$div.find('input[id="test"]').val(JSON.stringify(list))
 
@@ -342,6 +354,8 @@ if (typeof customPostInits !== 'undefined') {
             if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean')) {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
+
+                console.error(currentObj);
 
                 if (currentObj.common.write === false && (type === 'number' || type === 'string')) {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type) + " (read only)"));
@@ -916,7 +930,7 @@ if (typeof customPostInits !== 'undefined') {
                     }
                 });
             });
-        }        
+        }
         //#endregion
     }
 }
