@@ -1092,5 +1092,53 @@ systemDictionary = {
 		"es": "información para crear objetos vinculados",
 		"pl": "informacje do tworzenia połączonych obiektów",
 		"zh-cn": "创建链接对象的信息"
+	},
+	"Documentations": {
+		"en": "Documentations",
+		"de": "Dokumentationen",
+		"ru": "Документация",
+		"pt": "Documentações",
+		"nl": "Documentaties",
+		"fr": "Documentations",
+		"it": "Documentazioni",
+		"es": "Documentaciones",
+		"pl": "Dokumentacje",
+		"zh-cn": "文件资料"
+	},
+	"doc_adapter_settings": {
+		"en": "adapter settings",
+		"de": "Adaptereinstellungen",
+		"ru": "настройки адаптера",
+		"pt": "configurações do adaptador",
+		"nl": "adapter instellingen",
+		"fr": "paramètres de l'adaptateur",
+		"it": "impostazioni dell'adattatore",
+		"es": "configuración del adaptador",
+		"pl": "ustawienia adaptera",
+		"zh-cn": "适配器设置"
+	},
+	"doc_forum": {
+		"en": "Forum",
+		"de": "Forum",
+		"ru": "Форум",
+		"pt": "Fórum",
+		"nl": "Forum",
+		"fr": "Forum",
+		"it": "Forum",
+		"es": "Foro",
+		"pl": "Forum",
+		"zh-cn": "论坛"
+	},
+	"settings": {
+		"en": "settings",
+		"de": "Einstellungen",
+		"ru": "настройки",
+		"pt": "definições",
+		"nl": "instellingen",
+		"fr": "réglages",
+		"it": "impostazioni",
+		"es": "ajustes",
+		"pl": "ustawienia",
+		"zh-cn": "设定"
 	}
 };

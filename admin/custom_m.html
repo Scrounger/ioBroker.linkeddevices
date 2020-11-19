@@ -6,307 +6,368 @@
 			background: #64b5f6;
 			color: white;
 		}
+		
+		/* Card Styles */
+		.card {
+			margin: 0 !important;
+			margin-top: 6px !important;
+		}
+	
+		.card-title {
+			color: #2196f3;
+			margin-bottom: 12px !important;
+		}
+	
+		.my-card-subTitle {
+			font-size: 16px !important;
+			margin-top: 6px !important;
+			font-style: italic !important;
+			color: gray !important;
+		}
+	
+		.my-card-title {
+			font-size: 24px !important;
+			font-weight: 300 !important;
+			color: #2196f3 !important;
+		}
+
+		/* NavBar */
+		.m .tabs .myLinkBar a {
+			border-bottom: 0px solid #46a0e9 !important;
+			font-style: normal !important;
+			text-transform: none !important;
+			font-size: 16px;
+		}
+	
+		.m .tabs .myLinkBar a:hover {
+			border-bottom: 0px solid #46a0e9 !important;
+			background: rgba(161, 161, 161, 0.26);
+			font-weight: normal !important;
+			text-transform: none !important;
+			font-size: 16px;
+		}		
 	</style>
-
-	<div class="parentObject_view">
-		<div class="row">
-			<div class="col s2">
-				<input type="checkbox" data-field="enabled" data-default="false"/>
-				<!-- this field is mandatory, just to find out if to include this settings or not</span-->
-				<span class="translate">enabled</span>
-			</div>
-			<div class="col s10">
-				<div class="row">
-					<div class="col s4">
-						<label class="translate">prefix for id of linked object</label>
-						<input type="text" id="IN_prefixId" list="suggestionListPrefixId"/>
-						<datalist id="suggestionListPrefixId"></datalist>
-					</div>
+	
+	<div class="row">
+		<div class="parentObject_view">
+		
+			<div class="col s12 m12 l12 card" style="margin-top: -14px !important;">
+				<div class="card-content">
+					<span class="card-title translate">settings</span>
+	
 					<div class="col s2">
-						<label class="translate">id of linked object</label>
-						<input type="text" id="IN_stateId" list="suggestionListStateId"/>
-						<datalist id="suggestionListStateId"></datalist>
-					</div>
-					<div class="col s6">
-						<label class="translate">composite id of linked object</label>
-						<input type="text" data-field="linkedId" readonly /> 	
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s4">
-						<label class="translate">name of linked object</label>
-						<input type="text" data-field="name" list="suggestionListName"/>
-						<datalist id="suggestionListName"></datalist>
-					</div>
-					<div class="col s4">
-						<label class="translate" id="LB_role">change role '%s' in</label>
-						<input type="text" data-field="role" list="suggestionListRole"/>
-						<datalist id="suggestionListRole"></datalist>
-					</div>								
-				</div>
-				<div class="row">
-					<div class="col">
-						<input type="checkbox" data-field="mergeSettingsOnRestart"/>
-						<span class="translate">mergeSettingsOnRestart</span>			
-					</div>				
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div style="text-align: center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
-		</div>
-
-		<div class="view_expertSettings">
-
-			<div class="row" >
-				<h6 class="translate sub-title" id="SP_expertSettings"/>
-			</div>
-			<div class="row" >
-				<div class="col s10">
-					<input type="checkbox" data-field="expertSettings"/>
-					<span class="translate">enabled</span>			
-				</div>
-			</div>
-			<div class="view_Number">
-				<div class="row" style="margin-top: 20px">
-					<div class="col s2">
-						<label class="translate">convert linked object to type</label>
-						<select data-field="number_convertTo" data-default="">
-							<option value="" class="translate">do not convert</option>
-							<option value="boolean" class="translate">boolean</option>
-							<option value="duration" class="translate">duration</option>
-							<option value="datetime" class="translate">datetime</option>
-							<option value="string" class="translate" disabled="true">string</option>
-							<option value="multi" class="translate" disabled="true">multi</option>
-						</select>
+						<input type="checkbox" data-field="enabled" data-default="false"/>
+						<!-- this field is mandatory, just to find out if to include this settings or not</span-->
+						<span class="translate">enabled</span>
 					</div>
 					<div class="col s10">
-						<div class="view_Number_Converter_None">
+						<div class="row">
+							<div class="col s4">
+								<label class="translate">prefix for id of linked object</label>
+								<input type="text" id="IN_prefixId" list="suggestionListPrefixId"/>
+								<datalist id="suggestionListPrefixId"></datalist>
+							</div>
+							<div class="col s2">
+								<label class="translate">id of linked object</label>
+								<input type="text" id="IN_stateId" list="suggestionListStateId"/>
+								<datalist id="suggestionListStateId"></datalist>
+							</div>
+							<div class="col s6">
+								<label class="translate">composite id of linked object</label>
+								<input type="text" data-field="linkedId" readonly /> 	
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s4">
+								<label class="translate">name of linked object</label>
+								<input type="text" data-field="name" list="suggestionListName"/>
+								<datalist id="suggestionListName"></datalist>
+							</div>
+							<div class="col s4">
+								<label class="translate" id="LB_role">change role '%s' in</label>
+								<input type="text" data-field="role" list="suggestionListRole"/>
+								<datalist id="suggestionListRole"></datalist>
+							</div>								
+						</div>
+						<div class="row">
+							<div class="col">
+								<input type="checkbox" data-field="mergeSettingsOnRestart"/>
+								<span class="translate">mergeSettingsOnRestart</span>			
+							</div>				
+						</div>
+					</div>
+				</div>
+			</div>		
+				
+			<div class="col s12 m12 l12 card">
+				<div class="card-content">
+					<div style="display: flex; align-items: center; justify-content: center;"><span class="mdi mdi-coffee" style="font-size: 20px; color: #46a0e9; margin-right: 6px;"></span><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
+				</div>
+			</div>
+		
+			<div class="view_expertSettings">
+				<div class="col s12 m12 l12 card" style="padding-bottom: 20px !important;">
+					<div class="card-content">
+						<span class="card-title translate" id="SP_expertSettings"></span>
+		
+						<div class="col s12" style="margin-bottom: 20px !important">
+							<input type="checkbox" data-field="expertSettings"/>
+							<span class="translate">enabled</span>			
+						</div>
+		
+						<div class="view_Number">
+							<div class="col s2">
+								<label class="translate">convert linked object to type</label>
+								<select data-field="number_convertTo" data-default="">
+									<option value="" class="translate">do not convert</option>
+									<option value="boolean" class="translate">boolean</option>
+									<option value="duration" class="translate">duration</option>
+									<option value="datetime" class="translate">datetime</option>
+									<option value="string" class="translate" disabled="true">string</option>
+									<option value="multi" class="translate" disabled="true">multi</option>
+								</select>
+							</div>
+							<div class="col s10">
+								<div class="view_Number_Converter_None">
+									<div class="row">
+										<div class="col s3">
+											<label id="LB_number_unit" />
+											<input type="text" data-field="number_unit">
+										</div>
+										<div class="col s3">
+											<label class="translate">max. number of decimal places</label>
+											<input type="text" data-field="number_maxDecimal">
+										</div>
+										<div class="col s3">
+											<label id="LB_number_min" />
+											<input type="text" data-field="number_min">
+										</div>
+										<div class="col s3">
+											<label id="LB_number_max" />
+											<input type="text" data-field="number_max">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s3 view_Number_conversion">
+											<label class="translate">calculation for linked object</label>
+											<input type="text" data-field="number_calculation">
+										</div>					
+										<div class="col s3 view_Number_conversion_readOnly">
+											<label class="translate">calculation for 'read' object</label>
+											<input type="text" data-field="number_calculation_readOnly">
+										</div>
+									</div>
+								</div>
+								<div class="view_Number_Converter_Boolean">
+									<div class="col s3">
+										<label class="translate">condition 'true' for linked object</label>
+										<input type="text" data-field="number_to_boolean_condition">
+									</div>
+									<div class="view_Number_Converter_Boolean_notReadOnly">
+										<div class="col s3">
+											<label class="translate">value if linked object is 'true'</label>
+											<input type="number" data-field="number_to_boolean_value_true">
+										</div>
+										<div class="col s3">
+											<label class="translate">value if linked object is 'false'</label>
+											<input type="number" data-field="number_to_boolean_value_false">
+										</div>
+									</div>
+								</div>
+								<div class="view_Number_Converter_String">
+									<div class="col s3">
+										<label class="translate">conditions string</label>
+										<input type="text" data-field="number_to_string_condition">
+									</div>
+								</div>
+								<div class="view_Number_Converter_String_Duration">
+									<div class="col s3">
+										<label class="translate">conversion in seconds</label>
+										<input type="text" data-field="number_to_duration_convert_seconds">
+									</div>
+									<div class="col s3">
+										<label class="translate">display format of the duration</label>
+										<input type="text" data-field="number_to_duration_format">
+										<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information (moment library)</a></div>
+									</div>
+								</div>
+								<div class="view_Number_Converter_String_DateTime">
+									<div class="col s3">
+										<label class="translate">conversion in unix timestamp (seconds)</label>
+										<input type="text" data-field="number_to_datetime_convert_seconds">
+									</div>
+									<div class="col s3">
+										<label class="translate">display format of the datetime</label>
+										<input type="text" data-field="number_to_datetime_format">
+										<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
+									</div>							
+								</div>
+								<div class="view_Number_Converter_Multi">
+									<div class="col s3">
+										<label class="translate">conditions multi</label>
+										<input type="text" data-field="number_to_multi_condition">
+									</div>
+								</div>
+							</div>
+						</div>
+			
+						<div class="view_Boolean">
+							<div class="col s2">
+								<label class="translate">convert linked object to type</label>
+								<select data-field="boolean_convertTo" data-default="">
+									<option value="" class="translate">do not convert</option>
+									<option value="string" class="translate">string</option>
+								</select>
+							</div>
+							<div class="col s10">
+								<div class="view_Boolean_Converter_String">
+									<div class="row">
+										<div class="col s3">
+											<label class="translate">value if object is 'true'</label>
+											<input type="text" data-field="boolean_to_string_value_true">
+										</div>
+										<div class="col s3">
+											<label class="translate">value if object is 'false'</label>
+											<input type="text" data-field="boolean_to_string_value_false">
+										</div>
+									</div>
+								</div>
+							</div>			
+						</div>
+			
+						<div class="view_String">
+							<div class="col s2">
+								<label class="translate">convert linked object to type</label>
+								<select data-field="string_convertTo" data-default="">
+									<option value="" class="translate">do not convert</option>
+									<option value="boolean" class="translate">boolean</option>
+									<option value="number" class="translate">number</option>
+									<option value="duration" class="translate">duration</option>
+									<option value="datetime" class="translate">datetime</option>							
+								</select>
+							</div>
+							<div class="col s10">
+								<div class="view_String_Converter_None">	
+									<div class="row">
+										<div class="col s3">
+											<label class="translate">prefix string</label>
+											<input type="text" data-field="string_prefix">
+										</div>
+										<div class="col s3">
+											<label class="translate">suffix string</label>
+											<input type="text" data-field="string_suffix">
+										</div>
+									</div>
+								</div>
+								<div class="view_String_Converter_Boolean">
+									<div class="row">
+										<div class="col s3">
+											<label class="translate">string for 'true' of the linked object</label>
+											<input type="text" data-field="string_to_boolean_value_true">
+										</div>
+										<div class="col s3">
+											<label class="translate">string for 'false' of the linked object</label>
+											<input type="text" data-field="string_to_boolean_value_false">
+										</div>
+									</div>							
+								</div>
+								<div class="view_String_Converter_Number">
+									<div class="row">
+										<div class="col s3">
+											<label id="LB_string_to_number_unit" />
+											<input type="text" data-field="string_to_number_unit">
+										</div>
+										<div class="col s3">
+											<label class="translate">max. number of decimal places</label>
+											<input type="text" data-field="string_to_number_maxDecimal">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s3 view_String_to_Number_conversion">
+											<label class="translate">calculation for linked object</label>
+											<input type="text" data-field="string_to_number_calculation">
+										</div>					
+										<div class="col s3 view_String_to_Number_conversion_readOnly">
+											<label class="translate">calculation for 'read' object</label>
+											<input type="text" data-field="string_to_number_calculation_readOnly">
+										</div>
+									</div>							
+								</div>
+								<div class="view_String_Converter_String_Duration">
+									<div class="col s3">
+										<label class="translate">display format of the duration</label>
+										<input type="text" data-field="string_to_duration_format">
+										<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information (moment library)</a></div>
+									</div>
+								</div>
+								<div class="view_String_Converter_String_DateTime">
+									<div class="col s3">
+										<label class="translate">parser format</label>
+										<input type="text" data-field="string_to_datetime_parser">
+										<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
+									</div>							
+									<div class="col s3">
+										<label class="translate">display format of the datetime</label>
+										<input type="text" data-field="string_to_datetime_format">
+										<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
+									</div>						
+								</div>											
+							</div>
+						</div>
+					</div>
+				</div>						
+			</div>
+		</div>
+	
+		<div class="linkedObject_view">
+
+			<div class="col s12 m12 l12 card" style="margin-top: -14px !important;">
+				<div class="card-content">
+					<div class="row">
+						<div class="col s2">
+							<input type="checkbox" id="CB_isLinked" disabled="true"/>
+							<span class="translate">is linked</span>
+						</div>
+						<div class="col s10">
 							<div class="row">
-								<div class="col s3">
-									<label id="LB_number_unit" />
-									<input type="text" data-field="number_unit">
-								</div>
-								<div class="col s3">
-									<label class="translate">max. number of decimal places</label>
-									<input type="text" data-field="number_maxDecimal">
-								</div>
-								<div class="col s3">
-									<label id="LB_number_min" />
-									<input type="text" data-field="number_min">
-								</div>
-								<div class="col s3">
-									<label id="LB_number_max" />
-									<input type="text" data-field="number_max">
-								</div>
+								<label class="translate">linked with</label>
+								<input type="text" id="IN_parentId" disabled="true" readonly>
 							</div>
 							<div class="row">
-								<div class="col s3 view_Number_conversion">
-									<label class="translate">calculation for linked object</label>
-									<input type="text" data-field="number_calculation">
-								</div>					
-								<div class="col s3 view_Number_conversion_readOnly">
-									<label class="translate">calculation for 'read' object</label>
-									<input type="text" data-field="number_calculation_readOnly">
-								</div>
+								<label class="translate">parent name</label>
+								<input type="text" id="IN_parentName" disabled="true" readonly>
 							</div>
-						</div>
-						<div class="view_Number_Converter_Boolean">
-							<div class="col s3">
-								<label class="translate">condition 'true' for linked object</label>
-								<input type="text" data-field="number_to_boolean_condition">
-							</div>
-							<div class="view_Number_Converter_Boolean_notReadOnly">
-								<div class="col s3">
-									<label class="translate">value if linked object is 'true'</label>
-									<input type="number" data-field="number_to_boolean_value_true">
-								</div>
-								<div class="col s3">
-									<label class="translate">value if linked object is 'false'</label>
-									<input type="number" data-field="number_to_boolean_value_false">
-								</div>
-							</div>
-						</div>
-						<div class="view_Number_Converter_String">
-							<div class="col s3">
-								<label class="translate">conditions string</label>
-								<input type="text" data-field="number_to_string_condition">
-							</div>
-						</div>
-						<div class="view_Number_Converter_String_Duration">
-							<div class="col s3">
-								<label class="translate">conversion in seconds</label>
-								<input type="text" data-field="number_to_duration_convert_seconds">
-							</div>
-							<div class="col s3">
-								<label class="translate">display format of the duration</label>
-								<input type="text" data-field="number_to_duration_format">
-								<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information (moment library)</a></div>
-							</div>
-						</div>
-						<div class="view_Number_Converter_String_DateTime">
-							<div class="col s3">
-								<label class="translate">conversion in unix timestamp (seconds)</label>
-								<input type="text" data-field="number_to_datetime_convert_seconds">
-							</div>
-							<div class="col s3">
-								<label class="translate">display format of the datetime</label>
-								<input type="text" data-field="number_to_datetime_format">
-								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
-							</div>							
-						</div>
-						<div class="view_Number_Converter_Multi">
-							<div class="col s3">
-								<label class="translate">conditions multi</label>
-								<input type="text" data-field="number_to_multi_condition">
-							</div>
+						</div>			
+					</div>
+					<div class="row">
+						<div class="col s2" />
+						<div class="col s0">
+							<a data-command="openCustom" class="values-buttons btn-floating btn-large waves-effect waves-light" title="Einstellungen des verlinkten Objektes"><i class="material-icons">build</i></a>
+						</div>			
+						<div class="col s9">
+							<h6 class="translate">settings can only be adjusted in the object to which it is linked!</h6>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="view_Boolean">
-				<div class="row" style="margin-top: 20px">
-					<div class="col s2">
-						<label class="translate">convert linked object to type</label>
-						<select data-field="boolean_convertTo" data-default="">
-							<option value="" class="translate">do not convert</option>
-							<option value="string" class="translate">string</option>
-						</select>
-					</div>
-					<div class="col s10">
-						<div class="view_Boolean_Converter_String">
-							<div class="row">
-								<div class="col s3">
-									<label class="translate">value if object is 'true'</label>
-									<input type="text" data-field="boolean_to_string_value_true">
-								</div>
-								<div class="col s3">
-									<label class="translate">value if object is 'false'</label>
-									<input type="text" data-field="boolean_to_string_value_false">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>				
-			</div>
-
-			<div class="view_String">
-				<div class="row" style="margin-top: 20px">
-					<div class="col s2">
-						<label class="translate">convert linked object to type</label>
-						<select data-field="string_convertTo" data-default="">
-							<option value="" class="translate">do not convert</option>
-							<option value="boolean" class="translate">boolean</option>
-							<option value="number" class="translate">number</option>
-							<option value="duration" class="translate">duration</option>
-							<option value="datetime" class="translate">datetime</option>							
-						</select>
-					</div>
-					<div class="col s10">
-						<div class="view_String_Converter_None">	
-							<div class="row">
-								<div class="col s3">
-									<label class="translate">prefix string</label>
-									<input type="text" data-field="string_prefix">
-								</div>
-								<div class="col s3">
-									<label class="translate">suffix string</label>
-									<input type="text" data-field="string_suffix">
-								</div>
-							</div>
-						</div>
-						<div class="view_String_Converter_Boolean">
-							<div class="row">
-								<div class="col s3">
-									<label class="translate">string for 'true' of the linked object</label>
-									<input type="text" data-field="string_to_boolean_value_true">
-								</div>
-								<div class="col s3">
-									<label class="translate">string for 'false' of the linked object</label>
-									<input type="text" data-field="string_to_boolean_value_false">
-								</div>
-							</div>							
-						</div>
-						<div class="view_String_Converter_Number">
-							<div class="row">
-								<div class="col s3">
-									<label id="LB_string_to_number_unit" />
-									<input type="text" data-field="string_to_number_unit">
-								</div>
-								<div class="col s3">
-									<label class="translate">max. number of decimal places</label>
-									<input type="text" data-field="string_to_number_maxDecimal">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col s3 view_String_to_Number_conversion">
-									<label class="translate">calculation for linked object</label>
-									<input type="text" data-field="string_to_number_calculation">
-								</div>					
-								<div class="col s3 view_String_to_Number_conversion_readOnly">
-									<label class="translate">calculation for 'read' object</label>
-									<input type="text" data-field="string_to_number_calculation_readOnly">
-								</div>
-							</div>							
-						</div>
-						<div class="view_String_Converter_String_Duration">
-							<div class="col s3">
-								<label class="translate">display format of the duration</label>
-								<input type="text" data-field="string_to_duration_format">
-								<div><a href="https://github.com/jsmreese/moment-duration-format#template-string" target="_blank" class="translate">more information (moment library)</a></div>
-							</div>
-						</div>
-						<div class="view_String_Converter_String_DateTime">
-							<div class="col s3">
-								<label class="translate">parser format</label>
-								<input type="text" data-field="string_to_datetime_parser">
-								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
-							</div>							
-							<div class="col s3">
-								<label class="translate">display format of the datetime</label>
-								<input type="text" data-field="string_to_datetime_format">
-								<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
-							</div>						
-						</div>											
-					</div>
+			<div class="col s12 m12 l12 card">
+				<div class="card-content">
+					<div style="display: flex; align-items: center; justify-content: center;"><span class="mdi mdi-coffee" style="font-size: 20px; color: #46a0e9; margin-right: 6px;"></span><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="linkedObject_view">
-		<div class="row">
-			<div class="col s2">
-				<input type="checkbox" id="CB_isLinked" disabled="true"/>
-				<span class="translate">is linked</span>
+		<div class="col s12 m12 l12 card">
+			<div class="card-content">
+				<span class="card-title translate">Documentations</span>
+
+				<ul class="tabs" style="height: auto;">
+					<li class="tab myLinkBar col s6 l2"><a href="https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md" target="_blank" class="translate">doc_adapter_settings</a></li>
+					<li class="tab myLinkBar col s6 l2"><a href="https://forum.iobroker.net/topic/22301/neuer-adapter-linkeddevices" target="_blank" class="translate">doc_forum</a></li>
+				</ul>
 			</div>
-			<div class="col s10">
-				<div class="row">
-					<label class="translate">linked with</label>
-					<input type="text" id="IN_parentId" disabled="true" readonly>
-				</div>
-				<div class="row">
-					<label class="translate">parent name</label>
-					<input type="text" id="IN_parentName" disabled="true" readonly>
-				</div>
-			</div>			
-		</div>
-		<div class="row">
-			<div class="col s2" />
-			<div class="col s0">
-				<a data-command="openCustom" class="values-buttons btn-floating btn-large waves-effect waves-light" title="Einstellungen des verlinkten Objektes"><i class="material-icons">build</i></a>
-			</div>			
-			<div class="col s9">
-				<h6 class="translate">settings can only be adjusted in the object to which it is linked!</h6>
-			</div>
-		</div>
-		<div class="row">
-			<div style="text-align: center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
-		</div>
-	</div>
+		</div>		
+	</div>	
+ </script>
 
-
-</script>
-
-<script type="text/javascript" src="adapter/linkeddevices/custom.js">
+ <script type="text/javascript" src="adapter/linkeddevices/custom.js">

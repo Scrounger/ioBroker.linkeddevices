@@ -24,183 +24,281 @@
 	<script type="text/javascript" src="words.js"></script>
 	<script type="text/javascript" src="index_m.js"></script>
 
-	<style>
-		.table-values thead {
-			background: gray;
-			color: white;
-			height: 40px;
-		}
-
-		/* Index Column ausblenden */
-		.table-values tr>*:nth-child(1) {
-			display: none;
-		}
-
-		.table-values tr>*:nth-child(2) {
-			text-align: center; /* center checkbox horizontally */
-    		vertical-align: middle; /* center checkbox vertically */
-		}
-
-		#dialog-select-member {
-			z-index: 9999 !important;
-		}
-
-		.loader {
-			border: 4px solid #f3f3f3; /* Light grey */
-			border-top: 4px solid #3498db; /* Blue */
-			border-radius: 50%;
-			width: 50px;
-			height: 50px;
-			animation: spin 1s linear infinite;
-			margin-left: auto; 
-			margin-right:auto;
-		}
-
-		.sub-title {
-            margin-top: 2rem!important;
-            padding: 0.5rem;
-            background: #64b5f6;
-            color: white;
-        }
-
-		@keyframes spin {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
-		}
-
-		/* Header section */
-		#header-area {
-			margin-top: 4px;
-			margin-bottom: 1px;
-			background: white;
-		}
-
-		#header-area #header-logo-title .logo {
-			float: left;
-			margin-right: 10px;
-		}
-
-		#header-area #header-logo-title p {
-			line-height: normal !important;
-			margin: 0 !important;
-			padding: 8px 0 0 8px;
-		}
-
-		#header-area #header-logo-title p>span.h-title {
-			font-size: 2em !important;
-			font-weight: bold !important;
-		}
-
-		#header-area #header-logo-title p>span.h-sub-title {
-			font-size: 1.1em !important;
-			font-style: italic;
-			color: #2196f3;
-		}
-	</style>
 </head>
 
-<body>
+<style>
+	.table-values thead {
+		background: gray;
+		color: white;
+		height: 40px;
+	}
 
+	/* Index Column ausblenden */
+	.table-values tr>*:nth-child(1) {
+		display: none;
+	}
+
+	.table-values tr>*:nth-child(2) {
+		text-align: center;
+		/* center checkbox horizontally */
+		vertical-align: middle;
+		/* center checkbox vertically */
+	}
+
+	#dialog-select-member {
+		z-index: 9999 !important;
+	}
+
+	.loader {
+		border: 4px solid #f3f3f3;
+		/* Light grey */
+		border-top: 4px solid #3498db;
+		/* Blue */
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		animation: spin 1s linear infinite;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.sub-title {
+		margin-top: 2rem !important;
+		padding: 0.5rem;
+		background: #64b5f6;
+		color: white;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	/* Header section */
+	#header-area {
+		margin-top: 4px;
+		margin-bottom: 1px;
+		background: white;
+	}
+
+	#header-area #header-logo-title .logo {
+		float: left;
+		margin-right: 10px;
+	}
+
+	#header-area #header-logo-title p {
+		line-height: normal !important;
+		margin: 0 !important;
+		padding: 8px 0 0 8px;
+	}
+
+	#header-area #header-logo-title p>span.h-title {
+		font-size: 2em !important;
+		font-weight: bold !important;
+	}
+
+	#header-area #header-logo-title p>span.h-sub-title {
+		font-size: 1.1em !important;
+		font-style: italic;
+		color: #2196f3;
+	}
+
+
+	/* Header section */
+	.help-link {
+		order: 3 !important;
+		width: auto !important;
+		display: flex !important;
+		align-items: center !important;
+	}
+
+	.help-link .btn-floating {
+		margin-top: 0 !important;
+	}
+
+	.card-stacked {
+		order: 1;
+	}
+
+	.logo {
+		width: 100px;
+		height: 100px;
+		padding: 12px !important;
+	}
+
+	/* Card Styles */
+	.card {
+		margin: 0 !important;
+		margin-top: 6px !important;
+	}
+
+	.card-title {
+		color: #2196f3;
+		margin-bottom: 12px !important;
+	}
+
+	.my-card-subTitle {
+		font-size: 16px !important;
+		margin-top: 6px !important;
+		font-style: italic !important;
+		color: gray !important;
+	}
+
+	.my-card-title {
+		font-size: 24px !important;
+		font-weight: 300 !important;
+		color: #2196f3 !important;
+	}
+
+	/* NavBar */
+	.m .tabs .myLinkBar a {
+		border-bottom: 0px solid #46a0e9 !important;
+		font-style: normal !important;
+		text-transform: none !important;
+		font-size: 16px;
+	}
+
+	.m .tabs .myLinkBar a:hover {
+		border-bottom: 0px solid #46a0e9 !important;
+		background: rgba(161, 161, 161, 0.26);
+		font-weight: normal !important;
+		text-transform: none !important;
+		font-size: 16px;
+	}
+</style>
+
+
+<body>
 	<div class="m adapter-container">
 		<div class="row">
-			<div id="header-area" class="row" >
-				<div id="header-logo-title" class="col s6" >
-					<img class="logo" src="linkeddevices.png" >
-					<p>
-						<span class="h-title">LinkedDevices</span><br />
-						<span class="h-sub-title translate">Create linked objects of your devices with a self-defined structure</p>
-					</p>
-				</div>
-			</div>		
-
-			<!-- Put your content here -->
-			<div class="row" style="margin-top: 20px;">
-				<div><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
-			</div>
-			<div class="row">
-				<h6 class="translate sub-title">information to create linked objects</h6>
-			</div>			
-			<div class="row">
-				<h6 class="translate">Via 'Settings' button in the menu 'Object' you can create a new linked object.</h6>
-			</div>
-			<!-- For example columns with settings: -->
-			<div class="row">
-				<h6 class="translate sub-title">create a script with variables of all linked objects</h6>
-			</div>
-			<div class="row">
-				<div class="col s2 input-field">
-					<input type="text" class="value" id="scriptName" />
-					<label for="scriptName" class="translate">script name</label>
-				</div>
-				<div class="col s2 input-field">
-					<input type="text" class="value" id="variableName" />
-					<label for="variableName" class="translate">name of the variable</label>
-				</div>		
-				<div class="col s3">
-					<div class="row">
-						<input type="checkbox" class="value" id="generateVarsForAllObjectsOfInstance" />
-						<label for="generateVarsForAllObjectsOfInstance" class="translate">include all objects of the instance</label>
+			<div class="col s12">
+				<div class="col s12 m12 l12 card horizontal">
+					<div class="card-image">
+						<img class="logo" src="linkeddevices.png">
 					</div>
-					<div class="row">
-						<input type="checkbox" class="value" id="generateSetStateForReadOnly" />
-						<label for="generateSetStateForReadOnly" class="translate">generate setState for 'readonly' objects</label>
-					</div>
-				</div>						
-				<div class="col s5">
-					<a id="btnJavascript" data-command="btnCreateJavascript" class="values-buttons btn-floating btn-large waves-effect waves-light" title="create javascript"><i class="material-icons">note_add</i></a>
-					<label id="labelBtnJavascript" for="btnJavascript" class="translate">generate script</label>
-				</div>				
-			</div>
-			<div class="row">
-				<h6 class="translate sub-title">Overview of all linked objects</h6>
-			</div>
-			<div class="row" style="margin-top: -20px">
-				<div class="col s2 input-field">
-					<input type="text" id="filterList"/>
-					<label for="filterList" class="translate">browse the table</label>
-				</div>
-				<div class="col s2" style="margin-top: 20px">
-					<a id="repair" class="waves-effect waves-light btn-small"><i class="material-icons left">play_for_work</i><span class="translate">repair</span></a>
-				</div>				
-				<div class="col s7" style="margin-top: 15px">
-					<div class="loader" id="progressBar"></div>
-				</div>	
-				<div class="col s1" style="text-align: end; margin-top: 60px; padding-right: 10px">
-					<label id="labelTableEntries" class="translate">0 / 0</label>
-				</div>
-			</div>
-			<div class="row" style="margin-top: -20px">
-				<div class="col s12" id="events">
-					<div class="row">
-						<div class="table-values-div">
-							<table class="table-values">
-								<thead>
-									<tr>
-										<th data-name="_index"></th>
-										<th data-name="isLinked" style="width: 80px; cursor:pointer" data-style="width: 80px" data-type="checkbox" class="translate">is linked</th>									
-										<th data-name="linkedId" data-desc="linkedName" data-type="text" class="translate" style="cursor:pointer">id of linked object</th>
-										<th data-buttons="assignLink" style="width: 70px"></th>
-										<th data-buttons="removeLink" style="width: 70px"></th>
-										<th data-name="parentId" data-desc="parentName" data-type="text" class="translate" style="cursor:pointer">linked with</th>
-										<th data-buttons="openCustom" style="width: 70px"></th>
-									</tr>
-								</thead>
-							</table>
+					<div class="card-stacked">
+						<div class="card-content">
+							<div>
+								<div class="my-card-title">LinkedDevices</div>
+								<div class="my-card-subTitle translate">Create linked objects of your devices with a self-defined structure</div>
+							</div>
 						</div>
 					</div>
-				</div>				
-				<div>
-					<h6 id="noTableData" class="translate" style="text-align: center;">no linked objects available</h6>
 				</div>
+
+				<div class="col s12 m12 l12 card">
+					<div class="card-content">
+						<span class="card-title translate">Documentations</span>
+
+						<ul class="tabs" style="height: auto;">
+							<li class="tab myLinkBar col s6 l2"><a href="https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md" target="_blank" class="translate">doc_adapter_settings</a></li>
+							<li class="tab myLinkBar col s6 l2"><a href="https://forum.iobroker.net/topic/22301/neuer-adapter-linkeddevices" target="_blank" class="translate">doc_forum</a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="col s12 m12 l12 card">
+					<div class="card-content">
+						<span class="card-title translate">information to create linked objects</span>
+						<div class="translate" style="display: flex; align-items: center; font-size: 16px;">Via 'Settings' button in the menu 'Object' you can create a new linked object.</div>
+					</div>
+				</div>
+					
+
+				<div class="col s12 m12 l12 card">
+					<div class="card-content">
+						<span class="card-title translate">create a script with variables of all linked objects</span>								
+						<div class="col s2 input-field">
+							<input type="text" class="value" id="scriptName" />
+							<label for="scriptName" class="translate">script name</label>
+						</div>
+						<div class="col s2 input-field">
+							<input type="text" class="value" id="variableName" />
+							<label for="variableName" class="translate">name of the variable</label>
+						</div>
+						<div class="col s4 input-field">
+							<div class="row">
+								<input type="checkbox" class="value" id="generateVarsForAllObjectsOfInstance" />
+								<label for="generateVarsForAllObjectsOfInstance" class="translate">include all objects of the instance</label>
+							</div>
+							<div class="row">
+								<input type="checkbox" class="value" id="generateSetStateForReadOnly" />
+								<label for="generateSetStateForReadOnly" class="translate">generate setState for 'readonly' objects</label>
+							</div>
+						</div>
+						<div class="col s4">
+							<a id="btnJavascript" data-command="btnCreateJavascript" class="values-buttons btn-floating btn-large waves-effect waves-light" title="create javascript"><i class="material-icons">note_add</i></a>
+							<label id="labelBtnJavascript" class="translate" style="margin-left: 6px;">generate script</label>
+						</div>			
+					</div>
+				</div>
+				<div class="col s12 m12 l12 card">
+					<div class="card-content">
+						<span class="card-title translate">Overview of all linked objects</span>
+						<div class="row" style="margin-top: -20px">
+							<div class="col s2 input-field">
+								<input type="text" id="filterList" />
+								<label for="filterList" class="translate">browse the table</label>
+							</div>
+							<div class="col s2" style="margin-top: 20px">
+								<a id="repair" class="waves-effect waves-light btn-small"><i
+										class="material-icons left">play_for_work</i><span class="translate">repair</span></a>
+							</div>
+							<div class="col s7" style="margin-top: 15px">
+								<div class="loader" id="progressBar"></div>
+							</div>
+							<div class="col s1" style="text-align: end; margin-top: 60px; padding-right: 10px">
+								<label id="labelTableEntries" class="translate">0 / 0</label>
+							</div>
+						</div>
+						<div class="row" style="margin-top: -20px">
+							<div class="col s12" id="events">
+								<div class="row">
+									<div class="table-values-div">
+										<table class="table-values">
+											<thead>
+												<tr>
+													<th data-name="_index"></th>
+													<th data-name="isLinked" style="width: 80px; cursor:pointer"
+														data-style="width: 80px" data-type="checkbox" class="translate">is linked</th>
+													<th data-name="linkedId" data-desc="linkedName" data-type="text"
+														class="translate" style="cursor:pointer">id of linked object</th>
+													<th data-buttons="assignLink" style="width: 70px"></th>
+													<th data-buttons="removeLink" style="width: 70px"></th>
+													<th data-name="parentId" data-desc="parentName" data-type="text"
+														class="translate" style="cursor:pointer">linked with</th>
+													<th data-buttons="openCustom" style="width: 70px"></th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div>
+								<h6 id="noTableData" class="translate" style="text-align: center;">no linked objects available</h6>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 input-field">
+								<input type="checkbox" class="value" id="deleteDeadLinkedObjects" />
+								<label for="deleteDeadLinkedObjects" class="translate">delete objects that are no longer linked</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s12 m12 l12 card">
+					<div class="card-content">
+						<div style="display: flex; align-items: center; justify-content: center;"><span class="mdi mdi-coffee" style="font-size: 20px; color: #46a0e9; margin-right: 6px;"></span><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url" target="_blank" class="translate">You like the adapter? Then support us with a small donation.</a></div>
+					</div>
+				</div>			
 			</div>
-			<div class="row">
-				<div class="col s6 input-field">
-					<input type="checkbox" class="value" id="deleteDeadLinkedObjects" />
-					<label for="deleteDeadLinkedObjects" class="translate">delete objects that are no longer linked</label>
-				</div>				
-			</div>
+			<!-- Layout für Select Objekt Id Dialog -->
 		</div>
-		<!-- Layout für Select Objekt Id Dialog -->
 		<div id="dialog-select-member" class="modal modal-fixed-footer">
 			<div class="modal-content">
 				<div class="row">
@@ -217,7 +315,7 @@
 				<a class="modal-action modal-close waves-effect waves-green btn btn-close"><i
 						class="large material-icons left ">close</i><span class="translate">Cancel</span></a>
 			</div>
-		</div>
+		</div>		
 	</div>
 </body>
 
