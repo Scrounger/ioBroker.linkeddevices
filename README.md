@@ -45,6 +45,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 ### __WORK IN PROGRESS__
 * (Scrounger) show name of parent object in custom view
 * (Scrounger) buttons to use prefix and / or id as name added
+* (Scrounger) dependencies updated
 
 ### 1.2.2 (2020-08-23)
 * (Scrounger) moment bug fix
