@@ -1,3 +1,5 @@
-chore: release v1.2.2
+chore: release v1.3.0
 
-moment bug fix
+show name of parent object in custom view
+buttons to use prefix and / or id as name added
+dependencies updated

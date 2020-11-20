@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.2.2",
+        "version": "1.3.0",
         "news": {
+            "1.3.0": {
+                "en": "show name of parent object in custom view\nbuttons to use prefix and / or id as name added\ndependencies updated",
+                "de": "Namen des übergeordneten Objekts in der benutzerdefinierten Ansicht anzeigen\nSchaltflächen zur Verwendung von Präfix und / oder ID als hinzugefügtem Namen\nAbhängigkeiten aktualisiert",
+                "ru": "показать имя родительского объекта в пользовательском представлении\nкнопки для использования префикса и / или идентификатора в качестве добавленного имени\nзависимости обновлены",
+                "pt": "mostrar o nome do objeto pai na visualização personalizada\nbotões para usar prefixo e / ou id como nome adicionado\ndependências atualizadas",
+                "nl": "toon naam van bovenliggend object in aangepaste weergave\nknoppen om prefix en / of id te gebruiken als toegevoegde naam\nafhankelijkheden bijgewerkt",
+                "fr": "afficher le nom de l'objet parent dans la vue personnalisée\nboutons pour utiliser le préfixe et / ou l'identifiant comme nom ajouté\ndépendances mises à jour",
+                "it": "mostra il nome dell'oggetto padre nella visualizzazione personalizzata\npulsanti per utilizzare prefisso e / o id come nome aggiunto\ndipendenze aggiornate",
+                "es": "mostrar el nombre del objeto principal en la vista personalizada\nbotones para usar prefijo y / o identificación como nombre agregado\ndependencias actualizadas",
+                "pl": "pokaż nazwę obiektu nadrzędnego w widoku niestandardowym\nprzyciski do używania przedrostka i / lub identyfikatora jako dodanej nazwy\nzaktualizowane zależności",
+                "zh-cn": "在自定义视图中显示父对象的名称\n使用前缀和/或id作为名称的按钮\n依赖关系已更新"
+            },
             "1.2.2": {
                 "en": "moment bug fix",
                 "de": "Moment Bugfix",
@@ -230,18 +242,6 @@
                 "es": "número al convertidor booleano añadido",
                 "pl": "dodany konwerter liczby na logiczną",
                 "zh-cn": "添加了布尔转换器的数字"
-            },
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
             }
         },
         "title": "LinkedDevices",
