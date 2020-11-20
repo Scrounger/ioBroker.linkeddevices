@@ -1164,5 +1164,17 @@ systemDictionary = {
 		"es": "id como nombre",
 		"pl": "id jako nazwa",
 		"zh-cn": "id作为名字"
+	},
+	"parent name": {
+		"en": "name of object which is linked with",
+		"de": "Name des Objekts, mit dem verlinkt ist",
+		"ru": "имя объекта, который связан с",
+		"pt": "nome do objeto que está ligado a",
+		"nl": "naam van het object waarmee is verbonden",
+		"fr": "nom de l'objet lié à",
+		"it": "nome dell'oggetto a cui è collegato",
+		"es": "nombre del objeto que está vinculado con",
+		"pl": "nazwa obiektu, z którym jest powiązany",
+		"zh-cn": "与之链接的对象的名称"
 	}
 };
