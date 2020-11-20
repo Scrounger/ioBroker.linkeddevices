@@ -1140,5 +1140,29 @@ systemDictionary = {
 		"es": "ajustes",
 		"pl": "ustawienia",
 		"zh-cn": "设定"
+	},
+	"prefix_as_name": {
+		"en": "prefix as name",
+		"de": "Präfix als Name",
+		"ru": "префикс как имя",
+		"pt": "prefixo como nome",
+		"nl": "prefix als naam",
+		"fr": "préfixe comme nom",
+		"it": "prefisso come nome",
+		"es": "prefijo como nombre",
+		"pl": "prefiks jako nazwa",
+		"zh-cn": "前缀作为名称"
+	},
+	"id_as_name": {
+		"en": "id as name",
+		"de": "ID als Name",
+		"ru": "id как имя",
+		"pt": "id como nome",
+		"nl": "id als naam",
+		"fr": "id comme nom",
+		"it": "id come nome",
+		"es": "id como nombre",
+		"pl": "id jako nazwa",
+		"zh-cn": "id作为名字"
 	}
 };

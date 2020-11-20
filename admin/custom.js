@@ -200,6 +200,7 @@ if (typeof customPostInits !== 'undefined') {
             Input.number_to_duration_format = $div.find('input[data-field="number_to_duration_format"]');
             Input.number_to_datetime_convert_seconds = $div.find('input[data-field="number_to_datetime_convert_seconds"]');
             Input.number_to_datetime_format = $div.find('input[data-field="number_to_datetime_format"]');
+            Input.inputName = $div.find('#inputName');
 
             // Input: type 'boolean'
             Input.boolean_to_string_value_true = $div.find('input[data-field="boolean_to_string_value_true"]');
@@ -235,13 +236,14 @@ if (typeof customPostInits !== 'undefined') {
 
             // Buttons
             Button.parentObjectSettings = $div.find('.values-buttons');
+            Button.prefixAsName = $div.find('#prefixAsName');
+            Button.idAsName = $div.find('#idAsName');
 
             // DataList
             DataList.suggestionListPrefixId = $div.find('datalist[id="suggestionListPrefixId"]');
             DataList.suggestionListStateId = $div.find('datalist[id="suggestionListStateId"]');
             DataList.suggestionListName = $div.find('datalist[id="suggestionListName"]');
             DataList.suggestionListRole = $div.find('datalist[id="suggestionListRole"]');
-
         }
 
         async function intialize_Input_Suggestions() {
@@ -354,8 +356,6 @@ if (typeof customPostInits !== 'undefined') {
             if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean')) {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
-
-                console.error(currentObj);
 
                 if (currentObj.common.write === false && (type === 'number' || type === 'string')) {
                     Label.expertSettings.text(_("expert settings for linked object with type '%s'", _(currentObj.common.type) + " (read only)"));
@@ -699,6 +699,14 @@ if (typeof customPostInits !== 'undefined') {
                         Input.linkedId.val(stateId);
                     }
                 }
+            });
+
+            Button.prefixAsName.on('click', function () {
+                Input.inputName.val(Input.prefixId.val().replace(/\./g, ' '));
+            });
+
+            Button.idAsName.on('click', function () {
+                Input.inputName.val(Input.linkedId.val().replace(/\./g, ' '));
             });
         }
 

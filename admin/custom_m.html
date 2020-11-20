@@ -74,30 +74,34 @@
 							</div>
 							<div class="col s6">
 								<label class="translate">composite id of linked object</label>
-								<input type="text" data-field="linkedId" readonly /> 	
+								<input type="text" data-field="linkedId" readonly />
 							</div>
 						</div>
 						<div class="row">
 							<div class="col s4">
 								<label class="translate">name of linked object</label>
-								<input type="text" data-field="name" list="suggestionListName"/>
+								<input id="inputName" type="text" data-field="name" list="suggestionListName"/>
 								<datalist id="suggestionListName"></datalist>
 							</div>
+							<div class="col s2">
+								<a id="prefixAsName" class="waves-effect waves-light btn-small" style="width: 100%;"><i class="material-icons left">keyboard_arrow_left</i><span class="translate">prefix_as_name</span></a>
+								<a id="idAsName" class="waves-effect waves-light btn-small" style="margin-top: 12px; width: 100%;"><i class="material-icons left">keyboard_arrow_left</i><span class="translate">id_as_name</span></a>
+							</div>							
 							<div class="col s4">
 								<label class="translate" id="LB_role">change role '%s' in</label>
 								<input type="text" data-field="role" list="suggestionListRole"/>
 								<datalist id="suggestionListRole"></datalist>
-							</div>								
+							</div>
 						</div>
 						<div class="row">
 							<div class="col">
 								<input type="checkbox" data-field="mergeSettingsOnRestart"/>
-								<span class="translate">mergeSettingsOnRestart</span>			
-							</div>				
+								<span class="translate">mergeSettingsOnRestart</span>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>		
+			</div>
 				
 			<div class="col s12 m12 l12 card">
 				<div class="card-content">
@@ -112,7 +116,7 @@
 		
 						<div class="col s12" style="margin-bottom: 20px !important">
 							<input type="checkbox" data-field="expertSettings"/>
-							<span class="translate">enabled</span>			
+							<span class="translate">enabled</span>
 						</div>
 		
 						<div class="view_Number">
@@ -151,7 +155,7 @@
 										<div class="col s3 view_Number_conversion">
 											<label class="translate">calculation for linked object</label>
 											<input type="text" data-field="number_calculation">
-										</div>					
+										</div>
 										<div class="col s3 view_Number_conversion_readOnly">
 											<label class="translate">calculation for 'read' object</label>
 											<input type="text" data-field="number_calculation_readOnly">
@@ -200,7 +204,7 @@
 										<label class="translate">display format of the datetime</label>
 										<input type="text" data-field="number_to_datetime_format">
 										<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
-									</div>							
+									</div>
 								</div>
 								<div class="view_Number_Converter_Multi">
 									<div class="col s3">
@@ -232,7 +236,7 @@
 										</div>
 									</div>
 								</div>
-							</div>			
+							</div>
 						</div>
 			
 						<div class="view_String">
@@ -243,11 +247,11 @@
 									<option value="boolean" class="translate">boolean</option>
 									<option value="number" class="translate">number</option>
 									<option value="duration" class="translate">duration</option>
-									<option value="datetime" class="translate">datetime</option>							
+									<option value="datetime" class="translate">datetime</option>
 								</select>
 							</div>
 							<div class="col s10">
-								<div class="view_String_Converter_None">	
+								<div class="view_String_Converter_None">
 									<div class="row">
 										<div class="col s3">
 											<label class="translate">prefix string</label>
@@ -269,7 +273,7 @@
 											<label class="translate">string for 'false' of the linked object</label>
 											<input type="text" data-field="string_to_boolean_value_false">
 										</div>
-									</div>							
+									</div>
 								</div>
 								<div class="view_String_Converter_Number">
 									<div class="row">
@@ -286,12 +290,12 @@
 										<div class="col s3 view_String_to_Number_conversion">
 											<label class="translate">calculation for linked object</label>
 											<input type="text" data-field="string_to_number_calculation">
-										</div>					
+										</div>
 										<div class="col s3 view_String_to_Number_conversion_readOnly">
 											<label class="translate">calculation for 'read' object</label>
 											<input type="text" data-field="string_to_number_calculation_readOnly">
 										</div>
-									</div>							
+									</div>
 								</div>
 								<div class="view_String_Converter_String_Duration">
 									<div class="col s3">
@@ -305,17 +309,17 @@
 										<label class="translate">parser format</label>
 										<input type="text" data-field="string_to_datetime_parser">
 										<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
-									</div>							
+									</div>
 									<div class="col s3">
 										<label class="translate">display format of the datetime</label>
 										<input type="text" data-field="string_to_datetime_format">
 										<div><a href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="translate">more information (moment library)</a></div>
-									</div>						
-								</div>											
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>						
+				</div>
 			</div>
 		</div>
 	
@@ -337,13 +341,13 @@
 								<label class="translate">parent name</label>
 								<input type="text" id="IN_parentName" disabled="true" readonly>
 							</div>
-						</div>			
+						</div>
 					</div>
 					<div class="row">
 						<div class="col s2" />
 						<div class="col s0">
 							<a data-command="openCustom" class="values-buttons btn-floating btn-large waves-effect waves-light" title="Einstellungen des verlinkten Objektes"><i class="material-icons">build</i></a>
-						</div>			
+						</div>
 						<div class="col s9">
 							<h6 class="translate">settings can only be adjusted in the object to which it is linked!</h6>
 						</div>
@@ -366,8 +370,8 @@
 					<li class="tab myLinkBar col s6 l2"><a href="https://forum.iobroker.net/topic/22301/neuer-adapter-linkeddevices" target="_blank" class="translate">doc_forum</a></li>
 				</ul>
 			</div>
-		</div>		
-	</div>	
+		</div>
+	</div>
  </script>
 
  <script type="text/javascript" src="adapter/linkeddevices/custom.js">
