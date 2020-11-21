@@ -1,5 +1,4 @@
-chore: release v1.3.0
+chore: release v1.3.1
 
-show name of parent object in custom view
-buttons to use prefix and / or id as name added
-dependencies updated
+bug fix for change event of buttons to use prefix and / or id as name added
+option to select javascript instance where script should be created

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.3.0",
+        "version": "1.3.1",
         "news": {
+            "1.3.1": {
+                "en": "bug fix for change event of buttons to use prefix and / or id as name added\noption to select javascript instance where script should be created",
+                "de": "Fehlerbehebung für Änderungsereignis von Schaltflächen, um Präfix und / oder ID als hinzugefügten Namen zu verwenden\nOption zur Auswahl der Javascript-Instanz, in der das Skript erstellt werden soll",
+                "ru": "исправление ошибки для события изменения кнопок для использования префикса и / или идентификатора в качестве добавленного имени\nвозможность выбрать экземпляр javascript, в котором должен быть создан скрипт",
+                "pt": "correção de bug para mudança de evento de botões para usar prefixo e / ou id como nome adicionado\nopção para selecionar a instância javascript onde o script deve ser criado",
+                "nl": "bugfix voor veranderingsgebeurtenis van knoppen om prefix en / of id te gebruiken als toegevoegde naam\noptie om een javascript-instantie te selecteren waar het script moet worden gemaakt",
+                "fr": "correction de bogue pour l'événement de changement des boutons pour utiliser le préfixe et / ou l'identifiant comme nom ajouté\noption pour sélectionner l'instance javascript où le script doit être créé",
+                "it": "correzione di bug per evento di modifica dei pulsanti per utilizzare prefisso e / o ID come nome aggiunto\nopzione per selezionare l'istanza javascript in cui creare lo script",
+                "es": "corrección de errores para el evento de cambio de botones para usar prefijo y / o identificación como nombre agregado\nopción para seleccionar la instancia de javascript donde se debe crear el script",
+                "pl": "poprawka błędu zmiany zdarzenia przycisków, aby używały prefiksu i / lub identyfikatora jako dodanej nazwy\nmożliwość wybrania instancji javascript, w której ma zostać utworzony skrypt",
+                "zh-cn": "修正了按钮更改事件以使用前缀和/或id作为名称的错误修复程序\n选择应在其中创建脚本的javascript实例的选项"
+            },
             "1.3.0": {
                 "en": "show name of parent object in custom view\nbuttons to use prefix and / or id as name added\ndependencies updated",
                 "de": "Namen des übergeordneten Objekts in der benutzerdefinierten Ansicht anzeigen\nSchaltflächen zur Verwendung von Präfix und / oder ID als hinzugefügtem Namen\nAbhängigkeiten aktualisiert",
@@ -221,18 +233,6 @@
             },
             "0.2.1": {
                 "en": "boolean to string converter added, bug fixes",
-                "de": "number to boolean converter hinzugefügt",
-                "ru": "добавлено преобразование числа в булево",
-                "pt": "número para conversor booleano adicionado",
-                "nl": "number to boolean converter toegevoegd",
-                "fr": "nombre en convertisseur booléen ajouté",
-                "it": "numero al convertitore booleano aggiunto",
-                "es": "número al convertidor booleano añadido",
-                "pl": "dodany konwerter liczby na logiczną",
-                "zh-cn": "添加了布尔转换器的数字"
-            },
-            "0.2.0": {
-                "en": "number to boolean converter added",
                 "de": "number to boolean converter hinzugefügt",
                 "ru": "добавлено преобразование числа в булево",
                 "pt": "número para conversor booleano adicionado",
