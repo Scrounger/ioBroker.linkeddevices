@@ -702,11 +702,11 @@ if (typeof customPostInits !== 'undefined') {
             });
 
             Button.prefixAsName.on('click', function () {
-                Input.inputName.val(Input.prefixId.val().replace(/\./g, ' '));
+                Input.inputName.val(Input.prefixId.val().replace(/\./g, ' ')).trigger('change');
             });
 
             Button.idAsName.on('click', function () {
-                Input.inputName.val(Input.linkedId.val().replace(/\./g, ' '));
+                Input.inputName.val(Input.linkedId.val().replace(/\./g, ' ')).trigger('change');
             });
         }
 

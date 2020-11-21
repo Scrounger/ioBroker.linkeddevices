@@ -42,6 +42,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) bug fix for change event of buttons to use prefix and / or id as name added
+
 ### 1.3.0 (2020-11-20)
 * (Scrounger) show name of parent object in custom view
 * (Scrounger) buttons to use prefix and / or id as name added
