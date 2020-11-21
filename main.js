@@ -12,6 +12,7 @@ const fs = require('fs');
 
 const moment = require("moment");
 const momentDurationFormatSetup = require("moment-duration-format");
+momentDurationFormatSetup(moment);
 
 // Default values, falls system config nicht geladen werden kann
 var mySystemConfig = { language: "en", dateFormat: "DD.MM.YYYY", durationFormat: "dd[T] hh[h] mm[m]" };
@@ -1538,6 +1539,7 @@ class Linkeddevices extends utils.Adapter {
 							}
 						} catch (err) {
 							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
+							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
 							convertedValue = "Error";
 						}
 					}
@@ -1559,8 +1561,8 @@ class Linkeddevices extends utils.Adapter {
 								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
 							}
 						} catch (err) {
-							this.log.error(err.message);
 							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
+							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
 							convertedValue = "Error";
 						}
 					}
@@ -1725,8 +1727,9 @@ class Linkeddevices extends utils.Adapter {
 							convertedValue = moment.duration(convertedValue).format(targetObj.common.custom[this.namespace].string_to_duration_format, 0);
 
 							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].string_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-						} catch (err) {
+						} catch (err) {							
 							this.log.error(`[getConvertedValue] there is something wrong with your duration format, check your expert settings input for '${targetId}'!`);
+							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
 							convertedValue = "Error";
 						}
 					}
@@ -1744,6 +1747,7 @@ class Linkeddevices extends utils.Adapter {
 							}
 						} catch (err) {
 							this.log.error(`[getConvertedValue] there is something wrong with your datetime parser or format, check your expert settings input for '${targetId}'!`);
+							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
 							convertedValue = "Error";
 						}
 					}

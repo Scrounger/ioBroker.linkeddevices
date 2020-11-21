@@ -42,6 +42,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) moment-duration-format bug fix
+
 ### 1.3.1 (2020-11-21)
 * (Scrounger) bug fix for change event of buttons to use prefix and / or id as name added
 * (Scrounger) option to select javascript instance where script should be created
