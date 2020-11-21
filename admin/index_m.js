@@ -50,6 +50,8 @@ async function load(settings, onChange) {
         }
     });
 
+    generateJavascriptInstancesDropDown(settings);
+
     getIsAdapterAlive(function (isAlive) {
         // var $btnRefresh = $('.btn-refresh');
 
@@ -108,32 +110,50 @@ async function initialize_Divs() {
     //CheckBoxes
     Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
     Checkbox.generateSetStateForReadOnly = $('input[id="generateSetStateForReadOnly"]');
-
-    var javascriptAdapter = await getObject("system.adapter.javascript.0");
-    if (!javascriptAdapter) {
-        // Javascript Adapter ist nicht installiert -> Button deaktivieren und info anzeigen
-        Button.createJavaScript.attr('disabled', true);
-        Input.scriptName.attr('disabled', true);
-        Input.variableName.attr('disabled', true);
-        Checkbox.generateVarsForAllObjectsOfInstance.attr('disabled', true);
-        Checkbox.generateSetStateForReadOnly.attr('disabled', true);
-
-        Label.ButtonCreateJavaScript.text(_('javascript adapter is not installed'));
-    } else {
-        if (!Input.scriptName.val()) {
-            Input.scriptName.val(myNamespace);
-            $("label[for='scriptName']").addClass("active");        //overlapping bug fix
-        }
-        if (!Input.variableName.val()) {
-            Input.variableName.val(myNamespace.replace(".", ""));
-            $("label[for='variableName']").addClass("active");      //overlapping bug fix
-        }
-    }
 }
 
 //#region Table
 
 //#region Table Data
+function generateJavascriptInstancesDropDown(settings) {
+    socket.emit('getObjectView', 'system', 'instance', { startkey: 'system.adapter.javascript.', endkey: 'system.adapter.javascript.\u9999' }, function (err, doc) {
+        if (err) {
+            console.error(err);
+        } else {
+            if (doc.rows.length) {
+                var result = [];
+                for (var i = 0; i < doc.rows.length; i++) {
+                    result.push(doc.rows[i].value);
+                }
+
+                if (result.length > 0) {
+                    var text = '';
+                    for (var r = 0; r < result.length; r++) {
+                        var name = result[r]._id.substring('system.adapter.'.length);
+                        text += '<option value="' + name + '">' + name + '</option>';
+                    }
+
+                    if(settings.javascriptInstance && settings.javascriptInstance !== ''){
+                        $('#javascriptInstance').append(text).val(settings.javascriptInstance).select();
+                    }else{
+                        $('#javascriptInstance').append(text).val(result[0]._id.substring('system.adapter.'.length)).select();
+                    }
+                } else {
+                    var text = '';
+                    text += `<option value="">${_("not installed")}</option>`;
+                    $('#javascriptInstance').append(text).val('').select();
+
+                    $('.javascriptInstanceExist').find('input').each(function () {
+                        $(this).attr('disabled', 'disabled');
+                    });
+
+                    $('#btnJavascript').addClass('disabled')
+                }
+            }
+        }
+    });
+}
+
 async function createTable(onChange, filterText = null) {
     try {
 
@@ -1095,14 +1115,18 @@ async function tableOnReady() {
 function createJavascriptConfirm() {
     confirmMessage(_('After the script has been generated, the javascript adapter will be restarted!<br><br><br>Do you want to continue?'), _('attention'), null, [_('Cancel'), _('OK')], function (result) {
         if (result === 1) {
+            
             createJavascript();
         }
+
+        console.warn($('#javascriptInstance').val());
     });
 }
 
 async function createJavascript() {
     try {
-        var javascriptAdapter = await getObject("system.adapter.javascript.0");
+        let selectedJavascriptInstance = $('#javascriptInstance').val();
+        var javascriptAdapter = await getObject(`system.adapter.${selectedJavascriptInstance}`);
         if (javascriptAdapter) {
             // sofern javascript instanz vorhanden ist
 
@@ -1184,7 +1208,7 @@ async function createJavascript() {
                         name: Input.scriptName.val(),
                         expert: true,
                         engineType: "Javascript/js",
-                        engine: "system.adapter.javascript.0",
+                        engine: `system.adapter.${selectedJavascriptInstance}`,
                         source: autoScript,
                         debug: false,
                         verbose: false,

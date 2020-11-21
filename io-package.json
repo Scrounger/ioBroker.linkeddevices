@@ -318,7 +318,8 @@
         "scriptName": "",
         "variableName": "",
         "generateVarsForAllObjectsOfInstance": false,
-        "generateSetStateForReadOnly": false
+        "generateSetStateForReadOnly": false,
+        "javascriptInstance": ""
     },
     "objects": [],
     "instanceObjects": [

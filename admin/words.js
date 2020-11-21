@@ -1176,5 +1176,29 @@ systemDictionary = {
 		"es": "nombre del objeto que está vinculado con",
 		"pl": "nazwa obiektu, z którym jest powiązany",
 		"zh-cn": "与之链接的对象的名称"
+	},
+	"SelectJavascriptInstance": {
+		"en": "Javascript Instance",
+		"de": "Javascript Instanz",
+		"ru": "Экземпляр Javascript",
+		"pt": "Instância Javascript",
+		"nl": "Javascript-instantie",
+		"fr": "Instance Javascript",
+		"it": "Istanza Javascript",
+		"es": "Instancia de Javascript",
+		"pl": "Instancja JavaScript",
+		"zh-cn": "JavaScript实例"
+	},
+	"not installed": {
+		"en": "not installed",
+		"de": "nicht installiert",
+		"ru": "не установлено",
+		"pt": "não instalado",
+		"nl": "niet geïnstalleerd",
+		"fr": "pas installé",
+		"it": "non installato",
+		"es": "no instalado",
+		"pl": "nie zainstalowany",
+		"zh-cn": "未安装"
 	}
 };
