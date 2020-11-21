@@ -42,7 +42,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 1.3.2 (2020-11-21)
 * (Scrounger) moment-duration-format bug fix
 
 ### 1.3.1 (2020-11-21)

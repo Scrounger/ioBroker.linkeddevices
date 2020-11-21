@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.3.1",
+        "version": "1.3.2",
         "news": {
+            "1.3.2": {
+                "en": "moment-duration-format bug fix",
+                "de": "Fehlerbehebung im Moment-Dauer-Format",
+                "ru": "исправление ошибки формата времени-продолжительности",
+                "pt": "correção de bug no formato da duração do momento",
+                "nl": "bugfix voor moment-duur-formaat",
+                "fr": "correction de bogue au format moment-durée",
+                "it": "correzione di bug del formato della durata del momento",
+                "es": "corrección de errores de formato de duración de momento",
+                "pl": "poprawka błędu formatu czasu trwania",
+                "zh-cn": "矩持续时间格式错误修复"
+            },
             "1.3.1": {
                 "en": "bug fix for change event of buttons to use prefix and / or id as name added\noption to select javascript instance where script should be created",
                 "de": "Fehlerbehebung für Änderungsereignis von Schaltflächen, um Präfix und / oder ID als hinzugefügten Namen zu verwenden\nOption zur Auswahl der Javascript-Instanz, in der das Skript erstellt werden soll",
@@ -230,18 +242,6 @@
                 "es": "Vista general de dispositivos vinculados agregada a la configuración del adaptador",
                 "pl": "przegląd połączonych urządzeń dodany do konfiguracji adaptera",
                 "zh-cn": "链接设备概述添加到适配器配置"
-            },
-            "0.2.1": {
-                "en": "boolean to string converter added, bug fixes",
-                "de": "number to boolean converter hinzugefügt",
-                "ru": "добавлено преобразование числа в булево",
-                "pt": "número para conversor booleano adicionado",
-                "nl": "number to boolean converter toegevoegd",
-                "fr": "nombre en convertisseur booléen ajouté",
-                "it": "numero al convertitore booleano aggiunto",
-                "es": "número al convertidor booleano añadido",
-                "pl": "dodany konwerter liczby na logiczną",
-                "zh-cn": "添加了布尔转换器的数字"
             }
         },
         "title": "LinkedDevices",
