@@ -319,7 +319,10 @@
         "variableName": "",
         "generateVarsForAllObjectsOfInstance": false,
         "generateSetStateForReadOnly": false,
-        "javascriptInstance": ""
+        "javascriptInstance": "",
+        "prefixFromFunctionOrRoom": false,
+        "prefixAsName": false,
+        "idAsName": false        
     },
     "objects": [],
     "instanceObjects": [

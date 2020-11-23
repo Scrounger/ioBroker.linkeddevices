@@ -352,7 +352,9 @@ if (typeof customPostInits !== 'undefined') {
                     // ParentObject ist noch nicht verlinkt
                     var objId = currentObj._id;
 
-
+                    if (instanceObj.native.prefixFromFunctionOrRoom) {
+                        getPrefixFromFunctionOrRoom(objId);
+                    }
 
                     // stateId des ParentObjects holen
                     Input.stateId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
@@ -718,7 +720,7 @@ if (typeof customPostInits !== 'undefined') {
             });
 
             Button.prefixFromFunctionOrRoom.on('click', function () {
-                getPrefixFromFunctionOrRoom(currentObj._id);                
+                getPrefixFromFunctionOrRoom(currentObj._id);
             });
         }
 

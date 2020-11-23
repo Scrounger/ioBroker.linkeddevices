@@ -1212,5 +1212,41 @@ systemDictionary = {
 		"es": "Función y sala",
 		"pl": "Funkcja i pomieszczenie",
 		"zh-cn": "功能和房间"
+	},
+	"createPrefixFromFunctionOrRoom": {
+		"en": "use function and room to create automatically prefix for id",
+		"de": "Funktion und Raum verwenden, um automatisch ein Präfix für die ID zu erstellen",
+		"ru": "используйте функцию и место для автоматического создания префикса для идентификатора",
+		"pt": "use função e espaço para criar prefixo automático para id",
+		"nl": "gebruik functie en ruimte om automatisch een prefix voor id te maken",
+		"fr": "utiliser la fonction et la pièce pour créer automatiquement un préfixe pour l'id",
+		"it": "usa funzione e room per creare automaticamente il prefisso per id",
+		"es": "use la función y el espacio para crear automáticamente el prefijo para la identificación",
+		"pl": "użyj funkcji i pomieszczenia, aby automatycznie utworzyć prefiks dla identyfikatora",
+		"zh-cn": "使用功能和空间为ID自动创建前缀"
+	},
+	"usePrefixAsName": {
+		"en": "use prefix for id automatically as name",
+		"de": "Automatisch das Präfix für die ID als Namen verwenden",
+		"ru": "использовать префикс для идентификатора автоматически в качестве имени",
+		"pt": "use prefixo para id automaticamente como nome",
+		"nl": "gebruik prefix voor id automatisch als naam",
+		"fr": "utiliser automatiquement le préfixe pour l'identifiant comme nom",
+		"it": "usa automaticamente il prefisso per id come nome",
+		"es": "use el prefijo para la identificación automáticamente como nombre",
+		"pl": "użyj prefiksu dla id automatycznie jako nazwa",
+		"zh-cn": "将id的前缀自动用作名称"
+	},
+	"includeIdAlsoInName": {
+		"en": "include id for automatic names",
+		"de": "ID für automatischen Namen mit einbeziehen",
+		"ru": "включить идентификатор для автоматических имен",
+		"pt": "incluir id para nomes automáticos",
+		"nl": "inclusief id voor automatische namen",
+		"fr": "inclure l'ID pour les noms automatiques",
+		"it": "includi l'ID per i nomi automatici",
+		"es": "incluir id para nombres automáticos",
+		"pl": "dołącz identyfikator dla nazw automatycznych",
+		"zh-cn": "包含自动名称的ID"
 	}
 };
