@@ -231,16 +231,16 @@ systemDictionary = {
 		"zh-cn": "数"
 	},
 	"not allowed chars for Id": {
-		"en": "not allowed chars for Id!<br><br>Not Allowed chars: * ? \" ' [ ]",
-		"de": "Nicht erlaubte Zeichen für Id!<br><br>Nicht erlaubte Zeichen: * ? \" ' [ ]",
-		"ru": "Запрещенные символы для идентификатора! <br> <br> Недопустимые символы: *? \\ \"'[]",
-		"pt": "não permitido chars para Id! <br> <br> Não é permitido chars: *? \\ \"'[]",
-		"nl": "niet toegestane tekens voor ID! <br> <br> Niet toegestaan ​​tekens: *? \\ \"'[]",
-		"fr": "caractères non autorisés pour Id! <br> <br> Caractères non autorisés: *? \\ \"'[]",
-		"it": "caratteri non consentiti per ID! <br> <br> Caratteri non consentiti: *? \\ \"'[]",
-		"es": "caracteres no permitidos para Id! <br> <br> caracteres no permitidos: *? \\ \"'[]",
-		"pl": "niedozwolone znaki dla Id! <br> <br> Nie dozwolone znaki: *? „” []",
-		"zh-cn": "id不允许使用字符！<br> <br>不允许使用字符：*？ \\''[]"
+		"en": "not allowed chars for Id!<br><br>Not Allowed chars: %s",
+		"de": "Zeichen für Id nicht erlaubt!<br><br> Nicht erlaubte Zeichen: %s ",
+		"ru": "недопустимые символы для Id!<br><br> Запрещенные символы: %s ",
+		"pt": "não são permitidos caracteres para o Id!<br><br> Caracteres não permitidos: %s ",
+		"nl": "niet toegestane tekens voor Id!<br><br> Niet toegestane tekens: %s ",
+		"fr": "caractères non autorisés pour l'Id!<br><br> Caractères non autorisés: %s ",
+		"it": "caratteri non consentiti per Id!<br><br> Caratteri non consentiti: %s ",
+		"es": "No se permiten caracteres para Id.<br><br> Caracteres no permitidos: %s ",
+		"pl": "niedozwolone znaki dla Id!<br><br> Niedozwolone znaki: %s ",
+		"zh-cn": "不允许将字符用作ID！<br><br>不允许的字符：％s"
 	},
 	"do not convert": {
 		"en": "do not convert",

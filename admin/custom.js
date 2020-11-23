@@ -30,6 +30,9 @@ var currentState = gMain.states[gMain.navigateGetParams()];
 // Namespace 
 var myNamespace = '';
 
+var notAllowedSigns = /[*?"'`´,;:<>#{}ß\[\]\s]/;
+var notAllowedSignsReadable = "'" + notAllowedSigns.toString().replace(/\\/g, '').replace('s', ' ').replace('/[', '').replace(']/', '') + "'";
+
 if (typeof defaults !== 'undefined') {
     defaults.linkeddevices = function (obj, instanceObj) {
         return {
@@ -661,12 +664,10 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.prefixId.on('input', function () {
                 // Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
-                let notAllowedSigns = /[*?"'\[\]]/;
-
                 if (this.value.length > 0 && notAllowedSigns.test(this.value)) {
                     // prüfen auf zulässige Zeichen
                     this.value = this.value.replace(notAllowedSigns, '');
-                    gMain.showError(_("not allowed chars for Id"));
+                    gMain.showError(_("not allowed chars for Id", notAllowedSignsReadable));
                 } else {
                     // 'linkedId' zusammensetzen
                     let prefixId = Input.prefixId.val();
@@ -682,12 +683,10 @@ if (typeof customPostInits !== 'undefined') {
 
             Input.stateId.on('input', function () {
                 // Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
-                let notAllowedSigns = /[*?"'\[\]]/;
-
                 if (this.value.length > 0 && notAllowedSigns.test(this.value)) {
                     // prüfen auf zulässige Zeichen
                     this.value = this.value.replace(notAllowedSigns, '');
-                    gMain.showError(_("not allowed chars for Id"));
+                    gMain.showError(_("not allowed chars for Id", notAllowedSignsReadable));
                 } else {
                     // Bei Eingabe 'linkedId' zusammensetzen und prüfen auf erlaubte Zeichen
                     let prefixId = Input.prefixId.val();
