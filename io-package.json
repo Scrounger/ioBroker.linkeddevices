@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.3.2",
+        "version": "1.4.0",
         "news": {
+            "1.4.0": {
+                "en": "custom settings: button added to generate prefixId from function and room\nadapter settings: automatically generate prefixId from function and room\nadapter settings: automatically use prefix and optional id as name\nbug fixes",
+                "de": "Benutzerdefinierte Einstellungen: Schaltfläche hinzugefügt, um Präfix-ID aus Funktion und Raum zu generieren\nAdaptereinstellungen: Generieren Sie automatisch eine Präfix-ID aus Funktion und Raum\nAdaptereinstellungen: Verwenden Sie automatisch das Präfix und die optionale ID als Namen\nFehlerbehebung",
+                "ru": "пользовательские настройки: добавлена кнопка для генерации prefixId из функции и комнаты\nнастройки адаптера: автоматически генерировать prefixId из функции и комнаты\nнастройки адаптера: автоматически использовать префикс и необязательный идентификатор в качестве имени\nисправление ошибок",
+                "pt": "configurações personalizadas: botão adicionado para gerar prefixId de função e sala\nconfigurações do adaptador: gere automaticamente prefixId da função e da sala\nconfigurações do adaptador: use automaticamente prefixo e id opcional como nome\ncorreção de bugs",
+                "nl": "aangepaste instellingen: knop toegevoegd om prefixId te genereren vanuit functie en kamer\nadapterinstellingen: automatisch prefixId genereren uit functie en kamer\nadapterinstellingen: gebruik automatisch prefix en optionele id als naam\nbugfixes",
+                "fr": "paramètres personnalisés: bouton ajouté pour générer prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: générer automatiquement prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: utilisez automatiquement le préfixe et l'ID facultatif comme nom\ncorrections de bogues",
+                "it": "impostazioni personalizzate: pulsante aggiunto per generare prefixId dalla funzione e dalla stanza\nimpostazioni adattatore: genera automaticamente prefixId dalla funzione e dalla stanza\nimpostazioni dell'adattatore: usa automaticamente il prefisso e l'ID opzionale come nome\ncorrezioni di bug",
+                "es": "configuración personalizada: botón agregado para generar prefixId de función y sala\nconfiguración del adaptador: genera automáticamente prefixId desde la función y la habitación\nconfiguración del adaptador: use automáticamente el prefijo y la identificación opcional como nombre\ncorrección de errores",
+                "pl": "ustawienia niestandardowe: dodano przycisk do generowania prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie generuj prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie użyj przedrostka i opcjonalnego identyfikatora jako nazwy\npoprawki błędów",
+                "zh-cn": "自定义设置：添加了按钮以从功能和房间生成prefixId\n适配器设置：根据功能和房间自动生成prefixId\n适配器设置：自动使用前缀和可选ID作为名称\nbug修复"
+            },
             "1.3.2": {
                 "en": "moment-duration-format bug fix",
                 "de": "Fehlerbehebung im Moment-Dauer-Format",
@@ -230,18 +242,6 @@
                 "es": "más configuración de expertos añadidos. Configurar prefijo / sufijo para cadena. Convierta el número de solo lectura en duración, fecha, hora o fecha y hora. Algunas correcciones de errores.",
                 "pl": "dodano więcej ustawień ekspertów. Skonfiguruj prefiks / sufiks dla łańcucha. Konwertuj liczbę tylko do czasu trwania, daty, godziny lub daty / godziny. niektóre poprawki błędów.",
                 "zh-cn": "更多专家设置。配置字符串的前缀/后缀。将数字只读转换为持续时间，日期，时间或日期时间。一些错误修复。"
-            },
-            "0.3.0": {
-                "en": "linked devices overview added to adapter configuration",
-                "de": "Übersicht über verlinkte Objekte zur Adapterkonfiguration hinzugefügt",
-                "ru": "обзор связанных устройств добавлен в конфигурацию адаптера",
-                "pt": "Visão geral de dispositivos vinculados adicionada à configuração do adaptador",
-                "nl": "Overzicht gekoppelde apparaten toegevoegd aan adapterconfiguratie",
-                "fr": "aperçu des périphériques liés ajouté à la configuration de l'adaptateur",
-                "it": "Panoramica dei dispositivi collegati aggiunta alla configurazione dell'adattatore",
-                "es": "Vista general de dispositivos vinculados agregada a la configuración del adaptador",
-                "pl": "przegląd połączonych urządzeń dodany do konfiguracji adaptera",
-                "zh-cn": "链接设备概述添加到适配器配置"
             }
         },
         "title": "LinkedDevices",
@@ -322,7 +322,7 @@
         "javascriptInstance": "",
         "prefixFromFunctionOrRoom": false,
         "prefixAsName": false,
-        "idAsName": false        
+        "idAsName": false
     },
     "objects": [],
     "instanceObjects": [
