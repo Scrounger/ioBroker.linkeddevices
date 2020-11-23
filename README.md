@@ -42,6 +42,12 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) custom settings: button added to generate prefixId from function and room
+* (Scrounger) adapter settings: automatically generate prefixId from function and room
+* (Scrounger) adapter settings: automatically use prefix and optional id as name
+* (Scrounger) bug fixes
+
 ### 1.3.2 (2020-11-21)
 * (Scrounger) moment-duration-format bug fix
 
