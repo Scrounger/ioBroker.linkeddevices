@@ -722,6 +722,22 @@ if (typeof customPostInits !== 'undefined') {
             Button.prefixFromFunctionOrRoom.on('click', function () {
                 getPrefixFromFunctionOrRoom(currentObj._id);
             });
+
+            Input.prefixId.change(function () {
+                if (instanceObj.native.prefixAsName && instanceObj.native.idAsName) {
+                    Input.inputName.val(Input.prefixId.val().replace(/\./g, ' ') + ' ' + Input.stateId.val().replace(/\./g, ' ')).trigger('change');
+                } else if (instanceObj.native.prefixAsName) {
+                    Input.inputName.val(Input.prefixId.val().replace(/\./g, ' ')).trigger('change');
+                }
+            });
+
+            Input.stateId.change(function () {
+                if (instanceObj.native.prefixAsName && instanceObj.native.idAsName) {
+                    Input.inputName.val(Input.prefixId.val().replace(/\./g, ' ') + ' ' + Input.stateId.val().replace(/\./g, ' ')).trigger('change');
+                } else if (instanceObj.native.prefixAsName) {
+                    Input.inputName.val(Input.prefixId.val().replace(/\./g, ' ')).trigger('change');
+                }
+            });
         }
 
         function events_ExpertSettings() {

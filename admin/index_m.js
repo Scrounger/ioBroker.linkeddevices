@@ -52,20 +52,16 @@ async function load(settings, onChange) {
 
     generateJavascriptInstancesDropDown(settings);
 
-    getIsAdapterAlive(function (isAlive) {
-        // var $btnRefresh = $('.btn-refresh');
-
-        // $btnRefresh.on('click', function () {
-        // 	readLinkedObjects();
-        // });
-    });
-
     // Divs in vars packen
     initialize_Divs();
 
     // Table erzeugen
     $(`th[data-name=${currentSort}]`).text(`${$(`th[data-name=${currentSort}]`).text()} ▴`);
     createTable(onChange);
+
+    if (!settings.prefixAsName) {
+        $('#idAsName').attr('disabled', 'disabled');
+    }
 
     // GUI Events
     await events(onChange);
@@ -110,6 +106,8 @@ async function initialize_Divs() {
     //CheckBoxes
     Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
     Checkbox.generateSetStateForReadOnly = $('input[id="generateSetStateForReadOnly"]');
+    Checkbox.idAsName = $('input[id="idAsName"]');
+    Checkbox.prefixAsName = $('input[id="prefixAsName"]');
 }
 
 //#region Table
@@ -133,9 +131,9 @@ function generateJavascriptInstancesDropDown(settings) {
                         text += '<option value="' + name + '">' + name + '</option>';
                     }
 
-                    if(settings.javascriptInstance && settings.javascriptInstance !== ''){
+                    if (settings.javascriptInstance && settings.javascriptInstance !== '') {
                         $('#javascriptInstance').append(text).val(settings.javascriptInstance).select();
-                    }else{
+                    } else {
                         $('#javascriptInstance').append(text).val(result[0]._id.substring('system.adapter.'.length)).select();
                     }
                 } else {
@@ -1034,6 +1032,14 @@ async function events(onChange) {
             sortData(tableData, SORT.isLinked, onChange);
         });
 
+        $('#prefixAsName').change(function () {
+            if ($(this).is(':checked')) {
+                Checkbox.idAsName.removeAttr('disabled');
+            } else {
+                Checkbox.idAsName.attr('disabled', 'disabled');
+            }
+        });
+
         // filter list
         await $('input[id="filterList"').on('input', function () {
             let text = $(this).val();
@@ -1115,11 +1121,8 @@ async function tableOnReady() {
 function createJavascriptConfirm() {
     confirmMessage(_('After the script has been generated, the javascript adapter will be restarted!<br><br><br>Do you want to continue?'), _('attention'), null, [_('Cancel'), _('OK')], function (result) {
         if (result === 1) {
-            
             createJavascript();
         }
-
-        console.warn($('#javascriptInstance').val());
     });
 }
 
