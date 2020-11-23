@@ -1200,5 +1200,17 @@ systemDictionary = {
 		"es": "no instalado",
 		"pl": "nie zainstalowany",
 		"zh-cn": "未安装"
+	},
+	"prefixFromFunctionOrRoom": {
+		"en": "Function and room",
+		"de": "Funktion und Raum",
+		"ru": "Функция и комната",
+		"pt": "Função e sala",
+		"nl": "Functie en ruimte",
+		"fr": "Fonction et pièce",
+		"it": "Funzione e spazio",
+		"es": "Función y sala",
+		"pl": "Funkcja i pomieszczenie",
+		"zh-cn": "功能和房间"
 	}
 };

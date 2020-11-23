@@ -30,7 +30,9 @@ var currentState = gMain.states[gMain.navigateGetParams()];
 // Namespace 
 var myNamespace = '';
 
-var notAllowedSigns = /[*?"'`´,;:<>#{}ß\[\]\s]/;
+var currentLanguage = gMain.systemConfig.common.language;
+
+var notAllowedSigns = /[*?"'`´,;:<>#/{}ß\[\]\s]/;
 var notAllowedSignsReadable = "'" + notAllowedSigns.toString().replace(/\\/g, '').replace('s', ' ').replace('/[', '').replace(']/', '') + "'";
 
 if (typeof defaults !== 'undefined') {
@@ -108,7 +110,7 @@ if (typeof customPostInits !== 'undefined') {
         initialize_Divs();
 
 
-        if (values["isLinked"] != undefined) {
+        if (values["isLinked"] !== undefined) {
             // Custom Dialog für LinkedObject
             initialize_LinkedObject();
 
@@ -241,6 +243,7 @@ if (typeof customPostInits !== 'undefined') {
             Button.parentObjectSettings = $div.find('.values-buttons');
             Button.prefixAsName = $div.find('#prefixAsName');
             Button.idAsName = $div.find('#idAsName');
+            Button.prefixFromFunctionOrRoom = $div.find('#prefixFromFunctionOrRoom');
 
             // DataList
             DataList.suggestionListPrefixId = $div.find('datalist[id="suggestionListPrefixId"]');
@@ -321,7 +324,6 @@ if (typeof customPostInits !== 'undefined') {
             Input.parentId.val(values["parentId"]);
 
             let obj = await getObject(values["parentId"]);
-            console.log(obj);
             if (obj && obj.common && obj.common.name) {
                 Input.parentName.val(obj.common.name);
             } else {
@@ -329,29 +331,36 @@ if (typeof customPostInits !== 'undefined') {
             }
         }
 
-        function initialize_ParentObject() {
-            // Custom Dialog für ParentObject: Views initialisieren
-            Group.parentObject.show();
-            Group.linkedObject.hide();
+        async function initialize_ParentObject() {
+            try {
+                // Custom Dialog für ParentObject: Views initialisieren
+                Group.parentObject.show();
+                Group.linkedObject.hide();
 
-            if (values["linkedId"]) {
-                // ParentObject ist verlinkt
-                var linkedId = values["linkedId"];
+                if (values["linkedId"]) {
+                    // ParentObject ist verlinkt
+                    var linkedId = values["linkedId"];
 
-                // linkedId aufteilen in prefix & stateId
-                if (values["linkedId"].indexOf(".") > 0) {
-                    Input.stateId.val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
-                    Input.prefixId.val(linkedId.substring(0, linkedId.lastIndexOf(".")));
-                } else {
-                    Input.stateId.val(linkedId);
+                    // linkedId aufteilen in prefix & stateId
+                    if (values["linkedId"].indexOf(".") > 0) {
+                        Input.stateId.val(linkedId.substring(linkedId.lastIndexOf(".") + 1, linkedId.length));
+                        Input.prefixId.val(linkedId.substring(0, linkedId.lastIndexOf(".")));
+                    } else {
+                        Input.stateId.val(linkedId);
+                    }
+                } else if (currentObj && currentObj._id) {
+                    // ParentObject ist noch nicht verlinkt
+                    var objId = currentObj._id;
+
+
+
+                    // stateId des ParentObjects holen
+                    Input.stateId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+                    Input.linkedId.val(Input.prefixId.val() + '.' + objId.substring(objId.lastIndexOf(".") + 1, objId.length));
                 }
-            } else if (currentObj && currentObj._id) {
-                // ParentObject ist noch nicht verlinkt
-                var objId = currentObj._id;
 
-                // stateId des ParentObjects holen
-                Input.stateId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-                Input.linkedId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+            } catch (err) {
+                console.error(`[initialize_ParentObject] error: ${err.message}, stack: ${err.stack}`);
             }
         }
 
@@ -707,6 +716,10 @@ if (typeof customPostInits !== 'undefined') {
             Button.idAsName.on('click', function () {
                 Input.inputName.val(Input.linkedId.val().replace(/\./g, ' ')).trigger('change');
             });
+
+            Button.prefixFromFunctionOrRoom.on('click', function () {
+                getPrefixFromFunctionOrRoom(currentObj._id);                
+            });
         }
 
         function events_ExpertSettings() {
@@ -927,6 +940,7 @@ if (typeof customPostInits !== 'undefined') {
                 });
             });
         }
+
         async function getObject(pattern) {
             return new Promise((resolve, reject) => {
                 gMain.socket.emit('getObject', pattern, function (err, res) {
@@ -938,6 +952,66 @@ if (typeof customPostInits !== 'undefined') {
                 });
             });
         }
+
+        async function getPrefixFromFunctionOrRoom(objId) {
+            let objectWithEnums = await getForeignObjects(objId);
+            if (objectWithEnums && Object.keys(objectWithEnums).length === 1) {
+                let enums = objectWithEnums[Object.keys(objectWithEnums)[0]].enums
+
+                let functions = Object.keys(enums).filter(key => key.includes('functions'));
+                let rooms = Object.keys(enums).filter(key => key.includes('rooms'));
+
+                let prefixIdArray = [];
+                if (functions && functions.length > 0) {
+                    for (const item of functions) {
+                        let func = enums[item];
+                        if (typeof func === 'object') {
+                            prefixIdArray.push(func[currentLanguage].replace(notAllowedSigns, '_'));
+                        } else {
+                            prefixIdArray.push(func.replace(notAllowedSigns, '_'));
+                        }
+                    }
+                }
+
+                if (rooms && rooms.length > 0) {
+                    for (const item of rooms) {
+                        let room = enums[item]
+                        if (typeof room === 'object') {
+                            prefixIdArray.push(room[currentLanguage].replace(notAllowedSigns, '_'));
+                        } else {
+                            prefixIdArray.push(room.replace(notAllowedSigns, '_'));
+                        }
+                    }
+                }
+
+                if (prefixIdArray && prefixIdArray.length > 0) {
+                    Input.prefixId.val(replaceUmlaute(prefixIdArray.join('.'))).trigger('change');
+                    Input.linkedId.val(Input.prefixId.val() + '.' + objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+                }
+            }
+        }
+
+        function replaceUmlaute(str) {
+            const umlautMap = {
+                '\u00dc': 'UE',
+                '\u00c4': 'AE',
+                '\u00d6': 'OE',
+                '\u00fc': 'ue',
+                '\u00e4': 'ae',
+                '\u00f6': 'oe',
+                '\u00df': 'ss',
+            }
+
+            return str
+                .replace(/[\u00dc|\u00c4|\u00d6][a-z]/g, (a) => {
+                    const big = umlautMap[a.slice(0, 1)];
+                    return big.charAt(0) + big.charAt(1).toLowerCase() + a.slice(1);
+                })
+                .replace(new RegExp('[' + Object.keys(umlautMap).join('|') + ']', "g"),
+                    (a) => umlautMap[a]
+                );
+        }
+
         //#endregion
     }
 }
