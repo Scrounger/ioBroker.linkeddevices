@@ -16,3 +16,4 @@ admin/i18n/*/flat.txt
 /wordsFromAdmin.js
 system.config.json
 *.code-workspace
+package-lock.json
