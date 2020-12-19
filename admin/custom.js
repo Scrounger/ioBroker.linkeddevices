@@ -1,20 +1,12 @@
-// $.get("adapter/linkeddevices/words.js", function (script) {
-// 	let translation = script.substring(script.indexOf('{'), script.length);
-// 	translation = translation.substring(0, translation.lastIndexOf(';'));
-// 	$.extend(systemDictionary, JSON.parse(translation));
-// });
-
-// $.get({
-//     url: 'adapter/linkeddevices/words.js',
-//     success: function (result) {
-//         if (result.isOk) {
-//             let translation = script.substring(script.indexOf('{'), script.length);
-//             translation = translation.substring(0, translation.lastIndexOf(';'));
-//             $.extend(systemDictionary, JSON.parse(translation));
-//         }
-//     },
-//     async: false
-// })
+$.get({
+    url: 'adapter/linkeddevices/words.js',
+    success: function (script) {
+        let translation = script.substring(script.indexOf('{'), script.length);
+        translation = translation.substring(0, translation.lastIndexOf('};') + 1);
+        $.extend(systemDictionary, JSON.parse(translation));
+    },
+    async: false
+});
 
 // There are two ways how to predefine default settings:
 // - with attribute "data-default" (content independent)
@@ -46,26 +38,6 @@ if (typeof defaults !== 'undefined') {
 
 if (typeof customPostInits !== 'undefined') {
     customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
-
-        // $.get("adapter/linkeddevices/words.js", function (script) {
-        //     let translation = script.substring(script.indexOf('{'), script.length);
-        //     translation = translation.substring(0, translation.lastIndexOf(';'));
-        //     $.extend(systemDictionary, JSON.parse(translation));
-        // });
-
-        $.get({
-            url: 'adapter/linkeddevices/words.js',
-            success: function (result) {
-                if (result.isOk) {
-                    let translation = script.substring(script.indexOf('{'), script.length);
-                    translation = translation.substring(0, translation.lastIndexOf(';'));
-                    $.extend(systemDictionary, JSON.parse(translation));
-                }
-            },
-            async: false
-        })
-
-        //$div.find('input[id="test"]').val(JSON.stringify(list))
 
         // Namespace holen
         myNamespace = instanceObj._id.replace("system.adapter.", "");
