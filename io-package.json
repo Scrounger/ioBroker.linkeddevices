@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.4.0",
+        "version": "1.4.1",
         "news": {
+            "1.4.1": {
+                "en": "bug fix custom dialog incompatibilty with other adapters\nbug fix for translation load\nbug fix for id on custom dialog load",
+                "de": "Fehlerbehebung beim benutzerdefinierten Dialogfeld, das nicht mit anderen Adaptern kompatibel ist\nFehlerbehebung für das Laden der Übersetzung\nFehlerbehebung für ID beim Laden eines benutzerdefinierten Dialogfelds",
+                "ru": "Исправлена ошибка несовместимости настраиваемого диалогового окна с другими адаптерами\nисправление ошибки для загрузки перевода\nисправление ошибки для идентификатора при загрузке настраиваемого диалогового окна",
+                "pt": "bug correção incompatibilidade de diálogo personalizado com outros adaptadores\ncorreção de bug para carregamento de tradução\ncorreção de bug para id no carregamento de diálogo personalizado",
+                "nl": "bug fix aangepaste dialoog incompatibiliteit met andere adapters\nbugfix voor het laden van vertalingen\nbugfix voor id bij het laden van aangepaste dialoogvensters",
+                "fr": "correction de bogue incompatibilité des boîtes de dialogue personnalisées avec d'autres adaptateurs\ncorrection de bogue pour le chargement de la traduction\ncorrection de bogue pour l'ID lors du chargement de la boîte de dialogue personnalisée",
+                "it": "correzione di errori di dialogo personalizzato incompatibilità con altri adattatori\ncorrezione di bug per il caricamento della traduzione\ncorrezione di bug per ID durante il caricamento della finestra di dialogo personalizzata",
+                "es": "corrección de errores incompatibilidad de diálogo personalizado con otros adaptadores\ncorrección de errores para la carga de traducción\ncorrección de errores para la identificación en la carga de diálogo personalizado",
+                "pl": "naprawa błędów niestandardowego okna dialogowego niekompatybilnego z innymi adapterami\npoprawka błędu ładowania tłumaczenia\npoprawka błędu identyfikatora podczas ładowania niestandardowego okna dialogowego",
+                "zh-cn": "错误修复自定义对话框与其他适配器不兼容\n修复翻译负载的错误\n自定义对话框加载中ID的错误修复"
+            },
             "1.4.0": {
                 "en": "custom settings: button added to generate prefixId from function and room\nadapter settings: automatically generate prefixId from function and room\nadapter settings: automatically use prefix and optional id as name\nbug fixes",
                 "de": "Benutzerdefinierte Einstellungen: Schaltfläche hinzugefügt, um Präfix-ID aus Funktion und Raum zu generieren\nAdaptereinstellungen: Generieren Sie automatisch eine Präfix-ID aus Funktion und Raum\nAdaptereinstellungen: Verwenden Sie automatisch das Präfix und die optionale ID als Namen\nFehlerbehebung",
@@ -230,18 +242,6 @@
                 "es": "Cadena agregada al booleano agregado. Se utilizarán datos nativos, si están disponibles. Genere automáticamente una secuencia de comandos global para el adaptador Javascript Script Engine con variable agregada para todos los objetos vinculados",
                 "pl": "Dodano ciąg znaków dodany do boolean. Wykorzystane zostaną dane natywne, jeśli są dostępne. Automatycznie generuj globalny skrypt dla adaptera JavaScript Script Engine z dodaną zmienną dla wszystkich połączonych obiektów",
                 "zh-cn": "添加了添加到布尔值的字符串。如果可用，将使用本机数据。自动为适配器Javascript脚本引擎生成全局脚本，并为所有链接对象添加变量"
-            },
-            "0.3.2": {
-                "en": "more expertsettings added. Configure prefix / suffix for string. Convert number readonly to duration, date, time or datetime. some bug fixes.",
-                "de": "Weitere Experteneinstellungen hinzugefügt. Vorangestellte / nachgestellte Zeichen für eine Zeichenfolge. Wandeln Sie die Zahl (readonly) in Dauer, Datum, Uhrzeit oder Datum / Uhrzeit um. Einige Fehler behoben",
-                "ru": "добавлено больше экспертных настроек. Настройте префикс / суффикс для строки. Преобразование числа только для чтения в продолжительность, дату, время или дату и время. некоторые исправления ошибок.",
-                "pt": "mais expertsettings adicionados. Configurar prefixo / sufixo para string. Converta o número readonly para duração, data, hora ou data e hora. algumas correções de bugs.",
-                "nl": "meer expertinstellingen toegevoegd. Configureer het voorvoegsel / achtervoegsel voor tekenreeks. Converteer nummer alleen-lezen naar duur, datum, tijd of datetime. enkele bugfixes.",
-                "fr": "plus d'expertsettings ajoutés. Configure le préfixe / suffixe pour la chaîne. Convertir un nombre en lecture seule en durée, date, heure ou date / heure. quelques corrections de bugs.",
-                "it": "più esperti aggiunti. Configura prefisso / suffisso per stringa. Converti il numero in sola lettura in durata, data, ora o datetime. alcune correzioni di bug.",
-                "es": "más configuración de expertos añadidos. Configurar prefijo / sufijo para cadena. Convierta el número de solo lectura en duración, fecha, hora o fecha y hora. Algunas correcciones de errores.",
-                "pl": "dodano więcej ustawień ekspertów. Skonfiguruj prefiks / sufiks dla łańcucha. Konwertuj liczbę tylko do czasu trwania, daty, godziny lub daty / godziny. niektóre poprawki błędów.",
-                "zh-cn": "更多专家设置。配置字符串的前缀/后缀。将数字只读转换为持续时间，日期，时间或日期时间。一些错误修复。"
             }
         },
         "title": "LinkedDevices",

@@ -42,7 +42,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 1.4.1 (2020-12-19)
 * (Scrounger) bug fix custom dialog incompatibilty with other adapters
 * (Scrounger) bug fix for translation load
 * (Scrounger) bug fix for id on custom dialog load

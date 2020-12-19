@@ -1,6 +1,5 @@
-chore: release v1.4.0
+chore: release v1.4.1
 
-custom settings: button added to generate prefixId from function and room
-adapter settings: automatically generate prefixId from function and room
-adapter settings: automatically use prefix and optional id as name
-bug fixes
+bug fix custom dialog incompatibilty with other adapters
+bug fix for translation load
+bug fix for id on custom dialog load
