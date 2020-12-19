@@ -42,6 +42,11 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) bug fix custom dialog incompatibilty with other adapters
+* (Scrounger) bug fix for translation load
+* (Scrounger) bug fix for id on custom dialog load
+
 ### 1.4.0 (2020-11-23)
 * (Scrounger) custom settings: button added to generate prefixId from function and room
 * (Scrounger) adapter settings: automatically generate prefixId from function and room
