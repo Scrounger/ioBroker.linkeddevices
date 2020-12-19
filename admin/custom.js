@@ -330,7 +330,12 @@ if (typeof customPostInits !== 'undefined') {
 
                     // stateId des ParentObjects holen
                     Input.stateId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
-                    Input.linkedId.val(Input.prefixId.val() + '.' + objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+
+                    if (Input.prefixId.val()) {
+                        Input.linkedId.val(Input.prefixId.val() + '.' + objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+                    } else {
+                        Input.linkedId.val(objId.substring(objId.lastIndexOf(".") + 1, objId.length));
+                    }
                 }
 
             } catch (err) {
