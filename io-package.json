@@ -302,6 +302,8 @@
         "mode": "daemon",
         "type": "logic",
         "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
         "materialize": true,
         "supportCustoms": true,
         "dependencies": [
