@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.4.1",
+        "version": "1.4.2",
         "news": {
+            "1.4.2": {
+                "en": "bug fix for filtered custom dialog",
+                "de": "Fehlerbehebung für gefilterte benutzerdefinierte Dialoge",
+                "ru": "исправление ошибки для отфильтрованного настраиваемого диалогового окна",
+                "pt": "correção de bug para diálogo personalizado filtrado",
+                "nl": "bugfix voor gefilterde aangepaste dialoog",
+                "fr": "correction de bogue pour la boîte de dialogue personnalisée filtrée",
+                "it": "correzione di bug per la finestra di dialogo personalizzata filtrata",
+                "es": "corrección de errores para el diálogo personalizado filtrado",
+                "pl": "poprawka błędu filtrowanego niestandardowego okna dialogowego",
+                "zh-cn": "过滤自定义对话框的错误修复"
+            },
             "1.4.1": {
                 "en": "bug fix custom dialog incompatibilty with other adapters\nbug fix for translation load\nbug fix for id on custom dialog load",
                 "de": "Fehlerbehebung beim benutzerdefinierten Dialogfeld, das nicht mit anderen Adaptern kompatibel ist\nFehlerbehebung für das Laden der Übersetzung\nFehlerbehebung für ID beim Laden eines benutzerdefinierten Dialogfelds",
@@ -230,18 +242,6 @@
                 "es": "Corrección de errores para generar automáticamente un script global para el adaptador Javascript Script Engine",
                 "pl": "Poprawka do automatycznego generowania globalnego skryptu dla aparatu Javascript Script Engine",
                 "zh-cn": "修复错误，自动生成适配器Javascript脚本引擎的全局脚本"
-            },
-            "0.4.0": {
-                "en": "Added string to boolean added. Native data will be used, if available. Automatically generate a global script for the adapter Javascript Script Engine with variable added for all linked objects",
-                "de": "Zeichenkette in Logikwert konvertieren hinzugefügt. Native Daten werden übernommen, sofern verfügbar. Automatisches generieren eines globalen Skriptes für den Adapter Javascript Script Engine mit variablen für alle verlinkten Objekte hinzugefügt.",
-                "ru": "Добавлена строка в логическое значение. Будут использованы собственные данные, если таковые имеются. Автоматически генерировать глобальный скрипт для адаптера Javascript Script Engine с добавленной переменной для всех связанных объектов",
-                "pt": "Adicionado string para boolean adicionado. Dados nativos serão usados, se disponíveis. Gerar automaticamente um script global para o adaptador JavaScript Script Engine com a variável adicionada para todos os objetos vinculados",
-                "nl": "String toegevoegd aan Boolean toegevoegd. Native gegevens zullen worden gebruikt, indien beschikbaar. Genereer automatisch een globaal script voor de adapter Javascript Script Engine met variabele toegevoegd voor alle gekoppelde objecten",
-                "fr": "Chaîne ajoutée à booléen ajouté. Les données natives seront utilisées, si disponibles. Génère automatiquement un script global pour le moteur de script Javascript de l'adaptateur avec une variable ajoutée pour tous les objets liés",
-                "it": "Aggiunta stringa a booleano aggiunta. Verranno utilizzati dati nativi, se disponibili. Generare automaticamente uno script globale per il motore di script JavaScript dell'adattatore con la variabile aggiunta per tutti gli oggetti collegati",
-                "es": "Cadena agregada al booleano agregado. Se utilizarán datos nativos, si están disponibles. Genere automáticamente una secuencia de comandos global para el adaptador Javascript Script Engine con variable agregada para todos los objetos vinculados",
-                "pl": "Dodano ciąg znaków dodany do boolean. Wykorzystane zostaną dane natywne, jeśli są dostępne. Automatycznie generuj globalny skrypt dla adaptera JavaScript Script Engine z dodaną zmienną dla wszystkich połączonych obiektów",
-                "zh-cn": "添加了添加到布尔值的字符串。如果可用，将使用本机数据。自动为适配器Javascript脚本引擎生成全局脚本，并为所有链接对象添加变量"
             }
         },
         "title": "LinkedDevices",
