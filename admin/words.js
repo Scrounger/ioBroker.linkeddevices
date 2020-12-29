@@ -1248,5 +1248,17 @@ systemDictionary = {
 		"es": "incluir id para nombres automáticos",
 		"pl": "dołącz identyfikator dla nazw automatycznych",
 		"zh-cn": "包含自动名称的ID"
+	},
+	"Settings can only be made for individual datapoints!": {
+		"en": "Settings can only be made for individual datapoints!",
+		"de": "Einstellungen können nur für einzelne Datenpunkte vorgenommen werden!",
+		"ru": "Настройки могут быть выполнены только для отдельных точек данных!",
+		"pt": "As configurações só podem ser feitas para pontos de dados individuais!",
+		"nl": "Instellingen zijn alleen mogelijk voor individuele datapunten!",
+		"fr": "Les réglages ne peuvent être effectués que pour des points de données individuels!",
+		"it": "Le impostazioni possono essere effettuate solo per singoli datapoint!",
+		"es": "¡Solo se pueden realizar ajustes para puntos de datos individuales!",
+		"pl": "Ustawienia można wprowadzać tylko dla pojedynczych punktów danych!",
+		"zh-cn": "只能为单个数据点进行设置！"
 	}
 };

@@ -8,16 +8,6 @@ $.get({
     async: false
 });
 
-// There are two ways how to predefine default settings:
-// - with attribute "data-default" (content independent)
-// - with function in global variable "defaults". Function name is equal with adapter name.
-//   as input function receives object with all information concerning it
-
-// Objekt holen für das der custom Dialog geöffnet wurde 
-var currentObj = gMain.objects[gMain.navigateGetParams()];
-
-// State des Objektes holen
-var currentState = gMain.states[gMain.navigateGetParams()];
 
 // Namespace 
 var myNamespace = '';
@@ -27,6 +17,10 @@ var currentLanguage = gMain.systemConfig.common.language;
 var notAllowedSigns = /[*?"'`´,;:<>#/{}ß\[\]\s]/;
 var notAllowedSignsReadable = "'" + notAllowedSigns.toString().replace(/\\/g, '').replace('s', ' ').replace('/[', '').replace(']/', '') + "'";
 
+// There are two ways how to predefine default settings:
+// - with attribute "data-default" (content independent)
+// - with function in global variable "defaults". Function name is equal with adapter name.
+//   as input function receives object with all information concerning it
 if (typeof defaults !== 'undefined') {
     defaults.linkeddevices = function (obj, instanceObj) {
         return {
@@ -39,82 +33,94 @@ if (typeof defaults !== 'undefined') {
 if (typeof customPostInits !== 'undefined') {
     customPostInits.linkeddevices = function ($div, values, instanceObj, type, role) {
 
-        // Namespace holen
-        myNamespace = instanceObj._id.replace("system.adapter.", "");
+        // Objekt holen für das der custom Dialog geöffnet wurde 
+        if (gMain.navigateGetParams()) {
+            var currentObj = gMain.objects[gMain.navigateGetParams()];
 
-        var ComboBox = {};
-        var Group = {};
-        var Input = {};
-        var Select = {};
-        var Label = {};
-        var Button = {};
-        var DataList = {};
+            // // State des Objektes holen
+            // var currentState = gMain.states[gMain.navigateGetParams()];
 
-        // vars die sich verändern können und für conditions benötigt werden
-        var isCustomEnabled = false;
-        if (values["enabled"]) isCustomEnabled = values["enabled"];
+            // Namespace holen
+            myNamespace = instanceObj._id.replace("system.adapter.", "");
 
-        var expertSettingsActivated = false;
-        if (values["expertSettings"]) expertSettingsActivated = values["expertSettings"];
+            var ComboBox = {};
+            var Group = {};
+            var Input = {};
+            var Select = {};
+            var Label = {};
+            var Button = {};
+            var DataList = {};
 
-        var selectedNumberConverter = "";
-        if (values["number_convertTo"]) selectedNumberConverter = values["number_convertTo"];
+            // vars die sich verändern können und für conditions benötigt werden
+            var isCustomEnabled = false;
+            if (values["enabled"]) isCustomEnabled = values["enabled"];
 
-        var selectedBooleanConverter = "";
-        if (values["boolean_convertTo"]) selectedBooleanConverter = values["boolean_convertTo"];
+            var expertSettingsActivated = false;
+            if (values["expertSettings"]) expertSettingsActivated = values["expertSettings"];
 
-        var selectedStringConverter = "";
-        if (values["string_convertTo"]) selectedStringConverter = values["string_convertTo"];
+            var selectedNumberConverter = "";
+            if (values["number_convertTo"]) selectedNumberConverter = values["number_convertTo"];
 
-        // $div.find('input[id="test"]').val(JSON.stringify(currentObj));
-        //$div.find('input[id="test"]').val(Object.keys(gMain));
+            var selectedBooleanConverter = "";
+            if (values["boolean_convertTo"]) selectedBooleanConverter = values["boolean_convertTo"];
 
+            var selectedStringConverter = "";
+            if (values["string_convertTo"]) selectedStringConverter = values["string_convertTo"];
 
-
-        $div.ready(function () {
-            //$div.find('.view_Number').hide();
-            // Event Document ready -> hier kann select disabled = 'true' gesetzt werden, da sonst options weg sind bzw. enabled nicht geht
-            //$div.find('.view_Number_Converter').find('*').prop('disabled', true);
-
-        });
-
-        // Divs in vars packen
-        initialize_Divs();
+            // $div.find('input[id="test"]').val(JSON.stringify(currentObj));
+            //$div.find('input[id="test"]').val(Object.keys(gMain));
 
 
-        if (values["isLinked"] !== undefined) {
-            // Custom Dialog für LinkedObject
-            initialize_LinkedObject();
 
-            Button.parentObjectSettings.attr('title', _('settings of linked object'));
+            $div.ready(function () {
+                //$div.find('.view_Number').hide();
+                // Event Document ready -> hier kann select disabled = 'true' gesetzt werden, da sonst options weg sind bzw. enabled nicht geht
+                //$div.find('.view_Number_Converter').find('*').prop('disabled', true);
 
-            // Button um Custom Dialog des verlinkten Objektes zu öffnen
-            if (values["isLinked"] == true) {
-                Button.parentObjectSettings.attr('disabled', false);
+            });
 
-                Button.parentObjectSettings.click(function () {
-                    let parentId = Input.parentId.val();
-                    let url = `${window.location.origin}/#tab-objects/customs/${parentId}`;
-                    window.open(url);
-                });
+            // Divs in vars packen
+            initialize_Divs();
+
+            if (values["isLinked"] !== undefined) {
+                // Custom Dialog für LinkedObject
+                initialize_LinkedObject();
+
+                Button.parentObjectSettings.attr('title', _('settings of linked object'));
+
+                // Button um Custom Dialog des verlinkten Objektes zu öffnen
+                if (values["isLinked"] == true) {
+                    Button.parentObjectSettings.attr('disabled', false);
+
+                    Button.parentObjectSettings.click(function () {
+                        let parentId = Input.parentId.val();
+                        let url = `${window.location.origin}/#tab-objects/customs/${parentId}`;
+                        window.open(url);
+                    });
+                } else {
+                    // nicht verlinkt -> Button disable
+                    Button.parentObjectSettings.attr('disabled', true);
+                }
             } else {
-                // nicht verlinkt -> Button disable
-                Button.parentObjectSettings.attr('disabled', true);
+                // Custom Dialog für ParentObject
+                initialize_ParentObject();
+
+                Label.role.text(_("change role '%s' in", _(currentObj.common.role)));
+
+                // EventHandler
+                events_ParentObject();
+
+                // ExpertSettings initialisieren
+                initialize_ExpertSettings();
+
+                // Vorschläge für Inputs initialisieren
+                intialize_Input_Suggestions();
             }
         } else {
-            // Custom Dialog für ParentObject
-            initialize_ParentObject();
-
-            Label.role.text(_("change role '%s' in", _(currentObj.common.role)));
-
-            // EventHandler
-            events_ParentObject();
-
-            // ExpertSettings initialisieren
-            initialize_ExpertSettings();
-
-            // Vorschläge für Inputs initialisieren
-            intialize_Input_Suggestions();
+            // custom dialog for filtered objects
+            $div.find('.parentObject_view').hide();
+            $div.find('.linkedObject_view').hide();
+            $div.find('.filteredCustom_view').show();
         }
 
         //#region Initialize
