@@ -1466,7 +1466,7 @@ class Linkeddevices extends utils.Adapter {
 					convertedValue = value;
 				}
 
-				if (!targetIsParentObj && (targetObj.common.custom[this.namespace].number_maxDecimal || targetObj.common.custom[this.namespace].number_maxDecimal === 0)) {
+				if (targetObj.common.custom[this.namespace].number_maxDecimal || targetObj.common.custom[this.namespace].number_maxDecimal === 0) {
 					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
 					var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
 					if (!isNaN(maxDecimal)) {
