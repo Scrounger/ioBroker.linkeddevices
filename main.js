@@ -23,7 +23,7 @@ var mySystemConfig = { language: "en", dateFormat: "DD.MM.YYYY", durationFormat:
 class Linkeddevices extends utils.Adapter {
 
 	/**
-	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
 	constructor(options) {
 		super({
@@ -261,48 +261,43 @@ class Linkeddevices extends utils.Adapter {
 	 * @param {ioBroker.State | null | undefined} state
 	 */
 	async onStateChange(id, state) {
+		try {
+			// 'state' hat sich geändert -> darauf wird nur reagiert wenn nicht der Adapter selbst auslöser ist
+			if (state && state.from != `system.adapter.${this.namespace}`) {
+				let changedValue = state.val;
 
-		// 'state' hat sich geändert -> darauf wird nur reagiert wenn nicht der Adapter selbst auslöser ist
-		if (state && state.from != `system.adapter.${this.namespace}`) {
-			let changedValue = state.val;
+				// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
+				if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
+					let linkedObjId = this.dicLinkedParentObjects[id];
 
-			// parentObject 'state' hat sich geändert -> linkedObject 'state' ändern
-			if (this.dicLinkedParentObjects && id in this.dicLinkedParentObjects) {
-				let linkedObjId = this.dicLinkedParentObjects[id];
+					// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
+					changedValue = await this.getConvertedValue(linkedObjId, changedValue);
 
-				// ggf. kann für das linkedObject eine Umrechnung festgelegt sein
-				changedValue = await this.getConvertedValue(linkedObjId, changedValue);
+					await this.logStateChange(id, state, linkedObjId, "parentObject", changedValue);
 
-				await this.logStateChange(id, state, linkedObjId, "parentObject", changedValue);
+					await this.setForeignStateAsync(linkedObjId, { val: changedValue, ack: state.ack });
+				}
 
-				await this.setForeignStateAsync(linkedObjId, { val: changedValue, ack: state.ack });
-			}
+				// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
+				else if (this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
+					// @ts-ignore
+					let parentObjId = Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id);
 
-			// linkedObject 'state' hat sich geändert -> parentObject 'state' ändern
-			else if (this.dicLinkedObjectsStatus && id in this.dicLinkedObjectsStatus) {
-				// @ts-ignore
-				let parentObjId = Object.keys(this.dicLinkedParentObjects).find(key => this.dicLinkedParentObjects[key] === id);
+					// Wenn 'custom.isLinked = true', dann auf Änderung reagieren, da Verlinkung existiert
+					if (this.dicLinkedObjectsStatus[id] === true && parentObjId) {
 
-				// Wenn 'custom.isLinked = true', dann auf Änderung reagieren, da Verlinkung existiert
-				if (this.dicLinkedObjectsStatus[id] === true) {
+						// ggf. kann für das linkedObject eine Umrechnung festgelegt sein -> parentObject zurück rechnen
+						changedValue = await this.getConvertedValue(parentObjId, changedValue, true);
 
-					// ggf. kann für das linkedObject eine Umrechnung festgelegt sein -> parentObject zurück rechnen
-					changedValue = await this.getConvertedValue(parentObjId, changedValue, true);
+						await this.logStateChange(id, state, parentObjId, "linkedObject", changedValue);
 
-					await this.logStateChange(id, state, parentObjId, "linkedObject", changedValue);
-
-					await this.setForeignStateAsync(parentObjId, { val: changedValue, ack: state.ack });
+						await this.setForeignStateAsync(parentObjId, { val: changedValue, ack: state.ack });
+					}
 				}
 			}
+		} catch (err) {
+			this.log.error(`[onStateChange] changedId '${id}', error: ${err.message}, stack: ${err.stack}`);
 		}
-
-		// if (state) {
-		// 	// The state was changed
-		// 	this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
-		// } else {
-		// 	// The state was deleted
-		// 	this.log.info(`state ${id} deleted`);
-		// }
 	}
 
 	/**
@@ -1349,339 +1344,111 @@ class Linkeddevices extends utils.Adapter {
 
 		let convertedValue = value;
 		if (targetObj && targetObj.common && targetObj.common.custom && targetObj.common.custom[this.namespace]) {
-
 			let sourceId = "";
-			if (targetIsParentObj) {
-				// state change linkedObject
-				sourceId = this.namespace + "." + targetObj.common.custom[this.namespace].linkedId;
-			} else {
-				// state change parentObject
-				sourceId = targetObj.common.custom[this.namespace].parentId;
-			}
 
-			if (targetObj.common.type === "string") {
-
-				if (!targetIsParentObj) {
-					// parentObject state ändert sich
-					if (targetObj.common.custom[this.namespace].string_prefix || targetObj.common.custom[this.namespace].string_suffix) {
-						// string mit prefix / suffix
-						let log = false;
-						let logMessage = ""
-
-						if (targetObj.common.custom[this.namespace].string_prefix) {
-							// suffix zu String hinzufügen
-							convertedValue = (`${targetObj.common.custom[this.namespace].string_prefix}${convertedValue}`);
-
-							logMessage = (`prefix: '${targetObj.common.custom[this.namespace].string_prefix}'`);
-							log = true;
-						}
-
-						if (targetObj.common.custom[this.namespace].string_suffix) {
-							// prefix zu String hinzufügen
-							convertedValue = (`${convertedValue}${targetObj.common.custom[this.namespace].string_suffix}`);
-
-							if (log) {
-								logMessage = (`${logMessage}, suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
-							} else {
-								logMessage = (`suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
-							}
-							log = true;
-						}
-
-						if (log) {
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using ${logMessage} -> new linkedObject value is '${convertedValue}'`)
-						}
-					}
+			try {
+				if (targetIsParentObj) {
+					// state change linkedObject
+					sourceId = this.namespace + "." + targetObj.common.custom[this.namespace].linkedId;
 				} else {
-					// linkedObject state ändert sich
-					if (targetObj.common.custom[this.namespace].string_prefix || targetObj.common.custom[this.namespace].string_suffix) {
-						// string mit prefix / suffix
-						let log = false;
-						let logMessage = ""
+					// state change parentObject
+					sourceId = targetObj.common.custom[this.namespace].parentId;
+				}
 
-						if (targetObj.common.custom[this.namespace].string_prefix) {
-							if (value.startsWith(targetObj.common.custom[this.namespace].string_prefix)) {
-								var regex = new RegExp("^\(" + targetObj.common.custom[this.namespace].string_prefix + ")", "g");
-								convertedValue = convertedValue.replace(regex, '')
+				if (targetObj.common.type === "string") {
+
+					if (!targetIsParentObj) {
+						// parentObject state ändert sich
+						if (targetObj.common.custom[this.namespace].string_prefix || targetObj.common.custom[this.namespace].string_suffix) {
+							// string mit prefix / suffix
+							let log = false;
+							let logMessage = ""
+
+							if (targetObj.common.custom[this.namespace].string_prefix) {
+								// suffix zu String hinzufügen
+								convertedValue = (`${targetObj.common.custom[this.namespace].string_prefix}${convertedValue}`);
 
 								logMessage = (`prefix: '${targetObj.common.custom[this.namespace].string_prefix}'`);
 								log = true;
 							}
-						}
 
-						if (targetObj.common.custom[this.namespace].string_suffix) {
-							if (value.endsWith(targetObj.common.custom[this.namespace].string_suffix)) {
-								var regex = new RegExp("\(" + targetObj.common.custom[this.namespace].string_suffix + ")$", "g");
-								convertedValue = convertedValue.replace(regex, '')
+							if (targetObj.common.custom[this.namespace].string_suffix) {
+								// prefix zu String hinzufügen
+								convertedValue = (`${convertedValue}${targetObj.common.custom[this.namespace].string_suffix}`);
+
+								if (log) {
+									logMessage = (`${logMessage}, suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+								} else {
+									logMessage = (`suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+								}
+								log = true;
 							}
 
 							if (log) {
-								logMessage = (`${logMessage}, suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
-							} else {
-								logMessage = (`suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using ${logMessage} -> new linkedObject value is '${convertedValue}'`)
 							}
-							log = true;
 						}
-
-						if (log) {
-							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', remove ${logMessage} -> new linkedObject value is '${convertedValue}'`)
-						}
-					}
-				}
-			}
-
-			if (targetObj.common.type === "number") {
-				// number_calculation nur für type 'number'
-				try {
-					if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].number_calculation_readOnly && !targetIsParentObj) {
-						// ReadOnly object mit calculation -> umrechnen
-						let number_calculation_readOnly = targetObj.common.custom[this.namespace].number_calculation_readOnly.replace(/,/g, ".");
-						convertedValue = mathjs.evaluate(`${value} ${number_calculation_readOnly}`)
-
-						this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`)
-
-					} else if (targetObj.common.custom[this.namespace].number_calculation) {
-						// object mit number_calculation -> umrechnen
-						let number_calculation = targetObj.common.custom[this.namespace].number_calculation.replace(/,/g, ".");
-
-						if (!targetIsParentObj) {
-							// Umrechnung für linkedObject -> parentObject state ändert sich
-							convertedValue = mathjs.evaluate(`${value} ${number_calculation}`);
-
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${number_calculation}' -> linkedObject value is '${convertedValue}'`)
-						} else {
-							// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-							convertedValue = mathjs.evaluate(`${value} * 1/(1${number_calculation})`);
-							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${number_calculation})' -> parentObject value is '${convertedValue}'`)
-						}
-					}
-				} catch (err) {
-					// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
-					if (targetIsParentObj) {
-						this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your expert settings input for '${targetId}'!`);
 					} else {
-						this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your expert settings input for '${sourceId}'!`);
-					}
+						// linkedObject state ändert sich
+						if (targetObj.common.custom[this.namespace].string_prefix || targetObj.common.custom[this.namespace].string_suffix) {
+							// string mit prefix / suffix
+							let log = false;
+							let logMessage = ""
 
-					convertedValue = value;
+							if (targetObj.common.custom[this.namespace].string_prefix) {
+								if (value.startsWith(targetObj.common.custom[this.namespace].string_prefix)) {
+									var regex = new RegExp("^\(" + targetObj.common.custom[this.namespace].string_prefix + ")", "g");
+									convertedValue = convertedValue.replace(regex, '')
+
+									logMessage = (`prefix: '${targetObj.common.custom[this.namespace].string_prefix}'`);
+									log = true;
+								}
+							}
+
+							if (targetObj.common.custom[this.namespace].string_suffix) {
+								if (value.endsWith(targetObj.common.custom[this.namespace].string_suffix)) {
+									var regex = new RegExp("\(" + targetObj.common.custom[this.namespace].string_suffix + ")$", "g");
+									convertedValue = convertedValue.replace(regex, '')
+								}
+
+								if (log) {
+									logMessage = (`${logMessage}, suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+								} else {
+									logMessage = (`suffix: '${targetObj.common.custom[this.namespace].string_suffix}'`);
+								}
+								log = true;
+							}
+
+							if (log) {
+								this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', remove ${logMessage} -> new linkedObject value is '${convertedValue}'`)
+							}
+						}
+					}
 				}
 
-				if (!targetIsParentObj && (targetObj.common.custom[this.namespace].number_maxDecimal || targetObj.common.custom[this.namespace].number_maxDecimal === 0)) {
-					// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
-					var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
-					if (!isNaN(maxDecimal)) {
-						convertedValue = mathjs.round(convertedValue, maxDecimal);
-					}
-				}
-			}
-
-			// Type Converison: number -> boolean
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_boolean" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
-
-				// parentObject state hat sich geändert
-				if (!targetIsParentObj) {
-					// number -> boolean: linkedObject state laut condition umwandeln
+				if (targetObj.common.type === "number") {
+					// number_calculation nur für type 'number'
 					try {
-						convertedValue = this.numToBoolConditionParser(value, targetObj.common.custom[this.namespace].number_to_boolean_condition);
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using condition '${targetObj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
-					} catch (err) {
-						// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
-						convertedValue = targetObj.common.def;
-						this.log.error(`[getConvertedValue] there is something wrong with your conversion condition, check your expert settings input for '${sourceId}'! -> fallback to linkedObject default '${convertedValue}'`);
-					}
-				}
-
-				// linkedObject state hat sich geändert
-				if (targetIsParentObj) {
-					// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
-					if (value && (targetObj.common.custom[this.namespace].number_to_boolean_value_true || targetObj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
-						// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
-						convertedValue = parseFloat(targetObj.common.custom[this.namespace].number_to_boolean_value_true);
-						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${true}', using value '${targetObj.common.custom[this.namespace].number_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`)
-
-					} else if (!value && (targetObj.common.custom[this.namespace].number_to_boolean_value_false || targetObj.common.custom[this.namespace].number_to_boolean_value_false === 0)) {
-						// linkedObject auf 'false' geändert -> hinterlegten Wert für 'true' übergeben
-						convertedValue = parseFloat(targetObj.common.custom[this.namespace].number_to_boolean_value_false);
-						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${false}', using value '${targetObj.common.custom[this.namespace].number_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`)
-
-					} else {
-						// keine expertSettings hinterlegt für Wert true bzw. false
-						let parentObjState = await this.getForeignStateAsync(targetId);
-						if (parentObjState) {
-							convertedValue = parentObjState.val;
-							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${targetId}' -> fallback to parentObject value '${parentObjState.val}'`)
-						}
-					}
-				}
-			}
-
-			// Type Converison: number -> string (duration, datetime)
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_duration" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_datetime") {
-
-				if (!targetIsParentObj) {
-					// parentObject state hat sich geändert
-
-					if (targetObj.common.custom[this.namespace].number_to_duration_format) {
-						// number -> duration
-						try {
-							if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
-								// ggf. ist eine Umrechnung in Sekunden hinterlegt
-								convertedValue = mathjs.evaluate(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
-							}
-
-							moment.locale(mySystemConfig.language);
-							convertedValue = moment.duration(convertedValue, 'seconds').format(targetObj.common.custom[this.namespace].number_to_duration_format, 0);
-
-							if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
-								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}', format '${targetObj.common.custom[this.namespace].number_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-							} else {
-								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-							}
-						} catch (err) {
-							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
-							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
-							convertedValue = "Error";
-						}
-					}
-
-					if (targetObj.common.custom[this.namespace].number_to_datetime_format) {
-						// number -> datetime
-						try {
-							if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
-								// ggf. ist eine Umrechnung in Sekunden hinterlegt
-								convertedValue = mathjs.evaluate(`${value} ${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}`);
-							}
-
-							moment.locale(mySystemConfig.language);
-							convertedValue = moment.unix(convertedValue).format(targetObj.common.custom[this.namespace].number_to_datetime_format);
-
-							if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
-								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}', format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-							} else {
-								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-							}
-						} catch (err) {
-							this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
-							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
-							convertedValue = "Error";
-						}
-					}
-				}
-			}
-
-			// Type Converison: boolean -> string
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "boolean_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
-
-				if (!targetIsParentObj) {
-					// parentObject state hat sich geändert
-					if (value && targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
-						convertedValue = targetObj.common.custom[this.namespace].boolean_to_string_value_true;
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].boolean_to_string_value_true}' -> linkedObject value is '${convertedValue}'`);
-
-					} else if (!value && targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
-						convertedValue = targetObj.common.custom[this.namespace].boolean_to_string_value_false;
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].boolean_to_string_value_false}' -> linkedObject value is '${convertedValue}'`);
-
-					} else {
-						// keine expertSettings hinterlegt für Wert true bzw. false
-						convertedValue = value.toString();
-						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to parentObject value '${convertedValue}'`);
-					}
-				}
-
-				if (targetIsParentObj) {
-					// linkedObject state hat sich geändert
-					if (targetObj.common.custom[this.namespace].boolean_to_string_value_true && value === targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
-						convertedValue = true;
-						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${true}' -> parentObject value is '${convertedValue}'`);
-
-					} else if (targetObj.common.custom[this.namespace].boolean_to_string_value_false && value === targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
-						convertedValue = false;
-						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${false}' -> parentObject value is '${convertedValue}'`);
-
-					} else {
-						// keine expertSettings hinterlegt für Wert true bzw. false oder string unbekannt
-						convertedValue = targetObj.common.def;
-						if (!targetObj.common.custom[this.namespace].boolean_to_string_value_true || !targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
-							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${targetId}' -> fallback to parentObject value '${convertedValue}'`);
-						} else {
-							this.log.warn(`[getConvertedValue] value not set as 'true' / 'false' in expert settings of parentObject '${targetId}' -> fallback to parentObject default '${convertedValue}'`);
-						}
-					}
-				}
-			}
-
-			// Type Converison: string -> boolean
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_boolean" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_boolean") {
-
-				if (!targetIsParentObj) {
-					// parentObject state hat sich geändert
-					if ((targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0) && value.toString() === targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString()) {
-						convertedValue = true;
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', '${targetObj.common.custom[this.namespace].string_to_boolean_value_true}' is condition for 'true' -> linkedObject value is '${convertedValue}'`);
-
-					} else if ((targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0) && value.toString() === targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString()) {
-						convertedValue = false;
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', ${targetObj.common.custom[this.namespace].string_to_boolean_value_false}' is condition for 'false' -> linkedObject value is '${convertedValue}'`);
-
-					} else {
-						convertedValue = false;
-
-						if ((targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0) && targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString() && (targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0) && targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString()) {
-							this.log.debug(`[getConvertedValue] string not match with condition in expert settings of parentObject '${sourceId}' -> linkedObject value is '${convertedValue}'`);
-						} else {
-							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to '${convertedValue}'`);
-						}
-					}
-				}
-
-				if (targetIsParentObj) {
-					// linkedObject state hat sich geändert
-					if (value && (targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0)) {
-						convertedValue = targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString();
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].string_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`);
-
-					} else if (!value && (targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0)) {
-						convertedValue = targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString();
-						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].string_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`);
-					} else {
-						convertedValue = value.toString();
-						this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to linkedObject value '${convertedValue}'`);
-					}
-				}
-			}
-
-			// Type Converison: string -> number
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_number" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_number") {
-				if (!targetIsParentObj) {
-					// parentObject state vom type string hat sich geändert -> string versuchen in number umwandeln
-					value = value.toString().replace(',', '.');
-					convertedValue = parseFloat(value);
-				}
-
-				if (!isNaN(convertedValue)) {
-					// string erfolgreich in number umgewandelt wenn parentObject geändert wurde, linkedObject ist immer vom type number
-					try {
-						if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly && !targetIsParentObj) {
+						if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].number_calculation_readOnly && !targetIsParentObj) {
 							// ReadOnly object mit calculation -> umrechnen
-							let string_to_number_calculation_readOnly = targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly.replace(/,/g, ".");
-							convertedValue = mathjs.evaluate(`${value} ${string_to_number_calculation_readOnly}`)
+							let number_calculation_readOnly = targetObj.common.custom[this.namespace].number_calculation_readOnly.replace(/,/g, ".");
+							convertedValue = mathjs.evaluate(`${value} ${number_calculation_readOnly}`)
 
-							this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`);
+							this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`)
 
-						} else if (targetObj.common.custom[this.namespace].string_to_number_calculation) {
-							// object mit string_to_number_calculation -> umrechnen
-							let string_to_number_calculation = targetObj.common.custom[this.namespace].string_to_number_calculation.replace(/,/g, ".");
+						} else if (targetObj.common.custom[this.namespace].number_calculation) {
+							// object mit number_calculation -> umrechnen
+							let number_calculation = targetObj.common.custom[this.namespace].number_calculation.replace(/,/g, ".");
 
 							if (!targetIsParentObj) {
 								// Umrechnung für linkedObject -> parentObject state ändert sich
-								convertedValue = mathjs.evaluate(`${value} ${string_to_number_calculation}`);
+								convertedValue = mathjs.evaluate(`${value} ${number_calculation}`);
 
-								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation}' -> linkedObject value is '${convertedValue}'`)
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${number_calculation}' -> linkedObject value is '${convertedValue}'`)
 							} else {
 								// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
-								convertedValue = mathjs.evaluate(`${value} * 1/(1${string_to_number_calculation})`);
-								this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${string_to_number_calculation})' -> parentObject value is '${convertedValue}'`)
+								convertedValue = mathjs.evaluate(`${value} * 1/(1${number_calculation})`);
+								this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${number_calculation})' -> parentObject value is '${convertedValue}'`)
 							}
 						}
 					} catch (err) {
@@ -1695,63 +1462,295 @@ class Linkeddevices extends utils.Adapter {
 						convertedValue = value;
 					}
 
-					if (!targetIsParentObj && (targetObj.common.custom[this.namespace].string_to_number_maxDecimal || targetObj.common.custom[this.namespace].string_to_number_maxDecimal === 0)) {
+					if (!targetIsParentObj && (targetObj.common.custom[this.namespace].number_maxDecimal || targetObj.common.custom[this.namespace].number_maxDecimal === 0)) {
 						// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
-						var maxDecimal = parseInt(targetObj.common.custom[this.namespace].string_to_number_maxDecimal);
+						var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
 						if (!isNaN(maxDecimal)) {
 							convertedValue = mathjs.round(convertedValue, maxDecimal);
 						}
 					}
+				}
+
+				// Type Converison: number -> boolean
+				if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_boolean" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_boolean") {
+
+					// parentObject state hat sich geändert
+					if (!targetIsParentObj) {
+						// number -> boolean: linkedObject state laut condition umwandeln
+						try {
+							convertedValue = this.numToBoolConditionParser(value, targetObj.common.custom[this.namespace].number_to_boolean_condition);
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using condition '${targetObj.common.custom[this.namespace].number_to_boolean_condition}' -> linkedObject value is '${convertedValue}'`)
+						} catch (err) {
+							// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
+							convertedValue = targetObj.common.def;
+							this.log.error(`[getConvertedValue] there is something wrong with your conversion condition, check your expert settings input for '${sourceId}'! -> fallback to linkedObject default '${convertedValue}'`);
+						}
+					}
+
+					// linkedObject state hat sich geändert
+					if (targetIsParentObj) {
+						// number -> boolean: parentObject state laut wert für 'true' bzw. 'false' setzen
+						if (value && (targetObj.common.custom[this.namespace].number_to_boolean_value_true || targetObj.common.custom[this.namespace].number_to_boolean_value_true === 0)) {
+							// linkedObject auf 'true' geändert -> hinterlegten Wert für 'true' übergeben
+							convertedValue = parseFloat(targetObj.common.custom[this.namespace].number_to_boolean_value_true);
+							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${true}', using value '${targetObj.common.custom[this.namespace].number_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`)
+
+						} else if (!value && (targetObj.common.custom[this.namespace].number_to_boolean_value_false || targetObj.common.custom[this.namespace].number_to_boolean_value_false === 0)) {
+							// linkedObject auf 'false' geändert -> hinterlegten Wert für 'true' übergeben
+							convertedValue = parseFloat(targetObj.common.custom[this.namespace].number_to_boolean_value_false);
+							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${false}', using value '${targetObj.common.custom[this.namespace].number_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`)
+
+						} else {
+							// keine expertSettings hinterlegt für Wert true bzw. false
+							let parentObjState = await this.getForeignStateAsync(targetId);
+							if (parentObjState) {
+								convertedValue = parentObjState.val;
+								this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${targetId}' -> fallback to parentObject value '${parentObjState.val}'`)
+							}
+						}
+					}
+				}
+
+				// Type Converison: number -> string (duration, datetime)
+				if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_duration" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].number_convertTo}` === "number_to_datetime") {
+
+					if (!targetIsParentObj) {
+						// parentObject state hat sich geändert
+
+						if (targetObj.common.custom[this.namespace].number_to_duration_format) {
+							// number -> duration
+							try {
+								if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+									// ggf. ist eine Umrechnung in Sekunden hinterlegt
+									convertedValue = mathjs.evaluate(`${value} ${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}`);
+								}
+
+								moment.locale(mySystemConfig.language);
+								convertedValue = moment.duration(convertedValue, 'seconds').format(targetObj.common.custom[this.namespace].number_to_duration_format, 0);
+
+								if (targetObj.common.custom[this.namespace].number_to_duration_convert_seconds) {
+									this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_duration_convert_seconds}', format '${targetObj.common.custom[this.namespace].number_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+								} else {
+									this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+								}
+							} catch (err) {
+								this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
+								this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
+								convertedValue = "Error";
+							}
+						}
+
+						if (targetObj.common.custom[this.namespace].number_to_datetime_format) {
+							// number -> datetime
+							try {
+								if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
+									// ggf. ist eine Umrechnung in Sekunden hinterlegt
+									convertedValue = mathjs.evaluate(`${value} ${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}`);
+								}
+
+								moment.locale(mySystemConfig.language);
+								convertedValue = moment.unix(convertedValue).format(targetObj.common.custom[this.namespace].number_to_datetime_format);
+
+								if (targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds) {
+									this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${targetObj.common.custom[this.namespace].number_to_datetime_convert_seconds}', format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+								} else {
+									this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].number_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+								}
+							} catch (err) {
+								this.log.error(`[getConvertedValue] there is something wrong with your calculation formula or datetime format, check your expert settings input for '${targetId}'!`);
+								this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
+								convertedValue = "Error";
+							}
+						}
+					}
+				}
+
+				// Type Converison: boolean -> string
+				if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "boolean_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].boolean_convertTo}` === "boolean_to_string") {
+
+					if (!targetIsParentObj) {
+						// parentObject state hat sich geändert
+						if (value && targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
+							convertedValue = targetObj.common.custom[this.namespace].boolean_to_string_value_true;
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].boolean_to_string_value_true}' -> linkedObject value is '${convertedValue}'`);
+
+						} else if (!value && targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
+							convertedValue = targetObj.common.custom[this.namespace].boolean_to_string_value_false;
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].boolean_to_string_value_false}' -> linkedObject value is '${convertedValue}'`);
+
+						} else {
+							// keine expertSettings hinterlegt für Wert true bzw. false
+							convertedValue = value.toString();
+							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to parentObject value '${convertedValue}'`);
+						}
+					}
 
 					if (targetIsParentObj) {
-						// ziel ist parentObject vom type string, zahl noch in string umwandeln
-						convertedValue = convertedValue.toString();
+						// linkedObject state hat sich geändert
+						if (targetObj.common.custom[this.namespace].boolean_to_string_value_true && value === targetObj.common.custom[this.namespace].boolean_to_string_value_true) {
+							convertedValue = true;
+							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${true}' -> parentObject value is '${convertedValue}'`);
+
+						} else if (targetObj.common.custom[this.namespace].boolean_to_string_value_false && value === targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
+							convertedValue = false;
+							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using value '${false}' -> parentObject value is '${convertedValue}'`);
+
+						} else {
+							// keine expertSettings hinterlegt für Wert true bzw. false oder string unbekannt
+							convertedValue = targetObj.common.def;
+							if (!targetObj.common.custom[this.namespace].boolean_to_string_value_true || !targetObj.common.custom[this.namespace].boolean_to_string_value_false) {
+								this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${targetId}' -> fallback to parentObject value '${convertedValue}'`);
+							} else {
+								this.log.warn(`[getConvertedValue] value not set as 'true' / 'false' in expert settings of parentObject '${targetId}' -> fallback to parentObject default '${convertedValue}'`);
+							}
+						}
 					}
-
-				} else {
-					// value vom type string kann nicht in number umgewandelt werden (nur bei parentObject)
-					this.log.error(`[getConvertedValue] string value '${value}' from '${sourceId}' can not be parsed to number! -> value for '${targetId}' is set to 'null'!`);
 				}
-			}
 
-			// Type Converison: string -> string (duration, datetime)
-			if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_duration" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_datetime") {
+				// Type Converison: string -> boolean
+				if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_boolean" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_boolean") {
 
-				if (!targetIsParentObj) {
-					// parentObject state hat sich geändert
+					if (!targetIsParentObj) {
+						// parentObject state hat sich geändert
+						if ((targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0) && value.toString() === targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString()) {
+							convertedValue = true;
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', '${targetObj.common.custom[this.namespace].string_to_boolean_value_true}' is condition for 'true' -> linkedObject value is '${convertedValue}'`);
 
-					if (targetObj.common.custom[this.namespace].string_to_duration_format) {
-						// string -> duration
-						try {
-							moment.locale(mySystemConfig.language);
-							convertedValue = moment.duration(convertedValue).format(targetObj.common.custom[this.namespace].string_to_duration_format, 0);
+						} else if ((targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0) && value.toString() === targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString()) {
+							convertedValue = false;
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', ${targetObj.common.custom[this.namespace].string_to_boolean_value_false}' is condition for 'false' -> linkedObject value is '${convertedValue}'`);
 
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].string_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-						} catch (err) {							
-							this.log.error(`[getConvertedValue] there is something wrong with your duration format, check your expert settings input for '${targetId}'!`);
-							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
-							convertedValue = "Error";
+						} else {
+							convertedValue = false;
+
+							if ((targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0) && targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString() && (targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0) && targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString()) {
+								this.log.debug(`[getConvertedValue] string not match with condition in expert settings of parentObject '${sourceId}' -> linkedObject value is '${convertedValue}'`);
+							} else {
+								this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to '${convertedValue}'`);
+							}
 						}
 					}
 
-					if (targetObj.common.custom[this.namespace].string_to_datetime_parser && targetObj.common.custom[this.namespace].string_to_datetime_format) {
-						// string -> datetime
-						try {
-							moment.locale(mySystemConfig.language);
-							convertedValue = moment(convertedValue, targetObj.common.custom[this.namespace].string_to_datetime_parser).format(targetObj.common.custom[this.namespace].string_to_datetime_format);
+					if (targetIsParentObj) {
+						// linkedObject state hat sich geändert
+						if (value && (targetObj.common.custom[this.namespace].string_to_boolean_value_true || targetObj.common.custom[this.namespace].string_to_boolean_value_true === 0)) {
+							convertedValue = targetObj.common.custom[this.namespace].string_to_boolean_value_true.toString();
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].string_to_boolean_value_true}' -> parentObject value is '${convertedValue}'`);
 
-							if (convertedValue != "Invalid date") {
-								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using parser '${targetObj.common.custom[this.namespace].string_to_datetime_parser}', format '${targetObj.common.custom[this.namespace].string_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
-							} else {
-								this.log.error(`[getConvertedValue] there is something wrong with your datetime parser, check your expert settings input for '${targetId}'!`);
+						} else if (!value && (targetObj.common.custom[this.namespace].string_to_boolean_value_false || targetObj.common.custom[this.namespace].string_to_boolean_value_false === 0)) {
+							convertedValue = targetObj.common.custom[this.namespace].string_to_boolean_value_false.toString();
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using value '${targetObj.common.custom[this.namespace].string_to_boolean_value_false}' -> parentObject value is '${convertedValue}'`);
+						} else {
+							convertedValue = value.toString();
+							this.log.warn(`[getConvertedValue] no values for 'true' / 'false' set in expert settings of parentObject '${sourceId}' -> fallback to linkedObject value '${convertedValue}'`);
+						}
+					}
+				}
+
+				// Type Converison: string -> number
+				if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_number" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_number") {
+					if (!targetIsParentObj) {
+						// parentObject state vom type string hat sich geändert -> string versuchen in number umwandeln
+						value = value.toString().replace(',', '.');
+						convertedValue = parseFloat(value);
+					}
+
+					if (!isNaN(convertedValue)) {
+						// string erfolgreich in number umgewandelt wenn parentObject geändert wurde, linkedObject ist immer vom type number
+						try {
+							if (targetObj.common.read && !targetObj.common.write && targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly && !targetIsParentObj) {
+								// ReadOnly object mit calculation -> umrechnen
+								let string_to_number_calculation_readOnly = targetObj.common.custom[this.namespace].string_to_number_calculation_readOnly.replace(/,/g, ".");
+								convertedValue = mathjs.evaluate(`${value} ${string_to_number_calculation_readOnly}`)
+
+								this.log.debug(`[getConvertedValue] read only parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation_readOnly}' -> new linkedObject value is '${convertedValue}'`);
+
+							} else if (targetObj.common.custom[this.namespace].string_to_number_calculation) {
+								// object mit string_to_number_calculation -> umrechnen
+								let string_to_number_calculation = targetObj.common.custom[this.namespace].string_to_number_calculation.replace(/,/g, ".");
+
+								if (!targetIsParentObj) {
+									// Umrechnung für linkedObject -> parentObject state ändert sich
+									convertedValue = mathjs.evaluate(`${value} ${string_to_number_calculation}`);
+
+									this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using calculation '${string_to_number_calculation}' -> linkedObject value is '${convertedValue}'`)
+								} else {
+									// Umrechnung für parentObject -> Kehrwert nehmen -> linkedObject state ändert sich
+									convertedValue = mathjs.evaluate(`${value} * 1/(1${string_to_number_calculation})`);
+									this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using calculation '1/(1${string_to_number_calculation})' -> parentObject value is '${convertedValue}'`)
+								}
 							}
 						} catch (err) {
-							this.log.error(`[getConvertedValue] there is something wrong with your datetime parser or format, check your expert settings input for '${targetId}'!`);
-							this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
-							convertedValue = "Error";
+							// falls Falsche Formel in custom dialog eingegeben wurde, input value verwenden und Fehler ausgeben
+							if (targetIsParentObj) {
+								this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your expert settings input for '${targetId}'!`);
+							} else {
+								this.log.error(`[getConvertedValue] there is something wrong with your calculation formula, check your expert settings input for '${sourceId}'!`);
+							}
+
+							convertedValue = value;
+						}
+
+						if (!targetIsParentObj && (targetObj.common.custom[this.namespace].string_to_number_maxDecimal || targetObj.common.custom[this.namespace].string_to_number_maxDecimal === 0)) {
+							// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
+							var maxDecimal = parseInt(targetObj.common.custom[this.namespace].string_to_number_maxDecimal);
+							if (!isNaN(maxDecimal)) {
+								convertedValue = mathjs.round(convertedValue, maxDecimal);
+							}
+						}
+
+						if (targetIsParentObj) {
+							// ziel ist parentObject vom type string, zahl noch in string umwandeln
+							convertedValue = convertedValue.toString();
+						}
+
+					} else {
+						// value vom type string kann nicht in number umgewandelt werden (nur bei parentObject)
+						this.log.error(`[getConvertedValue] string value '${value}' from '${sourceId}' can not be parsed to number! -> value for '${targetId}' is set to 'null'!`);
+					}
+				}
+
+				// Type Converison: string -> string (duration, datetime)
+				if (`${targetObj.common.custom[this.namespace].parentType}_to_${targetObj.common.type}` === "string_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_string" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_duration" || `${targetObj.common.type}_to_${targetObj.common.custom[this.namespace].string_convertTo}` === "string_to_datetime") {
+
+					if (!targetIsParentObj) {
+						// parentObject state hat sich geändert
+
+						if (targetObj.common.custom[this.namespace].string_to_duration_format) {
+							// string -> duration
+							try {
+								moment.locale(mySystemConfig.language);
+								convertedValue = moment.duration(convertedValue).format(targetObj.common.custom[this.namespace].string_to_duration_format, 0);
+
+								this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using format '${targetObj.common.custom[this.namespace].string_to_duration_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+							} catch (err) {
+								this.log.error(`[getConvertedValue] there is something wrong with your duration format, check your expert settings input for '${targetId}'!`);
+								this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
+								convertedValue = "Error";
+							}
+						}
+
+						if (targetObj.common.custom[this.namespace].string_to_datetime_parser && targetObj.common.custom[this.namespace].string_to_datetime_format) {
+							// string -> datetime
+							try {
+								moment.locale(mySystemConfig.language);
+								convertedValue = moment(convertedValue, targetObj.common.custom[this.namespace].string_to_datetime_parser).format(targetObj.common.custom[this.namespace].string_to_datetime_format);
+
+								if (convertedValue != "Invalid date") {
+									this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using parser '${targetObj.common.custom[this.namespace].string_to_datetime_parser}', format '${targetObj.common.custom[this.namespace].string_to_datetime_format}', lang '${moment.locale()}' -> linkedObject value is '${convertedValue}'`);
+								} else {
+									this.log.error(`[getConvertedValue] there is something wrong with your datetime parser, check your expert settings input for '${targetId}'!`);
+								}
+							} catch (err) {
+								this.log.error(`[getConvertedValue] there is something wrong with your datetime parser or format, check your expert settings input for '${targetId}'!`);
+								this.log.error(`[getConvertedValue] error: ${err.message}, stack: ${err.stack}`);
+								convertedValue = "Error";
+							}
 						}
 					}
 				}
+			} catch (err) {
+				this.log.error(`[getConvertedValue] sourceId '${sourceId}' targetId '${targetId}', error: ${err.message}, stack: ${err.stack}`);
 			}
 		}
 
