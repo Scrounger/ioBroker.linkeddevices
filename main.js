@@ -1166,6 +1166,11 @@ class Linkeddevices extends utils.Adapter {
 
 		if (parentObj && parentObj.common && parentObj.common.custom) {
 
+			if (parentObj.common.custom[this.namespace].boolean_invert || parentObj.common.custom[this.namespace].boolean_invert === false) {
+				// boolean invert
+				expertSettings.boolean_invert = parentObj.common.custom[this.namespace].boolean_invert;
+			}
+
 			if (parentObj.common.custom[this.namespace].boolean_to_string_value_false) {
 				// boolean -> string: linkedObject Wert für False
 				expertSettings.boolean_to_string_value_false = parentObj.common.custom[this.namespace].boolean_to_string_value_false;
@@ -1467,6 +1472,18 @@ class Linkeddevices extends utils.Adapter {
 						var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
 						if (!isNaN(maxDecimal)) {
 							convertedValue = mathjs.round(convertedValue, maxDecimal);
+						}
+					}
+				}
+
+				if (targetObj.common.type === "boolean") {
+					if (targetObj.common.custom[this.namespace].boolean_invert) {
+						convertedValue = !value;
+
+						if (!targetIsParentObj) {
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using invert -> linkedObject value is '${convertedValue}'`)
+						} else {
+							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using invert -> parentObject value is '${convertedValue}'`)
 						}
 					}
 				}

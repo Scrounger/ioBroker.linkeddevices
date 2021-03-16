@@ -43,6 +43,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 -->
 
 ### __WORK IN PROGRESS__
+* (Scrounger) added option to invert boolean
 * (Scrounger) bug fix for translated object names
 * (Scrounger) show error in settings
 

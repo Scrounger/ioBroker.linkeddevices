@@ -1260,5 +1260,17 @@ systemDictionary = {
 		"es": "¡Solo se pueden realizar ajustes para puntos de datos individuales!",
 		"pl": "Ustawienia można wprowadzać tylko dla pojedynczych punktów danych!",
 		"zh-cn": "只能为单个数据点进行设置！"
+	},
+	"boolean_invert": {
+		"en": "invert boolean",
+		"de": "Logikwert umkehren",
+		"ru": "инвертировать логическое значение",
+		"pt": "inverter booleano",
+		"nl": "omkeren boolean",
+		"fr": "inverser booléen",
+		"it": "invertire booleano",
+		"es": "invertir booleano",
+		"pl": "invert boolean",
+		"zh-cn": "反转布尔"
 	}
 };

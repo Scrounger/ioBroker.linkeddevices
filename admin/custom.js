@@ -149,6 +149,7 @@ if (typeof customPostInits !== 'undefined') {
 
             // Group: type 'boolean'
             Group.Boolean = $div.find('.view_Boolean');
+            Group.Boolean_Converter_None = $div.find('.view_Boolean_Converter_None');
             Group.Boolean_Converter_String = $div.find('.view_Boolean_Converter_String');
 
             // Group: type 'string'
@@ -634,11 +635,13 @@ if (typeof customPostInits !== 'undefined') {
                 Group.Boolean.show();
 
                 // Prüfen ob Typ Konverter ausgewählt ist
-                if (selectedBooleanConverter === "") {
+                if (selectedBooleanConverter === "") {                    
                     Group.Boolean_Converter_String.hide();
+                    Group.Boolean_Converter_None.show();
                     Group.Boolean_Converter_String.find("input").val("");
 
                 } else if (selectedBooleanConverter === "string") {
+                    Group.Boolean_Converter_None.hide();
                     Group.Boolean_Converter_String.show();
                 }
 
