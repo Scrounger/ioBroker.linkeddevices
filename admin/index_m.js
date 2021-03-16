@@ -171,10 +171,15 @@ async function createTable(onChange, filterText = null) {
             if (filterText != null) {
                 // Tabelle filtern
                 tableData = tableData.filter(function (res) {
-                    return res.linkedId.toUpperCase().includes(filterText.toUpperCase()) ||
+                    try{
+                        return res.linkedId.toUpperCase().includes(filterText.toUpperCase()) ||
                         res.linkedName.toUpperCase().includes(filterText.toUpperCase()) ||
                         res.parentId.toUpperCase().includes(filterText.toUpperCase()) ||
                         res.parentName.toUpperCase().includes(filterText.toUpperCase());
+                    } catch (err) {
+                        reportError(`[createTable] filter entries item: ${JSON.stringify(res)}, error: ${err.message}, stack: ${err.stack}`);
+                        return false;
+                    }
                 });
             }
 
@@ -189,7 +194,7 @@ async function createTable(onChange, filterText = null) {
             progressBar.hide();
         }
     } catch (err) {
-        showError(`createTable: ${err}<br> stack: ${err.stack}`);
+        reportError(`[createTable] error: ${err.message}, stack: ${err.stack}`);
     }
 }
 
@@ -232,7 +237,7 @@ async function getTableData() {
             return null;
         }
     } catch (err) {
-        showError(`getTableData: ${err}<br> stack: ${err.stack}`);
+        reportError(`[getTableData] error: ${err.message}, stack: ${err.stack}`);
     }
 }
 
@@ -335,13 +340,13 @@ async function assignParentObject(rowNum, parentId) {
                     $('#events .values-buttons[data-command="removeLink"][data-index="' + rowNum + '"]').attr('disabled', false).trigger('change');
                     $('#events .values-buttons[data-command="openCustom"][data-index="' + rowNum + '"]').attr('disabled', false).trigger('change');
                 } else {
-                    showError(result.error);
+                    reportError(result.error);
                 }
             }
         });
 
     } catch (err) {
-        showError("assignParentObject: " + err);
+        reportError(`[assignParentObject] error: ${err.message}, stack: ${err.stack}`);
     }
 }
 
@@ -375,7 +380,7 @@ async function removeAssignedParentObject(rowNum, parentId, linkedId) {
         await setObject(parentId, parentObj);
         await setObject(linkedId, linkedObj);
     } catch (err) {
-        showError("assignParentObject: " + err);
+        reportError(`[removeAssignedParentObject] error: ${err.message}, stack: ${err.stack}`);
     }
 }
 //#endregion
@@ -1083,7 +1088,7 @@ async function events(onChange) {
 
 
     } catch (err) {
-        showError(err);
+        reportError(`[events] error: ${err.message}, stack: ${err.stack}`);
     }
 }
 
@@ -1223,7 +1228,7 @@ async function createJavascript() {
         }
 
     } catch (err) {
-        showError("generate javascript:" + err)
+        reportError(`[createJavascript] error: ${err.message}, stack: ${err.stack}`);
     }
 }
 
@@ -1233,6 +1238,16 @@ function createGetFunction(linkedId, returnStatement) {
 
 function createSetFunction(linkedId, setVars, setStatement) {
     return `function (${setVars}) { let obj = getObject("${linkedId}"); if (obj && obj.common && obj.common.custom && obj.common.custom["${myNamespace}"] && obj.common.custom["${myNamespace}"].isLinked === false) console.warn("object '${linkedId}' is not linked anymore!"); ${setStatement}; };`;
+}
+
+function reportError(msg) {
+    console.error(msg);
+    showMessage(`
+    <div style="display: flex; align-items: center; flex-direction: row;">
+        <i class="medium material-icons" style="color: FireBrick;">error_outline</i>
+        <div style="margin-left: 12px; font-weight: 700; font-size: 16px;">An error has occurred.<br>Please report this to the developer</div>
+    </div>
+    <textarea class="materialdesign-settings-error-msg" readonly="readonly" style="background: #e9e9e9; margin-top: 20px; height: calc(100% - 160px);">${msg.replace(', error:', ',\nerror:').replace(', stack:', ',\nstack:')}</textarea>`, 'Error', undefined);
 }
 //#endregion
 
