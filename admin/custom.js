@@ -303,7 +303,13 @@ if (typeof customPostInits !== 'undefined') {
 
             let obj = await getObject(values["parentId"]);
             if (obj && obj.common && obj.common.name) {
-                Input.parentName.val(obj.common.name);
+                if (typeof (obj.common.name) === 'string') {
+                    Input.parentName.val(obj.common.name);
+                } else if (typeof (obj.common.name) === 'object') {
+                    Input.parentName.val(obj.common.name[currentLanguage]);
+                } else {
+                    Input.parentName.val('');
+                }
             } else {
                 Input.parentName.val('');
             }

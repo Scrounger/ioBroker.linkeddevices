@@ -42,6 +42,10 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) bug fix for translated object names
+* (Scrounger) show error in settings
+
 ### 1.4.2 (2020-12-29)
 * (Scrounger) bug fix for filtered custom dialog
 

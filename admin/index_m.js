@@ -27,6 +27,8 @@ var Label = {};
 var Button = {};
 var Checkbox = {};
 
+var language = 'en';
+
 async function load(settings, onChange) {
     // Namespace bauen
     myNamespace = adapter + '.' + instance;
@@ -62,6 +64,9 @@ async function load(settings, onChange) {
     if (!settings.prefixAsName) {
         $('#idAsName').attr('disabled', 'disabled');
     }
+
+    language = await getLanguage();
+    console.warn(language);
 
     // GUI Events
     await events(onChange);
@@ -171,11 +176,36 @@ async function createTable(onChange, filterText = null) {
             if (filterText != null) {
                 // Tabelle filtern
                 tableData = tableData.filter(function (res) {
-                    try{
-                        return res.linkedId.toUpperCase().includes(filterText.toUpperCase()) ||
-                        res.linkedName.toUpperCase().includes(filterText.toUpperCase()) ||
-                        res.parentId.toUpperCase().includes(filterText.toUpperCase()) ||
-                        res.parentName.toUpperCase().includes(filterText.toUpperCase());
+                    try {
+                        if (res.linkedId.toUpperCase().includes(filterText.toUpperCase())) {
+                            return true;
+                        }
+
+                        if (typeof (res.linkedName) === 'string') {
+                            if (res.linkedName.toUpperCase().includes(filterText.toUpperCase())) {
+                                return true;
+                            }
+                        } else if (typeof (res.linkedName) === 'object') {
+                            if (res.linkedName[language].toString().toUpperCase().includes(filterText.toUpperCase())) {
+                                return true;
+                            }
+                        }
+
+                        if (res.parentId.toUpperCase().includes(filterText.toUpperCase())) {
+                            return true;
+                        }
+
+                        if (typeof (res.parentName) === 'string') {
+                            if (res.parentName.toUpperCase().includes(filterText.toUpperCase())) {
+                                return true;
+                            }
+                        } else if (typeof (res.parentName) === 'object') {
+                            if (res.parentName[language].toString().toUpperCase().includes(filterText.toUpperCase())) {
+                                return true;
+                            }
+                        }
+
+                        return false;
                     } catch (err) {
                         reportError(`[createTable] filter entries item: ${JSON.stringify(res)}, error: ${err.message}, stack: ${err.stack}`);
                         return false;
@@ -215,7 +245,11 @@ async function getTableData() {
                     var parentName = '';
 
                     if (linkedObj.common.name) {
-                        linkedName = linkedObj.common.name;
+                        if (typeof (linkedObj.common.name) === 'string') {
+                            linkedName = linkedObj.common.name;
+                        } else if (typeof (linkedObj.common.name) === 'object') {
+                            linkedName = linkedObj.common.name[language];
+                        }
                     }
 
                     if (linkedObj.common.custom[myNamespace].isLinked) {
@@ -225,7 +259,11 @@ async function getTableData() {
                         // Name des parent Objektes holen
                         let parentObj = await getObject(parentId);
                         if (parentObj && parentObj.common && parentObj.common.name) {
-                            parentName = parentObj.common.name;
+                            if (typeof (parentObj.common.name) === 'string') {
+                                parentName = parentObj.common.name;
+                            } else if (typeof (parentObj.common.name) === 'object') {
+                                parentName = parentObj.common.name[language];
+                            }
                         }
                     }
 
@@ -1248,6 +1286,22 @@ function reportError(msg) {
         <div style="margin-left: 12px; font-weight: 700; font-size: 16px;">An error has occurred.<br>Please report this to the developer</div>
     </div>
     <textarea class="materialdesign-settings-error-msg" readonly="readonly" style="background: #e9e9e9; margin-top: 20px; height: calc(100% - 160px);">${msg.replace(', error:', ',\nerror:').replace(', stack:', ',\nstack:')}</textarea>`, 'Error', undefined);
+}
+
+async function getLanguage() {
+    try {
+        let sysConfig = await getObject('system.config');
+
+        if (sysConfig && sysConfig.common && sysConfig.common.language) {
+            console.debug(`[getLanguage] using language '${sysConfig.common.language}'`);
+            return sysConfig.common.language;
+        } else {
+            console.warn(`system language could not be read -> Fallback to 'en`);
+            return 'en';
+        }
+    } catch (err) {
+        reportError(`[getLanguage] error: ${err.message}, stack: ${err.stack}`);
+    }
 }
 //#endregion
 
