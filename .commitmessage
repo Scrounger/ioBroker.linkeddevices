@@ -1,3 +1,5 @@
-chore: release v1.4.2
+chore: release v1.4.3
 
-bug fix for filtered custom dialog
+added option to invert boolean
+bug fix for translated object names
+show error in settings

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.4.2",
+        "version": "1.4.3",
         "news": {
+            "1.4.3": {
+                "en": "added option to invert boolean\nbug fix for translated object names\nshow error in settings",
+                "de": "Option zum Invertieren des Booleschen Werts hinzugefügt\nFehlerbehebung für übersetzte Objektnamen\nFehler in den Einstellungen anzeigen",
+                "ru": "добавлена возможность инвертировать логическое значение\nисправление ошибки для переведенных имен объектов\nпоказать ошибку в настройках",
+                "pt": "Adicionada opção para inverter o booleano\ncorreção de bug para nomes de objetos traduzidos\nmostrar erro nas configurações",
+                "nl": "optie toegevoegd om boolean om te keren\nbugfix voor vertaalde objectnamen\ntoon fout in instellingen",
+                "fr": "option ajoutée pour inverser le booléen\ncorrection de bogue pour les noms d'objets traduits\nafficher une erreur dans les paramètres",
+                "it": "aggiunta opzione per invertire booleano\ncorrezione di bug per i nomi degli oggetti tradotti\nmostra errore nelle impostazioni",
+                "es": "opción agregada para invertir booleano\ncorrección de errores para nombres de objetos traducidos\nmostrar error en la configuración",
+                "pl": "dodana opcja odwracania wartości logicznych\npoprawka błędu dla przetłumaczonych nazw obiektów\npokaż błąd w ustawieniach",
+                "zh-cn": "添加了反转布尔值的选项\n已翻译对象名称的错误修复\n显示设置错误"
+            },
             "1.4.2": {
                 "en": "bug fix for filtered custom dialog",
                 "de": "Fehlerbehebung für gefilterte benutzerdefinierte Dialoge",
@@ -230,18 +242,6 @@
                 "es": "Se agregó una lista de sugerencias para PrefixId, Id, y Name \nbutton para eliminar enlaces agregados \nConversion: cadena agregada (solo lectura) en duración, fecha y / o hora \nconfiguración del adaptador: número de configuración de diseño revisado \nexpert: permitir valores negativos por min. / max \nconfiguración de nadapter: autogenerar script globale - opcional crear función setState para objetos de solo lectura \nadapter configuración: auto generar script globale - ahora opcional reconocer también objetos creados manualmente \n correcciones de errores",
                 "pl": "Dodano listę sugestii dla PrefixId, Id i Name \n przycisk, aby usunąć dodane linki \n Konwersja: dodano ciąg (tylko do odczytu) w czasie trwania, dacie i / lub czasie \nkonfiguracja nadfiguracji: poprawiono układ / max \nkonfiguracja konfiguracji: automatyczne generowanie skryptu globale - opcjonalnie utwórz funkcję setState dla obiektów tylko do odczytu \nkonfiguracja konfiguracji: automatyczna generacja skryptu globale - teraz opcjonalnie rozpoznaje również ręcznie utworzone obiekty \npoprawki błędów",
                 "zh-cn": "添加了PrefixId，Id和Name \n按钮的建议列表，以删除添加的链接\n转换：在持续时间，日期和/或时间添加字符串（只读）\nadapap配置：布局修订\nexpert设置编号：允许负值为min / max \nadapter配置：自动生成globale脚本 - 为只读对象创建setState函数\nadapap配置：自动生成globale脚本 - 现在可选识别手动创建的对象\nbug修复"
-            },
-            "0.4.1": {
-                "en": "Bug fix for automatically generate a global script for the adapter Javascript Script Engine",
-                "de": "Fehlerbehebung für das automatische Generieren eines globalen Skripts für den Adapter Javascript Script Engine",
-                "ru": "Исправлена ошибка для автоматической генерации глобального скрипта для адаптера Javascript Script Engine",
-                "pt": "Correção de bug para gerar automaticamente um script global para o adaptador Javascript Script Engine",
-                "nl": "Bugfix voor het automatisch genereren van een globaal script voor de adapter Javascript Script Engine",
-                "fr": "Correction de bogue pour générer automatiquement un script global pour l'adaptateur Javascript Script Engine",
-                "it": "Bug fix per generare automaticamente uno script globale per l'adattatore JavaScript Script Engine",
-                "es": "Corrección de errores para generar automáticamente un script global para el adaptador Javascript Script Engine",
-                "pl": "Poprawka do automatycznego generowania globalnego skryptu dla aparatu Javascript Script Engine",
-                "zh-cn": "修复错误，自动生成适配器Javascript脚本引擎的全局脚本"
             }
         },
         "title": "LinkedDevices",
