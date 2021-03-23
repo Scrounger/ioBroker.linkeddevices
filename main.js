@@ -1471,7 +1471,11 @@ class Linkeddevices extends utils.Adapter {
 						// nur für linkedObject Nachkommastellen festlegen, sofern vorhanden und nicht leer
 						var maxDecimal = parseInt(targetObj.common.custom[this.namespace].number_maxDecimal);
 						if (!isNaN(maxDecimal)) {
-							convertedValue = mathjs.round(convertedValue, maxDecimal);
+							if (convertedValue !== null && convertedValue !== undefined) {
+								convertedValue = mathjs.round(convertedValue, maxDecimal);
+							} else {
+								this.log.warn(`[getConvertedValue] sourceId '${sourceId}', targetId '${targetId}': value is '${value}' and can't be rounded!`);
+							}
 						}
 					}
 				}
@@ -1767,7 +1771,7 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 			} catch (err) {
-				this.log.error(`[getConvertedValue] sourceId '${sourceId}' targetId '${targetId}', error: ${err.message}, stack: ${err.stack}`);
+				this.log.error(`[getConvertedValue] sourceId '${sourceId}', targetId '${targetId}', value: '${value}', error: ${err.message}, stack: ${err.stack}`);
 			}
 		}
 
