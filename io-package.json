@@ -304,8 +304,9 @@
         "compact": true,
         "connectionType": "local",
         "dataSource": "push",
-        "materialize": true,
+        "materialize": true,        
         "supportCustoms": true,
+        "jsonCustom": true,
         "dependencies": [
             {
                 "admin": ">=3.6.2"

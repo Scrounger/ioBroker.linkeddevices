@@ -1,0 +1,38 @@
+{
+    "items": {
+        "prefixId": {
+            "type": "text",
+            "label": "prefix for id of linked object",
+            "max": 255,
+            "sm": 4,
+            "defaultFunc": "data.linkedId.includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : ''",
+            "validator": "data.prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.prefixId)"
+        },
+        "stateId": {
+            "type": "text",
+            "label": "id of linked object",
+            "max": 255,
+            "sm": 4,
+            "defaultFunc": "(data.linkedId || '').split('.').pop()",
+            "validator": "data.stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.stateId)"
+        },
+        "linkedId": {
+            "type": "text",
+            "label": "composite id of linked object",
+            "max": 255,
+            "sm": 4,
+            "disabled": "true"
+        },
+        "_idHasNotAllowedCharsError": {
+            "newLine": true,
+            "type": "staticText",
+            "label": "the following chars are not allowed as Id: '*?\"'`´,;:<>#/{}ß[] '",
+            "style": {
+                "color": "red",
+                "fontSize": 20
+            },
+            "hidden": "(data.prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.prefixId)) && (data.stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.stateId))",
+            "sm": 12
+        }
+    }
+}
