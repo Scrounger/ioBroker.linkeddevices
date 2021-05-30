@@ -330,6 +330,90 @@ class Linkeddevices extends utils.Adapter {
 				if (obj.callback && result) {
 					this.sendTo(obj.from, obj.command, result, obj.callback);
 				}
+			} else if (obj.command === 'suggestions_prefixId') {
+				// message from custom dialog
+				let objOfInstance = await this.getForeignObjectsAsync(`${this.namespace}.*`);
+				let prefixIdSuggestionList = [];
+
+				for (var id in objOfInstance) {
+					let linkedObject = objOfInstance[id];
+
+					if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace]) {
+						// nur Objekte betrachten die custom vom Namespace haben -> es kann sein das andere Objekte existieren
+						let cleanId = id.replace(`${this.namespace}.`, '');
+
+						// alle prefixIds von rechts immer bis zum '.' durchlaufen und übergeben
+						let prefixId = cleanId;
+						for (var i = 0; i <= cleanId.split(".").length - 1; i++) {
+							prefixId = prefixId.substring(0, prefixId.lastIndexOf('.'))
+
+							if (prefixId) {
+								if (!prefixIdSuggestionList.includes(prefixId)) {
+									// nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+									prefixIdSuggestionList.push(prefixId);
+								}
+							}
+						}
+					}
+				}
+				this.sendTo(obj.from, obj.command, prefixIdSuggestionList, obj.callback);
+
+			} else if (obj.command === 'suggestions_stateId') {
+				// message from custom dialog
+				let objOfInstance = await this.getForeignObjectsAsync(`${this.namespace}.*`);
+				let stateIdSuggestionList = [];
+
+				for (var id in objOfInstance) {
+					let linkedObject = objOfInstance[id];
+
+					if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace]) {
+						// nur Objekte betrachten die custom vom Namespace haben -> es kann sein das andere Objekte existieren
+						let cleanId = id.replace(`${this.namespace}.`, '');
+
+						let stateId = cleanId.substring(cleanId.lastIndexOf('.'), cleanId.length).replace('.', '');
+						if (!stateIdSuggestionList.includes(stateId)) {
+							// nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+							stateIdSuggestionList.push(stateId);
+						}
+					}
+				}
+				this.sendTo(obj.from, obj.command, stateIdSuggestionList, obj.callback);
+
+			} else if (obj.command === 'suggestions_name') {
+				// message from custom dialog
+				let objOfInstance = await this.getForeignObjectsAsync(`${this.namespace}.*`);
+				let nameSugestionList = [];
+
+				for (var id in objOfInstance) {
+					let linkedObject = objOfInstance[id];
+
+					if (linkedObject && linkedObject.common && linkedObject.common.custom && linkedObject.common.custom[this.namespace]) {
+						if (linkedObject.common.name) {
+							let name = linkedObject.common.name;
+
+							if (typeof (name) === 'object') {
+								var sysConfig = await this.getForeignObjectAsync('system.config');
+
+								if (sysConfig && sysConfig.common) {
+									if (sysConfig.common.language) {
+										name = name[sysConfig.common.language];
+									} else {
+										name = name['en'];
+									}
+								}
+							}
+
+							if (!nameSugestionList.includes(name)) {
+								// nur zu prefixId array hinzufügen wenn noch nicht vorhanden
+								nameSugestionList.push(name);
+							}
+						}
+					}
+				}
+				this.sendTo(obj.from, obj.command, nameSugestionList, obj.callback);
+
+			} else if (obj.command === 'getParentName') {
+				this.sendTo(obj.from, obj.command, ["Fuu"], obj.callback);
 			}
 		}
 	}

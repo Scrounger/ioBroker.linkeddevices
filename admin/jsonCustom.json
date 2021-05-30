@@ -1,38 +1,228 @@
 {
+    "type": "panel",
+    "label": "General",
     "items": {
-        "prefixId": {
-            "type": "text",
-            "label": "prefix for id of linked object",
-            "max": 255,
-            "sm": 4,
-            "defaultFunc": "data.linkedId.includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : ''",
-            "validator": "data.prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.prefixId)"
+        "panel_parent_object": {
+            "hidden": "!(data.isLinked === undefined)",
+            "items": {
+                "_prefixId": {
+                    "type": "autocompleteSendTo",
+                    "label": "prefix for id of linked object",
+                    "sm": 4,
+                    "noMultiEdit": true,
+                    "freeSolo": true,
+                    "noTranslation": true,
+                    "command": "suggestions_prefixId",
+                    "maxLength": 255,
+                    "defaultFunc": {
+                        "func": "(data.linkedId || '').includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : ''",
+                        "alsoDependsOn": [
+                            "linkedId"
+                        ]
+                    },
+                    "validator": "data._prefixId && data._prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._prefixId) || data._prefixId === ''",
+                    "help": "${data._prefixId && data._prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._prefixId) || data._prefixId === '' ? '' : 'the following chars are not allowed \\'*?\"\\'`´,;:<>#/{}ß[] \\''}"
+                },
+                "_stateId": {
+                    "type": "autocompleteSendTo",
+                    "label": "id of linked object",
+                    "sm": 4,
+                    "noMultiEdit": true,
+                    "freeSolo": true,
+                    "noTranslation": true,
+                    "command": "suggestions_stateId",
+                    "maxLength": 255,
+                    "defaultFunc": {
+                        "func": "(data.linkedId || '').split('.').pop()",
+                        "alsoDependsOn": [
+                            "linkedId"
+                        ]
+                    },
+                    "validator": "data._stateId && data._stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._stateId)",
+                    "help": "${data._stateId && data._stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._stateId) ? '' : 'please enter a valid id, the following chars are not allowed \\'*?\"\\'`´,;:<>#/{}ß[] \\''}"
+                },
+                "linkedId": {
+                    "type": "text",
+                    "label": "composite id of linked object",
+                    "sm": 4,
+                    "noMultiEdit": true,
+                    "maxLength": 255,
+                    "disabled": "true",
+                    "defaultFunc": "data.linkedId || customObj._id.substring(customObj._id.lastIndexOf('.') + 1, customObj._id.length)",
+                    "onChange": {
+                        "alsoDependsOn": [
+                            "_prefixId",
+                            "_stateId"
+                        ],
+                        "calculateFunc": "(data._prefixId || '') + '.' + (data._stateId || '')",
+                        "ignoreOwnChanges": true
+                    }
+                },
+                "name": {
+                    "type": "autocompleteSendTo",
+                    "label": "name of linked object",
+                    "sm": 4,
+                    "noMultiEdit": true,
+                    "freeSolo": true,
+                    "noTranslation": true,
+                    "command": "suggestions_name",
+                    "maxLength": 255
+                },
+                "role": {
+                    "type": "autocomplete",
+                    "label": "change role '${customObj.common.role}' in",
+                    "sm": 4,
+                    "noMultiEdit": true,
+                    "freeSolo": true,
+                    "maxLength": 255,
+                    "options": [
+                        "value1",
+                        "value2"
+                    ]
+                },
+                "mergeSettingsOnRestart": {
+                    "type": "checkbox",
+                    "label": "mergeSettingsOnRestart",
+                    "sm": 12,
+                    "newLine": true,
+                    "noMultiEdit": true
+                },
+                "_headerExpertSettings": {
+                    "type": "header",
+                    "text": "expert settings for linked object with type '${customObj.common.type}'",
+                    "size": 1,
+                    "style": {
+                        "width": "100%"
+                    }
+                },
+                "expertSettings": {
+                    "type": "checkbox",
+                    "label": "enabled",
+                    "sm": 2,
+                    "newLine": true,
+                    "noMultiEdit": true,
+                    "hidden": "customObj && customObj.common && (customObj.common.type != 'number' && customObj.common.type != 'boolean' && customObj.common.type != 'string')"
+                },
+                "panel_expertSettings_numbers": {
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type == 'number')",
+                    "items": {
+                        "number_convertTo": {
+                            "type": "select",
+                            "label": "convert linked object to type",
+                            "sm": 12,
+                            "noMultiEdit": true,
+                            "default": "",
+                            "options": [
+                                {
+                                    "label": "do not convert",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "boolean",
+                                    "value": "boolean"
+                                },
+                                {
+                                    "label": "duration",
+                                    "value": "duration"
+                                },
+                                {
+                                    "label": "datetime",
+                                    "value": "datetime"
+                                }
+                            ]
+                        },
+                        "panel_no_conversion": {
+                            "hidden": "!(data.number_convertTo == '')",
+                            "items": {
+                                "number_unit": {
+                                    "type": "text",
+                                    "label": "change unit '${customObj.common.unit}' to",
+                                    "sm": 4,
+                                    "newLine": true,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255
+                                },
+                                "number_maxDecimal": {
+                                    "type": "number",
+                                    "label": "max. number of decimal places",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "min": 0,
+                                    "max": 100
+                                },
+                                "number_min": {
+                                    "type": "number",
+                                    "label": "change min '${customObj.common.min}' to",
+                                    "sm": 4,
+                                    "noMultiEdit": true
+                                },
+                                "number_max": {
+                                    "type": "number",
+                                    "label": "change max '${customObj.common.max}' to",
+                                    "sm": 4,
+                                    "noMultiEdit": true
+                                },
+                                "number_calculation": {
+                                    "type": "text",
+                                    "label": "calculation for linked object",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "help": "feature: dynamic to show error message and hidden prop",
+                                    "hidden": "!(customObj.common.write == true)",
+                                    "validator": "data.number_calculation == '' || data.number_calculation == undefined || data.number_calculation && data.number_calculation.length > 0 && !(/[^0-9\\.\\,\\*\/]/).test(data.number_calculation) && (data.number_calculation.startsWith('*') || data.number_calculation.startsWith('/'))"
+                                },
+                                "number_calculation_readOnly": {
+                                    "type": "text",
+                                    "label": "calculation for 'read' object",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "hidden": "!(customObj.common.write == false)",
+                                    "validator": "data.number_calculation_readOnly == '' || data.number_calculation == undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         },
-        "stateId": {
-            "type": "text",
-            "label": "id of linked object",
-            "max": 255,
-            "sm": 4,
-            "defaultFunc": "(data.linkedId || '').split('.').pop()",
-            "validator": "data.stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.stateId)"
-        },
-        "linkedId": {
-            "type": "text",
-            "label": "composite id of linked object",
-            "max": 255,
-            "sm": 4,
-            "disabled": "true"
-        },
-        "_idHasNotAllowedCharsError": {
-            "newLine": true,
-            "type": "staticText",
-            "label": "the following chars are not allowed as Id: '*?\"'`´,;:<>#/{}ß[] '",
-            "style": {
-                "color": "red",
-                "fontSize": 20
-            },
-            "hidden": "(data.prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.prefixId)) && (data.stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data.stateId))",
-            "sm": 12
+        "panel_linked_object": {
+            "hidden": "data.isLinked === undefined",
+            "items": {
+                "_parentId": {
+                    "type": "text",
+                    "label": "linked with",
+                    "sm": 12,
+                    "noMultiEdit": true,
+                    "disabled": "true",
+                    "maxLength": 255,
+                    "defaultFunc": {
+                        "func": "data.parentId"
+                    }
+                },
+                "_parentName": {
+                    "type": "textSendTo",
+                    "label": "parent name",
+                    "sm": 12,
+                    "noMultiEdit": true,
+                    "command": "getParentName",
+                    "jsonData": {
+                        "parentId": "${data.parentId}"
+                    }
+                },
+                "_linkToParentObject": {
+                    "type": "staticLink",
+                    "text": "settings of linked object",
+                    "sm": 12,
+                    "button": true,
+                    "icon": "Edit",
+                    "href": "#tab-objects/customs/${data.parentId}",
+                    "style": {
+                        "justifyContent": "flex-start"
+                    }
+                }
+            }
         }
     }
 }
