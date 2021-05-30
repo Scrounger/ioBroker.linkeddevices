@@ -131,7 +131,7 @@
                                 }
                             ]
                         },
-                        "panel_no_conversion": {
+                        "panel_convert_none": {
                             "hidden": "!(data.number_convertTo == '')",
                             "items": {
                                 "number_unit": {
@@ -182,6 +182,68 @@
                                     "validator": "data.number_calculation_readOnly == '' || data.number_calculation == undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))"
                                 }
                             }
+                        },
+                        "panel_convert_boolean": {
+                            "hidden": "!(data.number_convertTo == 'boolean')",
+                            "items": {
+                                "number_to_boolean_condition": {
+                                    "type": "text",
+                                    "label": "condition 'true' for linked object",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "validator": "data.number_to_boolean_condition && data.number_to_boolean_condition.length > 0 && !(/[^0-9\\.\\,\\=\\!\\>\\<]/).test(data.number_to_boolean_condition) && (data.number_to_boolean_condition.startsWith('=') || data.number_to_boolean_condition.startsWith('<') || data.number_to_boolean_condition.startsWith('>') || data.number_to_boolean_condition.startsWith('!='))",
+                                    "help": "${data.number_to_boolean_condition && data.number_to_boolean_condition.length > 0 && !(/[^0-9\\.\\,\\=\\!\\>\\<]/).test(data.number_to_boolean_condition) && (data.number_to_boolean_condition.startsWith('=') || data.number_to_boolean_condition.startsWith('<') || data.number_to_boolean_condition.startsWith('>') || data.number_to_boolean_condition.startsWith('!=')) ? '' : 'only numbers and mathematical (=, <, >, !=) operators allowed as a condition'}"
+                                },
+                                "number_to_boolean_value_true": {
+                                    "type": "number",
+                                    "label": "value if linked object is 'true'",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255
+                                },
+                                "number_to_boolean_value_false": {
+                                    "type": "number",
+                                    "label": "value if linked object is 'false'",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255
+                                }
+                            }
+                        }
+                    }
+                },
+                "panel_expertSettings_string": {
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type == 'string')",
+                    "items": {
+                        "number_convertTo": {
+                            "type": "select",
+                            "label": "convert linked object to type",
+                            "sm": 12,
+                            "noMultiEdit": true,
+                            "default": "",
+                            "options": [
+                                {
+                                    "label": "do not convert",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "boolean",
+                                    "value": "boolean"
+                                },
+                                {
+                                    "label": "number",
+                                    "value": "number"
+                                },
+                                {
+                                    "label": "duration",
+                                    "value": "duration"
+                                },
+                                {
+                                    "label": "datetime",
+                                    "value": "datetime"
+                                }
+                            ]
                         }
                     }
                 }
