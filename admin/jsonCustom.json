@@ -123,11 +123,13 @@
                                 },
                                 {
                                     "label": "duration",
-                                    "value": "duration"
+                                    "value": "duration",
+                                    "hidden": "customObj.common.write == false"
                                 },
                                 {
                                     "label": "datetime",
-                                    "value": "datetime"
+                                    "value": "datetime",
+                                    "hidden": "customObj.common.write == false"
                                 }
                             ]
                         },
@@ -178,7 +180,7 @@
                                     "sm": 4,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
-                                    "hidden": "!(customObj.common.write == false)",
+                                    "hidden": "customObj.common.write == false",
                                     "validator": "data.number_calculation_readOnly == '' || data.number_calculation == undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))"
                                 }
                             }
@@ -197,17 +199,19 @@
                                 },
                                 "number_to_boolean_value_true": {
                                     "type": "number",
-                                    "label": "value if linked object is 'true'",
+                                    "label": "value if linked object is 'true'",                                    
                                     "sm": 4,
                                     "noMultiEdit": true,
-                                    "maxLength": 255
+                                    "maxLength": 255,
+                                    "hidden": "customObj.common.write == false"
                                 },
                                 "number_to_boolean_value_false": {
                                     "type": "number",
                                     "label": "value if linked object is 'false'",
                                     "sm": 4,
                                     "noMultiEdit": true,
-                                    "maxLength": 255
+                                    "maxLength": 255,
+                                    "hidden": "customObj.common.write == false"
                                 }
                             }
                         }
