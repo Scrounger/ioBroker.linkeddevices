@@ -1,9 +1,10 @@
 {
-    "type": "panel",
+    "type": "tabs",
     "label": "General",
     "items": {
         "panel_parent_object": {
             "hidden": "!(data.isLinked === undefined)",
+            "type": "panel",
             "items": {
                 "_prefixId": {
                     "type": "autocompleteSendTo",
@@ -48,9 +49,7 @@
                     "noMultiEdit": true,
                     "maxLength": 255,
                     "disabled": "true",
-                    "defaultFunc": {
-                        "func": "data.linkedId || customObj._id.substring(customObj._id.lastIndexOf('.') + 1, customObj._id.length)"
-                    },
+                    "defaultFunc": "data.linkedId || customObj._id.substring(customObj._id.lastIndexOf('.') + 1)",
                     "onChange": {
                         "alsoDependsOn": [
                             "_prefixId",
@@ -106,7 +105,8 @@
                     "hidden": "customObj && customObj.common && (customObj.common.type != 'number' && customObj.common.type != 'boolean' && customObj.common.type != 'string')"
                 },
                 "panel_expertSettings_numbers": {
-                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type == 'number')",
+                    "type": "panel",
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type === 'number')",
                     "items": {
                         "number_convertTo": {
                             "type": "select",
@@ -126,12 +126,12 @@
                                 {
                                     "label": "duration",
                                     "value": "duration",
-                                    "hidden": "customObj.common.write == false"
+                                    "hidden": "customObj.common.write === false"
                                 },
                                 {
                                     "label": "datetime",
                                     "value": "datetime",
-                                    "hidden": "customObj.common.write == false"
+                                    "hidden": "customObj.common.write === false"
                                 }
                             ]
                         },
@@ -220,6 +220,7 @@
                     }
                 },
                 "panel_expertSettings_string": {
+                    "type": "panel",
                     "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type == 'string')",
                     "items": {
                         "number_convertTo": {
@@ -257,6 +258,7 @@
         },
         "panel_linked_object": {
             "hidden": "data.isLinked === undefined",
+            "type": "panel",
             "items": {
                 "_parentId": {
                     "type": "text",
@@ -275,16 +277,14 @@
                     "sm": 12,
                     "noMultiEdit": true,
                     "command": "getParentName",
-                    "jsonData": {
-                        "parentId": "${data.parentId}"
-                    }
+                    "jsonData": "{\"parentId\": \"${data.parentId}\"}"
                 },
                 "_linkToParentObject": {
                     "type": "staticLink",
                     "text": "settings of linked object",
                     "sm": 12,
                     "button": true,
-                    "icon": "Edit",
+                    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4NCiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0zIDE3LjI1VjIxaDMuNzVMMTcuODEgOS45NGwtMy43NS0zLjc1TDMgMTcuMjV6TTIwLjcxIDcuMDRjLjM5LS4zOS4zOS0xLjAyIDAtMS40MWwtMi4zNC0yLjM0Yy0uMzktLjM5LTEuMDItLjM5LTEuNDEgMGwtMS44MyAxLjgzIDMuNzUgMy43NSAxLjgzLTEuODN6Ii8+DQo8L3N2Zz4=",
                     "href": "#tab-objects/customs/${data.parentId}",
                     "style": {
                         "justifyContent": "flex-start"
