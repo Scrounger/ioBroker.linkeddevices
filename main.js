@@ -413,7 +413,18 @@ class Linkeddevices extends utils.Adapter {
 				this.sendTo(obj.from, obj.command, nameSugestionList, obj.callback);
 
 			} else if (obj.command === 'getParentName') {
-				this.sendTo(obj.from, obj.command, ["Fuu"], obj.callback);
+				// message from custom dialog
+				if (obj.message && obj.message['parentId']) {
+					let parentObj = await this.getForeignObjectAsync(obj.message['parentId']);
+
+					if (parentObj && parentObj.common && parentObj.common.name) {
+						this.sendTo(obj.from, obj.command, parentObj.common.name, obj.callback);
+					} else {
+						this.sendTo(obj.from, obj.command, "Error", obj.callback);
+					}
+				} else {
+					this.sendTo(obj.from, obj.command, "Error", obj.callback);
+				}
 			}
 		}
 	}

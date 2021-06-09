@@ -1,9 +1,8 @@
 {
-    "type": "tabs",
-    "label": "General",
+    "type": "panel",
     "items": {
         "panel_parent_object": {
-            "hidden": "!(data.isLinked === undefined)",
+            "hidden": "data.isLinked !== undefined",
             "type": "panel",
             "items": {
                 "_prefixId": {
@@ -90,7 +89,7 @@
                 },
                 "_headerExpertSettings": {
                     "type": "header",
-                    "text": "expert settings for linked object with type '${customObj.common.type}'",
+                    "text": "expert settings for linked object with type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
                     "size": 1,
                     "style": {
                         "width": "100%"
@@ -126,17 +125,17 @@
                                 {
                                     "label": "duration",
                                     "value": "duration",
-                                    "hidden": "customObj.common.write === false"
+                                    "hidden": "customObj.common.write === true"
                                 },
                                 {
                                     "label": "datetime",
                                     "value": "datetime",
-                                    "hidden": "customObj.common.write === false"
+                                    "hidden": "customObj.common.write === true"
                                 }
                             ]
                         },
                         "panel_convert_none": {
-                            "hidden": "!(data.number_convertTo == '')",
+                            "hidden": "!(data.number_convertTo === '')",
                             "items": {
                                 "number_unit": {
                                     "type": "text",
@@ -172,23 +171,24 @@
                                     "sm": 4,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
-                                    "help": "feature: dynamic to show error message and hidden prop",
-                                    "hidden": "!(customObj.common.write == true)",
-                                    "validator": "data.number_calculation == '' || data.number_calculation == undefined || data.number_calculation && data.number_calculation.length > 0 && !(/[^0-9\\.\\,\\*\/]/).test(data.number_calculation) && (data.number_calculation.startsWith('*') || data.number_calculation.startsWith('/'))"
+                                    "hidden": "customObj.common.write === false",
+                                    "validator": "data.number_calculation === '' || data.number_calculation === undefined || data.number_calculation && data.number_calculation.length > 0 && !(/[^0-9\\.\\,\\*\/]/).test(data.number_calculation) && (data.number_calculation.startsWith('*') || data.number_calculation.startsWith('/'))",
+                                    "help": "${data.number_calculation === '' || data.number_calculation === undefined || data.number_calculation && data.number_calculation.length > 0 && !(/[^0-9\\.\\,\\*\/]/).test(data.number_calculation) && (data.number_calculation.startsWith('*') || data.number_calculation.startsWith('/')) ? '' : 'only numbers and mathematical (*, /) operators allowed as condition and it must start with a mathematical operator'}"
                                 },
                                 "number_calculation_readOnly": {
                                     "type": "text",
-                                    "label": "calculation for 'read' object",
+                                    "label": "calculation for 'readOnly' object",
                                     "sm": 4,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
-                                    "hidden": "customObj.common.write == false",
-                                    "validator": "data.number_calculation_readOnly == '' || data.number_calculation == undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))"
+                                    "hidden": "customObj.common.write === true",
+                                    "validator": "data.number_calculation_readOnly === '' || data.number_calculation === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))",
+                                    "help": "${data.number_calculation_readOnly === '' || data.number_calculation === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
                                 }
                             }
                         },
                         "panel_convert_boolean": {
-                            "hidden": "!(data.number_convertTo == 'boolean')",
+                            "hidden": "!(data.number_convertTo === 'boolean')",
                             "items": {
                                 "number_to_boolean_condition": {
                                     "type": "text",
@@ -197,7 +197,7 @@
                                     "noMultiEdit": true,
                                     "maxLength": 255,
                                     "validator": "data.number_to_boolean_condition && data.number_to_boolean_condition.length > 0 && !(/[^0-9\\.\\,\\=\\!\\>\\<]/).test(data.number_to_boolean_condition) && (data.number_to_boolean_condition.startsWith('=') || data.number_to_boolean_condition.startsWith('<') || data.number_to_boolean_condition.startsWith('>') || data.number_to_boolean_condition.startsWith('!='))",
-                                    "help": "${data.number_to_boolean_condition && data.number_to_boolean_condition.length > 0 && !(/[^0-9\\.\\,\\=\\!\\>\\<]/).test(data.number_to_boolean_condition) && (data.number_to_boolean_condition.startsWith('=') || data.number_to_boolean_condition.startsWith('<') || data.number_to_boolean_condition.startsWith('>') || data.number_to_boolean_condition.startsWith('!=')) ? '' : 'only numbers and mathematical (=, <, >, !=) operators allowed as a condition'}"
+                                    "help": "${data.number_to_boolean_condition && data.number_to_boolean_condition.length > 0 && !(/[^0-9\\.\\,\\=\\!\\>\\<]/).test(data.number_to_boolean_condition) && (data.number_to_boolean_condition.startsWith('=') || data.number_to_boolean_condition.startsWith('<') || data.number_to_boolean_condition.startsWith('>') || data.number_to_boolean_condition.startsWith('!=')) ? '' : 'only numbers and mathematical (=, <, >, !=) operators allowed as condition and it must start with a mathematical operator'}"
                                 },
                                 "number_to_boolean_value_true": {
                                     "type": "number",
@@ -205,7 +205,7 @@
                                     "sm": 4,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
-                                    "hidden": "customObj.common.write == false"
+                                    "hidden": "customObj.common.write === false"
                                 },
                                 "number_to_boolean_value_false": {
                                     "type": "number",
@@ -213,7 +213,7 @@
                                     "sm": 4,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
-                                    "hidden": "customObj.common.write == false"
+                                    "hidden": "customObj.common.write === false"
                                 }
                             }
                         }
@@ -221,7 +221,7 @@
                 },
                 "panel_expertSettings_string": {
                     "type": "panel",
-                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type == 'string')",
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type === 'string')",
                     "items": {
                         "number_convertTo": {
                             "type": "select",
@@ -273,7 +273,6 @@
                 },
                 "_parentName": {
                     "type": "textSendTo",
-                    "label": "parent name",
                     "sm": 12,
                     "noMultiEdit": true,
                     "command": "getParentName",
