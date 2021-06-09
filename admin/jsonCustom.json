@@ -48,13 +48,15 @@
                     "noMultiEdit": true,
                     "maxLength": 255,
                     "disabled": "true",
-                    "defaultFunc": "data.linkedId || customObj._id.substring(customObj._id.lastIndexOf('.') + 1, customObj._id.length)",
+                    "defaultFunc": {
+                        "func": "data.linkedId || customObj._id.substring(customObj._id.lastIndexOf('.') + 1, customObj._id.length)"
+                    },
                     "onChange": {
                         "alsoDependsOn": [
                             "_prefixId",
                             "_stateId"
                         ],
-                        "calculateFunc": "(data._prefixId || '') + '.' + (data._stateId || '')",
+                        "calculateFunc": "data._prefixId.length > 0 && data._stateId.length > 0 ? (data._prefixId || '') + '.' + (data._stateId || '') : (data._stateId || '')",
                         "ignoreOwnChanges": true
                     }
                 },
@@ -199,7 +201,7 @@
                                 },
                                 "number_to_boolean_value_true": {
                                     "type": "number",
-                                    "label": "value if linked object is 'true'",                                    
+                                    "label": "value if linked object is 'true'",
                                     "sm": 4,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
