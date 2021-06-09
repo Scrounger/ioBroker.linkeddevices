@@ -86,29 +86,29 @@ systemDictionary = {
 		"pl": "połączony z",
 		"zh-cn": "与连接"
 	},
-	"expert settings for linked object with type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'": {
-		"en": "expert settings for linked object with type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"de": "Experteneinstellungen für verlinktes Objekt vom Typ '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"ru": "Экспертные настройки для связанного объекта с типом '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"pt": "configurações de especialista para objeto vinculado com o tipo '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"nl": "expertinstellingen voor gekoppeld object met type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"fr": "paramètres experts pour un objet lié de type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"it": "impostazioni avanzate per l'oggetto collegato con tipo '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"es": "Configuraciones expertas para objetos vinculados con tipo '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"pl": "ustawienia eksperckie dla obiektu połączonego z typem '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
-		"zh-cn": "类型为'${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'的链接对象的专家设置"
+	"expert settings for linked object with type '%s'": {
+		"en": "expert settings for linked object with type '%s'",
+		"de": "Experteneinstellungen für verlinktes Objekt vom Typ '%s'",
+		"ru": "Экспертные настройки для связанного объекта с типом '%s'",
+		"pt": "configurações de especialista para objeto vinculado com o tipo '%s'",
+		"nl": "expertinstellingen voor gekoppeld object met type '%s'",
+		"fr": "paramètres experts pour un objet lié de type '%s'",
+		"it": "impostazioni avanzate per l'oggetto collegato con tipo '%s'",
+		"es": "Configuraciones expertas para objetos vinculados con tipo '%s'",
+		"pl": "ustawienia eksperckie dla obiektu połączonego z typem '%s'",
+		"zh-cn": "类型为'%s'的链接对象的专家设置"
 	},
-	"change unit '${customObj.common.unit}' to": {
-		"en": "change unit '${customObj.common.unit}' to",
-		"de": "Ändere Einheit '${customObj.common.unit}' in",
-		"ru": "Изменить единицу измерения ${customObj.common.unit} на",
-		"pt": "mudar a unidade '${customObj.common.unit}' para",
-		"nl": "verander eenheid '${customObj.common.unit}' in",
-		"fr": "remplacez l'unité '${customObj.common.unit}' par",
-		"it": "cambia unità '${customObj.common.unit}' a",
-		"es": "cambia la unidad '${customObj.common.unit}' a",
-		"pl": "zmień jednostkę „${customObj.common.unit}” na",
-		"zh-cn": "将单位“${customObj.common.unit}”更改为"
+	"change unit '%s' to": {
+		"en": "change unit '%s' to",
+		"de": "Ändere Einheit '%s' in",
+		"ru": "Изменить единицу измерения %s на",
+		"pt": "mudar a unidade '%s' para",
+		"nl": "verander eenheid '%s' in",
+		"fr": "remplacez l'unité '%s' par",
+		"it": "cambia unità '%s' a",
+		"es": "cambia la unidad '%s' a",
+		"pl": "zmień jednostkę „%s” na",
+		"zh-cn": "将单位“%s”更改为"
 	},
 	"prefix for id of linked object": {
 		"en": "prefix for id of linked object",
@@ -302,29 +302,29 @@ systemDictionary = {
 		"pl": "wartość, jeśli połączony obiekt jest „fałszywy”",
 		"zh-cn": "链接对象为'false'时的值"
 	},
-	"change min '${customObj.common.min}' to": {
-		"en": "change min '${customObj.common.min}' to",
-		"de": "Ändere min '${customObj.common.min}' in",
-		"ru": "Изменить min '${customObj.common.min}' на",
-		"pt": "altere min '${customObj.common.min}' para",
-		"nl": "verander min '${customObj.common.min}' in",
-		"fr": "remplacez min '${customObj.common.min}' par",
-		"it": "cambia min '${customObj.common.min}' in",
-		"es": "cambiar min '${customObj.common.min}' a",
-		"pl": "zmień min '${customObj.common.min}' na",
-		"zh-cn": "将min'${customObj.common.min}'更改为"
+	"change min '%s' to": {
+		"en": "change min '%s' to",
+		"de": "Ändere min '%s' in",
+		"ru": "Изменить min '%s' на",
+		"pt": "altere min '%s' para",
+		"nl": "verander min '%s' in",
+		"fr": "remplacez min '%s' par",
+		"it": "cambia min '%s' in",
+		"es": "cambiar min '%s' a",
+		"pl": "zmień min '%s' na",
+		"zh-cn": "将min'％s'更改为"
 	},
-	"change max '${customObj.common.max}' to": {
-		"en": "change max '${customObj.common.max}' to",
-		"de": "Ändere max '${customObj.common.max}' auf",
-		"ru": "Изменить max '${customObj.common.max}' на",
-		"pt": "altere max '${customObj.common.max}' para",
-		"nl": "verander max '${customObj.common.max}' in",
-		"fr": "remplacez max '${customObj.common.max}' par",
-		"it": "modifica max '${customObj.common.max}' a",
-		"es": "cambiar max '${customObj.common.max}' a",
-		"pl": "zmień max '${customObj.common.max}' na",
-		"zh-cn": "将max'${customObj.common.max}'更改为"
+	"change max '%s' to": {
+		"en": "change max '%s' to",
+		"de": "Ändere max '%s' auf",
+		"ru": "Изменить max '%s' на",
+		"pt": "altere max '%s' para",
+		"nl": "verander max '%s' in",
+		"fr": "remplacez max '%s' par",
+		"it": "modifica max '%s' a",
+		"es": "cambiar max '%s' a",
+		"pl": "zmień max '%s' na",
+		"zh-cn": "将max'％s'更改为"
 	},
 	"only numbers and mathematical operators allowed as a condition": {
 		"en": "not allowed signs!<br>Only numbers and mathematical operators allowed as a condition! Input must start with math operator.<br><br>Allowed operators: = != > < >= <=",
@@ -1009,17 +1009,17 @@ systemDictionary = {
 		"pl": "czy naprawdę chcesz usunąć ten link?",
 		"zh-cn": "你真的想删除这个链接吗？"
 	},
-	"change role '${customObj.common.role}' in": {
-		"en": "change role '${customObj.common.role}' in",
-		"de": "Ändere Rolle '${customObj.common.role}' in",
-		"ru": "Изменить роль '${customObj.common.role}' на",
-		"pt": "mudar o papel '${customObj.common.role}' em",
-		"nl": "rol '${customObj.common.role}' in wijzigen",
-		"fr": "changer le rôle '${customObj.common.role}' dans",
-		"it": "cambia il ruolo '${customObj.common.role}' in",
-		"es": "cambiar el rol '${customObj.common.role}' en",
-		"pl": "zmień rolę '${customObj.common.role}' w",
-		"zh-cn": "改变角色'${customObj.common.role}'"
+	"change role '%s' in": {
+		"en": "change role '%s' in",
+		"de": "Ändere Rolle '%s' in",
+		"ru": "Изменить роль '%s' на",
+		"pt": "mudar o papel '%s' em",
+		"nl": "rol '%s' in wijzigen",
+		"fr": "changer le rôle '%s' dans",
+		"it": "cambia il ruolo '%s' in",
+		"es": "cambiar el rol '%s' en",
+		"pl": "zmień rolę '%s' w",
+		"zh-cn": "改变角色'％s'"
 	},
 	"repair": {
 		"en": "repair",

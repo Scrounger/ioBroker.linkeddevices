@@ -1,5 +1,5 @@
 $.get({
-    url: 'adapter/linkeddevices/words.js',
+    url: 'adapter/linkeddevices/words_material.js',
     success: function (script) {
         let translation = script.substring(script.indexOf('{'), script.length);
         translation = translation.substring(0, translation.lastIndexOf('};') + 1);
