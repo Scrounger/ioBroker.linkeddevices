@@ -1993,7 +1993,7 @@ class Linkeddevices extends utils.Adapter {
 			y = 0;	 
 	
 	
-		return `${x},${y}`;
+		return `[${x},${y}]`;
 	}
 
 	cieToHex(x, y, brightness)
