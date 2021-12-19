@@ -1291,9 +1291,9 @@ class Linkeddevices extends utils.Adapter {
 
 		if (parentObj && parentObj.common && parentObj.common.custom) {
 
-			if (parentObj.common.custom[this.namespace].boolean_to_string_value_true) {
+			if (parentObj.common.custom[this.namespace].colorCie_convertTo) {
 				// boolean -> string: linkedObject Wert für True
-				expertSettings.boolean_to_string_value_true = parentObj.common.custom[this.namespace].boolean_to_string_value_true;
+				expertSettings.colorCie_convertTo = parentObj.common.custom[this.namespace].colorCie_convertTo;
 			}
 		}
 		return expertSettings;
@@ -1608,7 +1608,7 @@ class Linkeddevices extends utils.Adapter {
 				}
 
 				if (targetObj.common.type === "colorCie") {
-					if (targetObj.common.custom[this.namespace].colorHex) {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'colorHex') {
 						if (!targetIsParentObj) {
 							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using invert -> linkedObject value is '${convertedValue}'`)
 							let correctedValue = value.replace("[", "");
