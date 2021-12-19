@@ -1607,7 +1607,7 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 
-				if (targetObj.common.type === "colorCie") {
+				if (targetObj.common.role === "color.CIE") {
 					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'colorHex') {
 						if (!targetIsParentObj) {
 							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using invert -> linkedObject value is '${convertedValue}'`)

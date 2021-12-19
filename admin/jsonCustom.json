@@ -102,7 +102,7 @@
                     "sm": 2,
                     "newLine": true,
                     "noMultiEdit": true,
-                    "hidden": "customObj && customObj.common && (customObj.common.type != 'number' && customObj.common.type != 'boolean' && customObj.common.type != 'string' && customObj.common.type != 'colorCie')"
+                    "hidden": "customObj && customObj.common && (customObj.common.type != 'number' && customObj.common.type != 'boolean' && customObj.common.type != 'string' && customObj.common.role != 'color.CIE')"
                 },
                 "panel_expertSettings_numbers": {
                     "type": "panel",
@@ -257,7 +257,7 @@
                 },
                 "panel_expertSettings_colorCie": {
                     "type": "panel",
-                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type === 'colorCie')",
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.role === 'color.CIE')",
                     "items": {
                         "colorCie_convertTo": {
                             "type": "select",
