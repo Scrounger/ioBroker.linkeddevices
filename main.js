@@ -1609,16 +1609,18 @@ class Linkeddevices extends utils.Adapter {
 
 				if (targetObj.common.type === "array" && targetObj.common.role === "color.CIE") {
 					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'color.hex') {
-						if (!targetIsParentObj) {
-							let correctedValue = value.replace("[", "");
-							correctedValue = correctedValue.replace("]", "");
-							const splittedValue = correctedValue.split(",");
-							convertedValue = this.cieToHex(splittedValue[0], splittedValue[1]);
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using cieToHex value is '${convertedValue}'`)
-						} else {
-							convertedValue = this.hexToCie(value);
-							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using hexToCie value is '${convertedValue}'`)
-						}
+						convertedValue = this.hexToCie(value);
+						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using hexToCie value is '${convertedValue}'`)
+					}
+				}
+
+				if (targetObj.common.type === "string" && targetObj.common.role === "color.hex") {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'color.hex') {
+						let correctedValue = value.replace("[", "");
+						correctedValue = correctedValue.replace("]", "");
+						const splittedValue = correctedValue.split(",");
+						convertedValue = this.cieToHex(splittedValue[0], splittedValue[1]);
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using cieToHex value is '${convertedValue}'`)
 					}
 				}
 
