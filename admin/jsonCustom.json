@@ -272,7 +272,7 @@
                                 },
                                 {
                                     "label": "HEX",
-                                    "value": "colorHex"
+                                    "value": "color.hex"
                                 }
                             ]
                         }

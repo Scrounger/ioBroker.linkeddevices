@@ -1090,8 +1090,9 @@ class Linkeddevices extends utils.Adapter {
 					// keine spezieller type, kann direkt vom parentObject übernommen werden
 					expertSettings.type = parentObj.common.custom[this.namespace].string_convertTo;
 				}
-			} else if (parentObj.common.custom[this.namespace].colorCie_convertTo) {
-				expertSettings.type = parentObj.common.custom[this.namespace].colorCie_convertTo;
+			} else if (parentObj.common.custom[this.namespace].colorCie_convertTo === "color.hex") {
+				expertSettings.type = "string";
+				expertSettings.role = "color.hex";
 			} 
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
@@ -1283,7 +1284,7 @@ class Linkeddevices extends utils.Adapter {
 	}
 
 	/**
-	 * Custom data für linkedObject erzeugen, wenn parentObject vom type 'boolean' ist
+	 * Custom data für linkedObject erzeugen, wenn parentObject die Rolle 'color.CIE' hat
 	 * @param {ioBroker.Object} parentObj
 	 */
 	 getCustomDataTypeColorCie(parentObj) {
@@ -1292,7 +1293,6 @@ class Linkeddevices extends utils.Adapter {
 		if (parentObj && parentObj.common && parentObj.common.custom) {
 
 			if (parentObj.common.custom[this.namespace].colorCie_convertTo) {
-				// boolean -> string: linkedObject Wert für True
 				expertSettings.colorCie_convertTo = parentObj.common.custom[this.namespace].colorCie_convertTo;
 			}
 		}
@@ -1607,17 +1607,17 @@ class Linkeddevices extends utils.Adapter {
 					}
 				}
 
-				if (targetObj.common.role === "color.CIE") {
-					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'colorHex') {
+				if (targetObj.common.type === "array" && targetObj.common.role === "color.CIE") {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'color.hex') {
 						if (!targetIsParentObj) {
-							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using invert -> linkedObject value is '${convertedValue}'`)
 							let correctedValue = value.replace("[", "");
 							correctedValue = correctedValue.replace("]", "");
 							const splittedValue = correctedValue.split(",");
 							convertedValue = this.cieToHex(splittedValue[0], splittedValue[1]);
+							this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using cieToHex value is '${convertedValue}'`)
 						} else {
-							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using invert -> parentObject value is '${convertedValue}'`)
 							convertedValue = this.hexToCie(value);
+							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using hexToCie value is '${convertedValue}'`)
 						}
 					}
 				}

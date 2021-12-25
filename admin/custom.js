@@ -165,7 +165,7 @@ if (typeof customPostInits !== 'undefined') {
             Group.String_Converter_String_Duration = $div.find('.view_String_Converter_String_Duration');
             Group.String_Converter_String_DateTime = $div.find('.view_String_Converter_String_DateTime');
 
-            // Group: type 'colorCie'
+            // Group: role 'color.CIE'
             Group.String = $div.find('.view_colorCie');
 
             // alle input in vars packen
@@ -364,7 +364,7 @@ if (typeof customPostInits !== 'undefined') {
         }
 
         function initialize_ExpertSettings() {
-            if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean' || role === 'color.CIE')) {
+            if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean' || (type === 'array' && role === 'color.CIE'))) {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
 
@@ -507,12 +507,12 @@ if (typeof customPostInits !== 'undefined') {
         }
 
         function initialize_ExpertSettings_ColorCie() { 
-            // ExpertSettings für type 'colorCie' initialisieren
+            // ExpertSettings für Rolle 'color.CIE' initialisieren
 
-            if (role === 'color.CIE' && expertSettingsActivated) {
+            if (type === 'array' && role === 'color.CIE' && expertSettingsActivated) {
                 Group.ColorCie.show();
 
-                // Event Handler für ExpertSettings mit type 'string'
+                // Event Handler für ExpertSettings mit Rolle 'color.CIE'
                 events_ExpertSettings_ColorCie();
 
             } else {
