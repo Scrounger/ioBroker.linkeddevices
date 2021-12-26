@@ -16,7 +16,7 @@
                     "command": "suggestions_prefixId",
                     "maxLength": 255,
                     "defaultFunc": {
-                        "func": "(data.linkedId || '').includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : ''",
+                        "func": "(data.linkedId || '').includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : null",
                         "alsoDependsOn": [
                             "linkedId"
                         ]
