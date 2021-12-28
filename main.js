@@ -1090,9 +1090,9 @@ class Linkeddevices extends utils.Adapter {
 					// keine spezieller type, kann direkt vom parentObject übernommen werden
 					expertSettings.type = parentObj.common.custom[this.namespace].string_convertTo;
 				}
-			} else if (parentObj.common.custom[this.namespace].colorCie_convertTo === "color.hex") {
+			} else if (parentObj.common.custom[this.namespace].colorCie_convertTo === "level.color.rgb") {
 				expertSettings.type = "string";
-				expertSettings.role = "color.hex";
+				expertSettings.role = "level.color.rgb";
 			} 
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
@@ -1608,14 +1608,14 @@ class Linkeddevices extends utils.Adapter {
 				}
 
 				if (targetObj.common.type === "array" && targetObj.common.role === "color.CIE") {
-					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'color.hex') {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'level.color.rgb') {
 						convertedValue = this.hexToCie(value);
 						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using hexToCie value is '${convertedValue}'`)
 					}
 				}
 
-				if (targetObj.common.type === "string" && targetObj.common.role === "color.hex") {
-					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'color.hex') {
+				if (targetObj.common.type === "string" && targetObj.common.role === "level.color.rgb") {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'level.color.rgb') {
 						let correctedValue = value.replace("[", "");
 						correctedValue = correctedValue.replace("]", "");
 						const splittedValue = correctedValue.split(",");

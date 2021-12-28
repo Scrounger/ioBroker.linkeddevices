@@ -271,8 +271,8 @@
                                     "value": ""
                                 },
                                 {
-                                    "label": "HEX",
-                                    "value": "color.hex"
+                                    "label": "RGB HEX",
+                                    "value": "level.color.rgb"
                                 }
                             ]
                         }
