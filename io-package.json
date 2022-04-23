@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.4.3",
+        "version": "1.4.4",
         "news": {
             "1.4.3": {
                 "en": "added option to invert boolean\nbug fix for translated object names\nshow error in settings",
