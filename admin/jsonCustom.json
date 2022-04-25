@@ -9,7 +9,7 @@
                 "_prefixId": {
                     "type": "autocompleteSendTo",
                     "label": "prefix for id of linked object",
-                    "sm": 4,
+                    "sm": 8,
                     "noMultiEdit": true,
                     "freeSolo": true,
                     "noTranslation": true,
@@ -45,7 +45,7 @@
                 "linkedId": {
                     "type": "text",
                     "label": "composite id of linked object",
-                    "sm": 4,
+                    "sm": 12,
                     "noMultiEdit": true,
                     "maxLength": 255,
                     "disabled": "true",
@@ -98,7 +98,7 @@
                     "style": {
                         "justifyContent": "flex-start !important"
                     }
-                },                 
+                },
                 "_headerExpertSettings": {
                     "type": "header",
                     "text": "expert settings for linked object with type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
@@ -276,7 +276,7 @@
                                     "default": "dd[T] hh[h] mm[m]",
                                     "help": "more information (moment library)",
                                     "helpLink": "https://momentjs.com/docs/#/parsing/string-format/"
-                                }                                
+                                }
                             }
                         }
                     }
@@ -369,7 +369,7 @@
                                     "label": "datetime",
                                     "value": "datetime",
                                     "hidden": "customObj.common.write === true"
-                                }                                
+                                }
                             ]
                         },
                         "panel_convert_none": {
@@ -452,11 +452,11 @@
                                     "hidden": "customObj.common.write === true",
                                     "validator": "data.string_to_number_calculation_readOnly === '' || data.string_to_number_calculation_readOnly === undefined || data.string_to_number_calculation_readOnly && data.string_to_number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.string_to_number_calculation_readOnly) && (data.string_to_number_calculation_readOnly.startsWith('+') || data.string_to_number_calculation_readOnly.startsWith('-') || data.string_to_number_calculation_readOnly.startsWith('*') || data.string_to_number_calculation_readOnly.startsWith('/'))",
                                     "help": "${data.string_to_number_calculation_readOnly === '' || data.string_to_number_calculation_readOnly === undefined || data.string_to_number_calculation_readOnly && data.string_to_number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.string_to_number_calculation_readOnly) && (data.string_to_number_calculation_readOnly.startsWith('+') || data.string_to_number_calculation_readOnly.startsWith('-') || data.string_to_number_calculation_readOnly.startsWith('*') || data.string_to_number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
-                                }                                
+                                }
                             }
                         }
                     }
-                }              
+                }
             }
         },
         "panel_linked_object": {

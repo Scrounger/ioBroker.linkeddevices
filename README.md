@@ -42,6 +42,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     ### __WORK IN PROGRESS__
 -->
 
+### __WORK IN PROGRESS__
+* (Scrounger) Admin 5 custom dialog layout optimization
+
 ### 1.5.1 (2022-04-25)
 * (Scrounger) Version number bug fix
 * (Scrounger) Admin 5 custom dialog integration
