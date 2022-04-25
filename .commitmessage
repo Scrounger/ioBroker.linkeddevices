@@ -1,5 +1,4 @@
-chore: release v1.4.3
+chore: release v1.5.1
 
-added option to invert boolean
-bug fix for translated object names
-show error in settings
+Version number bug fix
+Admin 5 custom dialog integration
