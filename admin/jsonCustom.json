@@ -88,6 +88,17 @@
                     "newLine": true,
                     "noMultiEdit": true
                 },
+                "donation_link": {
+                    "type": "staticLink",
+                    "text": "You like the adapter? Then support us with a small donation.",
+                    "sm": 12,
+                    "button": true,
+                    "newLine": true,
+                    "href": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VWAXSTS634G88&source=url",
+                    "style": {
+                        "justifyContent": "flex-start !important"
+                    }
+                },                 
                 "_headerExpertSettings": {
                     "type": "header",
                     "text": "expert settings for linked object with type '${customObj.common.write === false ? customObj.common.type + ' (read only)' : customObj.common.type}'",
@@ -221,16 +232,51 @@
                         "panel_convert_duration": {
                             "hidden": "!(data.number_convertTo === 'duration')",
                             "items": {
-                                "number_calculation_readOnly": {
+                                "number_to_duration_convert_seconds": {
                                     "type": "text",
-                                    "label": "calculation for 'readOnly' object",
-                                    "sm": 4,
+                                    "label": "conversion in seconds",
+                                    "sm": 6,
                                     "noMultiEdit": true,
                                     "maxLength": 255,
                                     "hidden": "customObj.common.write === true",
-                                    "validator": "data.number_calculation_readOnly === '' || data.number_calculation_readOnly === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))",
-                                    "help": "${data.number_calculation_readOnly === '' || data.number_calculation_readOnly === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                    "validator": "data.number_to_duration_convert_seconds === '' || data.number_to_duration_convert_seconds === undefined || data.number_to_duration_convert_seconds && data.number_to_duration_convert_seconds.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_to_duration_convert_seconds) && (data.number_to_duration_convert_seconds.startsWith('+') || data.number_to_duration_convert_seconds.startsWith('-') || data.number_to_duration_convert_seconds.startsWith('*') || data.number_to_duration_convert_seconds.startsWith('/'))",
+                                    "help": "${data.number_to_duration_convert_seconds === '' || data.number_to_duration_convert_seconds === undefined || data.number_to_duration_convert_seconds && data.number_to_duration_convert_seconds.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_to_duration_convert_seconds) && (data.number_to_duration_convert_seconds.startsWith('+') || data.number_to_duration_convert_seconds.startsWith('-') || data.number_to_duration_convert_seconds.startsWith('*') || data.number_to_duration_convert_seconds.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                },
+                                "number_to_duration_format": {
+                                    "type": "text",
+                                    "label": "display format of the duration",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "default": "dd[T] hh[h] mm[m]",
+                                    "help": "more information (moment library)",
+                                    "helpLink": "https://github.com/jsmreese/moment-duration-format#template-string"
                                 }
+                            }
+                        },
+                        "panel_convert_datetime": {
+                            "hidden": "!(data.number_convertTo === 'datetime')",
+                            "items": {
+                                "number_to_datetime_convert_seconds": {
+                                    "type": "text",
+                                    "label": "conversion in unix timestamp (seconds)",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "hidden": "customObj.common.write === true",
+                                    "validator": "data.number_to_datetime_convert_seconds === '' || data.number_to_datetime_convert_seconds === undefined || data.number_to_datetime_convert_seconds && data.number_to_datetime_convert_seconds.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_to_datetime_convert_seconds) && (data.number_to_datetime_convert_seconds.startsWith('+') || data.number_to_datetime_convert_seconds.startsWith('-') || data.number_to_datetime_convert_seconds.startsWith('*') || data.number_to_datetime_convert_seconds.startsWith('/'))",
+                                    "help": "${data.number_to_datetime_convert_seconds === '' || data.number_to_datetime_convert_seconds === undefined || data.number_to_datetime_convert_seconds && data.number_to_datetime_convert_seconds.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_to_datetime_convert_seconds) && (data.number_to_datetime_convert_seconds.startsWith('+') || data.number_to_datetime_convert_seconds.startsWith('-') || data.number_to_datetime_convert_seconds.startsWith('*') || data.number_to_datetime_convert_seconds.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                },
+                                "number_to_datetime_format": {
+                                    "type": "text",
+                                    "label": "display format of the datetime",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "default": "dd[T] hh[h] mm[m]",
+                                    "help": "more information (moment library)",
+                                    "helpLink": "https://momentjs.com/docs/#/parsing/string-format/"
+                                }                                
                             }
                         }
                     }
@@ -410,7 +456,7 @@
                             }
                         }
                     }
-                }
+                }              
             }
         },
         "panel_linked_object": {
