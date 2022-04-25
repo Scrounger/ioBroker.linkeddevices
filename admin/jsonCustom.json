@@ -217,6 +217,21 @@
                                     "hidden": "customObj.common.write === false"
                                 }
                             }
+                        },
+                        "panel_convert_duration": {
+                            "hidden": "!(data.number_convertTo === 'duration')",
+                            "items": {
+                                "number_calculation_readOnly": {
+                                    "type": "text",
+                                    "label": "calculation for 'readOnly' object",
+                                    "sm": 4,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "hidden": "customObj.common.write === true",
+                                    "validator": "data.number_calculation_readOnly === '' || data.number_calculation_readOnly === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))",
+                                    "help": "${data.number_calculation_readOnly === '' || data.number_calculation_readOnly === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                }
+                            }
                         }
                     }
                 },
