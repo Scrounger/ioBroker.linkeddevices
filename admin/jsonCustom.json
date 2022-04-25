@@ -16,7 +16,7 @@
                     "command": "suggestions_prefixId",
                     "maxLength": 255,
                     "defaultFunc": {
-                        "func": "(data.linkedId || '').includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : null",
+                        "func": "(data.linkedId || '').includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : ''",
                         "alsoDependsOn": [
                             "linkedId"
                         ]
@@ -62,7 +62,7 @@
                 "name": {
                     "type": "autocompleteSendTo",
                     "label": "name of linked object",
-                    "sm": 4,
+                    "sm": 6,
                     "noMultiEdit": true,
                     "freeSolo": true,
                     "noTranslation": true,
@@ -72,7 +72,7 @@
                 "role": {
                     "type": "autocomplete",
                     "label": "change role '${customObj.common.role}' in",
-                    "sm": 4,
+                    "sm": 6,
                     "noMultiEdit": true,
                     "freeSolo": true,
                     "maxLength": 255,
@@ -183,8 +183,8 @@
                                     "noMultiEdit": true,
                                     "maxLength": 255,
                                     "hidden": "customObj.common.write === true",
-                                    "validator": "data.number_calculation_readOnly === '' || data.number_calculation === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))",
-                                    "help": "${data.number_calculation_readOnly === '' || data.number_calculation === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                    "validator": "data.number_calculation_readOnly === '' || data.number_calculation_readOnly === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/'))",
+                                    "help": "${data.number_calculation_readOnly === '' || data.number_calculation_readOnly === undefined || data.number_calculation_readOnly && data.number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.number_calculation_readOnly) && (data.number_calculation_readOnly.startsWith('+') || data.number_calculation_readOnly.startsWith('-') || data.number_calculation_readOnly.startsWith('*') || data.number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
                                 }
                             }
                         },
@@ -220,11 +220,67 @@
                         }
                     }
                 },
+                "panel_expertSettings_boolean": {
+                    "type": "panel",
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type === 'boolean')",
+                    "items": {
+                        "boolean_convertTo": {
+                            "type": "select",
+                            "label": "convert linked object to type",
+                            "sm": 12,
+                            "noMultiEdit": true,
+                            "default": "",
+                            "options": [
+                                {
+                                    "label": "do not convert",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "string",
+                                    "value": "string"
+                                }
+                            ]
+                        },
+                        "panel_convert_none": {
+                            "hidden": "!(data.boolean_convertTo === '')",
+                            "items": {
+                                "boolean_invert": {
+                                    "type": "checkbox",
+                                    "label": "boolean_invert",
+                                    "sm": 4,
+                                    "newLine": true,
+                                    "noMultiEdit": true
+                                }
+                            }
+                        },
+                        "panel_convert_string": {
+                            "hidden": "!(data.boolean_convertTo === 'string')",
+                            "items": {
+                                "boolean_to_string_value_true": {
+                                    "type": "text",
+                                    "label": "value if object is 'true'",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "trim": false
+                                },
+                                "boolean_to_string_value_false": {
+                                    "type": "text",
+                                    "label": "value if object is 'false'",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "trim": false
+                                }
+                            }
+                        }
+                    }
+                },
                 "panel_expertSettings_string": {
                     "type": "panel",
                     "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.type === 'string')",
                     "items": {
-                        "number_convertTo": {
+                        "string_convertTo": {
                             "type": "select",
                             "label": "convert linked object to type",
                             "sm": 12,
@@ -245,13 +301,98 @@
                                 },
                                 {
                                     "label": "duration",
-                                    "value": "duration"
+                                    "value": "duration",
+                                    "hidden": "customObj.common.write === true"
                                 },
                                 {
                                     "label": "datetime",
-                                    "value": "datetime"
-                                }
+                                    "value": "datetime",
+                                    "hidden": "customObj.common.write === true"
+                                }                                
                             ]
+                        },
+                        "panel_convert_none": {
+                            "hidden": "!(data.string_convertTo === '')",
+                            "items": {
+                                "string_prefix": {
+                                    "type": "text",
+                                    "label": "prefix string",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "trim": false
+                                },
+                                "string_suffix": {
+                                    "type": "text",
+                                    "label": "suffix string",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "trim": false
+                                }
+                            }
+                        },
+                        "panel_convert_boolean": {
+                            "hidden": "!(data.string_convertTo === 'boolean')",
+                            "items": {
+                                "string_to_boolean_value_true": {
+                                    "type": "text",
+                                    "label": "string for 'true' of the linked object",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "trim": false
+                                },
+                                "string_to_boolean_value_false": {
+                                    "type": "text",
+                                    "label": "string for 'false' of the linked object",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "trim": false
+                                }
+                            }
+                        },
+                        "panel_convert_number": {
+                            "hidden": "!(data.string_convertTo === 'number')",
+                            "items": {
+                                "string_to_number_unit": {
+                                    "type": "text",
+                                    "label": "unit",
+                                    "sm": 6,
+                                    "newLine": true,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255
+                                },
+                                "string_to_number_maxDecimal": {
+                                    "type": "number",
+                                    "label": "max. number of decimal places",
+                                    "sm": 6,
+                                    "noMultiEdit": true,
+                                    "min": 0,
+                                    "max": 100
+                                },
+                                "string_to_number_calculation": {
+                                    "type": "text",
+                                    "label": "calculation for linked object",
+                                    "sm": 12,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "hidden": "customObj.common.write === false",
+                                    "validator": "data.string_to_number_calculation === '' || data.string_to_number_calculation === undefined || data.string_to_number_calculation && data.string_to_number_calculation.length > 0 && !(/[^0-9\\.\\,\\*\/]/).test(data.string_to_number_calculation) && (data.string_to_number_calculation.startsWith('*') || data.string_to_number_calculation.startsWith('/'))",
+                                    "help": "${data.string_to_number_calculation === '' || data.string_to_number_calculation === undefined || data.string_to_number_calculation && data.string_to_number_calculation.length > 0 && !(/[^0-9\\.\\,\\*\/]/).test(data.string_to_number_calculation) && (data.string_to_number_calculation.startsWith('*') || data.string_to_number_calculation.startsWith('/')) ? '' : 'only numbers and mathematical (*, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                },
+                                "string_to_number_calculation_readOnly": {
+                                    "type": "text",
+                                    "label": "calculation for 'readOnly' object",
+                                    "sm": 12,
+                                    "noMultiEdit": true,
+                                    "maxLength": 255,
+                                    "hidden": "customObj.common.write === true",
+                                    "validator": "data.string_to_number_calculation_readOnly === '' || data.string_to_number_calculation_readOnly === undefined || data.string_to_number_calculation_readOnly && data.string_to_number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.string_to_number_calculation_readOnly) && (data.string_to_number_calculation_readOnly.startsWith('+') || data.string_to_number_calculation_readOnly.startsWith('-') || data.string_to_number_calculation_readOnly.startsWith('*') || data.string_to_number_calculation_readOnly.startsWith('/'))",
+                                    "help": "${data.string_to_number_calculation_readOnly === '' || data.string_to_number_calculation_readOnly === undefined || data.string_to_number_calculation_readOnly && data.string_to_number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.string_to_number_calculation_readOnly) && (data.string_to_number_calculation_readOnly.startsWith('+') || data.string_to_number_calculation_readOnly.startsWith('-') || data.string_to_number_calculation_readOnly.startsWith('*') || data.string_to_number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
+                                }                                
+                            }
                         }
                     }
                 }
@@ -287,7 +428,7 @@
                     "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4NCiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0zIDE3LjI1VjIxaDMuNzVMMTcuODEgOS45NGwtMy43NS0zLjc1TDMgMTcuMjV6TTIwLjcxIDcuMDRjLjM5LS4zOS4zOS0xLjAyIDAtMS40MWwtMi4zNC0yLjM0Yy0uMzktLjM5LTEuMDItLjM5LTEuNDEgMGwtMS44MyAxLjgzIDMuNzUgMy43NSAxLjgzLTEuODN6Ii8+DQo8L3N2Zz4=",
                     "href": "#tab-objects/customs/${data.parentId}",
                     "style": {
-                        "justifyContent": "flex-start"
+                        "justifyContent": "flex-start !important"
                     }
                 }
             }
