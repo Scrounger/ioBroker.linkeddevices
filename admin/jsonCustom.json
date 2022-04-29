@@ -113,7 +113,7 @@
                     "sm": 2,
                     "newLine": true,
                     "noMultiEdit": true,
-                    "hidden": "customObj && customObj.common && (customObj.common.type != 'number' && customObj.common.type != 'boolean' && customObj.common.type != 'string')"
+                    "hidden": "customObj && customObj.common && (customObj.common.type != 'number' && customObj.common.type != 'boolean' && customObj.common.type != 'string' && customObj.common.role != 'color.CIE')"
                 },
                 "panel_expertSettings_numbers": {
                     "type": "panel",
@@ -454,6 +454,29 @@
                                     "help": "${data.string_to_number_calculation_readOnly === '' || data.string_to_number_calculation_readOnly === undefined || data.string_to_number_calculation_readOnly && data.string_to_number_calculation_readOnly.length > 0 && !(/[^0-9\\.\\,\\*\\+\\-\/\\(\\)]/).test(data.string_to_number_calculation_readOnly) && (data.string_to_number_calculation_readOnly.startsWith('+') || data.string_to_number_calculation_readOnly.startsWith('-') || data.string_to_number_calculation_readOnly.startsWith('*') || data.string_to_number_calculation_readOnly.startsWith('/')) ? '' : 'only numbers and mathematical (+, -, *, /) operators allowed as condition and it must start with a mathematical operator'}"
                                 }
                             }
+                        }
+                    }
+                },
+                "panel_expertSettings_colorCie": {
+                    "type": "panel",
+                    "hidden": "!(data.expertSettings && customObj && customObj.common && customObj.common.role === 'color.CIE')",
+                    "items": {
+                        "colorCie_convertTo": {
+                            "type": "select",
+                            "label": "convert linked object to type",
+                            "sm": 12,
+                            "noMultiEdit": true,
+                            "default": "",
+                            "options": [
+                                {
+                                    "label": "do not convert",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "RGB HEX",
+                                    "value": "level.color.rgb"
+                                }
+                            ]
                         }
                     }
                 }

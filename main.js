@@ -1090,7 +1090,10 @@ class Linkeddevices extends utils.Adapter {
 					// keine spezieller type, kann direkt vom parentObject übernommen werden
 					expertSettings.type = parentObj.common.custom[this.namespace].string_convertTo;
 				}
-			}
+			} else if (parentObj.common.custom[this.namespace].colorCie_convertTo === "level.color.rgb") {
+				expertSettings.type = "string";
+				expertSettings.role = "level.color.rgb";
+			} 
 
 			if (!expertSettings.type || expertSettings.type === parentObj.common.type) {
 				// Keine Typ Konvertierung -> expert Settings laden, die Auswirkung auf common haben
@@ -1165,7 +1168,7 @@ class Linkeddevices extends utils.Adapter {
 		Object.assign(expertSettings, this.getCustomDataTypeNumber(parentObj));
 		Object.assign(expertSettings, this.getCustomDataTypeBoolean(parentObj));
 		Object.assign(expertSettings, this.getCustomDataTypeString(parentObj));
-
+		Object.assign(expertSettings, this.getCustomDataTypeColorCie(parentObj));
 
 		if (Object.keys(expertSettings).length > 0) {
 			this.log.debug(`[getCustomData] custom expert settings for '${linkedId}': ${JSON.stringify(expertSettings)}`)
@@ -1274,6 +1277,22 @@ class Linkeddevices extends utils.Adapter {
 			if (parentObj.common.custom[this.namespace].boolean_to_string_value_true) {
 				// boolean -> string: linkedObject Wert für True
 				expertSettings.boolean_to_string_value_true = parentObj.common.custom[this.namespace].boolean_to_string_value_true;
+			}
+		}
+		return expertSettings;
+	}
+
+	/**
+ 	 * Custom data für linkedObject erzeugen, wenn parentObject die Rolle 'color.CIE' hat
+ 	 * @param {ioBroker.Object} parentObj
+ 	 */
+	getCustomDataTypeColorCie(parentObj) {
+		var expertSettings = {};
+
+		if (parentObj && parentObj.common && parentObj.common.custom) {
+
+			if (parentObj.common.custom[this.namespace].colorCie_convertTo) {
+				expertSettings.colorCie_convertTo = parentObj.common.custom[this.namespace].colorCie_convertTo;
 			}
 		}
 		return expertSettings;
@@ -1584,6 +1603,23 @@ class Linkeddevices extends utils.Adapter {
 						} else {
 							this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using invert -> parentObject value is '${convertedValue}'`)
 						}
+					}
+				}
+
+				if (targetObj.common.type === "array" && targetObj.common.role === "color.CIE") {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'level.color.rgb') {
+						convertedValue = this.hexToCie(value);
+						this.log.debug(`[getConvertedValue] linkedObject state '${sourceId}' changed to '${value}', using hexToCie value is '${convertedValue}'`)
+					}
+				}
+
+				if (targetObj.common.type === "string" && targetObj.common.role === "level.color.rgb") {
+					if (targetObj.common.custom[this.namespace].colorCie_convertTo == 'level.color.rgb') {
+						let correctedValue = value.replace("[", "");
+						correctedValue = correctedValue.replace("]", "");
+						const splittedValue = correctedValue.split(",");
+						convertedValue = this.cieToHex(splittedValue[0], splittedValue[1]);
+						this.log.debug(`[getConvertedValue] parentObject state '${sourceId}' changed to '${value}', using cieToHex value is '${convertedValue}'`)
 					}
 				}
 
@@ -1927,6 +1963,108 @@ class Linkeddevices extends utils.Adapter {
 			}
 			this.setForeignStateAsync(`${this.namespace}.info.notlinkedObjects`, countNotLinkedObjects, true);
 		}
+	}
+
+	hexToCie(value){
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(value);
+
+		var redHex = parseInt(result[1], 16)
+		var greenHex = parseInt(result[2], 16)
+		var blueHex =  parseInt(result[3], 16)
+
+
+		//Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
+		var red 	= (redHex > 0.04045) ? Math.pow((redHex + 0.055) / (1.0 + 0.055), 2.4) : (redHex / 12.92);
+		var green 	= (greenHex > 0.04045) ? Math.pow((greenHex + 0.055) / (1.0 + 0.055), 2.4) : (greenHex / 12.92);
+		var blue 	= (blueHex > 0.04045) ? Math.pow((blueHex + 0.055) / (1.0 + 0.055), 2.4) : (blueHex / 12.92); 
+
+		//RGB values to XYZ using the Wide RGB D65 conversion formula
+		var X 		= red * 0.664511 + green * 0.154324 + blue * 0.162028;
+		var Y 		= red * 0.283881 + green * 0.668433 + blue * 0.047685;
+		var Z 		= red * 0.000088 + green * 0.072310 + blue * 0.986039;
+
+		//Calculate the xy values from the XYZ values
+		var x 		= (X / (X + Y + Z)).toFixed(4);
+		var y 		= (Y / (X + Y + Z)).toFixed(4);
+
+		if (isNaN(x))
+			x = 0;
+
+		if (isNaN(y))
+			y = 0;	 
+
+
+		return `[${x},${y}]`;
+	}
+
+	cieToHex(x, y, brightness)
+	{
+		//Set to maximum brightness if no custom value was given (Not the slick ECMAScript 6 way for compatibility reasons)
+		if (brightness === undefined) {
+			brightness = 254;
+		}
+
+		var z = 1.0 - x - y;
+		var Y = (brightness / 254).toFixed(2);
+		var X = (Y / y) * x;
+		var Z = (Y / y) * z;
+
+		//Convert to RGB using Wide RGB D65 conversion
+		var red 	=  X * 1.656492 - Y * 0.354851 - Z * 0.255038;
+		var green 	= -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
+		var blue 	=  X * 0.051713 - Y * 0.121364 + Z * 1.011530;
+
+		//If red, green or blue is larger than 1.0 set it back to the maximum of 1.0
+		if (red > blue && red > green && red > 1.0) {
+
+			green = green / red;
+			blue = blue / red;
+			red = 1.0;
+		}
+		else if (green > blue && green > red && green > 1.0) {
+
+			red = red / green;
+			blue = blue / green;
+			green = 1.0;
+		}
+		else if (blue > red && blue > green && blue > 1.0) {
+
+			red = red / blue;
+			green = green / blue;
+			blue = 1.0;
+		}
+
+		//Reverse gamma correction
+		red 	= red <= 0.0031308 ? 12.92 * red : (1.0 + 0.055) * Math.pow(red, (1.0 / 2.4)) - 0.055;
+		green 	= green <= 0.0031308 ? 12.92 * green : (1.0 + 0.055) * Math.pow(green, (1.0 / 2.4)) - 0.055;
+		blue 	= blue <= 0.0031308 ? 12.92 * blue : (1.0 + 0.055) * Math.pow(blue, (1.0 / 2.4)) - 0.055;
+
+
+		//Convert normalized decimal to decimal
+		red 	= Math.round(red * 255);
+		green 	= Math.round(green * 255);
+		blue 	= Math.round(blue * 255);
+
+		if (isNaN(red))
+			red = 0;
+
+		if (isNaN(green))
+			green = 0;
+
+		if (isNaN(blue))
+			blue = 0;
+
+
+		return this.convertRGBtoHex(red, green, blue);
+	}
+
+	colorToHex(color) {
+		let hexadecimal = color.toString(16);
+		return hexadecimal.length == 1 ? "0" + hexadecimal : hexadecimal;
+	}
+
+	convertRGBtoHex(red, green, blue) {
+		return "#" + this.colorToHex(red) + this.colorToHex(green) + this.colorToHex(blue);
 	}
 
 	//#endregion
