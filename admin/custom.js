@@ -67,9 +67,6 @@ if (typeof customPostInits !== 'undefined') {
             var selectedStringConverter = "";
             if (values["string_convertTo"]) selectedStringConverter = values["string_convertTo"];
 
-            var selectedColorCieConverter = "";
-            if (values["colorCie_convertTo"]) selectedColorCieConverter = values["colorCie_convertTo"];
-
             // $div.find('input[id="test"]').val(JSON.stringify(currentObj));
             //$div.find('input[id="test"]').val(Object.keys(gMain));
 
@@ -165,9 +162,6 @@ if (typeof customPostInits !== 'undefined') {
             Group.String_Converter_String_Duration = $div.find('.view_String_Converter_String_Duration');
             Group.String_Converter_String_DateTime = $div.find('.view_String_Converter_String_DateTime');
 
-            // Group: role 'color.CIE'
-            Group.String = $div.find('.view_colorCie');
-
             // alle input in vars packen
             Input.parentId = $div.find('input[id="IN_parentId"]');
             Input.parentName = $div.find('input[id="IN_parentName"]');
@@ -215,7 +209,6 @@ if (typeof customPostInits !== 'undefined') {
             Select.number_convertTo = $div.find('select[data-field="number_convertTo"]');
             Select.boolean_convertTo = $div.find('select[data-field="boolean_convertTo"]');
             Select.string_convertTo = $div.find('select[data-field="string_convertTo"]');
-            Select.colorCie_convertTo = $div.find('select[data-field="colorCie_convertTo"]');
 
             // alle label / span in var packen
             Label.expertSettings = $div.find('span[id="SP_expertSettings"]');
@@ -364,7 +357,7 @@ if (typeof customPostInits !== 'undefined') {
         }
 
         function initialize_ExpertSettings() {
-            if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean' || (type === 'array' && role === 'color.CIE'))) {
+            if (isCustomEnabled && (type === 'number' || type === 'string' || type === 'boolean')) {
                 // Experteneinstellungen anzeigen, sofern für type vorhanden
                 Group.expertSettings.show();
 
@@ -384,7 +377,6 @@ if (typeof customPostInits !== 'undefined') {
                 initialize_ExpertSettings_Number();
                 initialize_ExpertSettings_Boolean();
                 initialize_ExpertSettings_String();
-                initialize_ExpertSettings_ColorCie();
 
                 // EventHandler für alle ExpertSettings
                 events_ExpertSettings();
@@ -503,22 +495,6 @@ if (typeof customPostInits !== 'undefined') {
                 // Ausblenden und alle Eingaben löschen
                 Group.String.hide();
                 Group.String.find("input, select").val("");
-            }
-        }
-
-        function initialize_ExpertSettings_ColorCie() { 
-            // ExpertSettings für Rolle 'color.CIE' initialisieren
-
-            if (type === 'array' && role === 'color.CIE' && expertSettingsActivated) {
-                Group.ColorCie.show();
-
-                // Event Handler für ExpertSettings mit Rolle 'color.CIE'
-                events_ExpertSettings_ColorCie();
-
-            } else {
-                // Ausblenden und alle Eingaben löschen
-                Group.ColorCie.hide();
-                Group.ColorCie.find("input, select").val("");
             }
         }
 
@@ -765,7 +741,6 @@ if (typeof customPostInits !== 'undefined') {
                 initialize_ExpertSettings_Number();
                 initialize_ExpertSettings_Boolean();
                 initialize_ExpertSettings_String();
-                initialize_ExpertSettings_ColorCie();
             });
         }
 
@@ -904,14 +879,6 @@ if (typeof customPostInits !== 'undefined') {
             Select.boolean_convertTo.on('change', function () {
                 selectedBooleanConverter = this.value;
                 initialize_ExpertSettings_Boolean();
-            });
-        }
-
-        function events_ExpertSettings_ColorCie() {
-
-            Select.colorCie_convertTo.on('change', function () {
-                selectedColorCieConverter = this.value;
-                initialize_ExpertSettings_ColorCie();
             });
         }
 

@@ -109,6 +109,7 @@ async function initialize_Divs() {
     Button.repair = $('a[id="repair"');
 
     //CheckBoxes
+    Checkbox.generateAllFunctions = $('input[id="generateAllFunctions"]');
     Checkbox.generateVarsForAllObjectsOfInstance = $('input[id="generateVarsForAllObjectsOfInstance"]');
     Checkbox.generateSetStateForReadOnly = $('input[id="generateSetStateForReadOnly"]');
     Checkbox.idAsName = $('input[id="idAsName"]');
@@ -1218,17 +1219,20 @@ async function createJavascript() {
                                 }
                             }
 
-                            // Funktionen den linkedObjects hinzufügen
                             autoScript = autoScript.concat(`${varName}.getId = ${createGetFunction(linkedId, `"${linkedId}"`)}\n`);
-                            autoScript = autoScript.concat(`${varName}.getState = ${createGetFunction(linkedId, `getState("${linkedId}")`)}\n`);
 
-                            if (linkedObject.common.write && linkedObject.common.write === true || Checkbox.generateSetStateForReadOnly.is(":checked")) {
-                                autoScript = autoScript.concat(`${varName}.setState = ${createSetFunction(linkedId, 'val, ack=false', `setState("${linkedId}", val, ack)`)}\n`);
-                                autoScript = autoScript.concat(`${varName}.setStateDelayed = ${createSetFunction(linkedId, 'val, delay, ack=false', `setStateDelayed("${linkedId}", val, ack, delay)`)}\n`);
+                            if (Checkbox.generateAllFunctions.is(":checked")) {
+                                // Funktionen den linkedObjects hinzufügen
+                                autoScript = autoScript.concat(`${varName}.getState = ${createGetFunction(linkedId, `getState("${linkedId}")`)}\n`);
+
+                                if (linkedObject.common.write && linkedObject.common.write === true || Checkbox.generateSetStateForReadOnly.is(":checked")) {
+                                    autoScript = autoScript.concat(`${varName}.setState = ${createSetFunction(linkedId, 'val, ack=false', `setState("${linkedId}", val, ack)`)}\n`);
+                                    autoScript = autoScript.concat(`${varName}.setStateDelayed = ${createSetFunction(linkedId, 'val, delay, ack=false', `setStateDelayed("${linkedId}", val, ack, delay)`)}\n`);
+                                }
+                                autoScript = autoScript.concat(`${varName}.getObject = ${createGetFunction(linkedId, `getObject("${linkedId}")`)}\n`);
+
+                                autoScript = autoScript.concat(`${varName}.getParentId = ${createGetFunction(linkedId, `getObject("${linkedId}").common.custom["${myNamespace}"].parentId`)}\n`);
                             }
-                            autoScript = autoScript.concat(`${varName}.getObject = ${createGetFunction(linkedId, `getObject("${linkedId}")`)}\n`);
-
-                            autoScript = autoScript.concat(`${varName}.getParentId = ${createGetFunction(linkedId, `getObject("${linkedId}").common.custom["${myNamespace}"].parentId`)}\n`);
                         }
                         autoScript = autoScript.concat("\n");
                     }

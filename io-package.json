@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "linkeddevices",
-        "version": "1.4.3",
+        "version": "1.5.1",
         "news": {
+            "1.5.1": {
+                "en": "Version number bug fix\nAdmin 5 custom dialog integration",
+                "de": "Fehlerbehebung bei der Versionsnummer\nAdmin 5 benutzerdefinierte Dialogintegration",
+                "ru": "Исправление ошибки номера версии\nИнтеграция пользовательских диалогов администратора 5",
+                "pt": "Correção de bug do número da versão\nIntegração de caixa de diálogo personalizada do administrador 5",
+                "nl": "Bugfix voor versienummer\nAdmin 5 aangepaste dialoog integratie",
+                "fr": "Correction du bogue du numéro de version\nIntégration de la boîte de dialogue personnalisée Admin 5",
+                "it": "Correzione del bug del numero di versione\nIntegrazione della finestra di dialogo personalizzata di Admin 5",
+                "es": "Corrección de errores del número de versión\nIntegración de diálogo personalizado de Admin 5",
+                "pl": "Poprawka błędu numeru wersji\nIntegracja z niestandardowym oknem dialogowym Admin 5",
+                "zh-cn": "版本号错误修复\nAdmin 5 自定义对话框集成"
+            },
             "1.4.3": {
                 "en": "added option to invert boolean\nbug fix for translated object names\nshow error in settings",
                 "de": "Option zum Invertieren des Booleschen Werts hinzugefügt\nFehlerbehebung für übersetzte Objektnamen\nFehler in den Einstellungen anzeigen",
@@ -230,18 +242,6 @@
                 "es": "cuadro de diálogo personalizado: cambie el rol para el objeto vinculado agregado. Configuración de \nadapter: generación automática de guión global: compruebe si el objeto siempre está vinculado agregado. \ncrear objetos de canal para los objetos vinculados. \nconfiguración de nadapter: diseño revisado, barra de progreso agregada. \n diálogo personalizado: diseño revisado",
                 "pl": "niestandardowe okno dialogowe: zmień rolę dodanego obiektu połączonego. \nkonfiguracja nadodu: automatyczne generowanie skryptu globale - sprawdź, czy obiekt zawsze został dodany połączony. \n stwórz obiekty kanału dla powiązanych obiektów. \nkonfiguracja nadrzędna: poprawiony układ, dodano pasek postępu. \n niestandardowe okno: zmieniony układ",
                 "zh-cn": "自定义对话框：更改已添加链接对象的角色。\nadapap配置：自动生成全局脚本 - 检查对象是否始终链接添加。\n为链接对象创建通道对象。\nadapter配置：修改布局，添加进度条。\ncustom对话框：布局修订"
-            },
-            "0.5.0": {
-                "en": "Added a list of suggestions for PrefixId, Id, and Name\nbutton to remove links added\nConversion: added string (readonly) in duration, date and / or time\nadapter configuration: layout revised\nexpert settings number: allow negative values for min / max\nadapter configuration: auto generate globale script - optional create setState funtion for readonly objects\nadapter configuration: auto generate globale script - now optional recognize also manual created objects\nbug fixes",
-                "de": "Liste mit Vorschlägen für PrefixId, Id und Name hinzugefügt\nSchaltfläche zum Entfernen von Links hinzugefügt\nKonvertierung: Zeichenkette (readonly) in Dauer, Datum und / oder Uhrzeit hinzugefügt\nAdapterkonfiguration: Layout überarbeitet\nExperteneinstellungsnummer: Negative Werte für min / max zulassen\nAdapterkonfiguration: globales Skript automatisch generieren - optional setState-Funktion für schreibgeschützte Objekte erstellen\nAdapterkonfiguration: globales Skript automatisch generieren - optional auch für manuell erzeugte Objekte generieren\nFehlerbehebungen",
-                "ru": "Добавлен список предложений для кнопок PrefixId, Id и Name \n, для удаления ссылок добавлено \nConversion: добавлена строка (только для чтения) по продолжительности, дате и / или времени \nконфигурация nadapter: изменен макет \nномер настроек nexpert: разрешены отрицательные значения для минимума / max \nadapter configuration: автоматическая генерация глобального сценария - необязательная функция create setState для объектов, доступных только для чтения \nadapter конфигурация: автоматическая генерация глобального сценария - теперь необязательно распознавать также созданные вручную объекты \nbug исправления",
-                "pt": "Adicionada uma lista de sugestões para os botões PrefixId, Id e Name \n para remover os links adicionados \nConversão: string adicionada (somente leitura) na configuração de duração, data e / ou hora \nadapter: layout revisado \no número de configurações doexpert: permitir valores negativos para min Configuração de / max \nadapter: script auto generate globale - opcional create setState funtion para readonly objects \nadapter configuration: script auto generate globale - agora opcional também reconhece objetos criados manualmente \nbug correções",
-                "nl": "Lijst met suggesties toegevoegd voor PrefixId, Id en Naam \nknop om links te verwijderen toegevoegd \nConversie: string toegevoegd (alleen-lezen) in duur, datum en / of tijd \nadapter configuratie: layout herzien \nexpert instellingennummer: negatieve waarden toestaan voor min / max \nadapter configuratie: automatisch genereren globaal script - optioneel maken setState functie voor alleen-lezen objecten \nadapter configuratie: automatisch genereren globaal script - nu optioneel herkennen ook handmatig gemaakte objecten \nbug fixes",
-                "fr": "Ajout d'une liste de suggestions pour PrefixId, Id et Nom \nBouton pour supprimer les liens ajoutés \nConversion: ajout de chaîne (en lecture seule) en durée, date et / ou heure \nadapter configuration: mise en page révisée \nexpert nombre de paramètres: autoriser les valeurs négatives pour min / max \nadapter configuration: script global de génération automatique - option facultative de création de setState pour les objets en lecture seule \nconfiguration de nadapter: script automatique de génération globale - maintenant facultatif, reconnaître également les objets créés manuellement \nbug correctifs",
-                "it": "Aggiunto un elenco di suggerimenti per PrefixId, Id e Nome \npulsante per rimuovere i collegamenti aggiunti \nConversione: aggiunta stringa (sola lettura) in durata, data e / o ora \nconfigurazione nadapter: layout rivisto \numero impostazioni nexpert: consenti valori negativi per min / max \nadapter configuration: auto generate global script - opzionale create setState funtion per oggetti di sola lettura \nadapter configuration: auto generate global script - ora opzionale riconosce anche gli oggetti creati manualmente \nbug fix",
-                "es": "Se agregó una lista de sugerencias para PrefixId, Id, y Name \nbutton para eliminar enlaces agregados \nConversion: cadena agregada (solo lectura) en duración, fecha y / o hora \nconfiguración del adaptador: número de configuración de diseño revisado \nexpert: permitir valores negativos por min. / max \nconfiguración de nadapter: autogenerar script globale - opcional crear función setState para objetos de solo lectura \nadapter configuración: auto generar script globale - ahora opcional reconocer también objetos creados manualmente \n correcciones de errores",
-                "pl": "Dodano listę sugestii dla PrefixId, Id i Name \n przycisk, aby usunąć dodane linki \n Konwersja: dodano ciąg (tylko do odczytu) w czasie trwania, dacie i / lub czasie \nkonfiguracja nadfiguracji: poprawiono układ / max \nkonfiguracja konfiguracji: automatyczne generowanie skryptu globale - opcjonalnie utwórz funkcję setState dla obiektów tylko do odczytu \nkonfiguracja konfiguracji: automatyczna generacja skryptu globale - teraz opcjonalnie rozpoznaje również ręcznie utworzone obiekty \npoprawki błędów",
-                "zh-cn": "添加了PrefixId，Id和Name \n按钮的建议列表，以删除添加的链接\n转换：在持续时间，日期和/或时间添加字符串（只读）\nadapap配置：布局修订\nexpert设置编号：允许负值为min / max \nadapter配置：自动生成globale脚本 - 为只读对象创建setState函数\nadapap配置：自动生成globale脚本 - 现在可选识别手动创建的对象\nbug修复"
             }
         },
         "title": "LinkedDevices",
@@ -314,7 +314,7 @@
                 "admin": ">=3.6.2"
             },
             {
-                "js-controller": ">=1.5.8"
+                "js-controller": ">=2.0.0"
             }
         ]
     },
