@@ -1,372 +1,216 @@
 {
-    "common": {
-        "name": "linkeddevices",
-        "version": "1.5.1",
-        "news": {
-            "1.5.1": {
-                "en": "Version number bug fix\nAdmin 5 custom dialog integration",
-                "de": "Fehlerbehebung bei der Versionsnummer\nAdmin 5 benutzerdefinierte Dialogintegration",
-                "ru": "Исправление ошибки номера версии\nИнтеграция пользовательских диалогов администратора 5",
-                "pt": "Correção de bug do número da versão\nIntegração de caixa de diálogo personalizada do administrador 5",
-                "nl": "Bugfix voor versienummer\nAdmin 5 aangepaste dialoog integratie",
-                "fr": "Correction du bogue du numéro de version\nIntégration de la boîte de dialogue personnalisée Admin 5",
-                "it": "Correzione del bug del numero di versione\nIntegrazione della finestra di dialogo personalizzata di Admin 5",
-                "es": "Corrección de errores del número de versión\nIntegración de diálogo personalizado de Admin 5",
-                "pl": "Poprawka błędu numeru wersji\nIntegracja z niestandardowym oknem dialogowym Admin 5",
-                "zh-cn": "版本号错误修复\nAdmin 5 自定义对话框集成"
-            },
-            "1.4.3": {
-                "en": "added option to invert boolean\nbug fix for translated object names\nshow error in settings",
-                "de": "Option zum Invertieren des Booleschen Werts hinzugefügt\nFehlerbehebung für übersetzte Objektnamen\nFehler in den Einstellungen anzeigen",
-                "ru": "добавлена возможность инвертировать логическое значение\nисправление ошибки для переведенных имен объектов\nпоказать ошибку в настройках",
-                "pt": "Adicionada opção para inverter o booleano\ncorreção de bug para nomes de objetos traduzidos\nmostrar erro nas configurações",
-                "nl": "optie toegevoegd om boolean om te keren\nbugfix voor vertaalde objectnamen\ntoon fout in instellingen",
-                "fr": "option ajoutée pour inverser le booléen\ncorrection de bogue pour les noms d'objets traduits\nafficher une erreur dans les paramètres",
-                "it": "aggiunta opzione per invertire booleano\ncorrezione di bug per i nomi degli oggetti tradotti\nmostra errore nelle impostazioni",
-                "es": "opción agregada para invertir booleano\ncorrección de errores para nombres de objetos traducidos\nmostrar error en la configuración",
-                "pl": "dodana opcja odwracania wartości logicznych\npoprawka błędu dla przetłumaczonych nazw obiektów\npokaż błąd w ustawieniach",
-                "zh-cn": "添加了反转布尔值的选项\n已翻译对象名称的错误修复\n显示设置错误"
-            },
-            "1.4.2": {
-                "en": "bug fix for filtered custom dialog",
-                "de": "Fehlerbehebung für gefilterte benutzerdefinierte Dialoge",
-                "ru": "исправление ошибки для отфильтрованного настраиваемого диалогового окна",
-                "pt": "correção de bug para diálogo personalizado filtrado",
-                "nl": "bugfix voor gefilterde aangepaste dialoog",
-                "fr": "correction de bogue pour la boîte de dialogue personnalisée filtrée",
-                "it": "correzione di bug per la finestra di dialogo personalizzata filtrata",
-                "es": "corrección de errores para el diálogo personalizado filtrado",
-                "pl": "poprawka błędu filtrowanego niestandardowego okna dialogowego",
-                "zh-cn": "过滤自定义对话框的错误修复"
-            },
-            "1.4.1": {
-                "en": "bug fix custom dialog incompatibilty with other adapters\nbug fix for translation load\nbug fix for id on custom dialog load",
-                "de": "Fehlerbehebung beim benutzerdefinierten Dialogfeld, das nicht mit anderen Adaptern kompatibel ist\nFehlerbehebung für das Laden der Übersetzung\nFehlerbehebung für ID beim Laden eines benutzerdefinierten Dialogfelds",
-                "ru": "Исправлена ошибка несовместимости настраиваемого диалогового окна с другими адаптерами\nисправление ошибки для загрузки перевода\nисправление ошибки для идентификатора при загрузке настраиваемого диалогового окна",
-                "pt": "bug correção incompatibilidade de diálogo personalizado com outros adaptadores\ncorreção de bug para carregamento de tradução\ncorreção de bug para id no carregamento de diálogo personalizado",
-                "nl": "bug fix aangepaste dialoog incompatibiliteit met andere adapters\nbugfix voor het laden van vertalingen\nbugfix voor id bij het laden van aangepaste dialoogvensters",
-                "fr": "correction de bogue incompatibilité des boîtes de dialogue personnalisées avec d'autres adaptateurs\ncorrection de bogue pour le chargement de la traduction\ncorrection de bogue pour l'ID lors du chargement de la boîte de dialogue personnalisée",
-                "it": "correzione di errori di dialogo personalizzato incompatibilità con altri adattatori\ncorrezione di bug per il caricamento della traduzione\ncorrezione di bug per ID durante il caricamento della finestra di dialogo personalizzata",
-                "es": "corrección de errores incompatibilidad de diálogo personalizado con otros adaptadores\ncorrección de errores para la carga de traducción\ncorrección de errores para la identificación en la carga de diálogo personalizado",
-                "pl": "naprawa błędów niestandardowego okna dialogowego niekompatybilnego z innymi adapterami\npoprawka błędu ładowania tłumaczenia\npoprawka błędu identyfikatora podczas ładowania niestandardowego okna dialogowego",
-                "zh-cn": "错误修复自定义对话框与其他适配器不兼容\n修复翻译负载的错误\n自定义对话框加载中ID的错误修复"
-            },
-            "1.4.0": {
-                "en": "custom settings: button added to generate prefixId from function and room\nadapter settings: automatically generate prefixId from function and room\nadapter settings: automatically use prefix and optional id as name\nbug fixes",
-                "de": "Benutzerdefinierte Einstellungen: Schaltfläche hinzugefügt, um Präfix-ID aus Funktion und Raum zu generieren\nAdaptereinstellungen: Generieren Sie automatisch eine Präfix-ID aus Funktion und Raum\nAdaptereinstellungen: Verwenden Sie automatisch das Präfix und die optionale ID als Namen\nFehlerbehebung",
-                "ru": "пользовательские настройки: добавлена кнопка для генерации prefixId из функции и комнаты\nнастройки адаптера: автоматически генерировать prefixId из функции и комнаты\nнастройки адаптера: автоматически использовать префикс и необязательный идентификатор в качестве имени\nисправление ошибок",
-                "pt": "configurações personalizadas: botão adicionado para gerar prefixId de função e sala\nconfigurações do adaptador: gere automaticamente prefixId da função e da sala\nconfigurações do adaptador: use automaticamente prefixo e id opcional como nome\ncorreção de bugs",
-                "nl": "aangepaste instellingen: knop toegevoegd om prefixId te genereren vanuit functie en kamer\nadapterinstellingen: automatisch prefixId genereren uit functie en kamer\nadapterinstellingen: gebruik automatisch prefix en optionele id als naam\nbugfixes",
-                "fr": "paramètres personnalisés: bouton ajouté pour générer prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: générer automatiquement prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: utilisez automatiquement le préfixe et l'ID facultatif comme nom\ncorrections de bogues",
-                "it": "impostazioni personalizzate: pulsante aggiunto per generare prefixId dalla funzione e dalla stanza\nimpostazioni adattatore: genera automaticamente prefixId dalla funzione e dalla stanza\nimpostazioni dell'adattatore: usa automaticamente il prefisso e l'ID opzionale come nome\ncorrezioni di bug",
-                "es": "configuración personalizada: botón agregado para generar prefixId de función y sala\nconfiguración del adaptador: genera automáticamente prefixId desde la función y la habitación\nconfiguración del adaptador: use automáticamente el prefijo y la identificación opcional como nombre\ncorrección de errores",
-                "pl": "ustawienia niestandardowe: dodano przycisk do generowania prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie generuj prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie użyj przedrostka i opcjonalnego identyfikatora jako nazwy\npoprawki błędów",
-                "zh-cn": "自定义设置：添加了按钮以从功能和房间生成prefixId\n适配器设置：根据功能和房间自动生成prefixId\n适配器设置：自动使用前缀和可选ID作为名称\nbug修复"
-            },
-            "1.3.2": {
-                "en": "moment-duration-format bug fix",
-                "de": "Fehlerbehebung im Moment-Dauer-Format",
-                "ru": "исправление ошибки формата времени-продолжительности",
-                "pt": "correção de bug no formato da duração do momento",
-                "nl": "bugfix voor moment-duur-formaat",
-                "fr": "correction de bogue au format moment-durée",
-                "it": "correzione di bug del formato della durata del momento",
-                "es": "corrección de errores de formato de duración de momento",
-                "pl": "poprawka błędu formatu czasu trwania",
-                "zh-cn": "矩持续时间格式错误修复"
-            },
-            "1.3.1": {
-                "en": "bug fix for change event of buttons to use prefix and / or id as name added\noption to select javascript instance where script should be created",
-                "de": "Fehlerbehebung für Änderungsereignis von Schaltflächen, um Präfix und / oder ID als hinzugefügten Namen zu verwenden\nOption zur Auswahl der Javascript-Instanz, in der das Skript erstellt werden soll",
-                "ru": "исправление ошибки для события изменения кнопок для использования префикса и / или идентификатора в качестве добавленного имени\nвозможность выбрать экземпляр javascript, в котором должен быть создан скрипт",
-                "pt": "correção de bug para mudança de evento de botões para usar prefixo e / ou id como nome adicionado\nopção para selecionar a instância javascript onde o script deve ser criado",
-                "nl": "bugfix voor veranderingsgebeurtenis van knoppen om prefix en / of id te gebruiken als toegevoegde naam\noptie om een javascript-instantie te selecteren waar het script moet worden gemaakt",
-                "fr": "correction de bogue pour l'événement de changement des boutons pour utiliser le préfixe et / ou l'identifiant comme nom ajouté\noption pour sélectionner l'instance javascript où le script doit être créé",
-                "it": "correzione di bug per evento di modifica dei pulsanti per utilizzare prefisso e / o ID come nome aggiunto\nopzione per selezionare l'istanza javascript in cui creare lo script",
-                "es": "corrección de errores para el evento de cambio de botones para usar prefijo y / o identificación como nombre agregado\nopción para seleccionar la instancia de javascript donde se debe crear el script",
-                "pl": "poprawka błędu zmiany zdarzenia przycisków, aby używały prefiksu i / lub identyfikatora jako dodanej nazwy\nmożliwość wybrania instancji javascript, w której ma zostać utworzony skrypt",
-                "zh-cn": "修正了按钮更改事件以使用前缀和/或id作为名称的错误修复程序\n选择应在其中创建脚本的javascript实例的选项"
-            },
-            "1.3.0": {
-                "en": "show name of parent object in custom view\nbuttons to use prefix and / or id as name added\ndependencies updated",
-                "de": "Namen des übergeordneten Objekts in der benutzerdefinierten Ansicht anzeigen\nSchaltflächen zur Verwendung von Präfix und / oder ID als hinzugefügtem Namen\nAbhängigkeiten aktualisiert",
-                "ru": "показать имя родительского объекта в пользовательском представлении\nкнопки для использования префикса и / или идентификатора в качестве добавленного имени\nзависимости обновлены",
-                "pt": "mostrar o nome do objeto pai na visualização personalizada\nbotões para usar prefixo e / ou id como nome adicionado\ndependências atualizadas",
-                "nl": "toon naam van bovenliggend object in aangepaste weergave\nknoppen om prefix en / of id te gebruiken als toegevoegde naam\nafhankelijkheden bijgewerkt",
-                "fr": "afficher le nom de l'objet parent dans la vue personnalisée\nboutons pour utiliser le préfixe et / ou l'identifiant comme nom ajouté\ndépendances mises à jour",
-                "it": "mostra il nome dell'oggetto padre nella visualizzazione personalizzata\npulsanti per utilizzare prefisso e / o id come nome aggiunto\ndipendenze aggiornate",
-                "es": "mostrar el nombre del objeto principal en la vista personalizada\nbotones para usar prefijo y / o identificación como nombre agregado\ndependencias actualizadas",
-                "pl": "pokaż nazwę obiektu nadrzędnego w widoku niestandardowym\nprzyciski do używania przedrostka i / lub identyfikatora jako dodanej nazwy\nzaktualizowane zależności",
-                "zh-cn": "在自定义视图中显示父对象的名称\n使用前缀和/或id作为名称的按钮\n依赖关系已更新"
-            },
-            "1.2.2": {
-                "en": "moment bug fix",
-                "de": "Moment Bugfix",
-                "ru": "момент исправления ошибки",
-                "pt": "correção de bug momentâneo",
-                "nl": "moment bugfix",
-                "fr": "correction de bogue du moment",
-                "it": "momento bug fix",
-                "es": "momento corrección de errores",
-                "pl": "chwilowa naprawa błędów",
-                "zh-cn": "即时错误修复"
-            },
-            "1.2.1": {
-                "en": "mathjs bug fix",
-                "de": "Mathjs Bugfix",
-                "ru": "исправление ошибки mathjs",
-                "pt": "correção de bug mathjs",
-                "nl": "mathjs bugfix",
-                "fr": "correction de bogue mathjs",
-                "it": "correzione di bug di mathjs",
-                "es": "corrección de errores de mathjs",
-                "pl": "poprawka błędów w mathjs",
-                "zh-cn": "mathjs错误修复"
-            },
-            "1.2.0": {
-                "en": "adapter configuration: auto generate globale script - function to get parent id added\ndependencies updated",
-                "de": "Adapterkonfiguration: Automatisches Generieren eines globalen Skripts - Funktion zum Hinzufügen der übergeordneten ID\nAbhängigkeiten aktualisiert",
-                "ru": "конфигурация адаптера: автоматически генерировать глобальный скрипт - функция для добавления родительского идентификатора\nзависимости обновлены",
-                "pt": "configuração do adaptador: geração automática de script global - função para obter id pai adicionado\ndependências atualizadas",
-                "nl": "adapterconfiguratie: genereer automatisch globaal script - functie om de bovenliggende id toe te voegen\nafhankelijkheden bijgewerkt",
-                "fr": "configuration de l'adaptateur: script global de génération automatique - fonction pour obtenir l'ID parent ajouté\ndépendances mises à jour",
-                "it": "configurazione dell'adattatore: generazione automatica dello script globale - funzione per ottenere l'ID genitore aggiunto\ndipendenze aggiornate",
-                "es": "configuración del adaptador: autogenerar secuencia de comandos global - función para obtener la identificación principal agregada\ndependencias actualizadas",
-                "pl": "konfiguracja adaptera: automatyczne generowanie skryptu globalnego - funkcja umożliwiająca dodanie identyfikatora rodzica\nzaktualizowane zależności",
-                "zh-cn": "适配器配置：自动生成全局脚本-添加父ID的功能\n依赖关系已更新"
-            },
-            "1.1.4": {
-                "en": "continuous loop after assign to new object bug fixed",
-                "de": "Endlosschleife nach Zuweisung zu neuem Objekt Fehler behoben",
-                "ru": "исправлен непрерывный цикл после присвоения новому объекту",
-                "pt": "loop contínuo após atribuir ao novo objeto bug corrigido",
-                "nl": "continue lus na toewijzing aan nieuwe objectbug opgelost",
-                "fr": "boucle continue après affectation au nouvel objet bug corrigé",
-                "it": "corretto il ciclo continuo dopo l'assegnazione al nuovo oggetto bug",
-                "es": "bucle continuo después de asignar al nuevo objeto error corregido",
-                "pl": "ciągła pętla po przypisaniu do nowego błędu obiektu naprawiona",
-                "zh-cn": "修复分配给新对象后的连续循环错误"
-            },
-            "1.1.3": {
-                "en": "bug fix for deleting objects via the setting",
-                "de": "Fehlerbehebung zum Löschen von Objekten über die Einstellung",
-                "ru": "исправлена ошибка удаления объектов через настройку",
-                "pt": "correção de bug para excluir objetos através da configuração",
-                "nl": "bugfix voor het verwijderen van objecten via de instelling",
-                "fr": "correction de bogue pour la suppression d'objets via le paramètre",
-                "it": "correzione di bug per l'eliminazione di oggetti tramite l'impostazione",
-                "es": "corrección de errores para eliminar objetos a través de la configuración",
-                "pl": "naprawa błędu usuwania obiektów za pomocą ustawienia",
-                "zh-cn": "通过设置删除对象的错误修复"
-            },
-            "1.1.2": {
-                "en": "bug fix for values from type object",
-                "de": "Fehlerbehebung für Werte vom Typ Objekt",
-                "ru": "исправлена ошибка для значений из типа объекта",
-                "pt": "correção de bug para valores do objeto de tipo",
-                "nl": "bugfix voor waarden van type object",
-                "fr": "correction de bogue pour les valeurs de l'objet type",
-                "it": "correzione di bug per valori dall'oggetto tipo",
-                "es": "corrección de errores para valores del objeto tipo",
-                "pl": "poprawka błędu dla wartości z obiektu typu",
-                "zh-cn": "错误修复类型对象的值"
-            },
-            "1.1.1": {
-                "en": "bug fix for string to number converter",
-                "de": "Fehlerbehebung für den Konverter von String zu Zahl",
-                "ru": "исправлена ошибка для преобразования строки в число",
-                "pt": "correção de bug do conversor de string para número",
-                "nl": "bugfix voor string naar nummer converter",
-                "fr": "correction de bogue pour le convertisseur de chaîne en nombre",
-                "it": "correzione di bug per il convertitore da stringa a numero",
-                "es": "corrección de errores para el convertidor de cadena a número",
-                "pl": "poprawka błędu konwertera ciągów na liczby",
-                "zh-cn": "字符串到数字转换器的错误修复"
-            },
-            "1.1.0": {
-                "en": "string to number converter added. option to merge linkedObject on adapter restart added. russian translation corrected by algar42.",
-                "de": "Zeichenkette in Zahl konvertieren hinzugefügt. Option zum Zusammenführen von linkedObject beim Neustart des Adapters. Russische übersetzung korrigiert von algar42.",
-                "ru": "Добавлен конвертер строк в числа. добавлена возможность слияния связанного объекта при перезагрузке адаптера. русский перевод исправлен algar42.",
-                "pt": "conversor de string para número adicionado. opção para mesclar linkedObject na reinicialização do adaptador adicionada. tradução russa corrigida por algar42.",
-                "nl": "tekenreeks naar nummerconvertor toegevoegd. optie om gelinkteObject op adapter opnieuw samen te voegen toegevoegd. Russische vertaling gecorrigeerd door algar42.",
-                "fr": "convertisseur de chaîne en nombre ajouté. option de fusion de linkedObject au redémarrage de l'adaptateur ajoutée. traduction en russe corrigée par algar42.",
-                "it": "convertitore stringa a numero aggiunto. aggiunta opzione per unire linkedObject al riavvio dell'adattatore. traduzione russa corretta da algar42.",
-                "es": "convertidor de cadena a número agregado. Se agregó la opción para fusionar el objeto vinculado al reiniciar el adaptador. traducción rusa corregida por algar42.",
-                "pl": "dodano konwerter ciągów na liczby. dodano opcję scalania obiektu LinkedObject przy ponownym uruchomieniu adaptera. tłumaczenie rosyjskie poprawione przez algar42.",
-                "zh-cn": "字符串到数字转换器已添加。添加了在适配器重新启动时合并linkedObject的选项。俄语翻译已由algar42纠正。"
-            },
-            "1.0.1": {
-                "en": "• adapter configuration: repair function added\n• receive system messages added",
-                "de": "• Adapterkonfiguration: Reparaturfunktion hinzugefügt\n• Systemmeldungen empfangen hinzugefügt",
-                "ru": "• конфигурация адаптера: добавлена функция восстановления\n• добавлены системные сообщения",
-                "pt": "• configuração do adaptador: função de reparo adicionada\n• recebe mensagens do sistema adicionadas",
-                "nl": "• adapterconfiguratie: reparatiefunctie toegevoegd\n• systeemberichten ontvangen toegevoegd",
-                "fr": "• configuration de l'adaptateur: fonction de réparation ajoutée\n• réception des messages système ajoutés",
-                "it": "• configurazione dell'adattatore: funzione di riparazione aggiunta\n• ricezione di messaggi di sistema aggiunti",
-                "es": "• configuración del adaptador: función de reparación agregada\n• recibir mensajes del sistema agregados",
-                "pl": "• konfiguracja adaptera: dodano funkcję naprawy\n• dodano komunikaty systemowe",
-                "zh-cn": "•适配器配置：添加了修复功能\n•接收添加的系统消息"
-            },
-            "1.0.0": {
-                "en": "bug fixes",
-                "de": "Fehlerbehebung",
-                "ru": "исправление ошибок",
-                "pt": "correções de bugs",
-                "nl": "bugfixes",
-                "fr": "corrections de bugs",
-                "it": "correzioni di bug",
-                "es": "corrección de errores",
-                "pl": "poprawki błędów",
-                "zh-cn": "bug修复"
-            },
-            "0.5.6": {
-                "en": "bug fixes",
-                "de": "Fehlerbehebung",
-                "ru": "исправление ошибок",
-                "pt": "correções de bugs",
-                "nl": "bugfixes",
-                "fr": "corrections de bugs",
-                "it": "correzioni di bug",
-                "es": "corrección de errores",
-                "pl": "poprawki błędów",
-                "zh-cn": "bug修复"
-            },
-            "0.5.5": {
-                "en": "custom dialog: change role for linked object added.\nadapter configuration: auto generate globale script - check if object always linked added.\ncreate channel objects for linked Objects.\nadapter configuration: layout revised, progressbar added.\ncustom dialog: layout revised",
-                "de": "Custom Dialog: Rolle für verlinkte Objekt ändern hinzugefügt. \nKonfiguration des Adapters: globales Skript automatisch generieren - prüfen, ob das Objekt immer verlinkt ist. \nKanalobjekte für verlinkte Objekte erstellen. \nKonfiguration des Adapters: Layout überarbeitet, Fortschrittsbalken hinzugefügt. \nCustom Dialog: Layout überarbeitet",
-                "ru": "настраиваемое диалоговое окно: изменение роли для связанного объекта. \napapter configuration: автоматическое создание глобального сценария - проверьте, всегда ли добавлен связанный объект. \nсоздание канальных объектов для связанных объектов. \nадаптерная конфигурация: изменен макет, добавлен индикатор выполнения. \nсобственное диалоговое окно: изменен макет",
-                "pt": "diálogo customizado: função de mudança para objeto vinculado adicionado. configuração \nadapter: auto generate globale script - verifica se o objeto está sempre vinculado. \ncria os objetos de canal para objetos vinculados. \nadapter configuração: layout revisado, barra de progresso adicionada. \ncache: layout revised",
-                "nl": "aangepast dialoogvenster: rol wijzigen voor gekoppeld object toegevoegd. \nadapter configuratie: automatisch genereren globaal script - controleer of object altijd gekoppeld is toegevoegd. \ncreër kanaalobjecten voor gekoppelde objecten. \nadapter configuratie: lay-out herzien, voortgangsbalk toegevoegd. \n aangepast dialoogvenster: lay-out herzien",
-                "fr": "boîte de dialogue personnalisée: modification du rôle de l'objet lié ajouté. \nadapter configuration: génération automatique de script global - vérifier si l'objet est toujours lié ajouté. \ncréer des objets de canal pour les objets liés. \nadapter configuration: mise en page modifiée, barre de progression ajoutée. \n dialogue - personnalisé: mise en forme",
-                "it": "finestra di dialogo personalizzata: cambia ruolo per l'oggetto collegato aggiunto. \nadapter configurazione: genera automaticamente lo script globale - controlla se l'oggetto è sempre collegato aggiunto. \ncrea oggetti canale per oggetti collegati. \nadapter configurazione: layout rivisto, barra di avanzamento aggiunta. \ncustom dialog: layout revisionato",
-                "es": "cuadro de diálogo personalizado: cambie el rol para el objeto vinculado agregado. Configuración de \nadapter: generación automática de guión global: compruebe si el objeto siempre está vinculado agregado. \ncrear objetos de canal para los objetos vinculados. \nconfiguración de nadapter: diseño revisado, barra de progreso agregada. \n diálogo personalizado: diseño revisado",
-                "pl": "niestandardowe okno dialogowe: zmień rolę dodanego obiektu połączonego. \nkonfiguracja nadodu: automatyczne generowanie skryptu globale - sprawdź, czy obiekt zawsze został dodany połączony. \n stwórz obiekty kanału dla powiązanych obiektów. \nkonfiguracja nadrzędna: poprawiony układ, dodano pasek postępu. \n niestandardowe okno: zmieniony układ",
-                "zh-cn": "自定义对话框：更改已添加链接对象的角色。\nadapap配置：自动生成全局脚本 - 检查对象是否始终链接添加。\n为链接对象创建通道对象。\nadapter配置：修改布局，添加进度条。\ncustom对话框：布局修订"
-            }
-        },
-        "title": "LinkedDevices",
-        "titleLang": {
-            "en": "LinkedDevices",
-            "de": "LinkedDevices",
-            "ru": "LinkedDevices",
-            "pt": "LinkedDevices",
-            "nl": "LinkedDevices",
-            "fr": "LinkedDevices",
-            "it": "LinkedDevices",
-            "es": "LinkedDevices",
-            "pl": "LinkedDevices",
-            "zh-cn": "LinkedDevices"
-        },
-        "desc": {
-            "en": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts.",
-            "de": "Erstelle verlinkte Objekte (Datenpunkte) deiner Geräte mit einer selbst definierten Struktur. Damit ist es  möglich eine Struktur in ioBroker zu schaffen, wo alle Objekte zentralisiert sind, die z.B. im vis oder Skripten verwendet werden.",
-            "ru": "Создавайте связанные объекты (точки данных) ваших устройств с самоопределяемой структурой. Это позволяет создать структуру в ioBroker, где все объекты централизованы, например для использования в vis или скриптах.",
-            "pt": "Crie objetos vinculados (pontos de dados) de seus dispositivos com uma estrutura autodefinida. Isso torna possível criar uma estrutura no ioBroker, onde todos os objetos são centralizados, por exemplo, para ser usado no vis ou scripts.",
-            "nl": "Maak gekoppelde objecten (datapunten) van uw apparaten met een zelfgedefinieerde structuur. Dit maakt het mogelijk om een structuur in ioBroker te creëren, waarin alle objecten gecentraliseerd zijn, bijv. te gebruiken in de vis of scripts.",
-            "fr": "Créez des objets liés (points de données) de vos appareils avec une structure auto-définie. Cela permet de créer une structure dans ioBroker, où tous les objets sont centralisés, par ex. à utiliser dans le vis ou les scripts.",
-            "it": "Crea oggetti collegati (punti dati) dei tuoi dispositivi con una struttura auto-definita. Ciò rende possibile creare una struttura in ioBroker, dove tutti gli oggetti sono centralizzati, ad es. da utilizzare nei vis o negli script.",
-            "es": "Cree objetos vinculados (puntos de datos) de sus dispositivos con una estructura autodefinida. Esto hace posible crear una estructura en ioBroker, donde todos los objetos están centralizados, p. Ej. para ser utilizado en vis o scripts.",
-            "pl": "Twórz połączone obiekty (punkty danych) swoich urządzeń z samodzielnie zdefiniowaną strukturą. Umożliwia to stworzenie struktury w ioBroker, w której wszystkie obiekty są scentralizowane, np. do wykorzystania w vis lub skryptach.",
-            "zh-cn": "使用自定义结构创建设备的链接对象（数据点）。这样就可以在ioBroker中创建一个结构，在该结构中所有对象都被集中化，例如在vis或脚本中使用。"
-        },
-        "docs": {
-            "en": [
-                "docs/en/readme.md"
-            ],
-            "de": [
-                "docs/de/readme.md"
-            ]
-        },
-        "authors": [
-            "Scrounger <scrounger@gmx.net>"
-        ],
-        "keywords": [
-            "device",
-            "link",
-            "virtual",
-            "datapoint",
-            "wrapper",
-            "reflect",
-            "logic"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "icon": "linkeddevices.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linkeddevices/master/admin/linkeddevices.png",
-        "readme": "https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md",
-        "loglevel": "info",
-        "messagebox": true,
-        "subscribe": "messagebox",
-        "mode": "daemon",
-        "type": "logic",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "push",
-        "materialize": true,
-        "supportCustoms": true,
-        "adminUI": {
-            "custom": "json",
-            "config": "materialize"
-        },
-        "dependencies": [
-            {
-                "admin": ">=3.6.2"
-            },
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ]
+  "common": {
+    "name": "linkeddevices",
+    "version": "1.5.2",
+    "news": {
+      "1.5.2": {
+        "en": "Admin 5 custom dialog layout optimization\nAdmin 5 custom dialog: sorted autocomplete entries",
+        "de": "Admin 5-Optimierung des benutzerdefinierten Dialoglayouts\nAdmin 5 benutzerdefinierter Dialog: sortierte Autocomplete-Einträge",
+        "ru": "Оптимизация макета пользовательского диалога администратора 5\nПользовательский диалог администратора 5: отсортированные записи автозаполнения",
+        "pt": "Otimização de layout de diálogo personalizado do Admin 5\nCaixa de diálogo personalizada Admin 5: entradas de preenchimento automático classificadas",
+        "nl": "Beheerder 5 aangepaste dialoogvensterlay-outoptimalisatie\nAdmin 5 aangepast dialoogvenster: gesorteerde autocomplete-items",
+        "fr": "Optimisation de la disposition des boîtes de dialogue personnalisées d'Admin 5\nBoîte de dialogue personnalisée Admin 5 : entrées de saisie semi-automatique triées",
+        "it": "Ottimizzazione del layout della finestra di dialogo personalizzata di Admin 5\nFinestra di dialogo personalizzata di Admin 5: voci di completamento automatico ordinate",
+        "es": "Optimización del diseño de diálogo personalizado de Admin 5\nCuadro de diálogo personalizado Admin 5: entradas ordenadas de autocompletar",
+        "pl": "Optymalizacja układu niestandardowego okna dialogowego Admin 5\nNiestandardowe okno dialogowe administratora 5: posortowane wpisy autouzupełniania",
+        "zh-cn": "Admin 5 自定义对话框布局优化\nAdmin 5 自定义对话框：排序的自动完成条目"
+      },
+      "1.5.1": {
+        "en": "Version number bug fix\nAdmin 5 custom dialog integration",
+        "de": "Fehlerbehebung bei der Versionsnummer\nAdmin 5 benutzerdefinierte Dialogintegration",
+        "ru": "Исправление ошибки номера версии\nИнтеграция пользовательских диалогов администратора 5",
+        "pt": "Correção de bug do número da versão\nIntegração de caixa de diálogo personalizada do administrador 5",
+        "nl": "Bugfix voor versienummer\nAdmin 5 aangepaste dialoog integratie",
+        "fr": "Correction du bogue du numéro de version\nIntégration de la boîte de dialogue personnalisée Admin 5",
+        "it": "Correzione del bug del numero di versione\nIntegrazione della finestra di dialogo personalizzata di Admin 5",
+        "es": "Corrección de errores del número de versión\nIntegración de diálogo personalizado de Admin 5",
+        "pl": "Poprawka błędu numeru wersji\nIntegracja z niestandardowym oknem dialogowym Admin 5",
+        "zh-cn": "版本号错误修复\nAdmin 5 自定义对话框集成"
+      },
+      "1.4.3": {
+        "en": "added option to invert boolean\nbug fix for translated object names\nshow error in settings",
+        "de": "Option zum Invertieren des Booleschen Werts hinzugefügt\nFehlerbehebung für übersetzte Objektnamen\nFehler in den Einstellungen anzeigen",
+        "ru": "добавлена возможность инвертировать логическое значение\nисправление ошибки для переведенных имен объектов\nпоказать ошибку в настройках",
+        "pt": "Adicionada opção para inverter o booleano\ncorreção de bug para nomes de objetos traduzidos\nmostrar erro nas configurações",
+        "nl": "optie toegevoegd om boolean om te keren\nbugfix voor vertaalde objectnamen\ntoon fout in instellingen",
+        "fr": "option ajoutée pour inverser le booléen\ncorrection de bogue pour les noms d'objets traduits\nafficher une erreur dans les paramètres",
+        "it": "aggiunta opzione per invertire booleano\ncorrezione di bug per i nomi degli oggetti tradotti\nmostra errore nelle impostazioni",
+        "es": "opción agregada para invertir booleano\ncorrección de errores para nombres de objetos traducidos\nmostrar error en la configuración",
+        "pl": "dodana opcja odwracania wartości logicznych\npoprawka błędu dla przetłumaczonych nazw obiektów\npokaż błąd w ustawieniach",
+        "zh-cn": "添加了反转布尔值的选项\n已翻译对象名称的错误修复\n显示设置错误"
+      },
+      "1.4.2": {
+        "en": "bug fix for filtered custom dialog",
+        "de": "Fehlerbehebung für gefilterte benutzerdefinierte Dialoge",
+        "ru": "исправление ошибки для отфильтрованного настраиваемого диалогового окна",
+        "pt": "correção de bug para diálogo personalizado filtrado",
+        "nl": "bugfix voor gefilterde aangepaste dialoog",
+        "fr": "correction de bogue pour la boîte de dialogue personnalisée filtrée",
+        "it": "correzione di bug per la finestra di dialogo personalizzata filtrata",
+        "es": "corrección de errores para el diálogo personalizado filtrado",
+        "pl": "poprawka błędu filtrowanego niestandardowego okna dialogowego",
+        "zh-cn": "过滤自定义对话框的错误修复"
+      },
+      "1.4.1": {
+        "en": "bug fix custom dialog incompatibilty with other adapters\nbug fix for translation load\nbug fix for id on custom dialog load",
+        "de": "Fehlerbehebung beim benutzerdefinierten Dialogfeld, das nicht mit anderen Adaptern kompatibel ist\nFehlerbehebung für das Laden der Übersetzung\nFehlerbehebung für ID beim Laden eines benutzerdefinierten Dialogfelds",
+        "ru": "Исправлена ошибка несовместимости настраиваемого диалогового окна с другими адаптерами\nисправление ошибки для загрузки перевода\nисправление ошибки для идентификатора при загрузке настраиваемого диалогового окна",
+        "pt": "bug correção incompatibilidade de diálogo personalizado com outros adaptadores\ncorreção de bug para carregamento de tradução\ncorreção de bug para id no carregamento de diálogo personalizado",
+        "nl": "bug fix aangepaste dialoog incompatibiliteit met andere adapters\nbugfix voor het laden van vertalingen\nbugfix voor id bij het laden van aangepaste dialoogvensters",
+        "fr": "correction de bogue incompatibilité des boîtes de dialogue personnalisées avec d'autres adaptateurs\ncorrection de bogue pour le chargement de la traduction\ncorrection de bogue pour l'ID lors du chargement de la boîte de dialogue personnalisée",
+        "it": "correzione di errori di dialogo personalizzato incompatibilità con altri adattatori\ncorrezione di bug per il caricamento della traduzione\ncorrezione di bug per ID durante il caricamento della finestra di dialogo personalizzata",
+        "es": "corrección de errores incompatibilidad de diálogo personalizado con otros adaptadores\ncorrección de errores para la carga de traducción\ncorrección de errores para la identificación en la carga de diálogo personalizado",
+        "pl": "naprawa błędów niestandardowego okna dialogowego niekompatybilnego z innymi adapterami\npoprawka błędu ładowania tłumaczenia\npoprawka błędu identyfikatora podczas ładowania niestandardowego okna dialogowego",
+        "zh-cn": "错误修复自定义对话框与其他适配器不兼容\n修复翻译负载的错误\n自定义对话框加载中ID的错误修复"
+      },
+      "1.4.0": {
+        "en": "custom settings: button added to generate prefixId from function and room\nadapter settings: automatically generate prefixId from function and room\nadapter settings: automatically use prefix and optional id as name\nbug fixes",
+        "de": "Benutzerdefinierte Einstellungen: Schaltfläche hinzugefügt, um Präfix-ID aus Funktion und Raum zu generieren\nAdaptereinstellungen: Generieren Sie automatisch eine Präfix-ID aus Funktion und Raum\nAdaptereinstellungen: Verwenden Sie automatisch das Präfix und die optionale ID als Namen\nFehlerbehebung",
+        "ru": "пользовательские настройки: добавлена кнопка для генерации prefixId из функции и комнаты\nнастройки адаптера: автоматически генерировать prefixId из функции и комнаты\nнастройки адаптера: автоматически использовать префикс и необязательный идентификатор в качестве имени\nисправление ошибок",
+        "pt": "configurações personalizadas: botão adicionado para gerar prefixId de função e sala\nconfigurações do adaptador: gere automaticamente prefixId da função e da sala\nconfigurações do adaptador: use automaticamente prefixo e id opcional como nome\ncorreção de bugs",
+        "nl": "aangepaste instellingen: knop toegevoegd om prefixId te genereren vanuit functie en kamer\nadapterinstellingen: automatisch prefixId genereren uit functie en kamer\nadapterinstellingen: gebruik automatisch prefix en optionele id als naam\nbugfixes",
+        "fr": "paramètres personnalisés: bouton ajouté pour générer prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: générer automatiquement prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: utilisez automatiquement le préfixe et l'ID facultatif comme nom\ncorrections de bogues",
+        "it": "impostazioni personalizzate: pulsante aggiunto per generare prefixId dalla funzione e dalla stanza\nimpostazioni adattatore: genera automaticamente prefixId dalla funzione e dalla stanza\nimpostazioni dell'adattatore: usa automaticamente il prefisso e l'ID opzionale come nome\ncorrezioni di bug",
+        "es": "configuración personalizada: botón agregado para generar prefixId de función y sala\nconfiguración del adaptador: genera automáticamente prefixId desde la función y la habitación\nconfiguración del adaptador: use automáticamente el prefijo y la identificación opcional como nombre\ncorrección de errores",
+        "pl": "ustawienia niestandardowe: dodano przycisk do generowania prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie generuj prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie użyj przedrostka i opcjonalnego identyfikatora jako nazwy\npoprawki błędów",
+        "zh-cn": "自定义设置：添加了按钮以从功能和房间生成prefixId\n适配器设置：根据功能和房间自动生成prefixId\n适配器设置：自动使用前缀和可选ID作为名称\nbug修复"
+      },
+      "1.3.2": {
+        "en": "moment-duration-format bug fix",
+        "de": "Fehlerbehebung im Moment-Dauer-Format",
+        "ru": "исправление ошибки формата времени-продолжительности",
+        "pt": "correção de bug no formato da duração do momento",
+        "nl": "bugfix voor moment-duur-formaat",
+        "fr": "correction de bogue au format moment-durée",
+        "it": "correzione di bug del formato della durata del momento",
+        "es": "corrección de errores de formato de duración de momento",
+        "pl": "poprawka błędu formatu czasu trwania",
+        "zh-cn": "矩持续时间格式错误修复"
+      }
     },
-    "native": {
-        "deleteDeadLinkedObjects": false,
-        "scriptName": "",
-        "variableName": "",
-        "generateVarsForAllObjectsOfInstance": false,
-        "generateSetStateForReadOnly": false,
-        "javascriptInstance": "",
-        "prefixFromFunctionOrRoom": false,
-        "prefixAsName": false,
-        "idAsName": false
+    "title": "LinkedDevices",
+    "titleLang": {
+      "en": "LinkedDevices",
+      "de": "LinkedDevices",
+      "ru": "LinkedDevices",
+      "pt": "LinkedDevices",
+      "nl": "LinkedDevices",
+      "fr": "LinkedDevices",
+      "it": "LinkedDevices",
+      "es": "LinkedDevices",
+      "pl": "LinkedDevices",
+      "zh-cn": "LinkedDevices"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information",
-                "icon": "linkeddevices_info.png"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.linkedObjects",
-            "type": "state",
-            "common": {
-                "role": "",
-                "name": "count of linked objects",
-                "type": "number",
-                "read": true,
-                "write": false,
-                "icon": "linkeddevices_info.png",
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.notlinkedObjects",
-            "type": "state",
-            "common": {
-                "role": "",
-                "name": "count of not linked objects",
-                "type": "number",
-                "read": true,
-                "write": false,
-                "icon": "linkeddevices_info.png",
-                "def": 0
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Create linked objects (datapoints) of your devices with a self-defined structure. This makes it possible to create a structure in ioBroker, where all objects are centralized, e.g. to be used in the vis or scripts.",
+      "de": "Erstelle verlinkte Objekte (Datenpunkte) deiner Geräte mit einer selbst definierten Struktur. Damit ist es  möglich eine Struktur in ioBroker zu schaffen, wo alle Objekte zentralisiert sind, die z.B. im vis oder Skripten verwendet werden.",
+      "ru": "Создавайте связанные объекты (точки данных) ваших устройств с самоопределяемой структурой. Это позволяет создать структуру в ioBroker, где все объекты централизованы, например для использования в vis или скриптах.",
+      "pt": "Crie objetos vinculados (pontos de dados) de seus dispositivos com uma estrutura autodefinida. Isso torna possível criar uma estrutura no ioBroker, onde todos os objetos são centralizados, por exemplo, para ser usado no vis ou scripts.",
+      "nl": "Maak gekoppelde objecten (datapunten) van uw apparaten met een zelfgedefinieerde structuur. Dit maakt het mogelijk om een structuur in ioBroker te creëren, waarin alle objecten gecentraliseerd zijn, bijv. te gebruiken in de vis of scripts.",
+      "fr": "Créez des objets liés (points de données) de vos appareils avec une structure auto-définie. Cela permet de créer une structure dans ioBroker, où tous les objets sont centralisés, par ex. à utiliser dans le vis ou les scripts.",
+      "it": "Crea oggetti collegati (punti dati) dei tuoi dispositivi con una struttura auto-definita. Ciò rende possibile creare una struttura in ioBroker, dove tutti gli oggetti sono centralizzati, ad es. da utilizzare nei vis o negli script.",
+      "es": "Cree objetos vinculados (puntos de datos) de sus dispositivos con una estructura autodefinida. Esto hace posible crear una estructura en ioBroker, donde todos los objetos están centralizados, p. Ej. para ser utilizado en vis o scripts.",
+      "pl": "Twórz połączone obiekty (punkty danych) swoich urządzeń z samodzielnie zdefiniowaną strukturą. Umożliwia to stworzenie struktury w ioBroker, w której wszystkie obiekty są scentralizowane, np. do wykorzystania w vis lub skryptach.",
+      "zh-cn": "使用自定义结构创建设备的链接对象（数据点）。这样就可以在ioBroker中创建一个结构，在该结构中所有对象都被集中化，例如在vis或脚本中使用。"
+    },
+    "docs": {
+      "en": [
+        "docs/en/readme.md"
+      ],
+      "de": [
+        "docs/de/readme.md"
+      ]
+    },
+    "authors": [
+      "Scrounger <scrounger@gmx.net>"
+    ],
+    "keywords": [
+      "device",
+      "link",
+      "virtual",
+      "datapoint",
+      "wrapper",
+      "reflect",
+      "logic"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "icon": "linkeddevices.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linkeddevices/master/admin/linkeddevices.png",
+    "readme": "https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md",
+    "loglevel": "info",
+    "messagebox": true,
+    "subscribe": "messagebox",
+    "mode": "daemon",
+    "type": "logic",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "push",
+    "materialize": true,
+    "supportCustoms": true,
+    "adminUI": {
+      "custom": "json",
+      "config": "materialize"
+    },
+    "dependencies": [
+      {
+        "admin": ">=3.6.2"
+      },
+      {
+        "js-controller": ">=2.0.0"
+      }
     ]
+  },
+  "native": {
+    "deleteDeadLinkedObjects": false,
+    "scriptName": "",
+    "variableName": "",
+    "generateVarsForAllObjectsOfInstance": false,
+    "generateSetStateForReadOnly": false,
+    "javascriptInstance": "",
+    "prefixFromFunctionOrRoom": false,
+    "prefixAsName": false,
+    "idAsName": false
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information",
+        "icon": "linkeddevices_info.png"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.linkedObjects",
+      "type": "state",
+      "common": {
+        "role": "",
+        "name": "count of linked objects",
+        "type": "number",
+        "read": true,
+        "write": false,
+        "icon": "linkeddevices_info.png",
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.notlinkedObjects",
+      "type": "state",
+      "common": {
+        "role": "",
+        "name": "count of not linked objects",
+        "type": "number",
+        "read": true,
+        "write": false,
+        "icon": "linkeddevices_info.png",
+        "def": 0
+      },
+      "native": {}
+    }
+  ]
 }
