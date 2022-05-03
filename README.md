@@ -44,6 +44,7 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 ### __WORK IN PROGRESS__
 * (Scrounger) Admin 5 custom dialog layout optimization
+* (Scrounger) Admin 5 custom dialog: sorted autocomplete entries
 
 ### 1.5.1 (2022-04-25)
 * (Scrounger) Version number bug fix

@@ -356,6 +356,11 @@ class Linkeddevices extends utils.Adapter {
 						}
 					}
 				}
+
+				prefixIdSuggestionList.sort(function (a, b) {
+					return a.toLowerCase().localeCompare(b.toLowerCase());
+				})
+
 				this.sendTo(obj.from, obj.command, prefixIdSuggestionList, obj.callback);
 
 			} else if (obj.command === 'suggestions_stateId') {
@@ -377,6 +382,11 @@ class Linkeddevices extends utils.Adapter {
 						}
 					}
 				}
+
+				stateIdSuggestionList.sort(function (a, b) {
+					return a.toLowerCase().localeCompare(b.toLowerCase());
+				})
+
 				this.sendTo(obj.from, obj.command, stateIdSuggestionList, obj.callback);
 
 			} else if (obj.command === 'suggestions_name') {
@@ -398,7 +408,7 @@ class Linkeddevices extends utils.Adapter {
 									if (sysConfig.common.language) {
 										name = name[sysConfig.common.language];
 									} else {
-										name = name['en'];
+										name = name && name['en'] ? name['en'] : '';
 									}
 								}
 							}
@@ -410,6 +420,11 @@ class Linkeddevices extends utils.Adapter {
 						}
 					}
 				}
+
+				nameSugestionList.sort(function (a, b) {
+					return a.toLowerCase().localeCompare(b.toLowerCase());
+				})
+
 				this.sendTo(obj.from, obj.command, nameSugestionList, obj.callback);
 
 			} else if (obj.command === 'getParentName') {
