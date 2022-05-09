@@ -39,8 +39,13 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 
 <!--
     Placeholder for the next version (at the beginning of the line):
-    ### __WORK IN PROGRESS__
+    ### __WORK IN PROGRESS__    
 -->
+
+### __WORK IN PROGRESS__ 
+* (marc2016) Added color CIE to color HEX converter
+
+
 ### 1.5.2 (2022-05-03)
 * (Scrounger) Admin 5 custom dialog layout optimization
 * (Scrounger) Admin 5 custom dialog: sorted autocomplete entries
