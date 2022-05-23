@@ -75,7 +75,6 @@
                     "sm": 6,
                     "noMultiEdit": true,
                     "freeSolo": true,
-                    "maxLength": 255,
                     "options": [
                         "value1",
                         "value2"
@@ -148,6 +147,7 @@
                         },
                         "panel_convert_none": {
                             "hidden": "!(data.number_convertTo === '')",
+                            "type": "panel",
                             "items": {
                                 "number_unit": {
                                     "type": "text",
@@ -201,6 +201,7 @@
                         },
                         "panel_convert_boolean": {
                             "hidden": "!(data.number_convertTo === 'boolean')",
+                            "type": "panel",
                             "items": {
                                 "number_to_boolean_condition": {
                                     "type": "text",
@@ -231,6 +232,7 @@
                         },
                         "panel_convert_duration": {
                             "hidden": "!(data.number_convertTo === 'duration')",
+                            "type": "panel",
                             "items": {
                                 "number_to_duration_convert_seconds": {
                                     "type": "text",
@@ -256,6 +258,7 @@
                         },
                         "panel_convert_datetime": {
                             "hidden": "!(data.number_convertTo === 'datetime')",
+                            "type": "panel",
                             "items": {
                                 "number_to_datetime_convert_seconds": {
                                     "type": "text",
@@ -304,6 +307,7 @@
                         },
                         "panel_convert_none": {
                             "hidden": "!(data.boolean_convertTo === '')",
+                            "type": "panel",
                             "items": {
                                 "boolean_invert": {
                                     "type": "checkbox",
@@ -316,6 +320,7 @@
                         },
                         "panel_convert_string": {
                             "hidden": "!(data.boolean_convertTo === 'string')",
+                            "type": "panel",
                             "items": {
                                 "boolean_to_string_value_true": {
                                     "type": "text",
@@ -374,6 +379,7 @@
                         },
                         "panel_convert_none": {
                             "hidden": "!(data.string_convertTo === '')",
+                            "type": "panel",
                             "items": {
                                 "string_prefix": {
                                     "type": "text",
@@ -395,6 +401,7 @@
                         },
                         "panel_convert_boolean": {
                             "hidden": "!(data.string_convertTo === 'boolean')",
+                            "type": "panel",
                             "items": {
                                 "string_to_boolean_value_true": {
                                     "type": "text",
@@ -416,6 +423,7 @@
                         },
                         "panel_convert_number": {
                             "hidden": "!(data.string_convertTo === 'number')",
+                            "type": "panel",
                             "items": {
                                 "string_to_number_unit": {
                                     "type": "text",
