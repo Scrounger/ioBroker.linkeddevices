@@ -1,4 +1,5 @@
-chore: release v1.5.2
+chore: release v1.5.3
 
-* (Scrounger) Admin 5 custom dialog layout optimization
-* (Scrounger) Admin 5 custom dialog: sorted autocomplete entries
+* (Scrounger) Generate script: Bugfix if varibale starts with number
+* (GermanBluefox) Corrected jsonCustom file
+* (marc2016) Added color CIE to color HEX converter
