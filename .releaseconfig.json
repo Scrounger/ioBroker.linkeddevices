@@ -1,7 +1,4 @@
 {
   "dry": false,
-  "plugins": ["iobroker", "license"],
-  "exec": {
-		"before_commit": "npm run translate"
-	}
+  "plugins": ["iobroker", "license"]
 }
