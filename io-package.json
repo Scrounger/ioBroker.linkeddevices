@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "linkeddevices",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "news": {
+      "1.5.4": {
+        "en": "Generate script: Bugfix if varibale starts with number",
+        "de": "Skript generieren: Bugfix wenn Variable mit Zahl beginnt",
+        "ru": "Сгенерировать скрипт: исправлено, если переменная начинается с числа",
+        "pt": "Gerar script: Bugfix se varibale começar com número",
+        "nl": "Genereer script: Bugfix als varibale begint met nummer",
+        "fr": "Générer le script : Correction d'un bug si la varibale commence par un nombre",
+        "it": "Genera script: correzione di bug se varibale inizia con numero",
+        "es": "Generar secuencia de comandos: corrección de errores si varibale comienza con un número",
+        "pl": "Generuj skrypt: Napraw błąd, jeśli zmienna zaczyna się od liczby",
+        "zh-cn": "生成脚本：如果变量以数字开头，则修正错误"
+      },
       "1.5.3": {
         "en": "Generate script: Bugfix if varibale starts with number\nCorrected jsonCustom file\nAdded color CIE to color HEX converter",
         "de": "Skript generieren: Bugfix wenn Variable mit Zahl beginnt\nKorrigierte jsonCustom-Datei\nFarb-CIE zum Farb-HEX-Konverter hinzugefügt",
@@ -74,18 +86,6 @@
         "es": "corrección de errores incompatibilidad de diálogo personalizado con otros adaptadores\ncorrección de errores para la carga de traducción\ncorrección de errores para la identificación en la carga de diálogo personalizado",
         "pl": "naprawa błędów niestandardowego okna dialogowego niekompatybilnego z innymi adapterami\npoprawka błędu ładowania tłumaczenia\npoprawka błędu identyfikatora podczas ładowania niestandardowego okna dialogowego",
         "zh-cn": "错误修复自定义对话框与其他适配器不兼容\n修复翻译负载的错误\n自定义对话框加载中ID的错误修复"
-      },
-      "1.4.0": {
-        "en": "custom settings: button added to generate prefixId from function and room\nadapter settings: automatically generate prefixId from function and room\nadapter settings: automatically use prefix and optional id as name\nbug fixes",
-        "de": "Benutzerdefinierte Einstellungen: Schaltfläche hinzugefügt, um Präfix-ID aus Funktion und Raum zu generieren\nAdaptereinstellungen: Generieren Sie automatisch eine Präfix-ID aus Funktion und Raum\nAdaptereinstellungen: Verwenden Sie automatisch das Präfix und die optionale ID als Namen\nFehlerbehebung",
-        "ru": "пользовательские настройки: добавлена кнопка для генерации prefixId из функции и комнаты\nнастройки адаптера: автоматически генерировать prefixId из функции и комнаты\nнастройки адаптера: автоматически использовать префикс и необязательный идентификатор в качестве имени\nисправление ошибок",
-        "pt": "configurações personalizadas: botão adicionado para gerar prefixId de função e sala\nconfigurações do adaptador: gere automaticamente prefixId da função e da sala\nconfigurações do adaptador: use automaticamente prefixo e id opcional como nome\ncorreção de bugs",
-        "nl": "aangepaste instellingen: knop toegevoegd om prefixId te genereren vanuit functie en kamer\nadapterinstellingen: automatisch prefixId genereren uit functie en kamer\nadapterinstellingen: gebruik automatisch prefix en optionele id als naam\nbugfixes",
-        "fr": "paramètres personnalisés: bouton ajouté pour générer prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: générer automatiquement prefixId à partir de la fonction et de la pièce\nparamètres de l'adaptateur: utilisez automatiquement le préfixe et l'ID facultatif comme nom\ncorrections de bogues",
-        "it": "impostazioni personalizzate: pulsante aggiunto per generare prefixId dalla funzione e dalla stanza\nimpostazioni adattatore: genera automaticamente prefixId dalla funzione e dalla stanza\nimpostazioni dell'adattatore: usa automaticamente il prefisso e l'ID opzionale come nome\ncorrezioni di bug",
-        "es": "configuración personalizada: botón agregado para generar prefixId de función y sala\nconfiguración del adaptador: genera automáticamente prefixId desde la función y la habitación\nconfiguración del adaptador: use automáticamente el prefijo y la identificación opcional como nombre\ncorrección de errores",
-        "pl": "ustawienia niestandardowe: dodano przycisk do generowania prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie generuj prefixId z funkcji i pomieszczenia\nustawienia adaptera: automatycznie użyj przedrostka i opcjonalnego identyfikatora jako nazwy\npoprawki błędów",
-        "zh-cn": "自定义设置：添加了按钮以从功能和房间生成prefixId\n适配器设置：根据功能和房间自动生成prefixId\n适配器设置：自动使用前缀和可选ID作为名称\nbug修复"
       }
     },
     "title": "LinkedDevices",
