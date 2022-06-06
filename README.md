@@ -41,6 +41,9 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     Placeholder for the next version (at the beginning of the line):
     ### __WORK IN PROGRESS__    
 -->
+### 1.5.5 (2022-06-06) 
+* (Scrounger) Generate script: Bugfix if varibale starts with number
+
 ### 1.5.4 (2022-06-06) 
 * (Scrounger) Generate script: Bugfix if varibale starts with number
 

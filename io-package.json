@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "linkeddevices",
-    "version": "1.5.4",
+    "version": "1.5.5",
     "news": {
+      "1.5.5": {
+        "en": "Generate script: Bugfix if varibale starts with number",
+        "de": "Skript generieren: Bugfix wenn Variable mit Zahl beginnt",
+        "ru": "Сгенерировать скрипт: исправлено, если переменная начинается с числа",
+        "pt": "Gerar script: Bugfix se varibale começar com número",
+        "nl": "Genereer script: Bugfix als varibale begint met nummer",
+        "fr": "Générer le script : Correction d'un bug si la varibale commence par un nombre",
+        "it": "Genera script: correzione di bug se varibale inizia con numero",
+        "es": "Generar secuencia de comandos: corrección de errores si varibale comienza con un número",
+        "pl": "Generuj skrypt: Napraw błąd, jeśli zmienna zaczyna się od liczby",
+        "zh-cn": "生成脚本：如果变量以数字开头，则修正错误"
+      },
       "1.5.4": {
         "en": "Generate script: Bugfix if varibale starts with number",
         "de": "Skript generieren: Bugfix wenn Variable mit Zahl beginnt",
@@ -74,18 +86,6 @@
         "es": "corrección de errores para el diálogo personalizado filtrado",
         "pl": "poprawka błędu filtrowanego niestandardowego okna dialogowego",
         "zh-cn": "过滤自定义对话框的错误修复"
-      },
-      "1.4.1": {
-        "en": "bug fix custom dialog incompatibilty with other adapters\nbug fix for translation load\nbug fix for id on custom dialog load",
-        "de": "Fehlerbehebung beim benutzerdefinierten Dialogfeld, das nicht mit anderen Adaptern kompatibel ist\nFehlerbehebung für das Laden der Übersetzung\nFehlerbehebung für ID beim Laden eines benutzerdefinierten Dialogfelds",
-        "ru": "Исправлена ошибка несовместимости настраиваемого диалогового окна с другими адаптерами\nисправление ошибки для загрузки перевода\nисправление ошибки для идентификатора при загрузке настраиваемого диалогового окна",
-        "pt": "bug correção incompatibilidade de diálogo personalizado com outros adaptadores\ncorreção de bug para carregamento de tradução\ncorreção de bug para id no carregamento de diálogo personalizado",
-        "nl": "bug fix aangepaste dialoog incompatibiliteit met andere adapters\nbugfix voor het laden van vertalingen\nbugfix voor id bij het laden van aangepaste dialoogvensters",
-        "fr": "correction de bogue incompatibilité des boîtes de dialogue personnalisées avec d'autres adaptateurs\ncorrection de bogue pour le chargement de la traduction\ncorrection de bogue pour l'ID lors du chargement de la boîte de dialogue personnalisée",
-        "it": "correzione di errori di dialogo personalizzato incompatibilità con altri adattatori\ncorrezione di bug per il caricamento della traduzione\ncorrezione di bug per ID durante il caricamento della finestra di dialogo personalizzata",
-        "es": "corrección de errores incompatibilidad de diálogo personalizado con otros adaptadores\ncorrección de errores para la carga de traducción\ncorrección de errores para la identificación en la carga de diálogo personalizado",
-        "pl": "naprawa błędów niestandardowego okna dialogowego niekompatybilnego z innymi adapterami\npoprawka błędu ładowania tłumaczenia\npoprawka błędu identyfikatora podczas ładowania niestandardowego okna dialogowego",
-        "zh-cn": "错误修复自定义对话框与其他适配器不兼容\n修复翻译负载的错误\n自定义对话框加载中ID的错误修复"
       }
     },
     "title": "LinkedDevices",
