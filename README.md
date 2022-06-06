@@ -43,6 +43,8 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 -->
 
 ### __WORK IN PROGRESS__ 
+* (Scrounger) Generate script: Bugfix if varibale starts with number
+* (GermanBluefox) Corrected jsonCustom file
 * (marc2016) Added color CIE to color HEX converter
 
 

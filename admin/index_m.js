@@ -1203,9 +1203,18 @@ async function createJavascript() {
                             for (var i = 0; i < linkedIdSplitted.length; i++) {
 
                                 if (i === 0) {
-                                    varName = `${rootName}.${linkedIdSplitted[i]}`;
+
+                                    if (/^\d/.test(linkedIdSplitted[i])) {
+                                        varName = `${rootName}["${linkedIdSplitted[i]}"]`;
+                                    } else {
+                                        varName = `${rootName}.${linkedIdSplitted[i]}`;
+                                    }
                                 } else {
-                                    varName = varName.concat(`.${linkedIdSplitted[i]}`)
+                                    if (/^\d/.test(linkedIdSplitted[i])) {
+                                        varName = varName.concat(`["${linkedIdSplitted[i]}"]`);
+                                    } else {
+                                        varName = varName.concat(`.${linkedIdSplitted[i]}`);
+                                    }
                                 }
 
                                 if (!existingVarName.includes(`${varName} = {};\n`)) {
@@ -1237,6 +1246,8 @@ async function createJavascript() {
                         autoScript = autoScript.concat("\n");
                     }
                 }
+
+                console.warn(autoScript);
 
                 // erste Ordner (Mappe) anlegen
                 let folder = {
