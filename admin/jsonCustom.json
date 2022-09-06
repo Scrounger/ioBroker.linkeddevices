@@ -6,7 +6,7 @@
             "hidden": "data.isLinked !== undefined",
             "type": "panel",
             "items": {
-                "linkedId1": {
+                "linkedId": {
                     "type": "custom",
                     "name": "AdminComponentLinkedDevicesSet/Components/LinkedIdComponent",
                     "i18n": false,
