@@ -1,0 +1,7 @@
+{
+  "Prefix for ID of linked object": "Prefix voor ID van gekoppeld object",
+  "error_prefix": "de volgende tekens zijn niet toegestaan '*?\"`´,;:<>#/{}ß[] en spaties",
+  "ID of linked object": "ID van gekoppeld object",
+  "error_stateId": "voer een geldige id in, de volgende tekens zijn niet toegestaan *?\"''´,;:<>#/{}ß[] en spaties",
+  "Composite id of linked object": "Samengestelde id van gekoppeld object"
+}

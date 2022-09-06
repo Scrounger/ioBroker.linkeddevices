@@ -6,58 +6,12 @@
             "hidden": "data.isLinked !== undefined",
             "type": "panel",
             "items": {
-                "_prefixId": {
-                    "type": "autocompleteSendTo",
-                    "label": "prefix for id of linked object",
-                    "sm": 8,
-                    "noMultiEdit": true,
-                    "freeSolo": true,
-                    "noTranslation": true,
-                    "command": "suggestions_prefixId",
-                    "maxLength": 255,
-                    "defaultFunc": {
-                        "func": "(data.linkedId || '').includes('.') ? data.linkedId.substring(0, data.linkedId.lastIndexOf('.')) : ''",
-                        "alsoDependsOn": [
-                            "linkedId"
-                        ]
-                    },
-                    "validator": "data._prefixId && data._prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._prefixId) || data._prefixId === ''",
-                    "help": "${data._prefixId && data._prefixId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._prefixId) || data._prefixId === '' ? '' : 'the following chars are not allowed \\'*?\"\\'`´,;:<>#/{}ß[] \\''}"
-                },
-                "_stateId": {
-                    "type": "autocompleteSendTo",
-                    "label": "id of linked object",
-                    "sm": 4,
-                    "noMultiEdit": true,
-                    "freeSolo": true,
-                    "noTranslation": true,
-                    "command": "suggestions_stateId",
-                    "maxLength": 255,
-                    "defaultFunc": {
-                        "func": "(data.linkedId || '').split('.').pop()",
-                        "alsoDependsOn": [
-                            "linkedId"
-                        ]
-                    },
-                    "validator": "data._stateId && data._stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._stateId)",
-                    "help": "${data._stateId && data._stateId.length > 0 && !(/[*?\"'`´,;:<>#/{}ß\\[\\]\\s]/).test(data._stateId) ? '' : 'please enter a valid id, the following chars are not allowed \\'*?\"\\'`´,;:<>#/{}ß[] \\''}"
-                },
                 "linkedId": {
-                    "type": "text",
-                    "label": "composite id of linked object",
-                    "sm": 12,
-                    "noMultiEdit": true,
-                    "maxLength": 255,
-                    "disabled": "true",
-                    "defaultFunc": "data.linkedId || customObj._id.substring(customObj._id.lastIndexOf('.') + 1)",
-                    "onChange": {
-                        "alsoDependsOn": [
-                            "_prefixId",
-                            "_stateId"
-                        ],
-                        "calculateFunc": "data._prefixId.length > 0 && data._stateId.length > 0 ? (data._prefixId || '') + '.' + (data._stateId || '') : (data._stateId || '')",
-                        "ignoreOwnChanges": true
-                    }
+                    "type": "custom",
+                    "name": "AdminComponentLinkedDevicesSet/Components/LinkedIdComponent",
+                    "i18n": false,
+                    "url": "custom/customComponents.js",
+                    "sm": 12
                 },
                 "name": {
                     "type": "autocompleteSendTo",

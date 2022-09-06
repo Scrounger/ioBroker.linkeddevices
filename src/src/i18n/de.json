@@ -1,0 +1,7 @@
+{
+  "Prefix for ID of linked object": "Präfix für die ID des verknüpften Objekts",
+  "error_prefix": "folgende Zeichen sind nicht erlaubt '*?\"`´,;:<>#/{}ß[] und Leerzeichen",
+  "ID of linked object": "ID des verknüpften Objekts",
+  "error_stateId": "Bitte geben Sie eine gültige ID ein, die folgenden Zeichen sind nicht erlaubt *?\"'`´,;:<>#/{}ß[] und Leerzeichen",
+  "Composite id of linked object": "Zusammengesetzte ID des verknüpften Objekts"
+}

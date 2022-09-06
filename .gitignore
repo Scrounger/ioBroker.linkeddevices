@@ -17,3 +17,5 @@ admin/i18n/*/flat.txt
 system.config.json
 *.code-workspace
 package-lock.json
+/src/build
+/admin/custom
