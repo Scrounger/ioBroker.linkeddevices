@@ -1,0 +1,7 @@
+{
+  "Prefix for ID of linked object": "Prefiks dla identyfikatora połączonego obiektu",
+  "error_prefix": "następujące znaki nie są dozwolone '*?\"`',;:<>#/{}ß[] i spacje",
+  "ID of linked object": "Identyfikator połączonego obiektu",
+  "error_stateId": "proszę podać poprawny identyfikator, następujące znaki nie są dozwolone *?\"'`´,;:<>#/{}ß[] i spacje",
+  "Composite id of linked object": "Złożony identyfikator połączonego obiektu"
+}

@@ -45,12 +45,14 @@
     "chai": "^4.3.6",
     "eslint": "^7.32.0",
     "gulp": "^4.0.2",
-    "mocha": "^9.2.2"
+    "mocha": "^9.2.2",
+    "del": "^6.1.1"
   },
   "main": "main.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit",
     "translate": "node node_modules/gulp/bin/gulp.js adminWords2languages",
+    "build": "gulp",
     "release": "release-script",
     "release-patch": "release-script patch --c .releaseconfig.json --all",
     "release-minor": "release-script minor --c .releaseconfig.json --all",
