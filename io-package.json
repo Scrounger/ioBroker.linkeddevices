@@ -133,7 +133,10 @@
       "reflect",
       "logic"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
     "platform": "Javascript/Node.js",
     "icon": "linkeddevices.png",
     "enabled": true,
