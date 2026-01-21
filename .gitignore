@@ -17,3 +17,6 @@ admin/i18n/*/flat.txt
 system.config.json
 *.code-workspace
 package-lock.json
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
