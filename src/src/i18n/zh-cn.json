@@ -1,0 +1,7 @@
+{
+  "Prefix for ID of linked object": "链接对象的 ID 前缀",
+  "error_prefix": "不允许使用以下字符 '*?\"`´,;:<>#/{}ß[] 和空格",
+  "ID of linked object": "链接对象的 ID",
+  "error_stateId": "请输入有效的 id，不允许使用以下字符 *?\"'`´,;:<>#/{}ß[] 和空格",
+  "Composite id of linked object": "链接对象的复合 id"
+}

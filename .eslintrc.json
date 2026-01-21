@@ -5,6 +5,7 @@
 		"mocha": true
 	},
 	"extends": "eslint:recommended",
+	"ignorePatterns": ["src/**/*.*", "gulpfile.js"],
 	"rules": {
 		"indent": [
 			"error",

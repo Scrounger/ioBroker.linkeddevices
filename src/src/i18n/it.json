@@ -1,0 +1,7 @@
+{
+  "Prefix for ID of linked object": "Prefisso per l'ID dell'oggetto collegato",
+  "error_prefix": "i seguenti caratteri non sono consentiti '*?\"`´,;:<>#/{}ß[] e spazi",
+  "ID of linked object": "ID dell'oggetto collegato",
+  "error_stateId": "inserisci un ID valido, i seguenti caratteri non sono consentiti *?\"'`´,;:<>#/{}ß[] e spazi",
+  "Composite id of linked object": "ID composito dell'oggetto collegato"
+}
