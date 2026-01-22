@@ -140,6 +140,7 @@
     "extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.linkeddevices/master/admin/linkeddevices.png",
     "readme": "https://github.com/Scrounger/ioBroker.linkeddevices/blob/master/README.md",
     "loglevel": "info",
+    "tier": 2,
     "messagebox": true,
     "subscribe": "messagebox",
     "mode": "daemon",
