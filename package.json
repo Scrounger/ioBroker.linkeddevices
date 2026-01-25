@@ -9,6 +9,7 @@
   "homepage": "https://github.com/Scrounger/ioBroker.linkeddevices",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
     "device",
     "link",
     "virtual",
