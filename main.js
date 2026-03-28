@@ -8,7 +8,7 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 const mathjs = require("mathjs");
-const fs = require('fs');
+const fs = require('node:fs');
 
 const moment = require("moment");
 const momentDurationFormatSetup = require("moment-duration-format");
@@ -18,7 +18,7 @@ momentDurationFormatSetup(moment);
 var mySystemConfig = { language: "en", dateFormat: "DD.MM.YYYY", durationFormat: "dd[T] hh[h] mm[m]" };
 
 // Load your modules here, e.g.:
-// const fs = require("fs");
+// const fs = require("node:fs");
 
 class Linkeddevices extends utils.Adapter {
 
