@@ -196,6 +196,8 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
 ### 0.0.1
 * (Scrounger) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
