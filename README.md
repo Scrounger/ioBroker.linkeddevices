@@ -41,6 +41,10 @@ This adapter is inspired from [virtual devices script by Pman](https://forum.iob
     Placeholder for the next version (at the beginning of the line):
     ### __WORK IN PROGRESS__    
 -->
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 1.5.5 (2022-06-06) 
 * (Scrounger) Generate script: Bugfix if varibale starts with number
 
